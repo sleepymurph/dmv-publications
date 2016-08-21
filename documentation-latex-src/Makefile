@@ -22,12 +22,11 @@ specification.pdf: \
 # Add diagram-whatever-dot.pdf or diagram-whatever-neato.pdf (depending on the
 # program you want to use to create the graph) to the dependency list of the
 # report that uses them.
-#
-# You can define common things in an M4 macro and include it in several files.
-# If you do, remember to add it to the dependency lists here.
 
-%-dot.pdf: %.dot diagram-common.m4.dot
-	m4 diagram-common.m4.dot $*.dot | dot -Tpdf -o $*-dot.pdf
+DOT_INCLUDE=diagram-common.m4.dot
 
-%-neato.pdf: %.dot diagram-common.m4.dot
-	m4 diagram-common.m4.dot $*.dot | neato -Tpdf -o $*-neato.pdf
+%-dot.pdf: %.dot $(DOT_INCLUDE)
+	m4 $(DOT_INCLUDE) $*.dot | dot -Tpdf -o $*-dot.pdf
+
+%-neato.pdf: %.dot $(DOT_INCLUDE)
+	m4 $(DOT_INCLUDE) $*.dot | neato -Tpdf -o $*-neato.pdf
