@@ -34,6 +34,9 @@ specification.pdf: \
 
 DOT_INCLUDE=diagram-common.m4.dot
 
+# Leave intermediate files after use (e.g. %.preprocessed.dot)
+.SECONDARY:
+
 %.preprocessed.dot: %.dot $(DOT_INCLUDE)
 	m4 $(DOT_INCLUDE) $*.dot > $*.preprocessed.dot
 
