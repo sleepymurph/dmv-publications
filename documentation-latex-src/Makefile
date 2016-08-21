@@ -25,8 +25,11 @@ specification.pdf: \
 
 DOT_INCLUDE=diagram-common.m4.dot
 
-%-dot.pdf: %.dot $(DOT_INCLUDE)
-	m4 $(DOT_INCLUDE) $*.dot | dot -Tpdf -o $*-dot.pdf
+%-preprocessed.dot: %.dot $(DOT_INCLUDE)
+	m4 $(DOT_INCLUDE) $*.dot > $*-preprocessed.dot
 
-%-neato.pdf: %.dot $(DOT_INCLUDE)
-	m4 $(DOT_INCLUDE) $*.dot | neato -Tpdf -o $*-neato.pdf
+%-dot.pdf: %-preprocessed.dot $(DOT_INCLUDE)
+	dot -Tpdf -o $*-dot.pdf $*-preprocessed.dot
+
+%-neato.pdf: %-preprocessed.dot $(DOT_INCLUDE)
+	neato -Tpdf -o $*-neato.pdf $*-preprocessed.dot
