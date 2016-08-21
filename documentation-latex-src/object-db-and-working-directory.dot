@@ -1,0 +1,20 @@
+digraph {
+
+    subgraph cluster_local0 {
+        ODB(local_obj_db0,"Local\nObject Database")
+        WD(local_working_dir0,"Working\nDirectory")
+        CICO_LABEL(local_working_dir0, local_obj_db0)
+    }
+
+    subgraph cluster_local1 {
+        ODB(local_obj_db1,"Local\nObject Database")
+        WD(local_working_dir1,"Working\nDirectory")
+        CICO_LABEL(local_working_dir1, local_obj_db1)
+    }
+
+    ODB(remote_obj_db, "Remote\nObject Databases")
+
+    PSPL_LABEL(local_obj_db0, remote_obj_db)
+    PSPL_LABEL(local_obj_db1, remote_obj_db)
+    PSPL_LABEL(local_obj_db0, local_obj_db1)
+}

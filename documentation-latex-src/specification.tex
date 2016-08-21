@@ -1,0 +1,461 @@
+\documentclass[a4paper]{article}
+% vim: set ts=2 sts=2 sw=2 :
+
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+
+% Use a blank space between paragraphs instead of an indent.
+\usepackage[parfill]{parskip}
+
+% Source code listings
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
+
+\usepackage{url}
+% To actually link URLs in the PDF.
+%
+% The hyperref docs recommend declaring it after the other \usepackage
+% declarations, because it has to redefine several commands to work properly,
+% and other later redefinitions might interfere.
+% Remove the hidelinks parameter to get (ugly) visual highlights around the
+% links.
+\usepackage[hidelinks]{hyperref}
+
+% Create a short macro for newly-defined key terms.
+\newcommand{\newterm}{\textit}
+
+
+\begin{document}
+
+\title{Version Control for Large Files\\
+    Specification}
+\author{Michael Murphy}
+\date{August 2016}
+\maketitle
+
+\section{Idea}\label{idea}
+
+\subsection{Main idea: Distributed version control for large data
+sets}\label{main-idea-distributed-version-control-for-large-data-sets}
+
+Main principles:
+
+\begin{itemize}
+\item
+  Data must never be lost accidentally.
+\item
+  However, history may be deliberately truncated to save space, and
+  sensitive data may be deliberately redacted.
+\item
+  Data integrity must be verifiable: The system must be able to detect
+  errors and, if possible, repair them.
+\item
+  Changes to the dataset should be tracked, versions should be
+  explicitly labeled, and history should be kept.
+\item
+  Like with distributed version control, updates can be made
+  independently and merged later. Different sites can have different
+  versions. Updates (commits) and synchronization are deliberate,
+  explicit, and manual.
+\end{itemize}
+
+Important assumptions:
+
+\begin{itemize}
+\item
+  Contact between repositories is intermittent. Repositories may be on
+  removable drives or mobile devices. Updates may require physical
+  connection and reconnection. It is important to track the state of
+  other repositories, so that the user can know what needs to be
+  synchronized.
+\item
+  Assume all actors are honest for now. No malicious components.
+\item
+  However, components can and will fail. The system must discover and
+  recover from errors (checksums, replication).
+\end{itemize}
+
+Scale:
+
+\begin{itemize}
+\item
+  Must work with many terabytes of data.
+\item
+  Must be able to spread data across several stores.
+\item
+  Must handle a wide range of file sizes (text, images, audio, video).
+\item
+  Must handle file counts in the millions.
+\end{itemize}
+
+\subsection{Main inspiration: Git}\label{main-inspiration-git}
+
+Can we take the elegance of Git's block chain and generalize and
+distribute it so that it works well with large files, and so that all
+the data does not have to be present in every repository?
+
+Differences from git:
+
+\begin{itemize}
+\item
+  Partial repositories: Individual repositories need not store entire
+  history. Several repositories can work together to spread the data
+  across many machines.
+\item
+  Partial checkouts: Working directories need not check out entire data
+  set.
+\item
+  Support for large files: Large files can be split into chunks and
+  spread across repositories.
+\item
+  Repositories work more closely together to form a whole:
+
+  \begin{itemize}
+  \item
+    Repositories should be aware of each other and what pieces of data
+    each one stores.
+  \item
+    Should know where to find data when needed.
+  \item
+    Should be able to visualize how complete data set storage is and how
+    well data is replicated to protect against data loss.
+  \end{itemize}
+\end{itemize}
+
+Other considerations:
+
+\begin{itemize}
+\item
+  Stored data set should be a normal file tree, with history, like any
+  normal version control system.
+
+  \begin{itemize}
+  \item
+    We do not want to reinvent the filesystem.
+  \item
+    We do not want to deal with media metadata and categorization. That
+    is a whole other problem.
+  \item
+    This is meant for long-term storage. Classic files are the best
+    chance for that. New data schemas are also a whole other problem.
+  \item
+    However: it may be possible to generalize, and allow flexible
+    aggregation besides trees.
+  \end{itemize}
+\item
+  However, knowledge of media formats might be used for
+  behind-the-scenes optimization such as more efficient compression.
+  E.g. recognizing that only tag data has changed in an audio file.
+\end{itemize}
+
+\section{Architecture}\label{architecture}
+
+\subsection{Core data structure: DAG}\label{core-data-structure-dag}
+
+\textbf{Start with data structure. If the data structure is right, the
+rest should follow.}
+
+Again, the main inspiration is Git.
+
+\begin{itemize}
+\item
+  Data structure will be based on Git's DAG: immutable blobs, trees, and commits
+  that are stored in a content-addressable object database, and referred to by
+  cryptographic hash.
+\item
+  The immutability, cryptographic hashing, and DAG data structure make it easy
+  to synchronize between repositories and check data integrity.
+\item
+  Like Git, current state of local branches, and known state of remote
+  repositories will be pointers to commits in the DAG.
+\end{itemize}
+
+\subsection{Like version control, interactions based on files and
+check-ins}\label{like-version-control-interactions-based-on-files-and-check-ins}
+
+\begin{itemize}
+\item
+  Like Git, there will be an object database that stores the DAG, and a
+  working directory where files are checked out for normal use and
+  editing.
+\item
+  We prefer a version-control style interaction, checking files in and
+  out explicitly to the filesystem where applications can work with them
+  as normal files. Again, we do not want to reinvent the filesystem.
+
+  However, to save space when working with large collections, perhaps a FUSE
+  filesystem could present a virtual working directory that is actually a
+  copy-on-write snapshot of files in the object database.
+\item
+  Like Git, no repository is inherently more important or more central than any
+  other. Importance given to a certain repository or specific push-pull flows
+  will be the result of the user's workflow, not of the underlying system.
+\end{itemize}
+
+
+\begin{figure}[h!]
+  \caption{Distributed Version Control}
+  \label{fig:object-db-and-working-directory}
+  \centering
+    \includegraphics[width=0.5\textwidth]{object-db-and-working-directory-dot}
+\end{figure}
+
+
+
+\subsection{Unlike Git, repositories will not be required to store
+all
+objects}\label{unlike-git-repositories-will-not-be-required-to-store-all-objects}
+
+\begin{itemize}
+\item
+  Commits and trees by themselves carry information about the structure
+  and history of the data, the metadata of the repository. They are a
+  kind of ``backbone'' that carries the actual data.
+\item
+  We could have all repositories keep this ``backbone,'' but allow them
+  to selectively store only certain blobs. This will allow repositories
+  to balance space vs completeness of history.
+
+  \begin{itemize}
+  \item
+    A full archive could store all history, just as in Git.
+  \item
+    Several partial archives could work together to store the full history.
+
+    Can configure which repository holds which data according to storage size
+    and network topography. Old infrequently-accessed versions could be kept on
+    larger, slower data stores.
+  \item
+    A shallow repository could store only a few recent versions, to be
+    compared against the working directory or to be restored to correct
+    mistakes. However, it would still have the full ``backbone,'' so it
+    would know what blobs would be needed to checkout different states.
+  \item
+    A ``backbone-only'' repository could store no blobs, just the
+    working directory and the ``backbone.'' This would allow the working
+    directory to detect changes, and it could create new commits, only
+    storing new blobs until they were pushed.
+  \item
+    A repository could also focus on a particular subtree, storing blobs
+    for its entire history, but none of the blobs outside. This would
+    allow detailed work on one part of the larger data set.
+  \item
+    Which blobs to keep could be configurable by rules that work along
+    dimensions of time and parts of the tree.
+
+\begin{verbatim}
+/       last 1 versions
+/foo    last 5 versions
+/bar    all versions
+/baz    no versions
+\end{verbatim}
+  \item
+    We could also provide tools to recommend which blobs to store based
+    on usage frequency, available storage space, and repository
+    availability.
+  \item
+    Perhaps it is not even necessary to store the full backbone. The
+    backbone will be tiny compared to the whole data set, but for large
+    (millions of files) or long-lived data sets, the full backbone could
+    be a burden on small, focused repositories.
+  \end{itemize}
+\item
+  Trees and commits may hold more information than in Git.
+
+  \begin{itemize}
+  \item
+    Objects could include a measure of the cumulative size of all the objects
+    they refer to, so that repositories could make decisions about space
+    trade-offs, and choosing to drop unneeded blobs to save space.
+  \end{itemize}
+
+\item
+  Remote pointers will hold more information than with Git.
+
+  \begin{itemize}
+  \item
+    Because we cannot assume that every repository has all objects,
+    remote pointers must also keep metadata on which blobs are available
+    at which repository. So that it knows where to look if needed.
+  \item
+    This availability data will be used to gather health metrics about
+    what parts of history and hierarchy are safely replicated over many
+    stores, and which are in danger of being lost.
+  \end{itemize}
+\item
+  All algorithms will have to be written around the idea that data might
+  not be available immediately, or at all.
+
+  \begin{itemize}
+  \item
+    Repositories and working directories will work with what is
+    available locally, and what is available locally will be chosen by
+    the user based on what they need to work on now.
+  \item
+    When those needs change, it will be easy to push and pull blobs to
+    and from other repositories.
+  \item
+    However, if a blob is lost, it is lost. This should never happen by
+    accident, but it may happen deliberately by dropping old history to
+    save space, or to deliberately expunge sensitive blobs from the
+    records. If the algorithms can deal with missing objects locally,
+    then they should naturally also be able to handle objects that are
+    missing permanently.
+  \end{itemize}
+\end{itemize}
+
+
+\subsection{Possible workflows}\label{possible-workflows}
+
+\subsubsection{Personal Workflow}
+
+  \begin{figure}[h]
+    \caption{Personal Workflow}
+    \label{fig:workflow-personal}
+    \centering
+      \includegraphics[width=.75\textwidth]{workflow-personal-dot}
+  \end{figure}
+
+  \begin{itemize}
+  \item
+    Repository on removable drive stores current version of whole data
+    set, and historical versions as far back as space will allow.
+  \item
+    Second removable drive repository configured the same way for
+    redundancy.
+  \item
+    Laptop has several partial repositories + working directories:
+
+    \begin{itemize}
+    \item
+      Full history of \texttt{/Documents}
+    \item
+      A year or so of \texttt{/Pictures}
+    \item
+      Recent history of \texttt{/Music}
+    \item
+      No history and selected \texttt{/Videos}
+    \end{itemize}
+  \item
+    Phone has several thin repositories + working directories:
+
+    \begin{itemize}
+    \item
+      Selected \texttt{/Music} checked out with no history. Just used to
+      sync.
+    \item
+      Selected \texttt{/Pictures} are checked out with no history, to be
+      displayed on the phone.
+    \item
+      A \texttt{/Pictures/new} directory is checked out as the phone's
+      new directory in which to put photos as they're taken. It stores
+      only history that has not been synced. A new state is pushed to
+      the laptop. The user categorizes the photos on the laptop, commits
+      the new state, and pushes it to the phone. The selected photos
+      show up in the categorized areas, and the \texttt{new} directory
+      is emptied.
+    \end{itemize}
+  \end{itemize}
+
+\subsubsection{Corporate/Scientific Workflow}
+
+  \begin{figure}[h]
+    \caption{Corporate Workflow}
+    \label{fig:workflow-corporate}
+    \centering
+      \includegraphics[width=.95\textwidth]{workflow-corporate-dot}
+  \end{figure}
+
+  \begin{itemize}
+  \item
+    Main repository uses a DHT as a backing store, keeps all history.
+  \item
+    Users check out pieces of the data set as needed, work with it, and
+    push their changes back.
+  \end{itemize}
+
+\subsubsection{Remote Sensors Workflow}
+
+  \begin{figure}[h]
+    \caption{Remote Sensor Workflow}
+    \label{fig:workflow-sensors}
+    \centering
+      \includegraphics[width=.95\textwidth]{workflow-sensors-dot}
+  \end{figure}
+
+  \begin{itemize}
+  \item
+    Archive on computers in office stores all data
+  \item
+    A directory in the hierarchy is designated for new data from each sensor
+  \item
+    The sensor has a thin repository + working directory for just its own new
+    data directory. It commits new data.
+  \item
+    A courier has a thin repository on their phone, holding just the new data
+    directories for all sensors. The courier visits a sensor and connects to it,
+    pulling in the new data. They visit another sensor and pulls in its data
+    too.
+  \item
+    The courier gets back to the office and syncs with the main archive.
+  \item
+    The archive now has a state with new data from all visited sensors. A
+    process moves the new data to a permanent directory, and commits that new
+    state.
+  \item
+    The courier syncs the phone again, this clears the space on their phone.
+  \item
+    When they visit the sensor again, it syncs and merges, deleting the data
+    that was stored safely, and creates a new state with just new data.
+  \end{itemize}
+
+
+\section{Design}\label{design}
+
+\subsection{Modified Git DAG}
+
+\begin{figure}[h!]
+    \caption{Modified Git DAG}
+    \label{fig:new-dag}
+    \centering
+        \includegraphics[width=0.5\textwidth]{new-dag-dot}
+\end{figure}
+
+We start with the Git DAG and modify it (Figure \ref{fig:new-dag}) to
+accommodate our desired features.
+
+\begin{itemize}
+    \item
+        Unlike Git, the repository is not required to store all objects in the
+        DAG. A repository needs only to include the bare minimum of objects to
+        record the state of its references. These include a reference to the
+        current commit, that commit object, and all of that commit's trees.
+        Large blob indexes should also be included. These required objects are
+        shaded grey in Figure \ref{fig:new-dag}. Those connections that can be
+        left dangling by not storing the referenced object are shown with dashes
+        in Figure \ref{fig:new-dag}.
+    \item
+        Large blobs in the object database can be broken into \newterm{chunks}
+        to make them easier to store, sync, and transfer. We introduce a new
+        \newterm{large blob index} object type to point to the chunks that make
+        up the larger blob (shown light grey in Figure \ref{fig:new-dag}.
+        Chunks themselves are just blobs.
+\end{itemize}
+
+
+\section{Implementation}\label{implementation}
+
+\begin{itemize}
+  \item
+    Object database storage should be pluggable. Flat files by default, but
+    should be able to use a DHT as a large highly-available object store.
+  \item
+    Should be able to sync with a phone, either with an on-phone app, or via USB
+    mount of filesystem.
+\end{itemize}
+
+% \nocite{*}  % Print all references even if they're not used
+% \bibliographystyle{plain}
+% \bibliography{specification}
+
+\end{document}

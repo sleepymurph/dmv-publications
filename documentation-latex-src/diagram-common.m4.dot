@@ -1,0 +1,14 @@
+define(ODB, `$1[label=$2]')
+define(WD, `$1[label=$2,shape=folder]')
+
+define(CICO, `$1->$2 [dir=both]')
+define(PSPL, `$1->$2 [dir=both]')
+
+define(CICO_LABEL, `$1->$2 [dir=both,label=" check-in/out"]')
+define(PSPL_LABEL, `$1->$2 [dir=both,label=" push/pull"]')
+
+define(WD_PAIR, `
+    ODB($1,$3)
+    WD($1_wd,$2)
+    CICO($1_wd,$1)
+')

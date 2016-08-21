@@ -1,0 +1,33 @@
+
+digraph {
+
+    rankdir=TB
+
+    define(VISIT, `$1->$2 [style=dotted]')
+
+    subgraph cluster_office_workstation {
+        label="Office Workstation"
+
+        ODB(archive,"Full Archive")
+        WD(wd,"Working Directory\nof Full Dataset")
+        CICO(wd,archive)
+    }
+
+    define(SENSOR, `
+
+        subgraph cluster_$1 {
+            label="$1"
+            WD_PAIR($1,"/newdata/$1", "Unsynced History")
+        }
+    ')
+
+    SENSOR(sensor0)
+    SENSOR(sensor1)
+    SENSOR(sensor2)
+
+    VISIT(archive, sensor0)
+    VISIT(sensor0, sensor1)
+    VISIT(sensor1, sensor2)
+    VISIT(sensor2, archive)
+
+}

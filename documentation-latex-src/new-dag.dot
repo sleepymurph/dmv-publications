@@ -1,0 +1,35 @@
+digraph {
+
+    define(OPTIONAL, `style=dashed')
+    define(NEW, `style=filled,fillcolor=grey')
+    define(BACKBONE, `style=filled,fillcolor=grey50')
+
+    {
+        // In Git
+        node[]
+        blobs[OPTIONAL]
+        trees[BACKBONE]
+        commits[BACKBONE]
+        refs[BACKBONE]
+    }
+
+    {
+        // New
+        node[NEW]
+        largeblobs[label="large blob indexes"]
+    }
+
+    refs -> { commits }
+    commits -> { trees }
+    trees -> trees [label=" subtrees"]
+    trees -> largeblobs
+
+    {
+        // optional connections
+        edge[OPTIONAL]
+        commits -> commits [label=" previous commits"]
+        trees -> { blobs }
+        largeblobs -> blobs [label=" chunks"]
+    }
+
+}

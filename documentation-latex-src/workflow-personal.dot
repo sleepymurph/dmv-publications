@@ -1,0 +1,38 @@
+digraph {
+
+    rankdir=LR
+
+    subgraph cluster_removable {
+        label="Removable Drive"
+        ODB(archive,"Full History")
+    }
+
+    subgraph cluster_laptop {
+        label="Laptop"
+
+        WD_PAIR(laptop_docs, "/Documents", "Full History\nof /Documents")
+        PSPL(laptop_docs,archive)
+
+        WD_PAIR(laptop_pics, "/Pictures", "Recent History\nof /Pictures")
+        PSPL(laptop_pics,archive)
+
+        WD_PAIR(laptop_music, "/Music", "Recent History\nof /Music")
+        PSPL(laptop_music,archive)
+
+        WD_PAIR(laptop_video, "Selected\n/Videos",
+            "Current Checksums\nof /Videos")
+        PSPL(laptop_video,archive)
+    }
+
+    subgraph cluster_phone {
+        label="Phone"
+
+        WD_PAIR(phone_pics, "/Pictures/new",
+                "Current Checksums\nof /Pictures/new")
+        PSPL(laptop_pics,phone_pics)
+
+        WD_PAIR(phone_music, "Selected\n/Music", "Current Checksums\nof /Music")
+        PSPL(laptop_music,phone_music)
+    }
+
+}

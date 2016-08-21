@@ -1,0 +1,54 @@
+digraph {
+
+    rankdir=LR
+
+    define(DHT_NODE, `$1[label=" "]')
+
+    subgraph cluster_dht {
+        label="Full History Object Database\nStored in DHT"
+
+
+        {rank=same
+            DHT_NODE(dht0)
+            DHT_NODE(dht7)
+        }
+
+        { rank=same
+            DHT_NODE(dht1)
+            DHT_NODE(dht6)
+        }
+        { rank=same
+            DHT_NODE(dht2)
+            DHT_NODE(dht5)
+        }
+
+        { rank=same
+            DHT_NODE(dht3)
+            DHT_NODE(dht4)
+        }
+
+        dht0 -> dht1 -> dht2 -> dht3 -> dht4 -> dht5 -> dht6 -> dht7 -> dht0
+
+        ODB(dht_frontend,"DHT Frontend")
+        PSPL(dht_frontend, dht0)
+    }
+
+    subgraph cluster_work1 {
+        label="Workstation 1"
+        WD_PAIR(work1_docs, "/projectx", "Full History\nof Project X")
+        PSPL(work1_docs,dht_frontend)
+    }
+
+    subgraph cluster_work2 {
+        label="Workstation 2"
+        WD_PAIR(work2_docs, "/datasety", "Recent History\nof Dataset Y")
+        PSPL(work2_docs,dht_frontend)
+    }
+
+    subgraph cluster_work3 {
+        label="Workstation 3"
+        WD_PAIR(work3_docs, "/projectz", "Recent History\nof Project Z")
+        PSPL(work3_docs,dht_frontend)
+    }
+
+}
