@@ -192,11 +192,27 @@ In particular:
 
 \section{Architecture}\label{architecture}
 
-\subsection{Main inspiration: Git}\label{main-inspiration-git}
+\subsection{Main inspiration: Git and its DAG}\label{main-inspiration-git}
+
+\textbf{Start with data structure. If the data structure is right, the
+rest should follow.}
 
 Can we take the elegance of Git's block chain and generalize and
 distribute it so that it works well with large files, and so that all
 the data does not have to be present in every repository?
+
+\begin{itemize}
+\item
+  Data structure will be based on Git's DAG: immutable blobs, trees, and commits
+  that are stored in a content-addressable object database, and referred to by
+  cryptographic hash.
+\item
+  The immutability, cryptographic hashing, and DAG data structure make it easy
+  to synchronize between repositories and check data integrity.
+\item
+  Like Git, current state of local branches, and known state of remote
+  repositories will be pointers to commits in the DAG.
+\end{itemize}
 
 Differences from git:
 
@@ -226,25 +242,6 @@ Differences from git:
   \end{itemize}
 \end{itemize}
 
-\subsection{Core data structure: DAG}\label{core-data-structure-dag}
-
-\textbf{Start with data structure. If the data structure is right, the
-rest should follow.}
-
-Again, the main inspiration is Git.
-
-\begin{itemize}
-\item
-  Data structure will be based on Git's DAG: immutable blobs, trees, and commits
-  that are stored in a content-addressable object database, and referred to by
-  cryptographic hash.
-\item
-  The immutability, cryptographic hashing, and DAG data structure make it easy
-  to synchronize between repositories and check data integrity.
-\item
-  Like Git, current state of local branches, and known state of remote
-  repositories will be pointers to commits in the DAG.
-\end{itemize}
 
 \subsection{Like version control, interactions based on files and
 check-ins}\label{like-version-control-interactions-based-on-files-and-check-ins}
