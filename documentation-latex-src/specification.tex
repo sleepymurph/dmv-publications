@@ -321,7 +321,8 @@ copy-on-write snapshot of objects in the database.
 
   \begin{itemize}
   \item
-    Main repository uses a DHT for its object database, keeps all history.
+    Main repository uses a DHT as a massive backing store for its object
+    database, keeps all history.
   \item
     Users check out pieces of the data set as needed, work with it, and
     push their changes back.
@@ -368,8 +369,9 @@ copy-on-write snapshot of objects in the database.
 
 \subsection{Main inspiration: Git and its DAG}\label{main-inspiration-git}
 
-\textbf{Start with data structure. If the data structure is right, the
-rest should follow.}
+\subsubsection{Start with data structure}
+
+If the data structure is right, the rest should follow.
 
 Can we take the elegance of Git's block chain and generalize and
 distribute it so that it works well with large files, and so that all
@@ -388,7 +390,7 @@ the data does not have to be present in every repository?
   repositories will be pointers to commits in the DAG.
 \end{itemize}
 
-Differences from git:
+\subsubsection{Differences from git}
 
 \begin{itemize}
 \item
@@ -406,10 +408,8 @@ Differences from git:
 
   \begin{itemize}
   \item
-    Repositories should be aware of each other and what pieces of data
-    each one stores.
-  \item
-    Should know where to find data when needed.
+    Repositories need to know not just the state of their neighbors but what
+    data each one actually stores.
   \item
     Should be able to visualize how complete data set storage is and how
     well data is replicated to protect against data loss.
@@ -417,71 +417,69 @@ Differences from git:
 \end{itemize}
 
 
-\subsection{Like version control, interactions based on files and
-check-ins}\label{like-version-control-interactions-based-on-files-and-check-ins}
+\subsection{Modified Git DAG}
+
+\begin{figure}[h!]
+    \caption{Modified Git DAG}
+    \label{fig:new-dag}
+    \centering
+        \includegraphics[width=0.5\textwidth]{new-dag}
+\end{figure}
+
+We start with the Git DAG and modify it (Figure \ref{fig:new-dag}) to
+accommodate our desired features.
 
 \begin{itemize}
-\item
-  Like Git, there will be an object database that stores the DAG, and a
-  working directory where files are checked out for normal use and
-  editing.
-\item
-  We prefer a version-control style interaction, checking files in and
-  out explicitly to the filesystem where applications can work with them
-  as normal files. Again, we do not want to reinvent the filesystem.
-
-  However, to save space when working with large collections, perhaps a FUSE
-  filesystem could present a virtual working directory that is actually a
-  copy-on-write snapshot of files in the object database.
-\item
-  Like Git, no repository is inherently more important or more central than any
-  other. Importance given to a certain repository or specific push-pull flows
-  will be the result of the user's workflow, not of the underlying system.
+    \item
+        Unlike Git, the repository is not required to store all objects in the
+        DAG. A repository needs only to include the bare minimum of objects to
+        record the state of its references. These include a reference to the
+        current commit, that commit object, and all of that commit's trees.
+        Large blob indexes should also be included. These required objects are
+        shaded grey in Figure \ref{fig:new-dag}. Those connections that can be
+        left dangling by not storing the referenced object are shown with dashes
+        in Figure \ref{fig:new-dag}.
+    \item
+        Large blobs in the object database can be broken into \newterm{chunks}
+        to make them easier to store, sync, and transfer. We introduce a new
+        \newterm{large blob index} object type to point to the chunks that make
+        up the larger blob (shown light grey in Figure \ref{fig:new-dag}.
+        Chunks themselves are just blobs.
 \end{itemize}
 
 
+\subsection{Possible variants of partial repositories}
 
-
-\subsection{Unlike Git, repositories will not be required to store
-all
-objects}\label{unlike-git-repositories-will-not-be-required-to-store-all-objects}
+Commits and trees by themselves carry information about the structure and
+history of the data, the metadata of the repository. They are a kind of
+``backbone'' that carries the actual data.
 
 \begin{itemize}
 \item
-  Commits and trees by themselves carry information about the structure
-  and history of the data, the metadata of the repository. They are a
-  kind of ``backbone'' that carries the actual data.
+  A full archive could store all history, just as in Git.
 \item
-  We could have all repositories keep this ``backbone,'' but allow them
-  to selectively store only certain blobs. This will allow repositories
-  to balance space vs completeness of history.
+  Several partial archives could work together to store the full history.
 
-  \begin{itemize}
-  \item
-    A full archive could store all history, just as in Git.
-  \item
-    Several partial archives could work together to store the full history.
-
-    Can configure which repository holds which data according to storage size
-    and network topography. Old infrequently-accessed versions could be kept on
-    larger, slower data stores.
-  \item
-    A shallow repository could store only a few recent versions, to be
-    compared against the working directory or to be restored to correct
-    mistakes. However, it would still have the full ``backbone,'' so it
-    would know what blobs would be needed to checkout different states.
-  \item
-    A ``backbone-only'' repository could store no blobs, just the
-    working directory and the ``backbone.'' This would allow the working
-    directory to detect changes, and it could create new commits, only
-    storing new blobs until they were pushed.
-  \item
-    A repository could also focus on a particular subtree, storing blobs
-    for its entire history, but none of the blobs outside. This would
-    allow detailed work on one part of the larger data set.
-  \item
-    Which blobs to keep could be configurable by rules that work along
-    dimensions of time and parts of the tree.
+  Can configure which repository holds which data according to storage size
+  and network topography. Old infrequently-accessed versions could be kept on
+  larger, slower data stores.
+\item
+  A shallow repository could store only a few recent versions, to be
+  compared against the working directory or to be restored to correct
+  mistakes. However, it would still have the full ``backbone,'' so it
+  would know what blobs would be needed to checkout different states.
+\item
+  A ``backbone-only'' repository could store no blobs, just the
+  working directory and the ``backbone.'' This would allow the working
+  directory to detect changes, and it could create new commits, only
+  storing new blobs until they were pushed.
+\item
+  A repository could also focus on a particular subtree, storing blobs
+  for its entire history, but none of the blobs outside. This would
+  allow detailed work on one part of the larger data set.
+\item
+  Which blobs to keep could be configurable by rules that work along
+  dimensions of time and parts of the tree.
 
 \begin{verbatim}
 /       last 1 versions
@@ -489,16 +487,21 @@ objects}\label{unlike-git-repositories-will-not-be-required-to-store-all-objects
 /bar    all versions
 /baz    no versions
 \end{verbatim}
-  \item
-    We could also provide tools to recommend which blobs to store based
-    on usage frequency, available storage space, and repository
-    availability.
-  \item
-    Perhaps it is not even necessary to store the full backbone. The
-    backbone will be tiny compared to the whole data set, but for large
-    (millions of files) or long-lived data sets, the full backbone could
-    be a burden on small, focused repositories.
-  \end{itemize}
+\item
+  We could also provide tools to recommend which blobs to store based
+  on usage frequency, available storage space, and repository
+  availability.
+\item
+  Perhaps it is not even necessary to store the full backbone. The
+  backbone will be tiny compared to the whole data set, but for large
+  (millions of files) or long-lived data sets, the full backbone could
+  be a burden on small, focused repositories.
+\end{itemize}
+
+
+\subsection{Other deviations from the Git data model}
+
+\begin{itemize}
 \item
   Trees and commits may hold more information than in Git.
 
@@ -542,37 +545,6 @@ objects}\label{unlike-git-repositories-will-not-be-required-to-store-all-objects
     then they should naturally also be able to handle objects that are
     missing permanently.
   \end{itemize}
-\end{itemize}
-
-
-\subsection{Modified Git DAG}
-
-\begin{figure}[h!]
-    \caption{Modified Git DAG}
-    \label{fig:new-dag}
-    \centering
-        \includegraphics[width=0.5\textwidth]{new-dag}
-\end{figure}
-
-We start with the Git DAG and modify it (Figure \ref{fig:new-dag}) to
-accommodate our desired features.
-
-\begin{itemize}
-    \item
-        Unlike Git, the repository is not required to store all objects in the
-        DAG. A repository needs only to include the bare minimum of objects to
-        record the state of its references. These include a reference to the
-        current commit, that commit object, and all of that commit's trees.
-        Large blob indexes should also be included. These required objects are
-        shaded grey in Figure \ref{fig:new-dag}. Those connections that can be
-        left dangling by not storing the referenced object are shown with dashes
-        in Figure \ref{fig:new-dag}.
-    \item
-        Large blobs in the object database can be broken into \newterm{chunks}
-        to make them easier to store, sync, and transfer. We introduce a new
-        \newterm{large blob index} object type to point to the chunks that make
-        up the larger blob (shown light grey in Figure \ref{fig:new-dag}.
-        Chunks themselves are just blobs.
 \end{itemize}
 
 
