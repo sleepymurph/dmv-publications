@@ -9,9 +9,9 @@ specification.pdf: \
 
 %.pdf: %.tex %.bib
 	pdflatex $*.tex
-	# bibtex $*.aux
-	# pdflatex $*.tex
-	# pdflatex $*.tex
+	bibtex $*.aux
+	pdflatex $*.tex
+	pdflatex $*.tex
 
 ../%.pdf: %.pdf
 	cp $*.pdf ../$*.pdf
