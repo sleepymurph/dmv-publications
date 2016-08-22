@@ -85,7 +85,8 @@ These data sets might:
 
 \subsubsection{Accommodating large data sets in version control}
 
-We believe this might be achieved by:
+We believe this might be achieved by starting with Git's cryptographic DAG data
+structure and:
 
 \begin{itemize}
 
@@ -110,7 +111,7 @@ inconsistency explicit, relaxing the full-history requirement makes availability
 explicit as well.
 
 Replicas will be able to choose their own balance of how much data to make
-available locally based on available storage space and latency to neighboring
+available locally, based on available storage space and latency to neighboring
 replicas.
 
 \subsubsection{As an abstraction}
@@ -119,7 +120,7 @@ In a sense, what we want to build is an abstraction for tracking a data set and
 its history as a cohesive whole, even though it may be physically spread across
 many nodes.
 
-Just as version control is a tool for tracking snapshots of a codebase, this
+Just as version control is a tool for managing snapshots of a codebase, this
 will be a tool for managing those snapshots when they become too large to store
 on a single disk and must be offloaded to removable drives or the cloud.
 
@@ -130,7 +131,7 @@ We believe such a system could be flexible enough to be used at various scales.
 
 \begin{itemize}
 
-  \item Individual users might use it to maintain their collection of important
+  \item Individual users might use it to maintain a collection of important
     documents, photos, and media, making it easier to keep up-to-date backups
     and to synchronize between computers and mobile devices.
 
