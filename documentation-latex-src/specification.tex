@@ -193,6 +193,45 @@ In particular:
 
 \section{Architecture}\label{architecture}
 
+\subsection{Autonomous nodes and free-form architecture}
+
+\begin{figure}[h!]
+  \caption{Distributed Version Control}
+  \label{fig:object-db-and-working-directory}
+  \centering
+    \includegraphics[width=0.5\textwidth]{object-db-and-working-directory}
+\end{figure}
+
+\paragraph{Availability}
+  Replicas are autonomous and always available to themselves.
+
+\paragraph{Explicit inconsistency}
+  Synchronization is explicit and manual. States are specifically allowed to
+  diverge. Each replica manually decides what updates to incorporate from other
+  sources.
+
+\paragraph{Scaling}
+  Local autonomy of replicas and explicit inconsistency allows networks of
+  replicas to mirror the connections of their users.
+
+  Many small projects use a hub-and-spoke topology, designating one replica as
+  the main replica, and others pull from it and push to it.
+
+  Large projects such as the Linux kernel can form hierarchies of maintainers,
+  each in charge of specific subsystems.
+
+
+
+\subsubsection{Working directory and plain local file access}
+
+Key advantage: applications access and edit files normally through the
+filesystem. Applications do not need to be rewritten to use the data.
+
+Disadvantage: double the disk space.
+
+Possible mitigation: virtual working directory (e.g. via FUSE) as a
+copy-on-write snapshot of objects in the database.
+
 \subsection{Main inspiration: Git and its DAG}\label{main-inspiration-git}
 
 \textbf{Start with data structure. If the data structure is right, the
@@ -266,13 +305,6 @@ check-ins}\label{like-version-control-interactions-based-on-files-and-check-ins}
   will be the result of the user's workflow, not of the underlying system.
 \end{itemize}
 
-
-\begin{figure}[h!]
-  \caption{Distributed Version Control}
-  \label{fig:object-db-and-working-directory}
-  \centering
-    \includegraphics[width=0.5\textwidth]{object-db-and-working-directory}
-\end{figure}
 
 
 
