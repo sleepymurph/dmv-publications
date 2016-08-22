@@ -1,6 +1,7 @@
 default: ../specification.pdf
 
 specification.pdf: \
+    research.bib \
     new-dag.pdf \
     object-db-and-working-directory.pdf \
     workflow-personal.pdf \
