@@ -114,17 +114,6 @@ Replicas will be able to choose their own balance of how much data to make
 available locally, based on available storage space and latency to neighboring
 replicas.
 
-\subsubsection{As an abstraction}
-
-In a sense, what we want to build is an abstraction for tracking a data set and
-its history as a cohesive whole, even though it may be physically spread across
-many nodes.
-
-Just as version control is a tool for managing snapshots of a codebase, this
-will be a tool for managing those snapshots when they become too large to store
-on a single disk and must be offloaded to removable drives or the cloud.
-
-
 \subsection{Expected Benefits}
 
 We believe such a system could be flexible enough to be used at various scales.
@@ -147,6 +136,42 @@ We believe such a system could be flexible enough to be used at various scales.
     synchronize data.
 
 \end{itemize}
+
+
+\subsection{As an abstraction}
+
+In a sense, what we want to build is an abstraction for tracking a data set and
+its history as a cohesive whole, even though it may be physically spread across
+many nodes.
+
+Just as version control is a tool for managing snapshots of a codebase, this
+will be a tool for managing those snapshots when they become too large to store
+on a single disk and must be offloaded to removable drives or the cloud.
+
+We are thinking about data across a number of dimensions:
+
+\begin{description}
+
+  \item[Coverage of data set] How much of the data set is available locally and
+    in neighboring nodes?
+
+  \item[Coverage of data history] How much of the data set's history is
+    available locally and in neighboring nodes?
+
+  \item[Number of replicas] How many times is the data replicated across
+    neighboring nodes? Is any data in danger of being permanently lost?
+
+  \item[Availability of or distance to replicas] Of the replicas available, how
+    available are they? What is the bandwidth of the connection to the
+    neighboring nodes? What is the latency?
+
+\end{description}
+
+The goal is to visualize the data in these dimensions for the user, so that they
+can make informed decisions about how to access the data they need.
+We do not necessarily want to write algorithms for automatic data management,
+though we do want it to be possible to build more automated systems as
+applications on top of this system.
 
 
 \subsection{Main principles}
