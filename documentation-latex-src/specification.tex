@@ -234,11 +234,11 @@ In particular:
 \end{figure}
 
 
-\subsubsection{Free-form networks}
+\subsubsection{Free-form network architecture}
 
-Because replicas are autonomous and there is no global state, there is no need
-for complicated network membership schemes. Replica network topologies reflect
-the connections between their users and their workflow.
+Because replicas are autonomous and there is no global most-recent state, there
+is no need for complicated network membership schemes. Replica network
+topologies reflect the connections between their users and their workflows.
 
 Many small projects use a hub-and-spoke topology, designating one replica as the
 main replica, and others pull from it and push to it.
@@ -256,6 +256,114 @@ Disadvantage: double the disk space.
 
 Possible solution: virtual working directory (e.g. via FUSE) as a
 copy-on-write snapshot of objects in the database.
+
+
+\subsection{Possible workflows}\label{possible-workflows}
+
+\subsubsection{Personal Workflow}
+
+  \begin{figure}[h]
+    \caption{Personal Workflow}
+    \label{fig:workflow-personal}
+    \centering
+      \includegraphics[width=.75\textwidth]{workflow-personal}
+  \end{figure}
+
+  \begin{itemize}
+  \item
+    Repository on removable drive stores current version of whole data
+    set, and historical versions as far back as space will allow.
+  \item
+    Second removable drive repository configured the same way for
+    redundancy.
+  \item
+    Laptop has several partial repositories + working directories:
+
+    \begin{itemize}
+    \item
+      Full history of \texttt{/Documents}
+    \item
+      A year or so of \texttt{/Pictures}
+    \item
+      Recent history of \texttt{/Music}
+    \item
+      No history and selected \texttt{/Videos}
+    \end{itemize}
+  \item
+    Phone has several thin repositories + working directories:
+
+    \begin{itemize}
+    \item
+      Selected \texttt{/Music} checked out with no history. Just used to
+      sync.
+    \item
+      Selected \texttt{/Pictures} are checked out with no history, to be
+      displayed on the phone.
+    \item
+      A \texttt{/Pictures/new} directory is checked out as the phone's
+      new directory in which to put photos as they're taken. It stores
+      only history that has not been synced. A new state is pushed to
+      the laptop. The user categorizes the photos on the laptop, commits
+      the new state, and pushes it to the phone. The selected photos
+      show up in the categorized areas, and the \texttt{new} directory
+      is emptied.
+    \end{itemize}
+  \end{itemize}
+
+\subsubsection{Corporate/Scientific Workflow}
+
+  \begin{figure}[h]
+    \caption{Corporate Workflow}
+    \label{fig:workflow-corporate}
+    \centering
+      \includegraphics[width=.95\textwidth]{workflow-corporate}
+  \end{figure}
+
+  \begin{itemize}
+  \item
+    Main repository uses a DHT for its object database, keeps all history.
+  \item
+    Users check out pieces of the data set as needed, work with it, and
+    push their changes back.
+  \end{itemize}
+
+\subsubsection{Remote Sensors Workflow}
+
+  \begin{figure}[h]
+    \caption{Remote Sensor Workflow}
+    \label{fig:workflow-sensors}
+    \centering
+      \includegraphics[width=.95\textwidth]{workflow-sensors}
+  \end{figure}
+
+  \begin{itemize}
+  \item
+    Archive on computers in office stores all data
+  \item
+    A directory in the hierarchy is designated for new data from each sensor
+  \item
+    The sensor has a thin repository + working directory for just its own new
+    data directory. It commits new data.
+  \item
+    A courier has a thin repository on their phone, holding just the new data
+    directories for all sensors. The courier visits a sensor and connects to it,
+    pulling in the new data. They visit another sensor and pulls in its data
+    too.
+  \item
+    The courier gets back to the office and syncs with the main archive.
+  \item
+    The archive now has a state with new data from all visited sensors. A
+    process moves the new data to a permanent directory, and commits that new
+    state.
+  \item
+    The courier syncs the phone again, this clears the space on their phone.
+  \item
+    When they visit the sensor again, it syncs and merges, deleting the data
+    that was stored safely, and creates a new state with just new data.
+  \end{itemize}
+
+
+\section{Design}\label{design}
 
 
 \subsection{Main inspiration: Git and its DAG}\label{main-inspiration-git}
@@ -436,113 +544,6 @@ objects}\label{unlike-git-repositories-will-not-be-required-to-store-all-objects
   \end{itemize}
 \end{itemize}
 
-
-\subsection{Possible workflows}\label{possible-workflows}
-
-\subsubsection{Personal Workflow}
-
-  \begin{figure}[h]
-    \caption{Personal Workflow}
-    \label{fig:workflow-personal}
-    \centering
-      \includegraphics[width=.75\textwidth]{workflow-personal}
-  \end{figure}
-
-  \begin{itemize}
-  \item
-    Repository on removable drive stores current version of whole data
-    set, and historical versions as far back as space will allow.
-  \item
-    Second removable drive repository configured the same way for
-    redundancy.
-  \item
-    Laptop has several partial repositories + working directories:
-
-    \begin{itemize}
-    \item
-      Full history of \texttt{/Documents}
-    \item
-      A year or so of \texttt{/Pictures}
-    \item
-      Recent history of \texttt{/Music}
-    \item
-      No history and selected \texttt{/Videos}
-    \end{itemize}
-  \item
-    Phone has several thin repositories + working directories:
-
-    \begin{itemize}
-    \item
-      Selected \texttt{/Music} checked out with no history. Just used to
-      sync.
-    \item
-      Selected \texttt{/Pictures} are checked out with no history, to be
-      displayed on the phone.
-    \item
-      A \texttt{/Pictures/new} directory is checked out as the phone's
-      new directory in which to put photos as they're taken. It stores
-      only history that has not been synced. A new state is pushed to
-      the laptop. The user categorizes the photos on the laptop, commits
-      the new state, and pushes it to the phone. The selected photos
-      show up in the categorized areas, and the \texttt{new} directory
-      is emptied.
-    \end{itemize}
-  \end{itemize}
-
-\subsubsection{Corporate/Scientific Workflow}
-
-  \begin{figure}[h]
-    \caption{Corporate Workflow}
-    \label{fig:workflow-corporate}
-    \centering
-      \includegraphics[width=.95\textwidth]{workflow-corporate}
-  \end{figure}
-
-  \begin{itemize}
-  \item
-    Main repository uses a DHT as a backing store, keeps all history.
-  \item
-    Users check out pieces of the data set as needed, work with it, and
-    push their changes back.
-  \end{itemize}
-
-\subsubsection{Remote Sensors Workflow}
-
-  \begin{figure}[h]
-    \caption{Remote Sensor Workflow}
-    \label{fig:workflow-sensors}
-    \centering
-      \includegraphics[width=.95\textwidth]{workflow-sensors}
-  \end{figure}
-
-  \begin{itemize}
-  \item
-    Archive on computers in office stores all data
-  \item
-    A directory in the hierarchy is designated for new data from each sensor
-  \item
-    The sensor has a thin repository + working directory for just its own new
-    data directory. It commits new data.
-  \item
-    A courier has a thin repository on their phone, holding just the new data
-    directories for all sensors. The courier visits a sensor and connects to it,
-    pulling in the new data. They visit another sensor and pulls in its data
-    too.
-  \item
-    The courier gets back to the office and syncs with the main archive.
-  \item
-    The archive now has a state with new data from all visited sensors. A
-    process moves the new data to a permanent directory, and commits that new
-    state.
-  \item
-    The courier syncs the phone again, this clears the space on their phone.
-  \item
-    When they visit the sensor again, it syncs and merges, deleting the data
-    that was stored safely, and creates a new state with just new data.
-  \end{itemize}
-
-
-\section{Design}\label{design}
 
 \subsection{Modified Git DAG}
 
