@@ -158,7 +158,7 @@ We believe such a system could be flexible enough to be used at various scales.
 \end{itemize}
 
 
-\subsection{Considerations and Caveats}
+\subsection{What the system should not do}
 
 We want to focus on the problem of storing file history and synchronizing files
 between replicas.
@@ -168,20 +168,21 @@ In particular:
 
 \begin{itemize}
 
-  \item We do not want to reinvent the filesystem or create new exotic file
-    formats.
-    We believe that the classic tree of files is our best chance for long-term
-    storage.
+  \item We do not want to reinvent the filesystem. The system should place and
+    update files on the filesystem (or offer a filesystem view, such as with
+    FUSE) for applications to use normally. Applications such as editors should
+    not have to be rewritten to use our system.
+
+  \item We do not want to create new exotic file formats. We believe that the
+    classic tree of files is our best chance for long-term storage.
 
   \item We hope this system could eventually be used as a piece of
-    infrastructure on which to build useful applications.
-    It should not incorporate functionality that would better be left to an
-    application.
+    infrastructure on which to build useful applications. It should not
+    incorporate functionality that would better be left to an application.
 
-  \item We do not want to deal with media metadata and categorization.
-    Metadata and categorization is best left to the applications that produce
-    and consume those media formats.
-    We will merely provide the storage.
+  \item We do not want to deal with media metadata and categorization. Metadata
+    and categorization is best left to the applications that produce and consume
+    those media formats. We will merely provide the storage.
 
   \item However, knowledge of media formats might be used for behind-the-scenes
     optimization such as more efficient compression. E.g. recognizing that only
