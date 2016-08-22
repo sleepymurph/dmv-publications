@@ -158,6 +158,40 @@ We believe such a system could be flexible enough to be used at various scales.
 \end{itemize}
 
 
+\subsection{Considerations and Caveats}
+
+We want to focus on the problem of storing file history and synchronizing files
+between replicas.
+We should be careful not to expand across the wrong abstraction boundaries or to
+try to do too much.
+In particular:
+
+\begin{itemize}
+
+  \item We do not want to reinvent the filesystem or create new exotic file
+    formats.
+    We believe that the classic tree of files is our best chance for long-term
+    storage.
+
+  \item We hope this system could eventually be used as a piece of
+    infrastructure on which to build useful applications.
+    It should not incorporate functionality that would better be left to an
+    application.
+
+  \item We do not want to deal with media metadata and categorization.
+    Metadata and categorization is best left to the applications that produce
+    and consume those media formats.
+    We will merely provide the storage.
+
+  \item However, knowledge of media formats might be used for behind-the-scenes
+    optimization such as more efficient compression. E.g. recognizing that only
+    tag data has changed in an audio file.
+
+\end{itemize}
+
+
+\section{Architecture}\label{architecture}
+
 \subsection{Main inspiration: Git}\label{main-inspiration-git}
 
 Can we take the elegance of Git's block chain and generalize and
@@ -191,34 +225,6 @@ Differences from git:
     well data is replicated to protect against data loss.
   \end{itemize}
 \end{itemize}
-
-Other considerations:
-
-\begin{itemize}
-\item
-  Stored data set should be a normal file tree, with history, like any
-  normal version control system.
-
-  \begin{itemize}
-  \item
-    We do not want to reinvent the filesystem.
-  \item
-    We do not want to deal with media metadata and categorization. That
-    is a whole other problem.
-  \item
-    This is meant for long-term storage. Classic files are the best
-    chance for that. New data schemas are also a whole other problem.
-  \item
-    However: it may be possible to generalize, and allow flexible
-    aggregation besides trees.
-  \end{itemize}
-\item
-  However, knowledge of media formats might be used for
-  behind-the-scenes optimization such as more efficient compression.
-  E.g. recognizing that only tag data has changed in an audio file.
-\end{itemize}
-
-\section{Architecture}\label{architecture}
 
 \subsection{Core data structure: DAG}\label{core-data-structure-dag}
 
