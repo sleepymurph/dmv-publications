@@ -45,6 +45,8 @@ This is difficult.
 By contrast, distributed version control wholly accepts inconsistency.
 Each replica has its own copy of the dataset, each can diverge by their own
 updates, and none is more valid than any other.
+There is no global concept of a most-recent version.
+
 Version control makes the history of mutations explicit, and provides tools for
 one replica to copy changes from other replicas and incorporate them into its
 own history.
@@ -81,6 +83,8 @@ These data sets might:
 
 \end{itemize}
 
+\subsubsection{Accommodating large data sets in version control}
+
 We believe this might be achieved by:
 
 \begin{itemize}
@@ -93,6 +97,31 @@ We believe this might be achieved by:
     data set or particular slices of its history
 
 \end{itemize}
+
+Allowing each replica to only store portions of the data set will compromise
+availability as well as consistency.
+However, replicas will always be able to record updates to the data they do
+have.
+And by keeping track of what data is available at neighboring nodes, the replica
+can fetch and cache requested data as needed.
+
+In much the same way that distributed version control makes consistency and
+inconsistency explicit, relaxing the full-history requirement makes availability
+explicit as well.
+
+Replicas will be able to choose their own balance of how much data to make
+available locally based on available storage space and latency to neighboring
+replicas.
+
+\subsubsection{As an abstraction}
+
+In a sense, what we want to build is an abstraction for tracking a data set and
+its history as a cohesive whole, even though it may be physically spread across
+many nodes.
+
+Just as version control is a tool for tracking snapshots of a codebase, this
+will be a tool for managing those snapshots when they become too large to store
+on a single disk and must be offloaded to removable drives or the cloud.
 
 
 \subsection{Expected Benefits}
@@ -193,7 +222,8 @@ In particular:
 
 \section{Architecture}\label{architecture}
 
-\subsection{Autonomous nodes and free-form architecture}
+
+\subsection{Key properties of distributed version control}
 
 \begin{figure}[h!]
   \caption{Distributed Version Control}
@@ -202,24 +232,18 @@ In particular:
     \includegraphics[width=0.5\textwidth]{object-db-and-working-directory}
 \end{figure}
 
-\paragraph{Availability}
-  Replicas are autonomous and always available to themselves.
 
-\paragraph{Explicit inconsistency}
-  Synchronization is explicit and manual. States are specifically allowed to
-  diverge. Each replica manually decides what updates to incorporate from other
-  sources.
+\subsubsection{Free-form networks}
 
-\paragraph{Scaling}
-  Local autonomy of replicas and explicit inconsistency allows networks of
-  replicas to mirror the connections of their users.
+Because replicas are autonomous and there is no global state, there is no need
+for complicated network membership schemes. Replica network topologies reflect
+the connections between their users and their workflow.
 
-  Many small projects use a hub-and-spoke topology, designating one replica as
-  the main replica, and others pull from it and push to it.
+Many small projects use a hub-and-spoke topology, designating one replica as the
+main replica, and others pull from it and push to it.
 
-  Large projects such as the Linux kernel can form hierarchies of maintainers,
-  each in charge of specific subsystems.
-
+Large projects such as the Linux kernel can form hierarchies of maintainers,
+each in charge of specific subsystems.
 
 
 \subsubsection{Working directory and plain local file access}
@@ -229,8 +253,9 @@ filesystem. Applications do not need to be rewritten to use the data.
 
 Disadvantage: double the disk space.
 
-Possible mitigation: virtual working directory (e.g. via FUSE) as a
+Possible solution: virtual working directory (e.g. via FUSE) as a
 copy-on-write snapshot of objects in the database.
+
 
 \subsection{Main inspiration: Git and its DAG}\label{main-inspiration-git}
 
