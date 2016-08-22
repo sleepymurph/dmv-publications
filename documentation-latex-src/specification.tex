@@ -38,55 +38,125 @@
 \subsection{Main idea: Distributed version control for large data
 sets}\label{main-idea-distributed-version-control-for-large-data-sets}
 
-Main principles:
+Distributed systems tend to focus on maintaining a consistent view of a large
+data set, across many replicas, as it is updated from many sources.
+This is difficult.
+
+By contrast, distributed version control wholly accepts inconsistency.
+Each replica has its own copy of the dataset, each can diverge by their own
+updates, and none is more valid than any other.
+Version control makes the history of mutations explicit, and provides tools for
+one replica to copy changes from other replicas and incorporate them into its
+own history.
+In terms of the CAP theorem, distributed version control systems such as Git or
+Mercurial go all-in on availability and partition tolerance.
+Each replica is apart from the others by default, and each replica is always
+available to read and make updates on its own.
+Inconsistency is made explicit, and reconciliation is done manually by the user
+with help from difference comparison tools and merge algorithms.
+
+Version control is a powerful tool for maintaining important data sets, usually
+source code.
+It allows easy backups, synchronization between computers, and collaboration
+between users.
+The main limitation of current version control systems is that they are designed
+for source code, which as data sets go is relative small, tens or maybe
+thousands of text files that are merely kilobytes in size.
+Adding larger binary files such as media causes existing version control systems
+to become sluggish and wasteful of disk space.
+
+Our goal is to apply the distributed version control concept to larger data
+sets.
+These data sets might:
 
 \begin{itemize}
-\item
-  Data must never be lost accidentally.
-\item
-  However, history may be deliberately truncated to save space, and
-  sensitive data may be deliberately redacted.
-\item
-  Data integrity must be verifiable: The system must be able to detect
-  errors and, if possible, repair them.
-\item
-  Changes to the dataset should be tracked, versions should be
-  explicitly labeled, and history should be kept.
-\item
-  Like with distributed version control, updates can be made
-  independently and merged later. Different sites can have different
-  versions. Updates (commits) and synchronization are deliberate,
-  explicit, and manual.
+
+  \item Contain individual files in a wide range of sizes, from single kilobyte
+    text files to several gigabyte videos
+
+  \item Contain files in large quantities, perhaps millions of files
+
+  \item Be too large as a whole to fit on a single conventional hard drive, up
+    to multiple terabytes or petabytes
+
 \end{itemize}
 
-Important assumptions:
+We believe this might be achieved by:
 
 \begin{itemize}
-\item
-  Contact between repositories is intermittent. Repositories may be on
-  removable drives or mobile devices. Updates may require physical
-  connection and reconnection. It is important to track the state of
-  other repositories, so that the user can know what needs to be
-  synchronized.
-\item
-  Assume all actors are honest for now. No malicious components.
-\item
-  However, components can and will fail. The system must discover and
-  recover from errors (checksums, replication).
+
+  \item Adding facilities to break large files into smaller chunks for more
+    efficient storage and comparison
+
+  \item Relaxing the requirement that every replica store the entire history of
+    the entire data set, allowing replicas to focus on particular subsets of the
+    data set or particular slices of its history
+
 \end{itemize}
 
-Scale:
+
+\subsection{Expected Benefits}
+
+We believe such a system could be flexible enough to be used at various scales.
 
 \begin{itemize}
-\item
-  Must work with many terabytes of data.
-\item
-  Must be able to spread data across several stores.
-\item
-  Must handle a wide range of file sizes (text, images, audio, video).
-\item
-  Must handle file counts in the millions.
+
+  \item Individual users might use it to maintain their collection of important
+    documents, photos, and media, making it easier to keep up-to-date backups
+    and to synchronize between computers and mobile devices.
+
+  \item Professional users that work with files too large for traditional
+    version control, such as graphic designers, audio engineers, or video
+    editors, might finally be able to adopt a version-control workflow.
+
+  \item Corporate or government users might it to maintain large archives of
+    data with full history.
+
+  \item Far-flung networks with high-latency or rare connectivity, such as
+    remote wildlife sensors or Mars rovers, could use it to manage and
+    synchronize data.
+
 \end{itemize}
+
+
+\subsection{Main principles}
+
+\begin{itemize}
+
+  \item Data must never be lost accidentally.
+
+  \item However, history may be deliberately truncated to save space, and
+    sensitive data may be deliberately redacted.
+
+  \item Data integrity must be verifiable: The system must be able to detect
+    errors and, if possible, repair them.
+
+  \item Changes to the dataset should be tracked, versions should be explicitly
+    labeled, and history should be kept.
+
+  \item Like with distributed version control, updates can be made independently
+    and merged later. Different sites can have different versions. Updates
+    (commits) and synchronization are deliberate, explicit, and manual.
+
+\end{itemize}
+
+
+\subsection{Important assumptions}
+
+\begin{itemize}
+
+  \item Contact between repositories is intermittent. Repositories may be on
+    removable drives or mobile devices. Updates may require physical connection
+    and reconnection. It is important to track the state of other repositories,
+    so that the user can know what needs to be synchronized.
+
+  \item Assume all actors are honest for now. No malicious components.
+
+  \item However, components can and will fail. The system must discover and
+    recover from errors (checksums, replication).
+
+\end{itemize}
+
 
 \subsection{Main inspiration: Git}\label{main-inspiration-git}
 
