@@ -140,9 +140,9 @@ We believe such a system could be flexible enough to be used at various scales.
 
 \subsection{As an abstraction}
 
-In a sense, what we want to build is an abstraction for tracking a data set and
-its history as a cohesive whole, even though it may be physically spread across
-many nodes.
+In a sense, what we want to build is an abstraction for tracking a data set, its
+differing versions, and its history as a cohesive whole, even though it may be
+physically spread across many nodes.
 
 Just as version control is a tool for managing snapshots of a codebase, this
 will be a tool for managing those snapshots when they become too large to store
@@ -152,11 +152,14 @@ We are thinking about data across a number of dimensions:
 
 \begin{description}
 
-  \item[Coverage of data set] How much of the data set is available locally and
+  \item[Coverage of data set] How much of the data set is available locally or
     in neighboring nodes?
 
   \item[Coverage of data history] How much of the data set's history is
-    available locally and in neighboring nodes?
+    available locally or in neighboring nodes?
+
+  \item[Divergence of versions] How many different branches has this data been
+    forked into, and how different are they?
 
   \item[Number of replicas] How many times is the data replicated across
     neighboring nodes? Is any data in danger of being permanently lost?
@@ -167,11 +170,13 @@ We are thinking about data across a number of dimensions:
 
 \end{description}
 
-The goal is to visualize the data in these dimensions for the user, so that they
-can make informed decisions about how to access the data they need.
-We do not necessarily want to write algorithms for automatic data management,
-though we do want it to be possible to build more automated systems as
-applications on top of this system.
+Rather than strive for automated consensus or availability, we want to make the
+trade-offs explicit.
+The goal is to track and visualize the data in these dimensions for the user, so
+that they can make informed decisions about how to access the data they need.
+
+Ideally, this system will be a generalized and flexible piece on infrastructure
+that others can use to build more automated systems for specific situations.
 
 
 \subsection{Main principles}
