@@ -403,10 +403,6 @@ copy-on-write snapshot of objects in the database.
 
 If the data structure is right, the rest should follow.
 
-Can we take the elegance of Git's block chain and generalize and
-distribute it so that it works well with large files, and so that all
-the data does not have to be present in every repository?
-
 \begin{itemize}
 \item
   Data structure will be based on Git's DAG: immutable blobs, trees, and commits
@@ -420,6 +416,9 @@ the data does not have to be present in every repository?
   repositories will be pointers to commits in the DAG.
 \end{itemize}
 
+Can we take Git's DAG and make it more efficient at handling large binary files,
+and can we rewrite its algorithms to be tolerant of missing blobs?
+
 \subsubsection{Differences from git}
 
 \begin{itemize}
@@ -431,8 +430,8 @@ the data does not have to be present in every repository?
   Partial checkouts: Working directories need not check out entire data
   set.
 \item
-  Support for large files: Large files can be split into chunks and
-  spread across repositories.
+  Support for large binary files (gigabytes): Large files can be split into
+  chunks and spread across repositories.
 \item
   Repositories work more closely together to form a whole:
 
@@ -466,15 +465,13 @@ accommodate our desired features.
         record the state of its references. These include a reference to the
         current commit, that commit object, and all of that commit's trees.
         Large blob indexes should also be included. These required objects are
-        shaded grey in Figure \ref{fig:new-dag}. Those connections that can be
-        left dangling by not storing the referenced object are shown with dashes
-        in Figure \ref{fig:new-dag}.
+        shaded grey. Those connections that can be left dangling by not storing
+        the referenced object are shown with dashes.
     \item
         Large blobs in the object database can be broken into \newterm{chunks}
         to make them easier to store, sync, and transfer. We introduce a new
         \newterm{large blob index} object type to point to the chunks that make
-        up the larger blob (shown light grey in Figure \ref{fig:new-dag}.
-        Chunks themselves are just blobs.
+        up the larger blob (shown light grey). Chunks themselves are just blobs.
 \end{itemize}
 
 
@@ -482,7 +479,7 @@ accommodate our desired features.
 
 Commits and trees by themselves carry information about the structure and
 history of the data, the metadata of the repository. They are a kind of
-``backbone'' that carries the actual data.
+``backbone'' that supports the actual data.
 
 \begin{itemize}
 \item
@@ -573,7 +570,7 @@ history of the data, the metadata of the repository. They are a kind of
     save space, or to deliberately expunge sensitive blobs from the
     records. If the algorithms can deal with missing objects locally,
     then they should naturally also be able to handle objects that are
-    missing permanently.
+    missing completely.
   \end{itemize}
 \end{itemize}
 
