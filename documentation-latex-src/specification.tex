@@ -600,6 +600,30 @@ store. However, it eschews normal filesystems and creates its own schemas to
 store various media.
 
 
+\subsubsection{Dat Data}
+
+Dat \cite{dat_homepage} is an open-source project for publishing and sharing
+scientific data sets for research. This project has a lot of overlap with ours,
+and several of the core ideas are similar, including breaking files into smaller
+chunks, and tracking changes via a Git-like DAG. However, their focus is
+different. The Dat team is concentrating on publishing research data, and making
+that specific task as simple as possible for non-technical researchers who might
+not be familiar with version control. By contrast, our project operates at a
+lower level of abstraction, offering the full power of version control in a very
+general way, exposing and illuminating the complexities rather than trying to
+hide them or automate them away.
+
+Where Dat focuses on publishing on the open internet, we focus on ad-hoc
+networks and data that may be private. Where Dat has components for automating
+peer discovery and consensus, we work at a lower level, trying to perfect and
+generalize the storage aspect first. Dat seems to assume that data sets will be
+small enough to fit on a typical disk on a workstation, while we want to scale
+even larger.
+
+We hope that our system could be used as a base to build something like Dat, but
+we intend to create something even more general than the Dat core.
+
+
 \subsubsection{Eyo}
 
 Eyo \cite{Strauss:2011:EDP:2002181.2002216} is system for storing personal media
