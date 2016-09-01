@@ -650,6 +650,23 @@ access files via Eyo rather than the filesystem, both of which are thorny and
 ambitious problems. We prefer to focus purely on storage and synchronization.
 
 
+\subsubsection{git-annex}
+
+Git-annex \cite{git_annex_homepage}, is an open-source project that extends Git
+with special handling for larger files. It stores the metadata of the large
+files inside the normal Git repository, and stores the files themselves in a
+separate area called the \newterm{annex}. Files in the annex do not have to be
+present in all clones of the git repository, and git-annex has features for
+tracking the locations of annex files in different remote repositories and
+moving them from one repository to another. These tracking and distribution
+features are very similar to our goals. However, git-annex is not as flexible as
+our system hopes to be. It considers the large files atomic units, and it does
+not break them into smaller chunks for de-duplication. Also, because metadata is
+processed by Git, it has the same limitations that Git does. All repositories
+must have all metadata, and performance suffers when metadata is too large to
+fit into RAM.
+
+
 \subsubsection{IPFS: The Interplanetary Filesystem}
 
 IPFS \cite{ipfs_github_main} is an open-source project to create a global
@@ -673,6 +690,23 @@ updates its network topology information as part of normal lookups. It is an
 advanced piece of infrastructure, but like other distributed hash tables, it
 focuses on system-wide consistency, rather than the version-control paradigm we
 are trying to achieve.
+
+
+\subsection{Content-Addressed Storage and Backup}
+
+\subsubsection{Bup}
+
+Bup \cite{bup_homepage} is an open-source file backup system that is based on
+Git's repository format. A Bup backup is a valid Git repository and it can be
+read by Git, but Bup is a separate program written from scratch to read and
+write files to Git's pack file format directly, skipping Git's separate store
+and pack steps that use double the disk space. It has many features that we want
+for our low-level storage of the object database. It breaks files into chunks by
+rolling checksum, and it has considerations for metadata that is larger than
+RAM. However, it is locked into a backup-based workflow. History is linear and
+based on clock time of backup. And it assumes that the whole data set and the
+whole repository can fit onto one filesystem.
+
 
 
 % \nocite{*}  % Print all references even if they're not used
