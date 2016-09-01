@@ -591,21 +591,6 @@ history of the data, the metadata of the repository. They are a kind of
 
 \subsection{Distributed storage and synchronization systems}
 
-\subsubsection{Boar}
-
-Boar \cite{boar_homepage} is an open-source project to create a version control
-system for large binary files. It is one of the main inspirations for our
-project. It stores file versions in a content-addressed way, and provides
-de-duplication for large files that only change in small pieces, and it can
-truncate history to reclaim disk space. However, Boar retreats to a centralized
-version control paradigm, with a central repository that working directories
-must connect to to check files in or out. We want to provide the advantages of
-Boar in a flexible distributed version control model. Boar also has practical
-limitations on repository size and number of files. Repositories are assumed to
-fit on one disk volume, and file metadata is assumed to fit into Ram. We aim to
-overcome both of those limitations.
-
-
 \subsubsection{Camlistore}
 
 Camlistore \cite{camlistore_homepage} is an open-source project to create a
@@ -693,6 +678,21 @@ are trying to achieve.
 
 
 \subsection{Content-Addressed Storage and Backup}
+
+\subsubsection{Boar}
+
+Boar \cite{boar_homepage} is an open-source project to create a version control
+system for large binary files. It is one of the main inspirations for our
+project. It stores file versions in a content-addressed way, and provides
+de-duplication for large files that only change in small pieces, and it can
+truncate history to reclaim disk space. However, Boar retreats to a centralized
+version control paradigm, with a central repository that working directories
+must connect to to check files in or out. We want to provide the advantages of
+Boar in a flexible distributed version control model. Boar also has practical
+limitations on repository size and number of files. Repositories are assumed to
+fit on one disk volume, and file metadata is assumed to fit into Ram. We aim to
+overcome both of those limitations.
+
 
 \subsubsection{Bup}
 
