@@ -635,21 +635,22 @@ access files via Eyo rather than the filesystem, both of which are thorny and
 ambitious problems. We prefer to focus purely on storage and synchronization.
 
 
-\subsubsection{git-annex}
+\subsubsection{git-annex and git-media}
 
-Git-annex \cite{git_annex_homepage}, is an open-source project that extends Git
-with special handling for larger files. It stores the metadata of the large
-files inside the normal Git repository, and stores the files themselves in a
-separate area called the \newterm{annex}. Files in the annex do not have to be
-present in all clones of the git repository, and git-annex has features for
-tracking the locations of annex files in different remote repositories and
-moving them from one repository to another. These tracking and distribution
-features are very similar to our goals. However, git-annex is not as flexible as
-our system hopes to be. It considers the large files atomic units, and it does
-not break them into smaller chunks for de-duplication. Also, because metadata is
-processed by Git, it has the same limitations that Git does. All repositories
-must have all metadata, and performance suffers when metadata is too large to
-fit into RAM.
+Git-annex \cite{git_annex_homepage} and git-media \cite{git_media_github} are
+open-source projects that extend Git with special handling for larger files.
+Both store the metadata of larger files in the normal Git repository and then
+store the files themselves in a separate location. Git-media stores all the
+larger files in a separate data store which may be remote. Git-annex is more
+flexible. Annex files may be spread across several different remote repository
+clones or data stores, and git-annex has features for tracking the locations of
+annex files in different remote repositories and moving them from one repository
+to another. These tracking and distribution features are very similar to our
+goals. However, git-annex is not quite as flexible as we aim for in our system.
+It considers the large files atomic units, and it does not break them into
+smaller chunks for de-duplication. Also, because metadata is processed by Git,
+it has the same limitations that Git does. All repositories must have all
+metadata, and performance suffers when metadata is too large to fit into RAM.
 
 
 \subsubsection{IPFS: The Interplanetary Filesystem}
