@@ -1,0 +1,27 @@
+Committing increasingly large files
+
+git_version: git version 2.1.4
+data_gen:    sparse
+
+date:        2016-09-14T02:13:23.652966
+commandline: ./increasing_file_size.py 33 35 --mag-steps=4 --data-gen=sparse
+testversion: dbe158f Limit test crash scope
+hostname:    vcstest
+platform:    Linux-3.16.0-4-amd64-x86_64-with-debian-8.5
+memtotal:    1024412 kB
+memfree:     698700 kB
+
+fsinfo:
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1        29G  2.7G   25G  10% /
+
+
+magnitude     filebytes  filehsize  create_time  commit_time     repobytes  repohsize  errors
+       33     200000000     8.0GiB        0.000      173.319        81d000     8.1MiB    True
+       33     280000000    10.0GiB        0.000      107.128        a1a000    10.1MiB   False
+       33     300000000    12.0GiB        0.000      257.350        c18000    12.1MiB    True
+       33     380000000    14.0GiB        0.000      150.322        e16000    14.1MiB   False
+       34     400000000    16.0GiB        0.000      360.132       1013000    16.1MiB    True
+       34     500000000    20.0GiB        0.000      420.088       140e000    20.1MiB    True
+       34     600000000    24.0GiB        0.000      500.255       1809000    24.0MiB    True
+       34     700000000    28.0GiB        0.000      584.555       1c05000    28.0MiB    True
