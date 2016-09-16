@@ -1,0 +1,23 @@
+# plot.gpi
+# To run:
+#   gnuplot plot.gpi  < awk_output.dat  > plot.pdf
+
+#set terminal pdf
+set title "Time to add files to Git"
+
+set xlabel "File Size"
+set logscale x 2
+set format x "%1.0b%B"
+
+set ylabel "Time to add and commit"
+set logscale y 60
+set ytics ( \
+    "1ms" .001, "10ms" .01, "20ms" .02, "50ms" .05, \
+    "100ms" .1, "200ms" .2, "500ms" .5, \
+    "1s" 1, "2s" 2, "5s" 5, "10s" 10, "30s" 30, \
+    "1m" 60, "2m" 2*60, "5m" 5*60, "10m" 10*60, "20m" 20*60, \
+    "1h" 60*60)
+
+set grid
+
+plot "test-2016-09-15--increasing-file-size--random--up-to-24gb-idle.txt" using 2:5 title ""

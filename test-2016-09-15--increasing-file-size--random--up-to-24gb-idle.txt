@@ -1,21 +1,21 @@
-Committing increasingly large files
-
-git_version: git version 2.1.4
-data_gen:    random
-
-date:        2016-09-14T19:42:14.651639
-commandline: ./increasing_file_size.py 0 35 --mag-steps=4 --data-gen=random
-testversion: eb91530 Write random file in chunks to avoid memory error
-hostname:    vcstest
-platform:    Linux-3.16.0-4-amd64-x86_64-with-debian-8.5
-memtotal:    1024412 kB
-memfree:     867512 kB
-
-fsinfo:
-Filesystem      Size  Used Avail Use% Mounted on
-/dev/sda1        29G  2.7G   25G  10% /
-
-
+# Committing increasingly large files
+# 
+# git_version: git version 2.1.4
+# data_gen:    random
+# 
+# date:        2016-09-14T19:42:14.651639
+# commandline: ./increasing_file_size.py 0 35 --mag-steps=4 --data-gen=random
+# testversion: eb91530 Write random file in chunks to avoid memory error
+# hostname:    vcstest
+# platform:    Linux-3.16.0-4-amd64-x86_64-with-debian-8.5
+# memtotal:    1024412 kB
+# memfree:     867512 kB
+# 
+# fsinfo:
+# Filesystem      Size  Used Avail Use% Mounted on
+# /dev/sda1        29G  2.7G   25G  10% /
+# 
+# 
 magnitude     filebytes  filehsize  create_time  commit_time     repobytes  repohsize  errors
         0  0x0000000001       1.0B        0.000        0.012  0x0000028000   160.0KiB   False
         0  0x0000000001       1.0B        0.000        0.010  0x0000028000   160.0KiB   False
