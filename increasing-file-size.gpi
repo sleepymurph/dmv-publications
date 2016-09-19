@@ -1,8 +1,10 @@
-# plot.gpi
+# Graph output of the increasing file size test
+#
 # To run:
-#   gnuplot plot.gpi  < awk_output.dat  > plot.pdf
+#   gnuplot -p increasing-file-size.gpi < input_data.dat
+#   gnuplot -e "set terminal pdf" increasing-file-size.gpi < input_data.dat  > output.pdf
+#
 
-#set terminal pdf
 set title "Time to add files to Git"
 
 set xlabel "File Size"
@@ -20,4 +22,4 @@ set ytics ( \
 
 set grid
 
-plot "test-2016-09-15--increasing-file-size--random--up-to-24gb-idle.txt" using 2:5 title ""
+plot '/dev/stdin' using 2:5 with linespoints title ""
