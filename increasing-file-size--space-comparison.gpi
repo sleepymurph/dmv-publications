@@ -1,0 +1,29 @@
+# Graph output of the increasing file size test
+#
+# To run:
+#   gnuplot -p increasing-file-size--space-comparison.gpi
+#   gnuplot -e "set terminal pdf" increasing-file-size--space-comparison.gpi > output.pdf
+#
+
+set title "Space needed to commit files of increasing size"
+
+set xlabel "File Size"
+set logscale x 2
+set xrange [2**10:2**40]
+set format x "%1.0b%BB"
+
+set ylabel "Ratio of space needed to size of stored file"
+set yrange [0:6]
+set format y "%.0f"
+
+set grid
+set key top right
+
+# < grep "False"  selects only the lines with no errors
+
+plot \
+    'test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:7 with linespoints title "git (initial)", \
+    'test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:10 with linespoints title "git (update)", \
+    'test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:13 with linespoints title "git (garbage collected)", \
+    '< grep "False" test-2016-10-04--small-change--hg--mmurphytest01.txt' using 2:7 with linespoints title "mercurial (initial)", \
+    '< grep "False" test-2016-10-04--small-change--hg--mmurphytest01.txt' using 2:10 with linespoints title "mercurial (update)"
