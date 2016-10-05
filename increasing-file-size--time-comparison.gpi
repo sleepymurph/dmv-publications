@@ -1,8 +1,8 @@
 # Graph output of the increasing file size test
 #
 # To run:
-#   gnuplot -p increasing-file-size-comparison.gpi
-#   gnuplot -e "set terminal pdf" increasing-file-size-comparison.gpi > output.pdf
+#   gnuplot -p increasing-file-size--time-comparison.gpi
+#   gnuplot -e "set terminal pdf" increasing-file-size--time-comparison.gpi > output.pdf
 #
 
 set title "Time to commit files of increasing size to version control systems"
