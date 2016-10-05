@@ -9,7 +9,8 @@ set title "Time to commit files of increasing size"
 
 set xlabel "File Size"
 set logscale x 2
-set format x "%1.0b%B"
+set xrange [2**10:2**35]
+set format x "%1.0b%BB"
 
 set ylabel "Time to add and commit"
 set logscale y 60
@@ -28,5 +29,6 @@ set key top left
 plot \
     '< grep "False" test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:5 with linespoints title "git (initial)", \
     '< grep "False" test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:8 with linespoints title "git (update)", \
+    '< grep "False" test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:11 with linespoints title "git (garbage collect)", \
     '< grep "False" test-2016-10-04--small-change--hg--mmurphytest01.txt' using 2:5 with linespoints title "mercurial (initial)", \
     '< grep "False" test-2016-10-04--small-change--hg--mmurphytest01.txt' using 2:8 with linespoints title "mercurial (update)"
