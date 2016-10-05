@@ -5,7 +5,7 @@
 #   gnuplot -e "set terminal pdf" increasing-file-count--time-comparison.gpi > output.pdf
 #
 
-set title "Time to commit increasingly numerous files to version control systems"
+set title "Time to commit increasingly numerous files"
 
 set xlabel "File Count"
 set logscale x 2
