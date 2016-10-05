@@ -21,6 +21,7 @@ set ytics ( \
     "1h" 60*60, "2h" 2*60*60, "5h" 5*60*60, "10h" 10*60*60)
 
 set grid
+set key top left
 
 # < grep "False"  selects only the lines with no errors
 
