@@ -22,8 +22,10 @@ set ytics ( \
 
 set grid
 
+# < grep "False"  selects only the lines with no errors
+
 plot \
-    'test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:5 with linespoints title "git (initial)", \
-    'test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:8 with linespoints title "git (update)", \
-    'test-2016-10-04--small-change--hg--mmurphytest01.txt' using 2:5 with linespoints title "mercurial (initial)", \
-    'test-2016-10-04--small-change--hg--mmurphytest01.txt' using 2:8 with linespoints title "mercurial (update)"
+    '< grep "False" test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:5 with linespoints title "git (initial)", \
+    '< grep "False" test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:8 with linespoints title "git (update)", \
+    '< grep "False" test-2016-10-04--small-change--hg--mmurphytest01.txt' using 2:5 with linespoints title "mercurial (initial)", \
+    '< grep "False" test-2016-10-04--small-change--hg--mmurphytest01.txt' using 2:8 with linespoints title "mercurial (update)"
