@@ -206,21 +206,28 @@ Observations:
         certain points (128Ki, 1.5Mi, and 2Mi files). We are not sure how to
         explain this.
 
-    \item Git in general is faster then Hg up to about half a million files. At
-        512Ki files is Hg and Git are about neck and neck. At 768Ki and over, Hg
-        is faster.
+    \item Git in general is faster then Mercurial up to about half a million
+        files. At 512Ki files is Mercurial and Git are about neck and neck. At
+        768Ki and over, Mercurial is faster.
 
     \item Status check times are more erratic, though still increasing linearly
-        overall.
+        overall. The variations may have to do with the output of the status
+        commands and whether our terminal multiplexer was focused on the
+        execution at the time. The status commands print one status line per
+        file changed, which can be significant when hundreds of thousands of
+        files involved. This output is significantly slower when the terminal
+        multiplexer we used to monitor the experiments is connected, because it
+        sends every line over the network to the monitoring machine.
 
-    \item Hg update status is consistently slower than initial status, often by
-        about 2-3x.
+    \item Mercurial update status is consistently slower than initial status,
+        often by about 2-3x.
 
-    \item Both Git and Hg converge to a little over 8x the space required. This
-        probably has more to do with the filesystem block size than anything
-        else. The underlying file system uses a 4KiB block size, so each 1KiB
-        file will still use 4KiB of disk space. And since there are two copies
-        of each file, that's 8KiB total for each 1KiB file, 8x the disk space.
+    \item Both Git and Mercurial converge to a little over 8x the space
+        required. This probably has more to do with the filesystem block size
+        than anything else. The underlying file system uses a 4KiB block size,
+        so each 1KiB file will still use 4KiB of disk space. And since there are
+        two copies of each file, that's 8KiB total for each 1KiB file, 8x the
+        disk space.
 
     \item Mercurial converges towards the 8x limit faster though. We guess this
         is because of lower repo overhead, and also because Git is creating tree
