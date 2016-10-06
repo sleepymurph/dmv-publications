@@ -1,0 +1,234 @@
+\documentclass[a4paper]{article}
+% vim: set ts=2 sts=2 sw=2 :
+
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+
+% Use parskip to use a blank space between paragraphs instead of an indent.
+\usepackage[parfill]{parskip}
+
+% Source code listings
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
+
+\usepackage{url}
+% To actually link URLs in the PDF.
+%
+% The hyperref docs recommend declaring it after the other \usepackage
+% declarations, because it has to redefine several commands to work properly,
+% and other later redefinitions might interfere.
+% Remove the hidelinks parameter to get (ugly) visual highlights around the
+% links.
+\usepackage[hidelinks]{hyperref}
+
+% Create a short macro for newly-defined key terms.
+\newcommand{\newterm}{\textit}
+
+
+\begin{document}
+
+\title{Performance Testing Version Control Systems}
+\author{Michael Murphy}
+\date{October 2016}
+\maketitle
+
+\section{Test Results}
+
+\subsection{Performance as file size increases}
+
+We performed a test where a single file of a given size was added to a version
+control repository. We increased the size until the version control system could
+no longer process the file without error. The basic procedure was as follows:
+
+\begin{enumerate}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}
+    \item Initialize an empty repository
+    \item Generate a test file of the given size from random binary data
+    \item Commit the file
+    \item Overwrite a small part of the file (1/1024th of the data)
+    \item Commit the file again
+    \item Run the garbage collection / compaction algorithm (Git only)
+\end{enumerate}
+
+Tests were performed on identical machines with 8GiB of RAM and about 200GiB of
+free hard disk space.
+
+Figure \ref{fig:increasing-file-size--time-comparison} shows commit performance
+as file size increases, and figure
+\ref{fig:increasing-file-size--space-comparison} shows disk space performance.
+
+\begin{figure}[h]
+  \caption{Increasing file size: commit time comparison}
+  \label{fig:increasing-file-size--time-comparison}
+  \centering
+    \includegraphics[]{increasing-file-size--time-comparison}
+\end{figure}
+
+\begin{figure}[h]
+  \caption{Increasing file size: repository size comparison}
+  \label{fig:increasing-file-size--space-comparison}
+  \centering
+    \includegraphics[]{increasing-file-size--space-comparison}
+\end{figure}
+
+Observed limitations:
+
+\begin{itemize}
+
+    \item Git initially stores a full copy of every revision and then has a
+        separate garbage collection phase to compact stored data in the
+        repository. So for a single commit, the operation uses 2x the disk space
+        as the size of the file: one for the file itself, and one for the copy
+        in the repository. And for a single commit and update, the operation
+        requires 3x the disk space: one for the file itself, one for the initial
+        copy in the repository, and one for the updated copy.
+
+        Disk space usage reduces after garbage collection (in this case to
+        2.001x), because git compacts and de-duplicates the data in its
+        repository. However, it cannot be reliably used unless there is enough
+        space to store the uncompressed version first. Therefore Git starts to
+        fail the test with files about 1/3 of the size of the available disk
+        space.
+
+    \item When the file is too large to fit into RAM, Git's commit operation
+        prints an error message and exits with an error code, but the operation
+        still completes successfully.
+
+    \item Starting at just under 1GiB, the Git garbage collection seems to fail
+        silently. No errors are reported, but on the graph one can see that the
+        garbage-collected disk space usage jumps from 2x to 3x, indicating that
+        the garbage collection phase is not doing any compacting. This might
+        have to do with RAM requirements, similar to Mercurial's commit
+        operation.
+
+    \item Mercurial stores only deltas of files. In a sense, it is doing Git's
+        garbage collection phase during each commit. This means more efficient
+        disk usage. But it places a strong limitation on file size: Mercurial
+        commits fail unless it has 3x as much RAM available as the size of the
+        file. We suspect this has to do with the way Mercurial calculates. On
+        the 8GiB test machines, Mercurial could only store files up to 2GiB in
+        size.
+
+\end{itemize}
+
+Performance observations:
+
+\begin{itemize}
+
+    \item After some initial overhead, performance increases linearly with size.
+        This is to be expected, since the operations are IO bound, copying all
+        data to the repository.
+
+    \item Times for the Mercurial update are faster than for Git's update,
+        because Mercurial's archive format only saves deltas to the file.
+
+    \item Mercurial has more initial time overhead, this is probably due to the
+        fact that it is written in Python and requires starting the Python
+        interpreter each time. This overhead is only 50 or 100ms, and quickly
+        becomes insignificant compared to the IO operation time.
+
+    \item Mercurial has less initial space overhead than Git.
+
+        \begin{itemize}
+            \setlength{\itemsep}{0pt}
+            \setlength{\parskip}{0pt}
+            \setlength{\parsep}{0pt}
+            \item Minimum Mercurial repository size: 80KiB.
+            \item Minimum Git repository size: 16KiB.
+        \end{itemize}
+
+        This can be seen in the disk space graph in the way the Mercurial usage
+        converges towards 2x faster than Git usage does. But again, this quickly
+        becomes insignificant compared to the size of the file.
+
+\end{itemize}
+
+\subsection{Performance as file count increases}
+
+We performed a test where increasingly large sets of files were committed to the
+different version control repositories. The procedure was as follows:
+
+\begin{enumerate}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt}
+    \item Initialize an empty repository
+    \item Generate a test file set of the given size. Each file is 1KiB of
+        random binary data
+    \item Commit the file set
+    \item Check the status of the files
+    \item Overwrite a small part of some of the files (1/1024th of the data in
+        1/16 files)
+    \item Check the status of the files again
+    \item Commit the file set again
+\end{enumerate}
+
+Figure \ref{fig:increasing-file-count--commit-time-comparison} shows the time
+required for the different commit operations. Figure
+\ref{fig:increasing-file-count--status-time-comparison} shows the time required
+for the different status operations. And Figure
+\ref{fig:increasing-file-count--space-comparison} shows the total disk space
+used after each commit operation.
+
+Unlike the test with a single large file, the numerous small files did not
+quickly hit error-causing disk space or RAM limitations. The version control
+systems happily crunched the data as test times grew into hours.
+
+\begin{figure}[h]
+  \caption{Increasing file count: commit time comparison}
+  \label{fig:increasing-file-count--commit-time-comparison}
+  \centering
+    \includegraphics[]{increasing-file-count--commit-time-comparison}
+\end{figure}
+
+\begin{figure}[h]
+  \caption{Increasing file count: status check time comparison}
+  \label{fig:increasing-file-count--status-time-comparison}
+  \centering
+    \includegraphics[]{increasing-file-count--status-time-comparison}
+\end{figure}
+
+\begin{figure}[h]
+  \caption{Increasing file count: repository size comparison}
+  \label{fig:increasing-file-count--space-comparison}
+  \centering
+    \includegraphics[]{increasing-file-count--space-comparison}
+\end{figure}
+
+Observations:
+
+\begin{itemize}
+
+    \item Git in general is faster then Hg up to about 500k files.
+
+    \item 512Ki files is where Hg and Git are neck and neck. At 768Ki and over,
+        Hg is faster.
+
+    \item Git's update times hit a peak at 1M and then starts getting faster.
+        Weird. Maybe at that point there are so many random files that some of
+        them are converging?
+
+\item Status check times are comparable between Git and Hg. Git is faster up to
+    1Mi files, when Hg becomes faster than it was before and the two are about
+    neck and neck.
+
+\item Git's update status is faster than initial status up to about 64Ki, then
+    it becomes slower.
+
+\item Hg update status is consistently slower than initial status, often by
+    about 2-3x.
+
+\item Both Git and Hg converge to a little over 8x the space required. This
+    probably has more to do with the filesystem block size than anything else.
+    If the file system is 4k blocks, the files are 1k, and there are two copies.
+    Then that's 2 blocks and 8k per file.
+
+\item Mercurial converges towards that faster though. I'm guessing because of
+    lower repo overhead, and also because Git is going to be making 4k tree
+    objects for all the subdirectories too.
+
+\end{itemize}
+
+\end{document}

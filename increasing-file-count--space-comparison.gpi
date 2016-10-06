@@ -6,7 +6,7 @@ set logscale x 2
 set xrange [2**5:2**25]
 set format x "%1.0b%B"
 
-set ylabel "Ratio of space needed to total size of stored files"
+set ylabel "Ratio of disk space used to size of file set"
 set yrange [1:15]
 set format y "%.0f"
 
