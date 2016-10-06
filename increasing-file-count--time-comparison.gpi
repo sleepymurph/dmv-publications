@@ -16,6 +16,9 @@ set ytics ( \
 set grid
 set key top left
 
+# set xrange [2**17 : 2**22]
+# set yrange [60 : 60*60]
+
 # < grep "False"  selects only the lines with no errors
 
 plot \
