@@ -234,6 +234,11 @@ Observations:
         objects for each of the subdirectories in the file set. These files will
         be small, but each will take up another 4KiB block on the disk.
 
+    \item Mercurial commits began to abort with disk space errors at 8Mi files,
+        8GiB of data. This was surprising. Even at 8x disk usage, that should
+        only be 64GiB of disk usage, well below the 192GiB free on the test
+        disk.
+
 \end{itemize}
 
 \end{document}
