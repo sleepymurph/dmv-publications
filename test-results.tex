@@ -201,33 +201,31 @@ Observations:
 
 \begin{itemize}
 
-    \item Git in general is faster then Hg up to about 500k files.
+    \item Again, after some initial overhead, commit and times increase
+        linearly. However, Git's initial commit times actually decrease at
+        certain points (128Ki, 1.5Mi, and 2Mi files). We are not sure how to
+        explain this.
 
-    \item 512Ki files is where Hg and Git are neck and neck. At 768Ki and over,
-        Hg is faster.
+    \item Git in general is faster then Hg up to about half a million files. At
+        512Ki files is Hg and Git are about neck and neck. At 768Ki and over, Hg
+        is faster.
 
-    \item Git's update times hit a peak at 1M and then starts getting faster.
-        Weird. Maybe at that point there are so many random files that some of
-        them are converging?
+    \item Status check times are more erratic, though still increasing linearly
+        overall.
 
-\item Status check times are comparable between Git and Hg. Git is faster up to
-    1Mi files, when Hg becomes faster than it was before and the two are about
-    neck and neck.
+    \item Hg update status is consistently slower than initial status, often by
+        about 2-3x.
 
-\item Git's update status is faster than initial status up to about 64Ki, then
-    it becomes slower.
+    \item Both Git and Hg converge to a little over 8x the space required. This
+        probably has more to do with the filesystem block size than anything
+        else. The underlying file system uses a 4KiB block size, so each 1KiB
+        file will still use 4KiB of disk space. And since there are two copies
+        of each file, that's 8KiB total for each 1KiB file, 8x the disk space.
 
-\item Hg update status is consistently slower than initial status, often by
-    about 2-3x.
-
-\item Both Git and Hg converge to a little over 8x the space required. This
-    probably has more to do with the filesystem block size than anything else.
-    If the file system is 4k blocks, the files are 1k, and there are two copies.
-    Then that's 2 blocks and 8k per file.
-
-\item Mercurial converges towards that faster though. I'm guessing because of
-    lower repo overhead, and also because Git is going to be making 4k tree
-    objects for all the subdirectories too.
+    \item Mercurial converges towards the 8x limit faster though. We guess this
+        is because of lower repo overhead, and also because Git is creating tree
+        objects for each of the subdirectories in the file set. These files will
+        be small, but each will take up another 4KiB block on the disk.
 
 \end{itemize}
 
