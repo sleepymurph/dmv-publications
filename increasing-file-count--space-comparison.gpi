@@ -1,0 +1,23 @@
+
+set title "Space needed to commit increasingly numerous files (1KiB each)"
+
+set xlabel "File Count"
+set logscale x 2
+set xrange [2**5:2**25]
+set format x "%1.0b%B"
+
+set ylabel "Ratio of space needed to total size of stored files"
+set yrange [1:15]
+set format y "%.0f"
+
+set grid
+set key top left
+
+# < grep "False"  selects only the lines with no errors
+
+plot \
+    '< grep "False" test-2016-10-06--increasing-file-count--git.txt' using 2:10 with linespoints title "git (initial commit)", \
+    '< grep "False" test-2016-10-06--increasing-file-count--hg.txt' using 2:10 with linespoints title "mercurial (initial commit)", \
+    \
+    '< grep "False" test-2016-10-06--increasing-file-count--git.txt' using 2:15 with linespoints title "git (commit updated 1/16 files)", \
+    '< grep "False" test-2016-10-06--increasing-file-count--hg.txt' using 2:15 with linespoints title "mercurial (commit updated 1/16 files)", \
