@@ -129,3 +129,5 @@ mag     filebytes  filesize  cre_time   c1_time       c1_size   c1_cmd    c1_ver
 # Command failed (exit code 255): git gc
  35  0x0c00000000   48.0GiB  3382.388  4857.885  0x1800f29000   failed  verified   assumed  5051.676  0x2401e2f000   failed  verified   assumed  2944.925        (None)   failed       bad
 # Commit command gave an error but commit was created successfully
+# Cancelled
+ 36  0x1000000000   64.0GiB  4494.212  6573.143  0x2001428000   failed  verified   assumed  2815.455        (None)   failed       bad       bad    (None)        (None)  not_executed  not_verified
