@@ -126,50 +126,61 @@ def tabulate(rows):
     return lines
 
 
+class ColumnMeanCalculator(object):
+
+    def __init__(self, specified_cols, filepaths):
+        self.specified_cols = specified_cols
+        self.filepaths = filepaths
+
+        # Build a column name list for the output
+        self.out_cols = [ self.specified_cols[0] ]
+        for colname in self.specified_cols[1:]:
+            self.out_cols.append(colname+'_avg')
+            self.out_cols.append(colname+'_std')
+
+        self.out_rows = [ self.out_cols ]
+
+    def set_input_headers(self, input_header_lines):
+        self.colindexes = []
+        for i,header in enumerate(input_header_lines):
+            colnames = header.split()
+            lookup = { colname:i for i,colname in enumerate(colnames) }
+            self.colindexes.append(lookup)
+            for expectedcol in self.specified_cols:
+                if expectedcol not in lookup.keys():
+                    raise KeyError("Expected column '{0}' not found in '{1}'".format(expectedcol, self.filepaths[i]))
+
+    def append_line_group(self, linegroup):
+        linegroup = [ line.split() for line in linegroup ]
+        row = []
+
+        keycol = self.specified_cols[0]
+        keyvals = [ line[self.colindexes[i][keycol]] for i,line in enumerate(linegroup) ]
+        if not all_same_value(keyvals):
+            raise ValueError("Mismatched independent variables (first column): {0}".format(keyvals))
+        row.append(keyvals[0])
+
+        for col in self.specified_cols[1:]:
+            vals = [ line[self.colindexes[i][col]] for i,line in enumerate(linegroup) ]
+            vals = [ ast.literal_eval(val) for val in vals ]
+            #print col, vals, mean(vals), stddev(vals)
+            row.append(mean(vals))
+            row.append(stddev(vals))
+
+        self.out_rows.append(row)
+
 def main():
     args = parse_args()
 
     with multi_open(args.files) as filegroup:
 
-        colindexes = []
-
-        # Find header line and build a column name to index dict for each file
-        for i,header in enumerate(filegroup.read_skip_all()):
-            colnames = header.split()
-            lookup = { colname:i for i,colname in enumerate(colnames) }
-            colindexes.append(lookup)
-            for expectedcol in args.columns:
-                if expectedcol not in lookup.keys():
-                    raise KeyError("Expected column '{0}' not found in '{1}'".format(expectedcol, args.files[i]))
-
-        # Build a column name list for the output
-        resultheader = [ args.columns[0] ]
-        for colname in args.columns[1:]:
-            resultheader.append(colname+'_avg')
-            resultheader.append(colname+'_std')
-
-        resultrows = [ resultheader ]
+        calculator = ColumnMeanCalculator(args.columns, args.files)
+        calculator.set_input_headers(filegroup.read_skip_all())
 
         for linegroup in filegroup:
-            linegroup = [ line.split() for line in linegroup ]
-            row = []
+            calculator.append_line_group(linegroup)
 
-            keycol = args.columns[0]
-            keyvals = [ line[colindexes[i][keycol]] for i,line in enumerate(linegroup) ]
-            if not all_same_value(keyvals):
-                raise ValueError("Mismatched independent variables (first column): {0}".format(keyvals))
-            row.append(keyvals[0])
-
-            for col in args.columns[1:]:
-                vals = [ line[colindexes[i][col]] for i,line in enumerate(linegroup) ]
-                vals = [ ast.literal_eval(val) for val in vals ]
-                #print col, vals, mean(vals), stddev(vals)
-                row.append(mean(vals))
-                row.append(stddev(vals))
-
-            resultrows.append(row)
-
-        for line in tabulate(resultrows):
+        for line in tabulate(calculator.out_rows):
             print line
 
 
