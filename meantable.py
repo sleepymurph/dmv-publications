@@ -150,22 +150,26 @@ class ColumnMeanCalculator(object):
                 if expectedcol not in lookup.keys():
                     raise KeyError("Expected column '{0}' not found in '{1}'".format(expectedcol, self.filepaths[i]))
 
+    def extract_column_values(self, col, linegroup):
+        return [ line[self.colindexes[i][col]]
+                for i,line in enumerate(linegroup) ]
+
     def append_line_group(self, linegroup):
         linegroup = [ line.split() for line in linegroup ]
         row = []
 
-        keycol = self.specified_cols[0]
-        keyvals = [ line[self.colindexes[i][keycol]] for i,line in enumerate(linegroup) ]
-        if not all_same_value(keyvals):
-            raise ValueError("Mismatched independent variables (first column): {0}".format(keyvals))
-        row.append(keyvals[0])
+        for i,col in enumerate(self.specified_cols):
+            vals = self.extract_column_values(col, linegroup)
 
-        for col in self.specified_cols[1:]:
-            vals = [ line[self.colindexes[i][col]] for i,line in enumerate(linegroup) ]
-            vals = [ ast.literal_eval(val) for val in vals ]
-            #print col, vals, mean(vals), stddev(vals)
-            row.append(mean(vals))
-            row.append(stddev(vals))
+            if i==0:    # Key column
+                if not all_same_value(vals):
+                    raise ValueError("Mismatched independent variables (first column): {0}".format(keyvals))
+                row.append(vals[0])
+
+            else:
+                vals = [ ast.literal_eval(val) for val in vals ]
+                row.append(mean(vals))
+                row.append(stddev(vals))
 
         self.out_rows.append(row)
 
