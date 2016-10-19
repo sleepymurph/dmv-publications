@@ -120,7 +120,7 @@ def tabulate(rows):
 
     lines = []
     for row in rows:
-        padded_row = [ '{0:{1}}'.format(val,max_widths[i]) for i,val in enumerate(row) ]
+        padded_row = [ '{0:>{1}}'.format(val,max_widths[i]) for i,val in enumerate(row) ]
         lines.append('  '.join(padded_row))
 
     return lines
