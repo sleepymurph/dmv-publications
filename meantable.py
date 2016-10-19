@@ -6,6 +6,9 @@ import math
 import sys
 import unittest
 
+
+# Arguments
+
 def parse_args(args=None):
     parser = argparse.ArgumentParser(
                 description = "Calculate mean and standard deviation from matching experiment run files"
@@ -32,6 +35,8 @@ class ParseArgsTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             args = parse_args("--columns x y".split())
 
+
+# Multiple Files
 
 class multi_open(object):
     def __init__(self, paths, mode='r'):
@@ -80,18 +85,13 @@ def read_skip(fd):
             return line
 
 
+# List combiners
+
 def all_same_value(vals):
     for val in vals[1:]:
         if val != vals[0]:
             return False
     return True
-
-
-class ListProcessorTests(unittest.TestCase):
-    def test_all_same_value(self):
-        self.assertEqual(all_same_value([0,0,0,0,0]), True)
-        self.assertEqual(all_same_value([1,0,0,0,0]), False)
-        self.assertEqual(all_same_value([0,0,0,0,1]), False)
 
 
 def mean(vals):
@@ -103,7 +103,12 @@ def stddev(vals):
     return math.sqrt( sum([(x-avg)**2 for x in vals]) / len(vals) )
 
 
-class MeanStdTests(unittest.TestCase):
+class ListCombinerTests(unittest.TestCase):
+    def test_all_same_value(self):
+        self.assertEqual(all_same_value([0,0,0,0,0]), True)
+        self.assertEqual(all_same_value([1,0,0,0,0]), False)
+        self.assertEqual(all_same_value([0,0,0,0,1]), False)
+
     def test_mean(self):
         self.assertEqual(mean([2,4]), 3)
         self.assertEqual(mean([1,2,3,4,5]), 3)
@@ -112,19 +117,7 @@ class MeanStdTests(unittest.TestCase):
         self.assertEqual(stddev([2,4,4,4,5,5,7,9]), 2)
 
 
-def tabulate(rows):
-    max_widths = [0] * len(rows[0])
-    for row in rows:
-        for i,val in enumerate(row):
-            max_widths[i] = max(max_widths[i], len(str(val)))
-
-    lines = []
-    for row in rows:
-        padded_row = [ '{0:>{1}}'.format(val,max_widths[i]) for i,val in enumerate(row) ]
-        lines.append('  '.join(padded_row))
-
-    return lines
-
+# Column Mean Calculator
 
 class ColumnMeanCalculator(object):
 
@@ -150,16 +143,16 @@ class ColumnMeanCalculator(object):
                 if expectedcol not in lookup.keys():
                     raise KeyError("Expected column '{0}' not found in '{1}'".format(expectedcol, self.filepaths[i]))
 
-    def extract_column_values(self, col, linegroup):
+    def extract_column_values(self, col, splitgroup):
         return [ line[self.colindexes[i][col]]
-                for i,line in enumerate(linegroup) ]
+                for i,line in enumerate(splitgroup) ]
 
     def append_line_group(self, linegroup):
-        linegroup = [ line.split() for line in linegroup ]
+        splitgroup = [ line.split() for line in linegroup ]
         row = []
 
         for i,col in enumerate(self.specified_cols):
-            vals = self.extract_column_values(col, linegroup)
+            vals = self.extract_column_values(col, splitgroup)
 
             if i==0:    # Key column
                 if not all_same_value(vals):
@@ -172,6 +165,25 @@ class ColumnMeanCalculator(object):
                 row.append(stddev(vals))
 
         self.out_rows.append(row)
+
+
+# Output
+
+def tabulate(rows):
+    max_widths = [0] * len(rows[0])
+    for row in rows:
+        for i,val in enumerate(row):
+            max_widths[i] = max(max_widths[i], len(str(val)))
+
+    lines = []
+    for row in rows:
+        padded_row = [ '{0:>{1}}'.format(val,max_widths[i]) for i,val in enumerate(row) ]
+        lines.append('  '.join(padded_row))
+
+    return lines
+
+
+# Main
 
 def main():
     args = parse_args()
