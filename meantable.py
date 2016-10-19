@@ -87,6 +87,13 @@ def all_same_value(vals):
     return True
 
 
+class ListProcessorTests(unittest.TestCase):
+    def test_all_same_value(self):
+        self.assertEqual(all_same_value([0,0,0,0,0]), True)
+        self.assertEqual(all_same_value([1,0,0,0,0]), False)
+        self.assertEqual(all_same_value([0,0,0,0,1]), False)
+
+
 def mean(vals):
     return float(sum(vals)) / len(vals)
 
@@ -94,6 +101,15 @@ def mean(vals):
 def stddev(vals):
     avg = mean(vals)
     return math.sqrt( sum([(x-avg)**2 for x in vals]) / len(vals) )
+
+
+class MeanStdTests(unittest.TestCase):
+    def test_mean(self):
+        self.assertEqual(mean([2,4]), 3)
+        self.assertEqual(mean([1,2,3,4,5]), 3)
+
+    def test_stddev(self):
+        self.assertEqual(stddev([2,4,4,4,5,5,7,9]), 2)
 
 
 def tabulate(rows):
