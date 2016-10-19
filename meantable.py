@@ -161,10 +161,74 @@ class ColumnMeanCalculator(object):
 
             else:
                 vals = [ ast.literal_eval(val) for val in vals ]
-                row.append(mean(vals))
-                row.append(stddev(vals))
+                if None in vals:
+                    row.append(None)
+                    row.append(None)
+                else:
+                    row.append(mean(vals))
+                    row.append(stddev(vals))
 
         self.out_rows.append(row)
+
+
+class ColumnMeanCalculatorTests(unittest.TestCase):
+    def test_simple_values(self):
+        calculator = ColumnMeanCalculator(
+                specified_cols = ['filebytes', 'c1_time'],
+                filepaths = ['file1', 'file2', 'file3'])
+
+        calculator.set_input_headers([
+            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
+            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
+            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
+            ])
+
+        calculator.append_line_group([
+            ' 24  0x0001000000     0.827  0x0002015000       ok  verified',
+            ' 24  0x0001000000     0.871  0x0002015000       ok  verified',
+            ' 24  0x0001000000     0.830  0x0002015000       ok  verified',
+            ])
+
+        self.assertEqual(calculator.out_rows,
+            [['filebytes', 'c1_time_avg', 'c1_time_std'],
+             ['0x0001000000', 0.8426666666666667, 0.02007209228976615]])
+
+    def test_missing_column(self):
+        calculator = ColumnMeanCalculator(
+                specified_cols = ['filebytes', 'c1_time'],
+                filepaths = ['file1', 'file2', 'file3'])
+
+        with self.assertRaises(KeyError) as raises:
+            calculator.set_input_headers([
+                'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
+                'mag     filebytes                 c1_size   c1_cmd    c1_ver',
+                'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
+                ])
+
+        self.assertIn('c1_time', str(raises.exception))
+        self.assertIn('file2', str(raises.exception))
+
+
+    def test_missing_values(self):
+        calculator = ColumnMeanCalculator(
+                specified_cols = ['filebytes', 'c1_time'],
+                filepaths = ['file1', 'file2', 'file3'])
+
+        calculator.set_input_headers([
+            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
+            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
+            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
+            ])
+
+        calculator.append_line_group([
+            ' 24  0x0001000000     0.827  0x0002015000       ok  verified',
+            ' 24  0x0001000000     0.871  0x0002015000       ok  verified',
+            ' 24  0x0001000000    (None)  0x0002015000       ok  verified',
+            ])
+
+        self.assertEqual(calculator.out_rows,
+            [['filebytes', 'c1_time_avg', 'c1_time_std'],
+             ['0x0001000000', None, None]])
 
 
 # Output
