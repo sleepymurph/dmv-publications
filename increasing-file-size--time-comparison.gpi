@@ -20,8 +20,13 @@ set key top left
 # < grep "False"  selects only the lines with no errors
 
 plot \
-    '< grep "False" test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:5 with linespoints title "git (initial)", \
-    '< grep "False" test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:8 with linespoints title "git (update)", \
-    '< grep "False" test-2016-10-03--small-change--git--mmurphytest01.txt' using 2:11 with linespoints title "git (garbage collect)", \
-    '< grep "False" test-2016-10-04--small-change--hg--mmurphytest01.txt' using 2:5 with linespoints title "mercurial (initial)", \
-    '< grep "False" test-2016-10-04--small-change--hg--mmurphytest01.txt' using 2:8 with linespoints title "mercurial (update)"
+    '< grep "False" exp--increasing-file-size--v02--commit-and-update/test-2016-10-03--small-change--git--mmurphytest01.txt' \
+        using 2:5 with linespoints title "git (initial)", \
+    '< grep "False" exp--increasing-file-size--v02--commit-and-update/test-2016-10-03--small-change--git--mmurphytest01.txt' \
+        using 2:8 with linespoints title "git (update)", \
+    '< grep "False" exp--increasing-file-size--v02--commit-and-update/test-2016-10-03--small-change--git--mmurphytest01.txt' \
+        using 2:11 with linespoints title "git (garbage collect)", \
+    '< grep "False" exp--increasing-file-size--v02--commit-and-update/test-2016-10-04--small-change--hg--mmurphytest01.txt' \
+        using 2:5 with linespoints title "mercurial (initial)", \
+    '< grep "False" exp--increasing-file-size--v02--commit-and-update/test-2016-10-04--small-change--hg--mmurphytest01.txt' \
+        using 2:8 with linespoints title "mercurial (update)"

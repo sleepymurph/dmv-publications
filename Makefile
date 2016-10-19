@@ -10,5 +10,5 @@ test-results.pdf: \
 %.pdf: %.tex
 	pdflatex $*.tex
 
-%.pdf: %.gpi test-*.txt
+%.pdf: %.gpi */test-*.txt
 	gnuplot -e 'set terminal pdf' $*.gpi > $*.pdf
