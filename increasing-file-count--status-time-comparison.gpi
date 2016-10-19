@@ -23,12 +23,12 @@ set key top left
 # < grep "False"  selects only the lines with no errors
 
 plot \
-    '< grep "False" exp--increasing-number-of-files--v01/test-2016-10-06--increasing-file-count--git.txt' \
+    '< grep "False" exp--increasing-number-of-files--v01/git-2016-10-06-murphytest01.txt' \
         using 2:11 with linespoints title "git (after initial commit)", \
-    '< grep "False" exp--increasing-number-of-files--v01/test-2016-10-06--increasing-file-count--hg.txt' \
+    '< grep "False" exp--increasing-number-of-files--v01/hg-2016-10-06-murphytest02.txt' \
         using 2:11 with linespoints title "mercurial (after initial commit)", \
     \
-    '< grep "False" exp--increasing-number-of-files--v01/test-2016-10-06--increasing-file-count--git.txt' \
+    '< grep "False" exp--increasing-number-of-files--v01/git-2016-10-06-murphytest01.txt' \
         using 2:12 with linespoints title "git (after updating 1/16 files)", \
-    '< grep "False" exp--increasing-number-of-files--v01/test-2016-10-06--increasing-file-count--hg.txt' \
+    '< grep "False" exp--increasing-number-of-files--v01/hg-2016-10-06-murphytest02.txt' \
         using 2:12 with linespoints title "mercurial (after updating 1/16 files)", \
