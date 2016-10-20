@@ -1,4 +1,4 @@
 #murphytest01	(manual testing -- Git at 24GiB)
 murphytest02	exp--increasing-number-of-files--v02--w-cpu/git-2016-10-18-{host}.txt
 #murphytest03	(manual testing -- Bup at 96GiB)
-murphytest04	exp--increasing-file-size--v04--w-cpu/git-2016-10-19-{host}.txt
+murphytest04	exp--increasing-file-size--v04--w-cpu/bup-2016-10-20-{host}.txt
