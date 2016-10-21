@@ -1,4 +1,4 @@
-murphytest01	exp--increasing-file-size--v04--w-cpu/copy-2016-10-20-{host}.txt
+murphytest01	exp--increasing-number-of-files--v02--w-cpu/copy-2016-10-21-{host}.txt
 murphytest02	exp--increasing-number-of-files--v02--w-cpu/git-2016-10-18-{host}.txt
-murphytest03	exp--increasing-file-size--v04--w-cpu/hg-2016-10-21-{host}.txt
+murphytest03	exp--increasing-file-size--v04--w-cpu/git-2016-10-21-{host}.txt
 murphytest04	exp--increasing-file-size--v04--w-cpu/bup-2016-10-20-{host}.txt
