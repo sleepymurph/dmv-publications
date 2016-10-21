@@ -78,3 +78,5 @@ mag     filecount    totalbytes  cre_time   c1_time       c1_size   c1_cmd    c1
   6       5000000  0x01312d0000   862.244  49484.588  0x0ab163b000       ok  verified   assumed      845863           0      100818     2806267     6092514    4770.031         ok    6692.951         ok  17577.336  0x0b4de2e000       ok  verified   assumed       12356           0       31991     1256758     2199050        14.089
 # CallFailedError(cmd='git add many_files_dir', exitcode='128')
   6       7500000  0x01c9c38000  1300.930  48478.529        (None)   failed       bad  verified     1806253           0       70707     3950957     3833448      (None)    no_exec      (None)    no_exec    (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         8.980
+# Cancelled
+  7      10000000  0x02625a0000  1695.686  7103.466        (None)   failed       bad  verified      554351           0        5007      698620      156762      (None)    no_exec      (None)    no_exec    (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         8.590
