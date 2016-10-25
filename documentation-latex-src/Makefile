@@ -1,6 +1,6 @@
-default: ../specification.pdf
+default: ../design-document.pdf
 
-specification.pdf: \
+design-document.pdf: \
     research.bib \
     new-dag.pdf \
     object-db-and-working-directory.pdf \
@@ -8,7 +8,7 @@ specification.pdf: \
     workflow-corporate.pdf \
     workflow-sensors.pdf
 
-%.pdf: %.tex %.bib
+%.pdf: %.tex research.bib
 	pdflatex $*.tex
 	bibtex $*.aux
 	pdflatex $*.tex
