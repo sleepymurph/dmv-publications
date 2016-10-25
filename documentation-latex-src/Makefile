@@ -1,12 +1,14 @@
-default: ../design-document.pdf
+default: ../design-document.pdf ../related-works.pdf
 
 design-document.pdf: \
+    design-document.tex \
     research.bib \
     new-dag.pdf \
     object-db-and-working-directory.pdf \
     workflow-personal.pdf \
     workflow-corporate.pdf \
     workflow-sensors.pdf
+	pdflatex design-document.tex
 
 %.pdf: %.tex research.bib
 	pdflatex $*.tex
