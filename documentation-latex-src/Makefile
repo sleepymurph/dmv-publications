@@ -1,4 +1,7 @@
-default: ../design-document.pdf ../related-works.pdf
+default: \
+    ../design-document.pdf \
+    ../design-document-2-short.pdf \
+    ../related-works.pdf
 
 design-document.pdf: \
     design-document.tex \
@@ -9,6 +12,11 @@ design-document.pdf: \
     workflow-corporate.pdf \
     workflow-sensors.pdf
 	pdflatex design-document.tex
+
+design-document-2-short.pdf: \
+    design-document-2-short.tex \
+    research.bib
+	pdflatex design-document-2-short.tex
 
 %.pdf: %.tex research.bib
 	pdflatex $*.tex

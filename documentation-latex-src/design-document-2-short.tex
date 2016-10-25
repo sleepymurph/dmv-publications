@@ -1,0 +1,43 @@
+\documentclass[a4paper]{article}
+% vim: set ts=2 sts=2 sw=2 :
+
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+
+% Use a blank space between paragraphs instead of an indent.
+\usepackage[parfill]{parskip}
+
+% Source code listings
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
+
+\usepackage{url}
+% To actually link URLs in the PDF.
+%
+% The hyperref docs recommend declaring it after the other \usepackage
+% declarations, because it has to redefine several commands to work properly,
+% and other later redefinitions might interfere.
+% Remove the hidelinks parameter to get (ugly) visual highlights around the
+% links.
+\usepackage[hidelinks]{hyperref}
+
+% Create a short macro for newly-defined key terms.
+\newcommand{\newterm}{\textit}
+
+
+\begin{document}
+
+\title{Master's Thesis Design Document \\ (Terse Version)}
+\author{Michael Murphy}
+\maketitle
+
+\section{Idea}\label{idea}
+\section{Architecture}\label{architecture}
+\section{Design}\label{design}
+\section{Implementation}\label{implementation}
+
+% \nocite{*}  % Print all references even if they're not used
+% \bibliographystyle{plain}
+% \bibliography{research}
+
+\end{document}
