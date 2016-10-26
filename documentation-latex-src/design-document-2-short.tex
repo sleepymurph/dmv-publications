@@ -45,7 +45,8 @@ data until a client that is familiar with the data model can merge them.
 
 The system should work with a wide range of file sizes (kilobytes to gigabytes),
 focusing on media storage and synchronization (binary blobs, 1 MiB to 4 GiB in
-size).
+size). The system should scale to data sets with petabytes of data in millions
+of files.
 
 
 \section{Architecture}\label{architecture}
@@ -103,29 +104,36 @@ as a normal filesystem. We do not want to reinvent the filesystem, and we do not
 to have to modify local applications to work with the data.
 
 The storage will be modeled on version control systems, specifically Git and
-it's directed acyclic graph data structure. There will be a content-addressable
-blob store to de-duplicate and store data, and a working tree where the files
-can be read and written by normal applications.
+it's directed acyclic graph data structure (DAG). There will be a
+content-addressable blob store to de-duplicate and store data in a DAG
+structure, and a working tree where the files can be read and written by normal
+applications.
 
 (Possible optimization: the working directory can be a virtual filesystem that
 is a view into the object database.)
 
-Files over a certain threshold will be broken into smaller chunks in the blob
-store.
+Like in a version control system, history of the data set will be kept. Ordering
+of updates will be determined by the child-parent relationship of commits in the
+DAG. The history can diverge into branches that can be merged later, and each
+individual store is also naturally a branch. Also like in version control,
+updates must be explicitly committed to the store, and fetches and merges from
+neighbors are explicitly initiated.
 
-Like a version control system, history of the data set will be kept, and the
-history can diverge into branches that can be merged later. Indeed, like Git,
-each individual store is also a branch. But unlike Git, not all blobs are
-required to be present on all systems. Some blobs may not be available on a
-given store, and history may be deliberately pruned to save space. Algorithms
-and client applications must work with the blobs they have locally and the hints
-about the availability of remote blobs.
+(Possible add-on feature: daemons which auto-commit, auto-fetch, and auto-merge
+if possible.)
+
+Individual stores are not required to store all blobs in the DAG. Some blobs may
+not be available on a given store, and history may be deliberately pruned to
+save space. Algorithms and client applications must work with the blobs they
+have locally and the hints about the availability of remote blobs.
 
 
 \section{Implementation}\label{implementation}
 
 % TODO: DAG diagram
 
+Files over a certain threshold will be broken into smaller chunks in the blob
+store.
 
 
 % \nocite{*}  % Print all references even if they're not used
