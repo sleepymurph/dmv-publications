@@ -1,0 +1,19 @@
+digraph {
+
+    define(STORE, `$1[label="$1\n$2% of data",
+            style=filled, fillcolor="0 0 .eval(100-20-$2/2)"]')
+
+    STORE(store0, 90)
+    STORE(store1, 40)
+    STORE(store2, 20)
+    STORE(store3, 30)
+    STORE(store4, 60)
+    STORE(store5, 10)
+
+    store1 -> store0
+    store2 -> store0
+    store3 -> store1 -> store3
+    store4 -> store0 -> store4
+    store5 -> store4
+    store5 -> store3
+}

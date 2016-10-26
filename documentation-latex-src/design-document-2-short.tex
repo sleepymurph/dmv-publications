@@ -51,16 +51,25 @@ size).
 \section{Architecture}\label{architecture}
 
 Data will be distributed across several \newterm{stores}, which will each hold a
-portion of the data set.
+portion of the data set. Stores can be diverse, from mobile devices to storage
+clusters, and each will choose which data to hold according to its capacity and
+processing needs.
 
 The data store network will be decentralized and unstructured. Stores can be
 connected to neighbors in an ad-hoc manner, with a user- or application-defined
-topography (one to hundreds of neighbors).
+topography. The number of neighbors will be limited by the capabilities of the
+store's device. We are aiming for one neighbor to tens, or perhaps hundreds of
+neighbors.
 
 (Possible extension: a gossip protocol to relay information about stores that
 are not direct neighbors.)
 
-% TODO: arch diagram
+\begin{figure}[h]
+  \caption{Stores in an ad-hoc network}
+  \label{fig:architecture}
+  \centering
+    \includegraphics[width=0.5\textwidth]{architecture}
+\end{figure}
 
 Each store will be autonomous and able to perform processing on any data that it
 has a local copy of. Data not currently available locally can be listed and
@@ -90,8 +99,8 @@ replicas.
 \section{Design}\label{design}
 
 The data set will be a normal hierarchical filesystem, and it will be presented
-as a normal (if virtual) filesystem. We do not want to reinvent the filesystem,
-and we do not to have to modify local applications to work with the data.
+as a normal filesystem. We do not want to reinvent the filesystem, and we do not
+to have to modify local applications to work with the data.
 
 The storage will be modeled on version control systems, specifically Git and
 it's directed acyclic graph data structure. There will be a content-addressable

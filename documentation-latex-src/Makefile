@@ -15,7 +15,8 @@ design-document.pdf: \
 
 design-document-2-short.pdf: \
     design-document-2-short.tex \
-    research.bib
+    research.bib \
+    architecture.pdf
 	pdflatex design-document-2-short.tex
 
 %.pdf: %.tex research.bib
