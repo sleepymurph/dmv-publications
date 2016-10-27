@@ -1,4 +1,4 @@
-set xlabel "Number of files"
+set xlabel "Number of files (log scale)"
 set logscale x 10
 set format x "%1.0s%c"
 
