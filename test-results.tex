@@ -35,6 +35,8 @@
 
 \subsection{Committing a single file of increasing size}
 
+\iffalse
+
 \subsubsection{Methodology}
 
 The experiment was written as a script in Python. For each version control
@@ -68,6 +70,8 @@ but the error bars are difficult to see.
 Each identical experiment computer had a 3GHz Intel processor, 8GiB of RAM, and
 about 200GiB of free hard disk space.
 
+\fi
+
 \subsubsection{Results}
 
 \begin{figure}[p]
@@ -85,17 +89,17 @@ about 200GiB of free hard disk space.
 \end{figure}
 
 \begin{figure}[p]
-  \caption{Total repository size after committing, editing, and committing again}
-  \label{fig:graph--increasing-file-size--repo-size}
-  \centering
-    \includegraphics[]{graph--increasing-file-size--repo-size}
-\end{figure}
-
-\begin{figure}[p]
   \caption{CPU utilization while committing one file to an empty repository}
   \label{fig:graph--increasing-file-size--c1-cpu}
   \centering
     \includegraphics[]{graph--increasing-file-size--c1-cpu}
+\end{figure}
+
+\begin{figure}[p]
+  \caption{Total repository size after committing, editing, and committing again}
+  \label{fig:graph--increasing-file-size--repo-size}
+  \centering
+    \includegraphics[]{graph--increasing-file-size--repo-size}
 \end{figure}
 
 Figure \ref{fig:graph--increasing-file-size--c1-time} shows time required for
@@ -105,12 +109,12 @@ Figure \ref{fig:graph--increasing-file-size--c1-time--detail-high-end} shows a
 detail of figure \ref{fig:graph--increasing-file-size--c1-time}, zooming in on
 the 1GiB to 64GiB region, and using a linear scale.
 
+Figure \ref{fig:graph--increasing-file-size--c1-cpu} shows the
+CPU usage during the initial commit.
+
 Figure \ref{fig:graph--increasing-file-size--repo-size} shows the total
 repository size, including the original file, after committing once, editing
 1/1024th of the file, and committing again.
-
-Figure \ref{fig:graph--increasing-file-size--c1-cpu} shows the
-CPU usage during the initial commit.
 
 \iffalse
 
@@ -204,7 +208,7 @@ Performance observations:
 
 \fi
 
-\subsection{Committing an increasing number of files}
+\subsection{Committing an increasing number of small files}
 
 \subsubsection{Results}
 
@@ -216,10 +220,11 @@ Performance observations:
 \end{figure}
 
 \begin{figure}[p]
-  \caption{Total repository size after committing, editing, and committing again}
-  \label{fig:graph--increasing-number-of-files--repo-size}
+  \caption{CPU utilization while committing many 1KiB files to an empty
+  repository}
+  \label{fig:graph--increasing-number-of-files--c1-cpu}
   \centering
-    \includegraphics[]{graph--increasing-number-of-files--repo-size}
+    \includegraphics[]{graph--increasing-number-of-files--c1-cpu}
 \end{figure}
 
 \begin{figure}[p]
@@ -231,12 +236,26 @@ Performance observations:
 \end{figure}
 
 \begin{figure}[p]
-  \caption{CPU utilization while committing many 1KiB files to an empty
-  repository}
-  \label{fig:graph--increasing-number-of-files--c1-cpu}
+  \caption{Total repository size after committing, editing, and committing again}
+  \label{fig:graph--increasing-number-of-files--repo-size}
   \centering
-    \includegraphics[]{graph--increasing-number-of-files--c1-cpu}
+    \includegraphics[]{graph--increasing-number-of-files--repo-size}
 \end{figure}
+
+Figure \ref{fig:graph--increasing-number-of-files--c1-time} shows the time
+required for the initial commit, copying all files into a fresh empty
+repository.
+
+Figure \ref{fig:graph--increasing-number-of-files--c1-cpu} shows CPU utilization
+during the commit.
+
+Figure \ref{fig:graph--increasing-number-of-files--stat1-time} shows the time
+required to check the changed status of all files just after committing.
+
+Figure \ref{fig:graph--increasing-number-of-files--repo-size} shows the total
+repository size, including the original files, after committing once, editing
+1/1024th of every sixteenth file, and committing again.
+
 
 \iffalse
 
@@ -257,13 +276,6 @@ different version control repositories. The procedure was as follows:
     \item Check the status of the files again
     \item Commit the file set again
 \end{enumerate}
-
-Figure \ref{fig:graph--increasing-number-of-files--c1-time} shows the time
-required for the different commit operations. Figure
-\ref{fig:graph--increasing-number-of-files--stat1-time} shows the time required
-for the different status operations. And Figure
-\ref{fig:graph--increasing-number-of-files--repo-size} shows the total disk space
-used after each commit operation.
 
 Unlike the test with a single large file, the numerous small files did not
 quickly hit error-causing disk space or RAM limitations. The version control
