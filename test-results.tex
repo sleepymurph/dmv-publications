@@ -36,6 +36,35 @@
 
 \subsection{Performance as file size increases}
 
+\begin{figure}[p]
+  \caption{Increasing file size: time to commit to empty repository}
+  \label{fig:graph--increasing-file-size--c1-time}
+  \centering
+    \includegraphics[]{graph--increasing-file-size--c1-time}
+\end{figure}
+
+\begin{figure}[p]
+  \caption{Increasing file size: time to commit to empty repository (detail)}
+  \label{fig:graph--increasing-file-size--c1-time--detail-high-end}
+  \centering
+    \includegraphics[]{graph--increasing-file-size--c1-time--detail-high-end}
+\end{figure}
+
+\begin{figure}[p]
+  \caption{Increasing file size: Repository size after committing, editing, and
+  committing again}
+  \label{fig:graph--increasing-file-size--repo-size}
+  \centering
+    \includegraphics[]{graph--increasing-file-size--repo-size}
+\end{figure}
+
+\begin{figure}[p]
+  \caption{Increasing file size: CPU usage during commit to empty repository}
+  \label{fig:graph--increasing-file-size--c1-cpu}
+  \centering
+    \includegraphics[]{graph--increasing-file-size--c1-cpu}
+\end{figure}
+
 We performed a test where a single file of a given size was added to a version
 control repository. We increased the size until the version control system could
 no longer process the file without error. The basic procedure was as follows:
@@ -59,34 +88,6 @@ Figure \ref{fig:graph--increasing-file-size--c1-time} shows commit performance
 as file size increases, and figure
 \ref{fig:graph--increasing-file-size--repo-size} shows disk space performance.
 
-\begin{figure}[h]
-  \caption{Increasing file size: time to commit to empty repository}
-  \label{fig:graph--increasing-file-size--c1-time}
-  \centering
-    \includegraphics[]{graph--increasing-file-size--c1-time}
-\end{figure}
-
-\begin{figure}[h]
-  \caption{Increasing file size: time to commit to empty repository, detail}
-  \label{fig:graph--increasing-file-size--c1-time--detail-high-end}
-  \centering
-    \includegraphics[]{graph--increasing-file-size--c1-time--detail-high-end}
-\end{figure}
-
-\begin{figure}[h]
-  \caption{Increasing file size: CPU usage during commit to empty repository}
-  \label{fig:graph--increasing-file-size--c1-cpu}
-  \centering
-    \includegraphics[]{graph--increasing-file-size--c1-cpu}
-\end{figure}
-
-\begin{figure}[h]
-  \caption{Increasing file size: Repository sizes after committing, editing, and
-  committing again}
-  \label{fig:graph--increasing-file-size--repo-size}
-  \centering
-    \includegraphics[]{graph--increasing-file-size--repo-size}
-\end{figure}
 
 Observed limitations:
 
@@ -162,6 +163,27 @@ Performance observations:
 
 \subsection{Performance as file count increases}
 
+\begin{figure}[p]
+  \caption{Increasing file count: commit time comparison}
+  \label{fig:increasing-file-count--commit-time-comparison}
+  \centering
+    \includegraphics[]{increasing-file-count--commit-time-comparison}
+\end{figure}
+
+\begin{figure}[p]
+  \caption{Increasing file count: status check time comparison}
+  \label{fig:increasing-file-count--status-time-comparison}
+  \centering
+    \includegraphics[]{increasing-file-count--status-time-comparison}
+\end{figure}
+
+\begin{figure}[p]
+  \caption{Increasing file count: repository size comparison}
+  \label{fig:increasing-file-count--space-comparison}
+  \centering
+    \includegraphics[]{increasing-file-count--space-comparison}
+\end{figure}
+
 We performed a test where increasingly large sets of files were committed to the
 different version control repositories. The procedure was as follows:
 
@@ -190,27 +212,6 @@ used after each commit operation.
 Unlike the test with a single large file, the numerous small files did not
 quickly hit error-causing disk space or RAM limitations. The version control
 systems happily crunched the data as test times grew into hours.
-
-\begin{figure}[h]
-  \caption{Increasing file count: commit time comparison}
-  \label{fig:increasing-file-count--commit-time-comparison}
-  \centering
-    \includegraphics[]{increasing-file-count--commit-time-comparison}
-\end{figure}
-
-\begin{figure}[h]
-  \caption{Increasing file count: status check time comparison}
-  \label{fig:increasing-file-count--status-time-comparison}
-  \centering
-    \includegraphics[]{increasing-file-count--status-time-comparison}
-\end{figure}
-
-\begin{figure}[h]
-  \caption{Increasing file count: repository size comparison}
-  \label{fig:increasing-file-count--space-comparison}
-  \centering
-    \includegraphics[]{increasing-file-count--space-comparison}
-\end{figure}
 
 Observations:
 
