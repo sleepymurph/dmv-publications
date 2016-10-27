@@ -7,7 +7,7 @@ test-results.pdf: \
     graph--increasing-file-size--repo-size.pdf \
     graph--increasing-number-of-files--c1-time.pdf \
     increasing-file-count--status-time-comparison.pdf \
-    increasing-file-count--space-comparison.pdf \
+    graph--increasing-number-of-files--repo-size.pdf \
 
 %.pdf: %.tex
 	pdflatex $*.tex
