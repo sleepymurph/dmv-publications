@@ -204,19 +204,22 @@ Performance observations:
 
 \fi
 
-\iffalse
-
 \subsection{Committing an increasing number of files}
 
+\subsubsection{Results}
+
 \begin{figure}[p]
-  \caption{Increasing file count: commit time comparison}
+  \caption{Real time required to commit many 1KiB files to an empty repository}
   \label{fig:graph--increasing-number-of-files--c1-time}
   \centering
     \includegraphics[]{graph--increasing-number-of-files--c1-time}
 \end{figure}
 
+\iffalse
+
 \begin{figure}[p]
-  \caption{Increasing file count: status check time comparison}
+  \caption{Real time required to check the status of many 1KiB files after
+  initial commit}
   \label{fig:increasing-file-count--status-time-comparison}
   \centering
     \includegraphics[]{increasing-file-count--status-time-comparison}

@@ -1,4 +1,8 @@
 
+# Logarithmic tens scale
+set logscale x 10
+set format x "%1.0s%c"
+
 # Logarithmic bytes scale
 set logscale x 2
 set xrange [2**10:2**40]
