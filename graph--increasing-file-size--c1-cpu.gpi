@@ -11,39 +11,29 @@ set format y "%1.0f%%"
 set grid
 set key top left
 
-
 set multiplot layout 2,2 rowsfirst
-
+meantable="< ./meantable.py --columns filebytes c1_user c1_system c1_idle c1_iowait --files exp--increasing-file-size--v04--w-cpu"
 POS="right at graph 0.95,0.88 front"
+USERPLOT='using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user"'
+SYSTEMPLOT='using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system"'
+IOWAITPLOT='using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowait"'
 
 set label 1 'git' @POS
 set ylabel "Git CPU Usage"
-gittable="< ./meantable.py --columns filebytes c1_user c1_system c1_idle c1_iowait --files exp--increasing-file-size--v04--w-cpu/git-*"
-plot \
-    gittable using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user", \
-    gittable using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system", \
-    gittable using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowait", \
+gittable=meantable."/git-*"
+plot gittable @USERPLOT, gittable @SYSTEMPLOT, gittable @IOWAITPLOT
 
 set label 1 'hg' @POS
 set ylabel "Hg CPU Usage"
-hgtable="< ./meantable.py --columns filebytes c1_user c1_system c1_idle c1_iowait --files exp--increasing-file-size--v04--w-cpu/hg-*"
-plot \
-    hgtable using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user", \
-    hgtable using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system", \
-    hgtable using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowait", \
+hgtable=meantable."/hg-*"
+plot hgtable @USERPLOT, hgtable @SYSTEMPLOT, hgtable @IOWAITPLOT
 
 set label 1 'bup' @POS
 set ylabel "Bup CPU Usage"
-buptable="< ./meantable.py --columns filebytes c1_user c1_system c1_idle c1_iowait --files exp--increasing-file-size--v04--w-cpu/bup-*"
-plot \
-    buptable using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user", \
-    buptable using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system", \
-    buptable using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowait", \
+buptable=meantable."/bup-*"
+plot buptable @USERPLOT, buptable @SYSTEMPLOT, buptable @IOWAITPLOT
 
 set label 1 'copy' @POS
 set ylabel "Copy CPU Usage"
-copytable="< ./meantable.py --columns filebytes c1_user c1_system c1_idle c1_iowait --files exp--increasing-file-size--v04--w-cpu/copy-*"
-plot \
-    copytable using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user", \
-    copytable using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system", \
-    copytable using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowait", \
+copytable=meantable."/copy-*"
+plot copytable @USERPLOT, copytable @SYSTEMPLOT, copytable @IOWAITPLOT
