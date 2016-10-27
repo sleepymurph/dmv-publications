@@ -1,6 +1,7 @@
 default: test-results.pdf
 
 test-results.pdf: \
+    graph--increasing-file-size--c1-cpu.pdf \
     graph--increasing-file-size--c1-time.pdf \
     graph--increasing-file-size--c1-time--detail-high-end.pdf \
     increasing-file-size--space-comparison.pdf \
