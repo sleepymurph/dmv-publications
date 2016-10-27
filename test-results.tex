@@ -27,47 +27,18 @@
 
 \begin{document}
 
-\title{Performance Testing Version Control Systems}
+\title{Master's Thesis Experiment Results}
 \author{Michael Murphy}
-\date{October 2016}
 \maketitle
 
-\section{Test Results}
+\section{Version Control System Behavior Experiments}
 
-\subsection{Performance as file size increases}
+\subsection{Committing a single file of increasing size}
 
-\begin{figure}[p]
-  \caption{Increasing file size: time to commit to empty repository}
-  \label{fig:graph--increasing-file-size--c1-time}
-  \centering
-    \includegraphics[]{graph--increasing-file-size--c1-time}
-\end{figure}
+\subsubsection{Methodology}
 
-\begin{figure}[p]
-  \caption{Increasing file size: time to commit to empty repository (detail)}
-  \label{fig:graph--increasing-file-size--c1-time--detail-high-end}
-  \centering
-    \includegraphics[]{graph--increasing-file-size--c1-time--detail-high-end}
-\end{figure}
-
-\begin{figure}[p]
-  \caption{Increasing file size: Repository size after committing, editing, and
-  committing again}
-  \label{fig:graph--increasing-file-size--repo-size}
-  \centering
-    \includegraphics[]{graph--increasing-file-size--repo-size}
-\end{figure}
-
-\begin{figure}[p]
-  \caption{Increasing file size: CPU usage during commit to empty repository}
-  \label{fig:graph--increasing-file-size--c1-cpu}
-  \centering
-    \includegraphics[]{graph--increasing-file-size--c1-cpu}
-\end{figure}
-
-We performed a test where a single file of a given size was added to a version
-control repository. We increased the size until the version control system could
-no longer process the file without error. The basic procedure was as follows:
+The experiment was written as a script in Python. For each version control
+system, and each file size, this script would do the following:
 
 \begin{enumerate}
     \setlength{\itemsep}{0pt}
@@ -81,15 +52,85 @@ no longer process the file without error. The basic procedure was as follows:
     \item Run the garbage collection / compaction algorithm (Git only)
 \end{enumerate}
 
-Tests were performed on identical machines with 8GiB of RAM and about 200GiB of
-free hard disk space.
+Times were measured by the Python script, checking the time of the real-time
+clock before and after the relevant command was run.
 
-Figure \ref{fig:graph--increasing-file-size--c1-time} shows commit performance
-as file size increases, and figure
-\ref{fig:graph--increasing-file-size--repo-size} shows disk space performance.
+Total repository size was measured via the Unix \lstinline{du} command, and it
+includes the original file in the working directory, as well as the repository.
 
+Trials were performed four times each, on four identical computers. Because the
+computers are identical, the performance across trials was nearly identical.
+These graphs display the mean values and have error bars for standard deviation,
+but the error bars are difficult to see.
 
-Observed limitations:
+\subsubsection{Platform and Configuration}
+
+Each identical experiment computer had a 3GHz Intel processor, 8GiB of RAM, and
+about 200GiB of free hard disk space.
+
+\subsubsection{Results}
+
+\begin{figure}[p]
+  \caption{Real time required to commit one file to an empty repository}
+  \label{fig:graph--increasing-file-size--c1-time}
+  \centering
+    \includegraphics[]{graph--increasing-file-size--c1-time}
+\end{figure}
+
+\begin{figure}[p]
+  \caption{Real time required to commit one file to an empty repository (detail)}
+  \label{fig:graph--increasing-file-size--c1-time--detail-high-end}
+  \centering
+    \includegraphics[]{graph--increasing-file-size--c1-time--detail-high-end}
+\end{figure}
+
+\begin{figure}[p]
+  \caption{Total repository size after committing, editing, and committing again}
+  \label{fig:graph--increasing-file-size--repo-size}
+  \centering
+    \includegraphics[]{graph--increasing-file-size--repo-size}
+\end{figure}
+
+\begin{figure}[p]
+  \caption{CPU utilization while committing one file to an empty repository}
+  \label{fig:graph--increasing-file-size--c1-cpu}
+  \centering
+    \includegraphics[]{graph--increasing-file-size--c1-cpu}
+\end{figure}
+
+Figure \ref{fig:graph--increasing-file-size--c1-time} shows time required for
+the initial commit, copying the file into a fresh empty repository.
+
+Figure \ref{fig:graph--increasing-file-size--c1-time--detail-high-end} shows a
+detail of figure \ref{fig:graph--increasing-file-size--c1-time}, zooming in on
+the 1GiB to 64GiB region, and using a linear scale.
+
+Figure \ref{fig:graph--increasing-file-size--repo-size} shows the total
+repository size, including the original file, after committing once, editing
+1/1024th of the file, and committing again.
+
+Figure \ref{fig:graph--increasing-file-size--c1-cpu} shows the
+CPU usage during the initial commit.
+
+\iffalse
+
+\subsubsection{Observations}
+
+\begin{itemize}
+
+  \item Mercurial's commit algorithm requires that the entire file fit into RAM
+    three time over. On our trial computers with 8GiB of ram, the largest file
+    Mercurial could commit successfully was 2GiB. At larger sizes, the commit
+    command would abort, roll back the commit in progress, and exit with an
+    error status.
+
+    This reflects the fact that Mercurial stores only changes to files. It must
+    examine every file with a diff algorithm during the commit.
+
+\end{itemize}
+
+% -------------------------------------------------
+% TODO: rewrite observations below and place above
 
 \begin{itemize}
 
@@ -161,7 +202,11 @@ Performance observations:
 
 \end{itemize}
 
-\subsection{Performance as file count increases}
+\fi
+
+\iffalse
+
+\subsection{Committing an increasing number of files}
 
 \begin{figure}[p]
   \caption{Increasing file count: commit time comparison}
@@ -256,5 +301,7 @@ Observations:
         disk.
 
 \end{itemize}
+
+\fi
 
 \end{document}

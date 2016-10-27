@@ -3,7 +3,7 @@ set xrange [512*2**20:65*2**30]
 set format x "%1.0b%BB"
 set xtics 8*2**30
 
-set ylabel "Time to commit file"
+set ylabel "Time to commit"
 
 minutetics = 10
 ticstring = "("

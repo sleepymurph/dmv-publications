@@ -3,7 +3,7 @@ set logscale x 2
 set xrange [2**10:2**40]
 set format x "%1.0b%BB"
 
-set ylabel "Time to commit file"
+set ylabel "Time to commit"
 set logscale y 60
 set ytics ( \
     "1ms" .001, "10ms" .01, "20ms" .02, "50ms" .05, \
