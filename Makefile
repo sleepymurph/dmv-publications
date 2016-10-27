@@ -6,7 +6,7 @@ test-results.pdf: \
     graph--increasing-file-size--c1-time--detail-high-end.pdf \
     graph--increasing-file-size--repo-size.pdf \
     graph--increasing-number-of-files--c1-time.pdf \
-    increasing-file-count--status-time-comparison.pdf \
+    graph--increasing-number-of-files--stat1-time.pdf \
     graph--increasing-number-of-files--repo-size.pdf \
 
 %.pdf: %.tex
