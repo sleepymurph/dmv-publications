@@ -126,7 +126,8 @@ class ColumnAggregator(object):
                     row.append(None)
                     row.append(None)
 
-            out_rows.append(row)
+            if not all(v is None for v in row[1:]):
+                out_rows.append(row)
 
         return out_rows
 
