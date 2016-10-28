@@ -251,9 +251,9 @@ class ColumnAggregator(object):
         return column_map
 
     def extract_value_map(self, column_map, value_line):
-        values = value_line.split()
+        strings = value_line.split()
         # column name -> value in row
-        return { col: values[ column_map[col] ] for col in self.columns }
+        return { col: ast.literal_eval( strings[ column_map[col] ] ) for col in self.columns }
 
     def append_values(self, value_map):
         for col in self.other_cols:
@@ -283,7 +283,6 @@ class ColumnAggregator(object):
 
             for col_name in self.other_cols:
                 colvals = self.values[keyval][col_name]
-                colvals = [ ast.literal_eval(val) for val in colvals ]
                 # TODO: accept some Nones
                 if None in colvals:
                     row.append(None)
