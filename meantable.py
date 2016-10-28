@@ -231,6 +231,71 @@ class ColumnMeanCalculatorTests(unittest.TestCase):
              ['0x0001000000', None, None]])
 
 
+class ColumnAggregator(object):
+
+    def __init__(self, columns):
+        self.columns = columns
+        self.key_col = columns[0]
+        self.other_cols = columns[1:]
+
+        # { key val -> column name -> [values] }
+        self.values = { }
+
+    def create_column_map(self, header_line):
+        colnames = header_line.split()
+        column_map = { colname:i for i,colname in enumerate(colnames) }
+        for expected_col in self.columns:
+            if expected_col not in column_map.keys():
+                raise KeyError("Expected column '{0}' not found".format(expectedcol))
+        # column name -> column index in file
+        return column_map
+
+    def extract_value_map(self, column_map, value_line):
+        values = value_line.split()
+        # column name -> value in row
+        return { col: values[ column_map[col] ] for col in self.columns }
+
+    def append_values(self, value_map):
+        for col in self.other_cols:
+            keyval = value_map[self.key_col]
+            colval = value_map[col]
+
+            if keyval not in self.values.keys():
+                self.values[keyval] = {}
+            if col not in self.values[keyval].keys():
+                self.values[keyval][col] = []
+            self.values[keyval][col].append(colval)
+
+    def build_output_table(self):
+        # Build a column name list for the output
+        out_header = [ self.key_col ]
+        for col_name in self.other_cols:
+            out_header.append(col_name+'_avg')
+            out_header.append(col_name+'_std')
+
+        out_rows = [ out_header ]
+
+        keyvals = list(self.values.keys())
+        keyvals.sort()
+
+        for keyval in keyvals:
+            row = [ keyval ]
+
+            for col_name in self.other_cols:
+                colvals = self.values[keyval][col_name]
+                colvals = [ ast.literal_eval(val) for val in colvals ]
+                # TODO: accept some Nones
+                if None in colvals:
+                    row.append(None)
+                    row.append(None)
+                else:
+                    row.append(mean(colvals))
+                    row.append(stddev(colvals))
+
+            out_rows.append(row)
+
+        return out_rows
+
 # Output
 
 def tabulate(rows):
@@ -252,17 +317,20 @@ def tabulate(rows):
 def main():
     args = parse_args()
 
-    with multi_open(args.files) as filegroup:
+    aggregator = ColumnAggregator(args.columns)
+    for path in args.files:
+        with open(path) as f:
+            header_line = read_skip(f)
+            column_map = aggregator.create_column_map(header_line)
+            while True:
+                line = read_skip(f)
+                if not line: break
+                vals = aggregator.extract_value_map(column_map, line)
+                aggregator.append_values(vals)
 
-        calculator = ColumnMeanCalculator(args.columns, args.files)
-        calculator.set_input_headers(filegroup.read_skip_all())
-
-        for linegroup in filegroup:
-            calculator.append_line_group(linegroup)
-
-        for line in tabulate(calculator.out_rows):
-            print line
-
+    rows = aggregator.build_output_table()
+    for line in tabulate(rows):
+        print line
 
 if __name__ == '__main__':
     main()
