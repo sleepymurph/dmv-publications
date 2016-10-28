@@ -36,47 +36,6 @@ class ParseArgsTests(unittest.TestCase):
             args = parse_args("--columns x y".split())
 
 
-# Multiple Files
-
-class multi_open(object):
-    def __init__(self, paths, mode='r'):
-        self.paths = paths
-        self.mode = mode
-        self.fds = []
-
-        try:
-            for path in paths:
-                self.fds.append(open(path, self.mode))
-        except:
-            self.close_all()
-            raise
-
-    def close_all(self):
-        for fd in self.fds:
-            fd.close()
-
-    def read_skip_all(self):
-        nextlines = []
-        for fd in self.fds:
-            nextlines.append(read_skip(fd))
-        return nextlines
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.close_all()
-
-    def __iter__(self):
-        return self
-
-    def next(self):
-        lines = self.read_skip_all()
-        if None in lines:
-            raise StopIteration
-        return lines
-
-
 def read_skip(fd):
     for line in fd:
         if line == "" or line.startswith('#'):
@@ -86,13 +45,6 @@ def read_skip(fd):
 
 
 # List combiners
-
-def all_same_value(vals):
-    for val in vals[1:]:
-        if val != vals[0]:
-            return False
-    return True
-
 
 def mean(vals):
     return float(sum(vals)) / len(vals)
@@ -104,11 +56,6 @@ def stddev(vals):
 
 
 class ListCombinerTests(unittest.TestCase):
-    def test_all_same_value(self):
-        self.assertEqual(all_same_value([0,0,0,0,0]), True)
-        self.assertEqual(all_same_value([1,0,0,0,0]), False)
-        self.assertEqual(all_same_value([0,0,0,0,1]), False)
-
     def test_mean(self):
         self.assertEqual(mean([2,4]), 3)
         self.assertEqual(mean([1,2,3,4,5]), 3)
@@ -118,118 +65,6 @@ class ListCombinerTests(unittest.TestCase):
 
 
 # Column Mean Calculator
-
-class ColumnMeanCalculator(object):
-
-    def __init__(self, specified_cols, filepaths):
-        self.specified_cols = specified_cols
-        self.filepaths = filepaths
-
-        # Build a column name list for the output
-        self.out_cols = [ self.specified_cols[0] ]
-        for colname in self.specified_cols[1:]:
-            self.out_cols.append(colname+'_avg')
-            self.out_cols.append(colname+'_std')
-
-        self.out_rows = [ self.out_cols ]
-
-    def set_input_headers(self, input_header_lines):
-        self.colindexes = []
-        for i,header in enumerate(input_header_lines):
-            colnames = header.split()
-            lookup = { colname:i for i,colname in enumerate(colnames) }
-            self.colindexes.append(lookup)
-            for expectedcol in self.specified_cols:
-                if expectedcol not in lookup.keys():
-                    raise KeyError("Expected column '{0}' not found in '{1}'".format(expectedcol, self.filepaths[i]))
-
-    def extract_column_values(self, col, splitgroup):
-        return [ line[self.colindexes[i][col]]
-                for i,line in enumerate(splitgroup) ]
-
-    def append_line_group(self, linegroup):
-        splitgroup = [ line.split() for line in linegroup ]
-        row = []
-
-        for i,col in enumerate(self.specified_cols):
-            vals = self.extract_column_values(col, splitgroup)
-
-            if i==0:    # Key column
-                if not all_same_value(vals):
-                    raise ValueError("Mismatched independent variables (first column): {0}".format(keyvals))
-                row.append(vals[0])
-
-            else:
-                vals = [ ast.literal_eval(val) for val in vals ]
-                if None in vals:
-                    row.append(None)
-                    row.append(None)
-                else:
-                    row.append(mean(vals))
-                    row.append(stddev(vals))
-
-        self.out_rows.append(row)
-
-
-class ColumnMeanCalculatorTests(unittest.TestCase):
-    def test_simple_values(self):
-        calculator = ColumnMeanCalculator(
-                specified_cols = ['filebytes', 'c1_time'],
-                filepaths = ['file1', 'file2', 'file3'])
-
-        calculator.set_input_headers([
-            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
-            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
-            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
-            ])
-
-        calculator.append_line_group([
-            ' 24  0x0001000000     0.827  0x0002015000       ok  verified',
-            ' 24  0x0001000000     0.871  0x0002015000       ok  verified',
-            ' 24  0x0001000000     0.830  0x0002015000       ok  verified',
-            ])
-
-        self.assertEqual(calculator.out_rows,
-            [['filebytes', 'c1_time_avg', 'c1_time_std'],
-             ['0x0001000000', 0.8426666666666667, 0.02007209228976615]])
-
-    def test_missing_column(self):
-        calculator = ColumnMeanCalculator(
-                specified_cols = ['filebytes', 'c1_time'],
-                filepaths = ['file1', 'file2', 'file3'])
-
-        with self.assertRaises(KeyError) as raises:
-            calculator.set_input_headers([
-                'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
-                'mag     filebytes                 c1_size   c1_cmd    c1_ver',
-                'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
-                ])
-
-        self.assertIn('c1_time', str(raises.exception))
-        self.assertIn('file2', str(raises.exception))
-
-
-    def test_missing_values(self):
-        calculator = ColumnMeanCalculator(
-                specified_cols = ['filebytes', 'c1_time'],
-                filepaths = ['file1', 'file2', 'file3'])
-
-        calculator.set_input_headers([
-            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
-            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
-            'mag     filebytes   c1_time       c1_size   c1_cmd    c1_ver',
-            ])
-
-        calculator.append_line_group([
-            ' 24  0x0001000000     0.827  0x0002015000       ok  verified',
-            ' 24  0x0001000000     0.871  0x0002015000       ok  verified',
-            ' 24  0x0001000000    (None)  0x0002015000       ok  verified',
-            ])
-
-        self.assertEqual(calculator.out_rows,
-            [['filebytes', 'c1_time_avg', 'c1_time_std'],
-             ['0x0001000000', None, None]])
-
 
 class ColumnAggregator(object):
 
