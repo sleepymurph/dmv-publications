@@ -118,13 +118,13 @@ class ColumnAggregator(object):
 
             for col_name in self.other_cols:
                 colvals = self.values[keyval][col_name]
-                # TODO: accept some Nones
-                if None in colvals:
-                    row.append(None)
-                    row.append(None)
-                else:
+                colvals = [ x for x in colvals if x is not None ]
+                if colvals:
                     row.append(mean(colvals))
                     row.append(stddev(colvals))
+                else:
+                    row.append(None)
+                    row.append(None)
 
             out_rows.append(row)
 
