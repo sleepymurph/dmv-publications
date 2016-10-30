@@ -1,0 +1,80 @@
+# Committing increasingly large numbers of files
+# 
+# reformat_partition: /dev/murphytest03-vg/test
+# vcs:                copy
+# vcs_version:        Dummy copy repo -- version 1
+# each_file_size:     0x400 bytes (1.0KiB)
+# data_gen:           random
+# 
+# date:          2016-10-28T13:56:26.656057
+# commandline:   ./increasing_number_of_files.py copy 0 7 --mag-step=4 --data-gen=random --tmp=/test --reformat-partition /dev/murphytest03-vg/test
+# testversion:   b170c9a Give the time columns an extra digit
+# hostname:      murphytest03
+# platform:      Linux-3.16.0-4-amd64-x86_64-with-debian-8.6
+# memtotal:      8064260 kB
+# memfree:       7868528 kB
+# 
+# pythonversion:
+#     2.7.9 (default, Jun 29 2016, 13:08:31) 
+#     [GCC 4.9.2]
+# 
+# cpuinfo:
+#     processor	: 0
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 1998.000
+#     cache size	: 6144 KB
+#     
+#     processor	: 1
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 3166.000
+#     cache size	: 6144 KB
+# 
+# fsinfo:
+#     Filesystem                         Size  Used Avail Use% Mounted on
+#     /dev/mapper/murphytest03--vg-test  197G   60M  197G   1% /test
+# 
+# diskinfo:
+#     sda	vendor: ATA, model: ST3250318AS	scheduler: noop deadline [cfq]
+# 
+# Command results:
+# ok:      Command completed successfully
+# no_exec: Command was never executed
+# failed:  Command failed
+# 
+# Verification results:
+# ver_err:  Could not verify due to error during verification
+# no_ver:   Verification was never performed
+# bad:      Verification discovered an error
+# verified: Verified OK
+# assumed:  Assumed ok because dependent commands successful
+# 
+mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    c1_ver   c1_repo     c1_user     c1_nice   c1_system     c1_idle   c1_iowait  stat1_time  stat1_cmd  stat2_time  stat2_cmd    c2_time       c2_size   c2_cmd    c2_ver   c2_repo     c2_user     c2_nice   c2_system     c2_idle   c2_iowait  cleanup_time
+  0             1  0x0000000400      0.000      0.002  0x0000007000       ok  verified   assumed           0           0           0           0           0       0.000         ok       0.000         ok      0.002  0x0000007000       ok  verified   assumed           1           0           0           0           0         2.806
+  0             2  0x0000000800      0.000      0.002  0x0000009000       ok  verified   assumed           1           0           0           1           0       0.000         ok       0.000         ok      0.002  0x0000009000       ok  verified   assumed           0           0           0           0           0         2.957
+  0             4  0x0000001000      0.001      0.002  0x000000d000       ok  verified   assumed           0           0           0           0           0       0.000         ok       0.000         ok      0.002  0x000000d000       ok  verified   assumed           0           0           1           0           0         2.772
+  0             6  0x0000001800      0.001      0.002  0x0000011000       ok  verified   assumed           1           0           0           0           0       0.000         ok       0.000         ok      0.002  0x0000011000       ok  verified   assumed           0           0           1           0           0         2.855
+  1            10  0x0000002800      0.001      0.002  0x0000019000       ok  verified   assumed           0           0           0           0           0       0.000         ok       0.000         ok      0.002  0x0000019000       ok  verified   assumed           0           0           0           0           0         2.775
+  1            25  0x0000006400      0.003      0.002  0x0000037000       ok  verified   assumed           0           0           0           0           0       0.000         ok       0.000         ok      0.012  0x0000037000       ok  verified   assumed           1           0           0           1           0         2.845
+  1            50  0x000000c800      0.006      0.003  0x0000069000       ok  verified   assumed           0           0           0           1           0       0.000         ok       0.000         ok      0.003  0x0000069000       ok  verified   assumed           1           0           1           0           0         2.782
+  1            75  0x0000012c00      0.009      0.003  0x000009b000       ok  verified   assumed           1           0           0           0           0       0.000         ok       0.000         ok      0.004  0x000009b000       ok  verified   assumed           0           0           0           0           0         2.789
+  2           100  0x0000019000      0.012      0.004  0x00000cd000       ok  verified   assumed           0           0           0           0           1       0.000         ok       0.000         ok      0.005  0x00000cd000       ok  verified   assumed           0           0           0           1           0         2.757
+  2           250  0x000003e800      0.030      0.012  0x000022b000       ok  verified   assumed           1           0           1           0           0       0.000         ok       0.000         ok      0.010  0x000022b000       ok  verified   assumed           0           0           2           1           0         2.821
+  2           500  0x000007d000      0.063      0.018  0x0000451000       ok  verified   assumed           0           0           2           2           0       0.000         ok       0.000         ok      0.022  0x0000451000       ok  verified   assumed           1           0           2           2           0         3.041
+  2           750  0x00000bb800      0.089      0.020  0x0000677000       ok  verified   assumed           0           0           3           2           0       0.000         ok       0.000         ok      0.030  0x0000677000       ok  verified   assumed           0           0           3           4           0         2.952
+  3          1000  0x00000fa000      0.123      0.029  0x000089d000       ok  verified   assumed           0           0           4           3           0       0.000         ok       0.000         ok      0.033  0x000089d000       ok  verified   assumed           1           0           3           3           0         2.945
+  3          2500  0x0000271000      0.290      0.061  0x00013bf000       ok  verified   assumed           1           0           5           6           0       0.000         ok       0.000         ok      0.079  0x00013bf000       ok  verified   assumed           0           0           8           8           0         3.143
+  3          5000  0x00004e2000      0.582      0.116  0x0002779000       ok  verified   assumed           2           0          10          12           0       0.000         ok       0.000         ok      0.163  0x0002779000       ok  verified   assumed           1           0          14          17           0         3.282
+  3          7500  0x0000753000      0.875      0.168  0x0003b33000       ok  verified   assumed           2           0          15          17           0       0.000         ok       0.000         ok      0.233  0x0003b33000       ok  verified   assumed           2           0          20          23           0         3.405
+  4         10000  0x00009c4000      1.163      0.228  0x0004eed000       ok  verified   assumed           4           0          19          23           0       0.000         ok       0.000         ok      0.310  0x0004eed000       ok  verified   assumed           1           0          29          31           0         3.464
+  4         25000  0x000186a000      3.057      1.038  0x000d70f000       ok  verified   assumed           9           0          56          83          59       0.000         ok       0.000         ok      0.798  0x000d70f000       ok  verified   assumed           5           0          73          39          40         5.263
+  4         50000  0x00030d4000      6.238      1.710  0x001ae19000       ok  verified   assumed          11           0         114         157          58       0.000         ok       0.000         ok      2.116  0x001ae19000       ok  verified   assumed          16           0         141         102         158         8.641
+  4         75000  0x000493e000      9.371      2.600  0x0028523000       ok  verified   assumed          20           0         172         192         133       0.000         ok       0.000         ok      4.591  0x0028523000       ok  verified   assumed          23           0         216         371         297         7.464
+  5        100000  0x00061a8000     12.446      6.793  0x0035c2d000       ok  verified   assumed          26           0         289         480         552       0.000         ok       0.000         ok     10.814  0x0035c2d000       ok  verified   assumed          26           0         408         371        1330        20.063
+  5        250000  0x000f424000     30.653     13.645  0x007b4df000       ok  verified   assumed          57           0         748         775        1118       0.000         ok       0.000         ok     81.823  0x007b4df000       ok  verified   assumed          75           0         824        1585       13791        40.425
+  5        500000  0x001e848000     63.218     38.537  0x00f69b9000       ok  verified   assumed         113           0        1636        1814        4056       0.000         ok       0.000         ok    265.389  0x00f69b9000       ok  verified   assumed         142           0        1785        7685       43264        11.193
+  5        750000  0x002dc6c000     99.926    106.907  0x0171e93000       ok  verified   assumed         207           0        3122        4006       13678       0.000         ok       0.000         ok    412.390  0x0171e93000       ok  verified   assumed         222           0        2669       13380       65960        15.476
+  6       1000000  0x003d090000    135.959    217.173  0x01ed36d000       ok  verified   assumed         403           0        5456       10541       25796       0.000         ok       0.000         ok    510.255  0x01ed36d000       ok  verified   assumed         371           0        5157       10022       85488        15.655
+  6       2500000  0x0098968000    420.238   1353.594  0x054001f000       ok  verified   assumed        1341           0       19362       95099      149895       0.000         ok       0.000         ok   3041.139  0x054001f000       ok  verified   assumed        1665           0       22410      278773      298790        13.739
+  6       5000000  0x01312d0000    906.903   4133.031  0x0a80039000       ok  verified   assumed        3152           0       39770      341274      430494       0.000         ok       0.000         ok   5989.774  0x0a80039000       ok  verified   assumed        3496           0       45081      549893      586038        13.598
+# CallFailedError(cmd='cp -r many_files_dir .backup/', exitcode='1')
+  6       7500000  0x01c9c38000   1348.177   3743.349        (None)   failed       bad  verified        2770           0       35518      312736      387303      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        12.089

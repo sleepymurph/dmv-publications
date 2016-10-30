@@ -49,3 +49,10 @@
 # assumed:  Assumed ok because dependent commands successful
 # 
 mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    c1_ver   c1_repo     c1_user     c1_nice   c1_system     c1_idle   c1_iowait  stat1_time  stat1_cmd  stat2_time  stat2_cmd    c2_time       c2_size   c2_cmd    c2_ver   c2_repo     c2_user     c2_nice   c2_system     c2_idle   c2_iowait  cleanup_time
+  7      10000000  0x02625a0000   1629.671  17582.589  0x0d8e394000       ok  verified   assumed      595671           0       72012     1192350     1625314    4341.033         ok    3978.708         ok   9280.198  0x0dd51d0000       ok  verified   assumed      323423           0       28552      909594      584618        13.680
+# IOError(28, 'No space left on device')
+  7      25000000  0x05f5e10000   1808.789     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        15.525
+# IOError(28, 'No space left on device')
+  7      50000000  0x0bebc20000   1817.626     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        12.068
+# IOError(28, 'No space left on device')
+  7      75000000  0x11e1a30000   1809.444     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.969
