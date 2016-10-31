@@ -50,10 +50,14 @@ client application.
 We assume that the data set and all nodes in the system are controlled by the
 user.
 
-The target data sets for this system include collections of media files (blobs
-ranging in size from hundreds of kilobytes to several gigabytes) numbering in
-the hundreds to millions. The system will not attempt to understand the
+The target data sets for this system include collections of media files (binary
+files ranging in size from hundreds of kilobytes to several gigabytes) numbering
+in the hundreds to millions. The system will not attempt to understand the
 internals of different media formats and will treat all files as opaque blobs.
+Such media data suggests a usage pattern where files are more often created or
+moved than they are updated in-place. Also, we assume writes will be infrequent
+compared to traditional online transactional databases (seconds to minutes, or
+longer, between updates).
 
 The system will be designed for high availability in the face of connections
 that are intermittent, high-latency, expensive, or otherwise restricted. At each
@@ -69,17 +73,15 @@ be presented to the client application to resolve.
 
 Data will be distributed across several \newterm{stores}, which will each hold a
 portion of the data set. Stores can be diverse, from mobile devices to storage
-clusters, and each will choose which data to hold according to its capacity and
-processing needs.
+clusters. Distribution of the data will be determined by the end user or client
+application according to available resources and the needs of the user.
 
 The data store network will be decentralized and unstructured (Figure
-\ref{fig:architecture}). Stores can be connected to neighbors in an ad-hoc
-manner, with a user- or application-defined topography. The number of neighbors
-will be limited by the capabilities of the store's device. We are aiming for one
-neighbor to tens, or perhaps hundreds of neighbors.
-
-(Possible extension: a gossip protocol to relay information about stores that
-are not direct neighbors.)
+\ref{fig:architecture}). Stores can be connected to other stores in an ad-hoc
+manner, with a user- or application-defined topography. The number of
+connections will not be strictly limited, but extreme scalability of individual
+connections is not a priority. We are aiming for one, to tens, to perhaps
+hundreds of connections.
 
 \begin{figure}[h]
   \caption{Stores in an ad-hoc network}
@@ -88,15 +90,17 @@ are not direct neighbors.)
     \includegraphics[width=0.95\textwidth]{architecture}
 \end{figure}
 
-Each store will be autonomous and able to perform processing on any data that it
-has a local copy of. Data not currently available locally can be listed and
-requested. The listing will give hints about the estimated time of availability,
-calculated based on latency, bandwidth, and file size. This metadata will
-naturally fall out of date between syncs with neighbors. The age of that data
-can be part of the hint.
+Each store will be autonomous, and local applications will be able to access and
+perform processing on any data that is stored locally. Data not currently
+available can be listed and requested. The listing will give hints about the
+estimated availability of each piece of data, with metrics including connection
+uptime, latency, and bandwidth to stores that have copies of the data. This
+metadata will naturally fall out of date between syncs with connected nodes. The
+age of that data can be part of the hint.
 
 We are envisioning a filesystem with an \lstinline{ls} command that lists these
-hints as part of its output:
+hints as part of its output (in this example presented as a single estimated
+time to retrieve):
 
 \begin{lstlisting}
     -rw-r--r-- 1 user user  121306 Oct 21 18:28 local   filex
@@ -106,18 +110,21 @@ hints as part of its output:
     -rw-r--r-- 1 user user   83977 Sep 22 21:23 unknown fileyy
 \end{lstlisting}
 
-The system should detect storage errors and never lose data inadvertently. Local
-data stores should detect corruption, and replication between stores should
-provide data safety. However, data can be explicitly removed from the data set,
-or it can be removed from the local store, relying on remote stores to keep
-replicas.
+A primary goal for the system is to detect storage errors and never lose data
+inadvertently. Local data stores will detect corruption, and data loss will be
+prevented by replication between stores. However, data can be explicitly removed
+from the data set. Data can be removed from the local store, relying on remote
+stores to keep replicas, though it will be up the end user/application to ensure
+that there are enough copies of the data to ensure its durability. Number of
+known replicas will be one of the metrics tracked by the system.
 
 
 \section{Design}\label{design}
 
-The data set will be a normal hierarchical filesystem, and it will be presented
-as a normal filesystem. We do not want to reinvent the filesystem, and we do not
-to have to modify local applications to work with the data.
+The data set will be a traditional hierarchical file structure, and it will be
+presented as a normal filesystem. We do not want to reinvent the filesystem, and
+we do not want to have to modify local applications to work with the data,
+though applications can be modified to be aware of and to work with the system.
 
 The storage will be modeled on version control systems, specifically Git and
 it's directed acyclic graph data structure (DAG). There will be a
@@ -125,18 +132,12 @@ content-addressable blob store to de-duplicate and store data in a DAG
 structure, and a working tree where the files can be read and written by normal
 applications.
 
-(Possible optimization: the working directory can be a virtual filesystem that
-is a view into the object database.)
-
-Like in a version control system, history of the data set will be kept. Ordering
-of updates will be determined by the child-parent relationship of commits in the
-DAG. The history can diverge into branches that can be merged later, and each
-individual store is also naturally a branch. Also like in version control,
-updates must be explicitly committed to the store, and fetches and merges from
-neighbors are explicitly initiated.
-
-(Possible add-on feature: daemons which auto-commit, auto-fetch, and auto-merge
-if possible.)
+Like in a version control system, previous versions of the data will be kept,
+along with metadata about the history of changes. Snapshots of the data will be
+explicitly \newterm{committed} to the system by the user/application. The chain
+of commit history can diverge into branches to be merged later, and each
+individual store is also naturally a branch. Syncs and merges with connected
+stores will be explicitly initiated.
 
 Individual stores are not required to store all blobs in the DAG. Some blobs may
 not be available on a given store, and history may be deliberately pruned to
@@ -150,6 +151,26 @@ have locally and the hints about the availability of remote blobs.
 
 Files over a certain threshold will be broken into smaller chunks in the blob
 store, using a content-based splitting technique such as Rabin fingerprinting.
+
+
+\section{Possible extensions}
+
+The goal of the system is to be a low-level platform for tracking a single data
+set that is distributed across many nodes. Following the version-control
+paradigm, most operations will be explicit. However, it will be possible to
+write applications on top of this system that automate more operations.
+
+\begin{itemize}
+
+  \item A gossip protocol could spread information about availability of remote
+    stores that are not directly connected.
+
+  \item Daemons could auto-commit and auto-sync with other stores.
+
+  \item To save storage space, the working directory can be a virtual filesystem
+    that is a view into the object database.
+
+\end{itemize}
 
 
 % \nocite{*}  % Print all references even if they're not used
