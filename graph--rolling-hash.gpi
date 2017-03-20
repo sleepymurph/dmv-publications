@@ -1,24 +1,26 @@
-set xlabel "Window Size"
+set xlabel "Match"
 set logscale x 2
-set xrange [2**8:2**20]
+set xrange [.8 * 2**8: 1.2 * 2**15]
 set format x "%1.0b%BB"
 
-set ylabel "Match"
+set ylabel "Chunk size"
 set logscale y 2
-set yrange [2**8:2**16]
+set yrange [2**10:2**21]
 set format y "%1.0b%BB"
-
-set zlabel ""
-set logscale z 2
-#set zrange [2**8:2**20]
-set format z "%1.0b%BB"
 
 set grid
 set key top left
 
-splot \
-    'exp--rolling-hash/2017-03-20--rolling-hash.txt' \
-        using 1:2:3 title "Mean chunk size", \
-    'exp--rolling-hash/2017-03-20--rolling-hash.txt' \
-        using 1:2:4 title "Chunk size std. dev.", \
-    x+y title "Window Size + Match", \
+plot \
+    "< awk '$1==65536 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
+        using 2:3:4 with errorlines title "64 KiB window", \
+    "< awk '$1==32768 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
+        using 2:3:4 with errorlines title "32 KiB window", \
+    "< awk '$1==16384 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
+        using 2:3:4 with errorlines title "16 KiB window", \
+    "< awk '$1==16384 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
+        using 2:3:4 with errorlines title "16 KiB window", \
+    "< awk '$1==8192 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
+        using 2:3:4 with errorlines title "8 KiB window", \
+    "< awk '$1==4096 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
+        using 2:3:4 with errorlines title "4 KiB window", \
