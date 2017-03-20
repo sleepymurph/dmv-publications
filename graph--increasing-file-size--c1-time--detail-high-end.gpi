@@ -1,7 +1,7 @@
 set xlabel "File Size (linear scale)"
-set xrange [512*2**20:65*2**30]
+set xrange [512*2**20:8.5*2**30]
 set format x "%1.0b%BB"
-set xtics 8*2**30
+set xtics 1*2**30
 
 set ylabel "Time to commit"
 
