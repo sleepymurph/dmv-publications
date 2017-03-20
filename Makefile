@@ -11,6 +11,7 @@ test-results.pdf: \
     graph--increasing-number-of-files--c1-time.pdf \
     graph--increasing-number-of-files--stat1-time.pdf \
     graph--increasing-number-of-files--repo-size.pdf \
+    graph--rolling-hash.pdf \
 
 %.pdf: %.tex
 	pdflatex $*.tex
