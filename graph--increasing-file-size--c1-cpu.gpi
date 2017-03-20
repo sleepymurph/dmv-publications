@@ -33,6 +33,11 @@ set ylabel "Bup CPU Usage"
 buptable=meantable."/bup-*"
 plot buptable @USERPLOT, buptable @SYSTEMPLOT, buptable @IOWAITPLOT
 
+set label 1 'prototype' @POS
+set ylabel "Prototype CPU Usage"
+prototypetable=meantable."/prototype-*"
+plot prototypetable @USERPLOT, prototypetable @SYSTEMPLOT, prototypetable @IOWAITPLOT
+
 set label 1 'copy' @POS
 set ylabel "Copy CPU Usage"
 copytable=meantable."/copy-*"

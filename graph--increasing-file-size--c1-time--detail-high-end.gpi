@@ -24,5 +24,7 @@ plot \
         using 1:2:3 with errorlines title "hg", \
     '< ./meantable.py --columns filebytes c1_time --files exp--increasing-file-size--v04--w-cpu/bup-*' \
         using 1:2:3 with errorlines title "bup", \
+    '< ./meantable.py --columns filebytes c1_time --files exp--increasing-file-size--v04--w-cpu/prototype-*' \
+        using 1:2:3 with errorlines title "prototype", \
     '< ./meantable.py --columns filebytes c1_time --files exp--increasing-file-size--v04--w-cpu/copy-*' \
         using 1:2:3 with errorlines title "cp", \
