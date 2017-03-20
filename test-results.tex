@@ -334,6 +334,25 @@ Observations:
 
 \subsection{Tuning Chunk Size}
 
+\subsubsection{Methodology}
+
+This experiment is written as a unit test in the prototype Rust code. The test
+is found in the \texttt{rolling\_hash} module, under the name
+\texttt{chunk\_size\_experiment}.
+
+\begin{itemize}
+
+  \item Generate random data and pass it through the rolling hash algorithm with
+    the given window size and match parameters.
+
+  \item Continue generating data until the rolling hash has flagged 100 chunks.
+
+  \item Calculate the mean chunk size and standard deviation.
+
+\end{itemize}
+
+\subsubsection{Results}
+
 \begin{figure}[p]
   \caption{Mean chunk size}
   \label{fig:graph--rolling-hash}
@@ -342,5 +361,17 @@ Observations:
 \end{figure}
 
 Figure \ref{fig:graph--rolling-hash} shows the mean chunk size.
+
+\subsubsection{Observations}
+
+\begin{itemize}
+
+  \item The mean chunk size is approximately the sum of the window size and
+    match parameter.
+
+  \item When the match parameter is less than the window size, the standard
+    deviation is approximately the match parameter.
+
+\end{itemize}
 
 \end{document}
