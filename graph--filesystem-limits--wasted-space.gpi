@@ -3,17 +3,14 @@ set xrange [-.5:6.5]
 set xtics 1
 
 set ylabel "Wasted disk space"
-set logscale y 16
-set format y "%1.0b%BB"
+set format y "%1.0f%%"
 
 set grid
 set key bottom right
 
 files="exp--filesystem-limits--micro/*murphytest03*"
-aggregate_files="./aggregate_last_lines.sh ".files
-filter_only_s(s)="awk '$2==".s." {print $0}'"
-cmdline(s)="\"< ".aggregate_files." | ".filter_only_s(s)."\""
-plotline(s)=cmdline(s)." using 3:11 with histeps title \"".s." chars per dir\""
+cmdline(s)="\"< ./process--wasted-space.sh ".s." ".files."\""
+plotline(s)=cmdline(s)." using 1:2 with histeps title \"".s." chars per dir\""
 
 plotstr= "" \
     .plotline(3).", \n" \
