@@ -1,5 +1,5 @@
 murphytest01 exp--increasing-number-of-files--v02--w-cpu/prototype-2017-03-21-{host}.txt
-murphytest02 exp--filesystem-limits/4096x2x3--2017-03-21-{host}.txt
+murphytest02 exp--filesystem-limits/4096x2x4--2017-03-21-{host}.txt
 #murphytest02 exp--filesystem-limits--big-part/4096x2x2--2017-03-21-{host}.txt
-murphytest03 exp--filesystem-limits/4096x0x0--2017-03-21-{host}.txt
-murphytest04 exp--filesystem-limits/4096x1x2--2017-03-21-{host}.txt
+murphytest03 exp--filesystem-limits/4096x2x5--2017-03-21-{host}.txt
+murphytest04 exp--filesystem-limits/4096x1x6--2017-03-21-{host}.txt
