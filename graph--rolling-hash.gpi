@@ -1,9 +1,9 @@
-set xlabel "Match"
+set xlabel "Window size (log scale)"
 #set logscale x 2
 #set xrange [.8 * 2**8: 1.2 * 2**15]
 set format x "%1.0b%BB"
 
-set ylabel "Chunk size"
+set ylabel "Chunk size (log scale)"
 set logscale y 2
 #set yrange [2**10:2**21]
 set format y "%1.0b%BB"
@@ -14,20 +14,24 @@ set style data histograms
 set style histogram errorbars
 #set style fill solid
 
-cmdline(n) = "\"< awk '$1==".n." {print $0}'"\
-                ." exp--rolling-hash/2017-03-20--rolling-hash.txt\""
+cmdline(n) = "\"< awk '$2==".n." {print $0}'"\
+                ." exp--rolling-hash/2017-03-22--rolling-hash.txt\""
 
-data04k=cmdline(4096)
-data08k=cmdline(8192)
-data16k=cmdline(16384)
-data32k=cmdline(32768)
-data64k=cmdline(65536)
-data128k=cmdline(131072)
+data8=cmdline(8)
+data9=cmdline(9)
+data10=cmdline(10)
+data11=cmdline(11)
+data12=cmdline(12)
+data13=cmdline(13)
+data14=cmdline(14)
+data15=cmdline(15)
 
 plot \
-    @data04k using 3:4:xticlabels(2) title " 4kiB window", \
-    @data08k using 3:4:xticlabels(2) title " 8kiB window", \
-    @data16k using 3:4:xticlabels(2) title "16kiB window", \
-    @data32k using 3:4:xticlabels(2) title "32kiB window", \
-    @data64k using 3:4:xticlabels(2) title "64kiB window", \
-    @data128k using 3:4:xticlabels(2) title "128kiB window", \
+    @data8    using 3:4:xticlabels(1) title " 8 bits match", \
+    @data9    using 3:4:xticlabels(1) title " 9 bits match", \
+    @data10   using 3:4:xticlabels(1) title "10 bits match", \
+    @data11   using 3:4:xticlabels(1) title "11 bits match", \
+    @data12   using 3:4:xticlabels(1) title "12 bits match", \
+    @data13   using 3:4:xticlabels(1) title "13 bits match", \
+    @data14   using 3:4:xticlabels(1) title "14 bits match", \
+    @data15   using 3:4:xticlabels(1) title "15 bits match", \
