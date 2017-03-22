@@ -1,6 +1,7 @@
-set xlabel "Directory Depth"
+#set xlabel "Directory Depth"
 
-set ylabel "File/Dir count"
+#set ylabel "File/Dir count"
+set format y "%1.0s%c"
 
 set key at 2.5,23000
 
@@ -12,8 +13,31 @@ files="exp--filesystem-limits--micro/*murphytest03*"
 cmdline(s)="\"< ./process--wasted-space.sh ".s." ".files."\""
 plotline(s)=cmdline(s)." using 4 title \"".s." chars per dir\""
 
+datacmd1=cmdline(1)
 datacmd2=cmdline(2)
+datacmd3=cmdline(3)
+datacmd4=cmdline(4)
 
+set multiplot layout 2,2 rowsfirst
+
+labelpos = "right at graph 1,1.05 front"
+
+set label 1 '1 char per dir' @labelpos
+plot \
+    @datacmd1 using 4:xticlabels(3) title "files",\
+    @datacmd1 using 5:xticlabels(3) title "dirs"
+
+set label 1 '2 chars per dir' @labelpos
 plot \
     @datacmd2 using 4:xticlabels(3) title "files",\
     @datacmd2 using 5:xticlabels(3) title "dirs"
+
+set label 1 '3 chars per dir' @labelpos
+plot \
+    @datacmd3 using 4:xticlabels(3) title "files",\
+    @datacmd3 using 5:xticlabels(3) title "dirs"
+
+set label 1 '4 chars per dir' @labelpos
+plot \
+    @datacmd4 using 4:xticlabels(3) title "files",\
+    @datacmd4 using 5:xticlabels(3) title "dirs"
