@@ -22,6 +22,7 @@ data08k=cmdline(8192)
 data16k=cmdline(16384)
 data32k=cmdline(32768)
 data64k=cmdline(65536)
+data128k=cmdline(131072)
 
 plot \
     @data04k using 3:4:xticlabels(2) title " 4kiB window", \
@@ -29,3 +30,4 @@ plot \
     @data16k using 3:4:xticlabels(2) title "16kiB window", \
     @data32k using 3:4:xticlabels(2) title "32kiB window", \
     @data64k using 3:4:xticlabels(2) title "64kiB window", \
+    @data128k using 3:4:xticlabels(2) title "128kiB window", \
