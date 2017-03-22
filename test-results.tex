@@ -330,9 +330,10 @@ Observations:
 \fi
 
 
-\section{Rolling Hash Experiments}
+\section{Performance Tuning}
 
-\subsection{Tuning Chunk Size}
+
+\subsection{Rolling Hash Chunk Size}
 
 \subsubsection{Methodology}
 
@@ -371,6 +372,43 @@ Figure \ref{fig:graph--rolling-hash} shows the mean chunk size.
 
   \item When the match parameter is less than the window size, the standard
     deviation is approximately the match parameter.
+
+\end{itemize}
+
+
+\subsection{Directory Structure}
+
+\subsubsection{Methodology}
+
+\begin{itemize}
+
+  \item Create an empty 100MiB partition.
+
+  \item Write 4KiB objects according to the given object directory scheme, until
+    the disk is reported as full.
+
+  \item Track the total number of files written and total number of directories
+    created.
+
+\end{itemize}
+
+\subsubsection{Results}
+
+\begin{figure}[p]
+  \caption{Overwhelmed by subdirectories}
+  \label{fig:graph--filesystem-limits--wasted-space}
+  \centering
+    \includegraphics[]{graph--filesystem-limits--wasted-space}
+\end{figure}
+
+Figure \ref{fig:graph--filesystem-limits--wasted-space} shows the mean chunk size.
+
+\subsubsection{Observations}
+
+\begin{itemize}
+
+  \item In hindsight, it should have been easy to see that the number of
+    directories would grow exponentially.
 
 \end{itemize}
 
