@@ -1,15 +1,18 @@
 set xlabel "Match"
-set logscale x 2
-set xrange [.8 * 2**8: 1.2 * 2**15]
+#set logscale x 2
+#set xrange [.8 * 2**8: 1.2 * 2**15]
 set format x "%1.0b%BB"
 
 set ylabel "Chunk size"
 set logscale y 2
-set yrange [2**10:2**21]
+#set yrange [2**10:2**21]
 set format y "%1.0b%BB"
 
-set grid
-set key top left
+set key below
+
+set style data histograms
+set style histogram errorbars
+#set style fill solid
 
 cmdline(n) = "\"< awk '$1==".n." {print $0}'"\
                 ." exp--rolling-hash/2017-03-20--rolling-hash.txt\""
@@ -21,8 +24,8 @@ data32k=cmdline(32768)
 data64k=cmdline(65536)
 
 plot \
-    @data64k using 2:3:4 with errorlines title "64 KiB window", \
-    @data32k using 2:3:4 with errorlines title "32 KiB window", \
-    @data16k using 2:3:4 with errorlines title "16 KiB window", \
-    @data08k using 2:3:4 with errorlines title " 8 KiB window", \
-    @data04k using 2:3:4 with errorlines title " 4 KiB window", \
+    @data04k using 3:4:xticlabels(2) title " 4kiB window", \
+    @data08k using 3:4:xticlabels(2) title " 8kiB window", \
+    @data16k using 3:4:xticlabels(2) title "16kiB window", \
+    @data32k using 3:4:xticlabels(2) title "32kiB window", \
+    @data64k using 3:4:xticlabels(2) title "64kiB window", \
