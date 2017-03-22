@@ -3,7 +3,10 @@
 #set ylabel "File/Dir count"
 set format y "%1.0s%c"
 
-set key at 2.5,23000
+set key below
+set tmargin 1.5
+labelpos = "right at graph 1, 1.08 front"
+
 
 set style data histograms
 set style histogram cluster
@@ -19,8 +22,6 @@ datacmd3=cmdline(3)
 datacmd4=cmdline(4)
 
 set multiplot layout 2,2 rowsfirst
-
-labelpos = "right at graph 1,1.05 front"
 
 set label 1 '1 char per dir' @labelpos
 plot \
