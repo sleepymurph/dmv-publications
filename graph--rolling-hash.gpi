@@ -11,16 +11,18 @@ set format y "%1.0b%BB"
 set grid
 set key top left
 
+cmdline(n) = "\"< awk '$1==".n." {print $0}'"\
+                ." exp--rolling-hash/2017-03-20--rolling-hash.txt\""
+
+data04k=cmdline(4096)
+data08k=cmdline(8192)
+data16k=cmdline(16384)
+data32k=cmdline(32768)
+data64k=cmdline(65536)
+
 plot \
-    "< awk '$1==65536 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
-        using 2:3:4 with errorlines title "64 KiB window", \
-    "< awk '$1==32768 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
-        using 2:3:4 with errorlines title "32 KiB window", \
-    "< awk '$1==16384 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
-        using 2:3:4 with errorlines title "16 KiB window", \
-    "< awk '$1==16384 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
-        using 2:3:4 with errorlines title "16 KiB window", \
-    "< awk '$1==8192 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
-        using 2:3:4 with errorlines title "8 KiB window", \
-    "< awk '$1==4096 {print $0}' exp--rolling-hash/2017-03-20--rolling-hash.txt" \
-        using 2:3:4 with errorlines title "4 KiB window", \
+    @data64k using 2:3:4 with errorlines title "64 KiB window", \
+    @data32k using 2:3:4 with errorlines title "32 KiB window", \
+    @data16k using 2:3:4 with errorlines title "16 KiB window", \
+    @data08k using 2:3:4 with errorlines title " 8 KiB window", \
+    @data04k using 2:3:4 with errorlines title " 4 KiB window", \
