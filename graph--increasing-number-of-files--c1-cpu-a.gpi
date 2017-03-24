@@ -11,6 +11,7 @@ set key top left
 
 set multiplot layout 2,2 rowsfirst
 meantable="< ./meantable.py --columns filecount c1_user c1_system c1_idle c1_iowait --files exp--increasing-number-of-files--v02--w-cpu"
+meantable2="< ./meantable.py --columns filecount c1_user c1_system c1_idle c1_iowait --files exp--increasing-number-of-files--v03--less-dirs/"
 POS="right at graph 0.95,0.88 front"
 USERPLOT='using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user"'
 SYSTEMPLOT='using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system"'
@@ -31,7 +32,7 @@ set ylabel "Bup CPU Usage"
 buptable=meantable."/bup-*"
 plot buptable @USERPLOT, buptable @SYSTEMPLOT, buptable @IOWAITPLOT
 
-set label 1 'copy' @POS
-set ylabel "Copy CPU Usage"
-copytable=meantable."/copy-*"
+set label 1 'prototype' @POS
+set ylabel "Prototype CPU Usage"
+copytable=meantable2."/prototype2x1mem-*"
 plot copytable @USERPLOT, copytable @SYSTEMPLOT, copytable @IOWAITPLOT
