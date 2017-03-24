@@ -10,9 +10,11 @@ set grid
 set key top right
 
 meantable="< ./meantable.py --columns filecount c2_size --files exp--increasing-number-of-files--v02--w-cpu"
+meantable2="< ./meantable.py --columns filecount c2_size --files exp--increasing-number-of-files--v03--less-dirs/"
 eachbytes=1024
 
 plot \
     meantable."/git-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with errorlines title "git (two commits)", \
     meantable."/hg-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with errorlines title "hg (two commits)", \
     meantable."/bup-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with errorlines title "bup (two commits)", \
+    meantable2."/prototype2x1mem-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with errorlines title "prototype (two commits)", \
