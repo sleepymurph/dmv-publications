@@ -13,6 +13,7 @@ test-results.pdf: \
     graph--increasing-number-of-files--c1-time-detail.pdf \
     graph--increasing-number-of-files--stat1-time.pdf \
     graph--increasing-number-of-files--repo-size.pdf \
+    graph--increasing-number-of-files--prototype-improvements--c1-time-detail.pdf \
     graph--rolling-hash.pdf \
 
 

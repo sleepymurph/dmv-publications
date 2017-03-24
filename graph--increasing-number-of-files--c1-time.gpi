@@ -22,7 +22,5 @@ plot \
     meantable.'/git-*' using 1:2:3 with errorlines title "git", \
     meantable.'/hg-*' using 1:2:3 with errorlines title "hg", \
     meantable.'/bup-*' using 1:2:3 with errorlines title "bup", \
-    meantable.'/prototype-*' using 1:2:3 with errorlines title "prototype (2x2)", \
-    meantable2.'/prototype2x1-*' using 1:2:3 with errorlines title "prototype (2x1)", \
     meantable2.'/prototype2x1mem-*' using 1:2:3 with errorlines title "prototype (2x1,mem)", \
     meantable.'/copy-*' using 1:2:3 with errorlines title "cp", \
