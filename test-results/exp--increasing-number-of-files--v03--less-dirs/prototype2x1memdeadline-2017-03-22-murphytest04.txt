@@ -78,3 +78,11 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
   6       5000000  0x01312d0000    687.467  17091.873  0x09d83f2000       ok  verified   assumed       52073           0       90006      892948     2372766    2082.320         ok    1956.005         ok   4134.020  0x0a2db09000       ok  verified   assumed       30238           0       76732      322936      378872        13.500
 # CallFailedError(cmd='prototype commit -m 'Add many_files_dir'', exitcode='1')
   6       7500000  0x01c9c38000   1045.572  20340.021        (None)   failed       bad  verified       57349           0       71761      947971     2978264      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        12.916
+# CallFailedError(cmd='prototype commit -m 'Add many_files_dir'', exitcode='1')
+  7      10000000  0x02625a0000   1342.760   7992.980        (None)   failed       bad  verified       35024           0       44420      508512     1003232      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        17.081
+# IOError(28, 'No space left on device')
+  7      25000000  0x05f5e10000   1954.649     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.249
+# IOError(28, 'No space left on device')
+  7      50000000  0x0bebc20000   1908.332     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.588
+# IOError(28, 'No space left on device')
+  7      75000000  0x11e1a30000   1924.576     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         9.589
