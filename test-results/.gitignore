@@ -1,0 +1,12 @@
+# LaTeX intermediate files
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+
+# All PDFs here are generated
+*.pdf
+
+# Compiled Python
+*.pyc

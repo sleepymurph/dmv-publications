@@ -1,0 +1,86 @@
+# Committing increasingly large numbers of files
+# 
+# reformat_partition: /dev/murphytest04-vg/test
+# vcs:                bup
+# vcs_version:        debian/0.25-1
+# each_file_size:     0x400 bytes (1.0KiB)
+# data_gen:           random
+# 
+# date:          2016-10-31T08:16:18.229357
+# commandline:   ./increasing_number_of_files.py bup 0 8 --mag-step=4 --data-gen=random --tmp=/test --reformat-partition /dev/murphytest04-vg/test
+# testversion:   2759e67 Do an initial reformat just in case
+# hostname:      murphytest04
+# platform:      Linux-3.16.0-4-amd64-x86_64-with-debian-8.6
+# memtotal:      8064260 kB
+# memfree:       7903356 kB
+# 
+# pythonversion:
+#     2.7.9 (default, Jun 29 2016, 13:08:31) 
+#     [GCC 4.9.2]
+# 
+# cpuinfo:
+#     processor	: 0
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 1998.000
+#     cache size	: 6144 KB
+#     
+#     processor	: 1
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 3166.000
+#     cache size	: 6144 KB
+# 
+# fsinfo:
+#     Filesystem                         Size  Used Avail Use% Mounted on
+#     /dev/mapper/murphytest04--vg-test  197G   60M  197G   1% /test
+# 
+# diskinfo:
+#     sda	vendor: ATA, model: ST3250318AS	scheduler: noop deadline [cfq]
+# 
+# Command results:
+# ok:      Command completed successfully
+# no_exec: Command was never executed
+# failed:  Command failed
+# 
+# Verification results:
+# ver_err:  Could not verify due to error during verification
+# no_ver:   Verification was never performed
+# bad:      Verification discovered an error
+# verified: Verified OK
+# assumed:  Assumed ok because dependent commands successful
+# 
+mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    c1_ver   c1_repo     c1_user     c1_nice   c1_system     c1_idle   c1_iowait  stat1_time  stat1_cmd  stat2_time  stat2_cmd    c2_time       c2_size   c2_cmd    c2_ver   c2_repo     c2_user     c2_nice   c2_system     c2_idle   c2_iowait  cleanup_time
+  0             1  0x0000000400      0.000      0.982  0x0000025000       ok  verified   assumed          20           0           7         151          19       1.677         ok       1.986         ok      1.241  0x0000027000       ok  verified   assumed          18           0           9         216           4         2.742
+  0             2  0x0000000800      0.000      0.520  0x0000026000       ok  verified   assumed          17           0           9          74           3       1.787         ok       2.015         ok      1.208  0x0000028000       ok  verified   assumed          20           0           6         209           5         2.872
+  0             4  0x0000001000      0.001      0.401  0x0000029000       ok  verified   assumed          22           0           4          49           4       1.774         ok       1.996         ok      1.231  0x000002b000       ok  verified   assumed          20           0           9         213           4         2.765
+  0             6  0x0000001800      0.001      1.260  0x000002b000       ok  verified   assumed          20           0           8         220           5       1.778         ok       2.021         ok      1.183  0x000002d000       ok  verified   assumed          21           0           7         207           2         2.799
+  1            10  0x0000002800      0.001      0.404  0x0000030000       ok  verified   assumed          19           0           6          51           3       1.790         ok       1.998         ok      1.260  0x0000032000       ok  verified   assumed          20           0           9         216           8         2.755
+  1            25  0x0000006400      0.003      0.409  0x0000043000       ok  verified   assumed          24           0           5          52           3       1.779         ok       1.999         ok      1.223  0x0000045000       ok  verified   assumed          23           0           5         212           4         2.770
+  1            50  0x000000c800      0.008      0.519  0x0000064000       ok  verified   assumed          23           0           6          69           6       1.743         ok       1.994         ok      1.223  0x0000067000       ok  verified   assumed          22           0           8         210           4         2.839
+  1            75  0x0000012c00      0.009      0.412  0x0000084000       ok  verified   assumed          24           0           8          48           2       1.753         ok       2.024         ok      1.203  0x0000087000       ok  verified   assumed          24           0           7         205           4         2.746
+  2           100  0x0000019000      0.012      0.486  0x00000a6000       ok  verified   assumed          22           0           9          60           5       1.721         ok       1.999         ok      1.244  0x00000aa000       ok  verified   assumed          24           0           8         214           3         2.819
+  2           250  0x000003e800      0.030      1.334  0x0000184000       ok  verified   assumed          32           0           8         224           3       1.658         ok       2.000         ok      1.324  0x000018b000       ok  verified   assumed          27           0           7         228           3         2.710
+  2           500  0x000007d000      0.061      0.675  0x00002e5000       ok  verified   assumed          42           0          11          78           4       1.527         ok       1.996         ok      1.393  0x00002f2000       ok  verified   assumed          44           0           7         223           5         2.698
+  2           750  0x00000bb800      0.089      1.587  0x0000446000       ok  verified   assumed          53           0          14         242           7       1.393         ok       1.996         ok      1.467  0x0000459000       ok  verified   assumed          44           0          11         235           4         2.792
+  3          1000  0x00000fa000      0.122      1.609  0x00005a8000       ok  verified   assumed          62           0          16         233           7       1.291         ok       1.947         ok      1.627  0x00005c1000       ok  verified   assumed          63           0           9         250           2         2.836
+  3          2500  0x0000271000      0.290      1.969  0x0000cfd000       ok  verified   assumed         129           0          17         237           7       1.580         ok       1.981         ok      2.185  0x0000d37000       ok  verified   assumed         117           0          13         294          12         2.781
+  3          5000  0x00004e2000      0.580      3.241  0x00019d4000       ok  verified   assumed         233           0          35         358          16       1.405         ok       1.979         ok      3.079  0x0001a47000       ok  verified   assumed         205           0          19         386           5         3.008
+  3          7500  0x0000753000      0.873      4.227  0x00026af000       ok  verified   assumed         343           0          48         390          57       3.163         ok       2.980         ok      4.075  0x000275b000       ok  verified   assumed         304           0          26         467          17         2.949
+  4         10000  0x00009c4000      1.160      5.936  0x0003382000       ok  verified   assumed         453           0          56         478         192       3.080         ok       2.975         ok      4.441  0x0003467000       ok  verified   assumed         344           0          21         497          23         3.043
+  4         25000  0x000186a000      3.050     14.247  0x0008a2c000       ok  verified   assumed        1190           0         137        1031         460       5.712         ok       4.996         ok      8.886  0x0008c74000       ok  verified   assumed         789           0          54         688         242         3.346
+  4         50000  0x00030d4000      6.386     27.926  0x0011432000       ok  verified   assumed        2342           0         273        2174         739       9.149         ok       8.459         ok     15.919  0x00118be000       ok  verified   assumed        1451           0          61        1441         223         3.991
+  4         75000  0x000493e000      9.363     40.642  0x0019e1a000       ok  verified   assumed        3514           0         407        3374         780      13.738         ok      13.912         ok     26.075  0x001a4ef000       ok  verified   assumed        2192           0         107        1223        1681         7.798
+  5        100000  0x00061a8000     12.710     52.304  0x002283e000       ok  verified   assumed        4679           0         466        4071        1194      16.804         ok      16.993         ok     35.502  0x002315c000       ok  verified   assumed        2884           0         124        1074        2995         3.118
+  5        250000  0x000f424000     32.269    116.679  0x0050492000       ok  verified   assumed       10828           0         836       10535        1080      36.659         ok      41.198         ok     92.668  0x0051ae1000       ok  verified   assumed        8187           0         242        5981        4080         3.419
+  5        500000  0x001e848000     63.066    235.215  0x00a09f5000       ok  verified   assumed       21804           0        1670       20992        2457      71.784         ok      83.518         ok    183.010  0x00a3683000       ok  verified   assumed       16716           0         506       11824        7477         4.101
+  5        750000  0x002dc6c000     95.740    353.198  0x00f0de8000       ok  verified   assumed       32667           0        2386       31790        3636     107.474         ok     123.882         ok    264.060  0x00f636d000       ok  verified   assumed       24458           0         764       16847       10638         4.740
+  6       1000000  0x003d090000    130.409    470.531  0x01428a9000       ok  verified   assumed       43670           0        3111       42336        4782     142.369         ok     153.178         ok    354.983  0x01481c1000       ok  verified   assumed       33561           0        1026       20015       16245         5.121
+  6       2500000  0x0098968000    423.678   2415.980  0x0364fa3000       ok  verified   assumed      141913           0       12645      236972       86369     394.682         ok     446.609         ok    780.386  0x0371d04000       ok  verified   assumed       74734           0        3157       76522        1414         9.836
+  6       5000000  0x01312d0000    870.497   7595.360  0x06c6c82000       ok  verified   assumed      290504           0       33458      740265      441461    2122.420         ok    2200.787         ok   5564.624  0x06e4532000       ok  verified   assumed      160694           0       13731      544821      388624        13.344
+  6       7500000  0x01c9c38000   1272.141  11640.747  0x0a31a15000       ok  verified   assumed      437412           0       51561     1133666      685136    3247.553         ok    3297.887         ok   7601.243  0x0a5f8f8000       ok  verified   assumed      240645           0       21465      742764      507891        12.703
+  7      10000000  0x02625a0000   1663.215  18645.393  0x0d8e50a000       ok  verified   assumed      577840           0       70704     1335580     1714761    5036.987         ok    4516.118         ok  10481.913  0x0dd5330000       ok  verified   assumed      322559           0       28880     1024137      710423        13.330
+# IOError(28, 'No space left on device')
+  7      25000000  0x05f5e10000   1823.134     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        13.304
+# IOError(28, 'No space left on device')
+  7      50000000  0x0bebc20000   1784.937     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.321
+# IOError(28, 'No space left on device')
+  7      75000000  0x11e1a30000   1800.809     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.956

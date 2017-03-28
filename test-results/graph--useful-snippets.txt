@@ -1,0 +1,31 @@
+
+# Logarithmic tens scale
+set logscale x 10
+set format x "%1.0s%c"
+
+# Logarithmic bytes scale
+set logscale x 2
+set xrange [2**10:2**40]
+set format x "%1.0b%BB"
+
+# Linear bytes scale (GiB)
+set xrange [512*2**20:17*2**30]
+set format x "%1.0b%BB"
+set xtics 0*2**30, 2*2**30, 18*2**30
+
+# Logarithmic time scale
+set logscale y 60
+set ytics ( \
+    "1ms" .001, "10ms" .01, "20ms" .02, "50ms" .05, \
+    "100ms" .1, "200ms" .2, "500ms" .5, \
+    "1s" 1, "2s" 2, "5s" 5, "10s" 10, "30s" 30, \
+    "1m" 60, "2m" 2*60, "5m" 5*60, "10m" 10*60, "30m" 30*60, \
+    "1h" 60*60, "2h" 2*60*60, "5h" 5*60*60, "10h" 10*60*60)
+
+# Linear time scale (10-minute increments)
+ticstring = "("
+do for [m=0:1200:10] {
+    ticstring = ticstring.'"'.m.'m" '.m.'*60, '
+}
+ticstring = ticstring.')'
+set ytics @ticstring

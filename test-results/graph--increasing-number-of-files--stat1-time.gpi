@@ -1,0 +1,24 @@
+set xlabel "Number of files (log scale)"
+set format x "%1.0s%c"
+set xrange [0:8*1000*1000]
+
+set ylabel "Time to check status"
+ticstring = "("
+do for [m=0:1200:5] {
+    ticstring = ticstring.'"'.m.'m" '.m.'*60, '
+}
+ticstring = ticstring.')'
+set ytics @ticstring
+set yrange [0:60*60]
+
+set grid
+set key top left
+
+meantable="< ./meantable.py --columns filecount stat1_time --files exp--increasing-number-of-files--v02--w-cpu"
+meantable2="< ./meantable.py --columns filecount stat1_time --files exp--increasing-number-of-files--v03--less-dirs/"
+
+plot \
+    meantable.'/git-*' using 1:2:3 with errorlines title "git", \
+    meantable.'/hg-*' using 1:2:3 with errorlines title "hg", \
+    meantable.'/bup-*' using 1:2:3 with errorlines title "bup", \
+    meantable2.'/prototype2x1mem-*' using 1:2:3 with errorlines title "prototype (2x1,mem)", \

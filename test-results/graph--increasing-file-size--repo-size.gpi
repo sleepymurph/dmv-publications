@@ -1,0 +1,20 @@
+set xlabel "File Size (log scale)"
+set logscale x 2
+set xrange [2**10:2**40]
+set format x "%1.0b%BB"
+
+set ylabel "Ratio of total storage used to file size"
+set yrange [0:6]
+set format y "%.0fx"
+
+set grid
+set key top right
+
+meantable="< ./meantable.py --columns filebytes c2_size gc_size --files exp--increasing-file-size--v04--w-cpu"
+
+plot \
+    meantable."/git-*" using 1:($2/$1):($3/$1) with errorlines title "git (two commits)", \
+    meantable."/git-*" using 1:($4/$1):($5/$1) with errorlines title "git (garbage collected)", \
+    meantable."/hg-*" using 1:($2/$1):($3/$1) with errorlines title "hg (two commits)", \
+    meantable."/bup-*" using 1:($2/$1):($3/$1) with errorlines title "bup (two commits)", \
+    meantable."/prototype-*" using 1:($2/$1):($3/$1) with errorlines title "prototype (two commits)", \

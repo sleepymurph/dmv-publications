@@ -1,0 +1,131 @@
+# Committing increasingly large files
+# 
+# vcs:         bup
+# vcs_version: debian/0.25-1
+# data_gen:    random
+# 
+# date:          2016-10-15T13:18:00.519953
+# commandline:   ./increasing_file_size.py bup 0 39 --mag-step=2 --data-gen=random --tmp=/test
+# testversion:   117369b Properly detect large files in Bup commits
+# hostname:      murphytest01
+# platform:      Linux-3.16.0-4-amd64-x86_64-with-debian-8.6
+# memtotal:      8064260 kB
+# memfree:       7525604 kB
+# 
+# pythonversion:
+#     2.7.9 (default, Jun 29 2016, 13:08:31) 
+#     [GCC 4.9.2]
+# 
+# cpuinfo:
+#     processor	: 0
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 1998.000
+#     cache size	: 6144 KB
+#     
+#     processor	: 1
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 3166.000
+#     cache size	: 6144 KB
+# 
+# fsinfo:
+#     Filesystem                         Size  Used Avail Use% Mounted on
+#     /dev/mapper/murphytest01--vg-test  197G   60M  197G   1% /test
+# 
+# diskinfo:
+#     sda	vendor: ATA, model: ST3250318AS	scheduler: noop deadline [cfq]
+# 
+# Command results:
+# ok:      Command completed successfully
+# no_exec: Command was never executed
+# failed:  Command failed
+# 
+# Verification results:
+# ver_err:  Could not verify due to error during verification
+# no_ver:   Verification was never performed
+# bad:      Verification discovered an error
+# verified: Verified OK
+# assumed:  Assumed ok because dependent commands successful
+# 
+mag     filebytes  filesize  cre_time   c1_time       c1_size   c1_cmd    c1_ver   c1_repo   c2_time       c2_size   c2_cmd    c2_ver   c2_repo   gc_time       gc_size   gc_cmd   gc_repo
+  0  0x0000000001      1.0B     0.000     0.572  0x0000024000       ok  verified   assumed     0.997  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  0  0x0000000001      1.0B     0.000     0.907  0x0000024000       ok  verified   assumed     0.988  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  1  0x0000000002      2.0B     0.000     0.912  0x0000024000       ok  verified   assumed     1.011  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  1  0x0000000003      3.0B     0.000     0.903  0x0000024000       ok  verified   assumed     0.991  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  2  0x0000000004      4.0B     0.000     0.870  0x0000024000       ok  verified   assumed     0.993  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  2  0x0000000006      6.0B     0.000     0.932  0x0000024000       ok  verified   assumed     0.987  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  3  0x0000000008      8.0B     0.000     0.904  0x0000024000       ok  verified   assumed     0.992  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  3  0x000000000c     12.0B     0.000     0.918  0x0000024000       ok  verified   assumed     0.988  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  4  0x0000000010     16.0B     0.000     0.913  0x0000024000       ok  verified   assumed     1.004  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  4  0x0000000018     24.0B     0.000     0.911  0x0000024000       ok  verified   assumed     0.999  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  5  0x0000000020     32.0B     0.000     0.907  0x0000024000       ok  verified   assumed     0.985  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  5  0x0000000030     48.0B     0.000     0.915  0x0000024000       ok  verified   assumed     1.000  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  6  0x0000000040     64.0B     0.000     0.918  0x0000024000       ok  verified   assumed     0.994  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  6  0x0000000060     96.0B     0.000     0.917  0x0000024000       ok  verified   assumed     0.982  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  7  0x0000000080    128.0B     0.000     0.920  0x0000024000       ok  verified   assumed     1.004  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  7  0x00000000c0    192.0B     0.000     0.906  0x0000024000       ok  verified   assumed     0.987  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  8  0x0000000100    256.0B     0.000     0.923  0x0000024000       ok  verified   assumed     1.001  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  8  0x0000000180    384.0B     0.000     0.891  0x0000024000       ok  verified   assumed     1.028  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  9  0x0000000200    512.0B     0.000     0.887  0x0000024000       ok  verified   assumed     0.998  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+  9  0x0000000300    768.0B     0.000     0.912  0x0000024000       ok  verified   assumed     0.994  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+ 10  0x0000000400    1.0KiB     0.000     0.914  0x0000024000       ok  verified   assumed     1.004  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+ 10  0x0000000600    1.5KiB     0.000     0.909  0x0000024000       ok  verified   assumed     0.993  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+ 11  0x0000000800    2.0KiB     0.000     0.916  0x0000024000       ok  verified   assumed     0.992  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+ 11  0x0000000c00    3.0KiB     0.000     0.905  0x0000024000       ok  verified   assumed     1.013  0x0000026000       ok  verified   assumed     0.000  0x0000026000       ok   assumed
+ 12  0x0000001000    4.0KiB     0.000     0.901  0x0000025000       ok  verified   assumed     1.004  0x0000027000       ok  verified   assumed     0.000  0x0000027000       ok   assumed
+ 12  0x0000001800    6.0KiB     0.001     0.910  0x0000026000       ok  verified   assumed     0.981  0x0000029000       ok  verified   assumed     0.000  0x0000029000       ok   assumed
+ 13  0x0000002000    8.0KiB     0.001     0.929  0x0000027000       ok  verified   assumed     0.992  0x000002a000       ok  verified   assumed     0.000  0x000002a000       ok   assumed
+ 13  0x0000003000   12.0KiB     0.001     0.901  0x0000029000       ok  verified   assumed     0.991  0x000002e000       ok  verified   assumed     0.000  0x000002e000       ok   assumed
+ 14  0x0000004000   16.0KiB     0.001     0.919  0x000002b000       ok  verified   assumed     1.001  0x000002e000       ok  verified   assumed     0.000  0x000002e000       ok   assumed
+ 14  0x0000006000   24.0KiB     0.002     0.888  0x000002f000       ok  verified   assumed     1.016  0x0000035000       ok  verified   assumed     0.000  0x0000035000       ok   assumed
+ 15  0x0000008000   32.0KiB     0.002     0.897  0x0000033000       ok  verified   assumed     0.999  0x000003d000       ok  verified   assumed     0.000  0x000003d000       ok   assumed
+ 15  0x000000c000   48.0KiB     0.003     0.915  0x000003b000       ok  verified   assumed     0.994  0x000003f000       ok  verified   assumed     0.000  0x000003f000       ok   assumed
+ 16  0x0000010000   64.0KiB     0.004     0.918  0x0000043000       ok  verified   assumed     0.996  0x0000046000       ok  verified   assumed     0.000  0x0000046000       ok   assumed
+ 16  0x0000018000   96.0KiB     0.008     0.915  0x0000053000       ok  verified   assumed     0.981  0x0000058000       ok  verified   assumed     0.000  0x0000058000       ok   assumed
+ 17  0x0000020000  128.0KiB     0.009     0.907  0x0000063000       ok  verified   assumed     0.986  0x0000066000       ok  verified   assumed     0.000  0x0000066000       ok   assumed
+ 17  0x0000030000  192.0KiB     0.016     0.883  0x0000083000       ok  verified   assumed     0.993  0x000008b000       ok  verified   assumed     0.000  0x000008b000       ok   assumed
+ 18  0x0000040000  256.0KiB     0.019     0.905  0x00000a3000       ok  verified   assumed     0.973  0x00000a6000       ok  verified   assumed     0.000  0x00000a6000       ok   assumed
+ 18  0x0000060000  384.0KiB     0.026     0.915  0x00000e3000       ok  verified   assumed     0.985  0x00000e8000       ok  verified   assumed     0.000  0x00000e8000       ok   assumed
+ 19  0x0000080000  512.0KiB     0.036     0.878  0x0000123000       ok  verified   assumed     0.989  0x000012a000       ok  verified   assumed     0.000  0x000012a000       ok   assumed
+ 19  0x00000c0000  768.0KiB     0.052     0.878  0x00001a5000       ok  verified   assumed     0.972  0x00001ab000       ok  verified   assumed     0.000  0x00001ab000       ok   assumed
+ 20  0x0000100000    1.0MiB     0.072     0.875  0x0000225000       ok  verified   assumed     0.943  0x000022a000       ok  verified   assumed     0.000  0x000022a000       ok   assumed
+ 20  0x0000180000    1.5MiB     0.103     0.875  0x0000326000       ok  verified   assumed     0.962  0x0000330000       ok  verified   assumed     0.000  0x0000330000       ok   assumed
+ 21  0x0000200000    2.0MiB     0.138     0.830  0x0000427000       ok  verified   assumed     0.940  0x000042d000       ok  verified   assumed     0.000  0x000042d000       ok   assumed
+ 21  0x0000300000    3.0MiB     0.207     0.806  0x0000629000       ok  verified   assumed     0.895  0x0000630000       ok  verified   assumed     0.000  0x0000630000       ok   assumed
+ 22  0x0000400000    4.0MiB     0.275     0.760  0x000082c000       ok  verified   assumed     0.885  0x0000830000       ok  verified   assumed     0.000  0x0000830000       ok   assumed
+ 22  0x0000600000    6.0MiB     0.411     0.681  0x0000c30000       ok  verified   assumed     0.850  0x0000c3e000       ok  verified   assumed     0.000  0x0000c3e000       ok   assumed
+ 23  0x0000800000    8.0MiB     0.546     1.574  0x0001036000       ok  verified   assumed     0.794  0x0001043000       ok  verified   assumed     0.000  0x0001043000       ok   assumed
+ 23  0x0000c00000   12.0MiB     0.823     1.421  0x0001840000       ok  verified   assumed     0.672  0x000184e000       ok  verified   assumed     0.000  0x000184e000       ok   assumed
+ 24  0x0001000000   16.0MiB     1.093     1.261  0x000204d000       ok  verified   assumed     1.583  0x0002055000       ok  verified   assumed     0.000  0x0002055000       ok   assumed
+ 24  0x0001800000   24.0MiB     1.639     1.956  0x000305f000       ok  verified   assumed     1.407  0x000306b000       ok  verified   assumed     0.000  0x000306b000       ok   assumed
+ 25  0x0002000000   32.0MiB     2.187     2.520  0x0004074000       ok  verified   assumed     1.188  0x0004083000       ok  verified   assumed     0.000  0x0004083000       ok   assumed
+ 25  0x0003000000   48.0MiB     3.282     2.958  0x000609c000       ok  verified   assumed     1.700  0x00060ab000       ok  verified   assumed     0.000  0x00060ab000       ok   assumed
+ 26  0x0004000000   64.0MiB     4.371     3.247  0x00080c6000       ok  verified   assumed     2.308  0x00080db000       ok  verified   assumed     0.000  0x00080db000       ok   assumed
+ 26  0x0006000000   96.0MiB     6.556     5.055  0x000c10b000       ok  verified   assumed     2.493  0x000c129000       ok  verified   assumed     0.000  0x000c129000       ok   assumed
+ 27  0x0008000000  128.0MiB     8.742     6.579  0x0010164000       ok  verified   assumed     3.679  0x001018a000       ok  verified   assumed     0.000  0x001018a000       ok   assumed
+ 27  0x000c000000  192.0MiB    13.113     9.208  0x00181fe000       ok  verified   assumed     3.799  0x0018232000       ok  verified   assumed     0.000  0x0018232000       ok   assumed
+ 28  0x0010000000  256.0MiB    17.484    11.373  0x00202a9000       ok  verified   assumed     5.457  0x00202ed000       ok  verified   assumed     0.000  0x00202ed000       ok   assumed
+ 28  0x0018000000  384.0MiB    26.220    17.237  0x00303d6000       ok  verified   assumed     7.867  0x0030440000       ok  verified   assumed     0.000  0x0030440000       ok   assumed
+ 29  0x0020000000  512.0MiB    34.960    22.643  0x0040534000       ok  verified   assumed    13.049  0x00405bb000       ok  verified   assumed     0.000  0x00405bb000       ok   assumed
+ 29  0x0030000000  768.0MiB    52.626    33.358  0x0060792000       ok  verified   assumed    24.603  0x0060859000       ok  verified   assumed     0.000  0x0060859000       ok   assumed
+ 30  0x0040000000    1.0GiB    70.029    44.666  0x0080a3b000       ok  verified   assumed    20.146  0x0080b44000       ok  verified   assumed     0.000  0x0080b44000       ok   assumed
+ 30  0x0060000000    1.5GiB   105.309    66.451  0x00c0f05000       ok  verified   assumed    39.006  0x00c1091000       ok  verified   assumed     0.000  0x00c1091000       ok   assumed
+ 31  0x0080000000    2.0GiB   140.526    88.409  0x01013d7000       ok  verified   assumed    43.555  0x01015e1000       ok  verified   assumed     0.000  0x01015e1000       ok   assumed
+ 31  0x00c0000000    3.0GiB   210.400   132.943  0x0181df1000       ok  verified   assumed    61.114  0x01820fe000       ok  verified   assumed     0.000  0x01820fe000       ok   assumed
+ 32  0x0100000000    4.0GiB   280.631   176.896  0x0202878000       ok  verified   assumed    87.660  0x020369c000       ok  verified   assumed     0.000  0x020369c000       ok   assumed
+ 32  0x0180000000    6.0GiB   421.231   265.281  0x0304acb000       ok  verified   assumed   127.307  0x03050ea000       ok  verified   assumed     0.000  0x03050ea000       ok   assumed
+ 33  0x0200000000    8.0GiB   561.507   512.125  0x0405df8000       ok  verified   assumed   165.758  0x0407128000       ok  verified   assumed     0.000  0x0407128000       ok   assumed
+ 33  0x0300000000   12.0GiB   843.573   780.286  0x0609581000       ok  verified   assumed   254.624  0x060b9cf000       ok  verified   assumed     0.000  0x060b9cf000       ok   assumed
+ 34  0x0400000000   16.0GiB  1126.400  1062.241  0x080e0e0000       ok  verified   assumed   351.030  0x080e1e7000       ok  verified   assumed     0.000  0x080e1e7000       ok   assumed
+ 34  0x0600000000   24.0GiB  1690.231  1681.674  0x0c15826000       ok  verified   assumed   541.676  0x0c15517000       ok  verified   assumed     0.000  0x0c15517000       ok   assumed
+ 35  0x0800000000   32.0GiB  2263.488  2088.024  0x101a214000       ok  verified   assumed   680.368  0x101c270000       ok  verified   assumed     0.000  0x101c270000       ok   assumed
+ 35  0x0c00000000   48.0GiB  3399.315  3292.801  0x1827451000       ok  verified   assumed  1013.120  0x182a4d9000       ok  verified   assumed     0.000  0x182a4d9000       ok   assumed
+ 36  0x1000000000   64.0GiB  4544.680  4334.856  0x203ac12000       ok  verified   assumed  1428.782  0x2038890000       ok  verified   assumed     0.000  0x2038890000       ok   assumed
+ 36  0x1800000000   96.0GiB  6803.267  6626.247  0x304ee73000       ok  verified   assumed  2181.677  0x3054f76000       ok  verified   assumed     0.000  0x3054f76000       ok   assumed
+# CallFailedError()
+ 37  0x2000000000  128.0GiB  9009.449  4561.476        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# CallFailedError()
+ 37  0x3000000000  192.0GiB  13510.140   320.759        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# IOError(28, 'No space left on device')
+ 38  0x4000000000  256.0GiB  13846.537    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# IOError(28, 'No space left on device')
+ 38  0x6000000000  384.0GiB  13850.008    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified

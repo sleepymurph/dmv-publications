@@ -1,0 +1,27 @@
+set xlabel "Number of files (linear scale)"
+set format x "%1.0s%c"
+set xrange [0:8*1000*1000]
+
+set ylabel "Time to commit"
+ticstring = "("
+do for [m=0:1200:30] {
+    ticstring = ticstring.'"'.m.'m" '.m.'*60, '
+}
+ticstring = ticstring.')'
+set ytics @ticstring
+set yrange [0:5*60*60]
+
+
+set grid
+set key bottom right
+
+meantable="< ./meantable.py --columns filecount c1_time --files exp--increasing-number-of-files--v02--w-cpu"
+meantable2="< ./meantable.py --columns filecount c1_time --files exp--increasing-number-of-files--v03--less-dirs/"
+
+plot \
+    meantable.'/prototype-*' using 1:2:3 with errorlines title "prototype (2x2)", \
+    meantable2.'/prototype2x1-*' using 1:2:3 with errorlines title "prototype (2x1)", \
+    meantable2.'/prototype2x1mem-*' using 1:2:3 with errorlines title "prototype (2x1,mem)", \
+    meantable2.'/prototype2x1memdeadline-*' using 1:2:3 with errorlines title "prototype (2x1,mem, deadline iosched)", \
+    meantable2.'/prototype2x1memnoop-*' using 1:2:3 with errorlines title "prototype (2x1,mem, noop iosched)", \
+    meantable2.'/prototype2x1memcfqfilebuf-*' using 1:2:3 with errorlines title "prototype (2x1,mem,filebuffer)", \

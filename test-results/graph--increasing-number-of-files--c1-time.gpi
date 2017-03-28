@@ -1,0 +1,26 @@
+set xlabel "Number of files (log scale)"
+set logscale x 10
+set format x "%1.0s%c"
+
+set ylabel "Time commit"
+set logscale y 60
+set ytics ( \
+    "1ms" .001, "10ms" .01, "20ms" .02, "50ms" .05, \
+    "100ms" .1, "200ms" .2, "500ms" .5, \
+    "1s" 1, "2s" 2, "5s" 5, "10s" 10, "30s" 30, \
+    "1m" 60, "2m" 2*60, "5m" 5*60, "10m" 10*60, "30m" 30*60, \
+    "1h" 60*60, "2h" 2*60*60, "5h" 5*60*60, "10h" 10*60*60)
+
+
+set grid
+set key top left
+
+meantable="< ./meantable.py --columns filecount c1_time --files exp--increasing-number-of-files--v02--w-cpu"
+meantable2="< ./meantable.py --columns filecount c1_time --files exp--increasing-number-of-files--v03--less-dirs/"
+
+plot \
+    meantable.'/git-*' using 1:2:3 with errorlines title "git", \
+    meantable.'/hg-*' using 1:2:3 with errorlines title "hg", \
+    meantable.'/bup-*' using 1:2:3 with errorlines title "bup", \
+    meantable2.'/prototype2x1mem-*' using 1:2:3 with errorlines title "prototype (2x1,mem)", \
+    meantable.'/copy-*' using 1:2:3 with errorlines title "cp", \

@@ -1,0 +1,375 @@
+Committing increasingly large files
+
+data_gen: sparse
+
+hostname:    sleepy
+date:        2016-09-13T18:34:24.161143
+commandline: ./increasing_file_size.py --data_gen sparse 0 34
+memtotal:    3952208 kB
+memfree:     2505124 kB
+
+fsinfo:
+Filesystem       Size  Used Avail Use% Mounted on
+/dev/mapper/tmp  9.9G   23M  9.4G   1% /tmp
+
+
+magnitude             filebytes  filehsize  create_time  commit_time             repobytes  repohsize
++ /tmp/vcs_benchmark2BRjbI$ git init
+Initialized empty Git repository in /tmp/vcs_benchmark2BRjbI/.git/
+Generating test_file (1.0B, sparse)
+Generated  test_file (1.0B, sparse) in 0.000 seconds
++ /tmp/vcs_benchmark2BRjbI$ git add test_file
++ /tmp/vcs_benchmark2BRjbI$ git commit -m 'Add test_file'
+[master (root-commit) 18efd08] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+        0                     1       1.0B        0.000        0.006                159744   156.0KiB
++ /tmp/vcs_benchmarkQItzue$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkQItzue/.git/
+Generating test_file (2.0B, sparse)
+Generated  test_file (2.0B, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkQItzue$ git add test_file
++ /tmp/vcs_benchmarkQItzue$ git commit -m 'Add test_file'
+[master (root-commit) 2849074] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+        1                     2       2.0B        0.000        0.006                159744   156.0KiB
++ /tmp/vcs_benchmarkj4tPn0$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkj4tPn0/.git/
+Generating test_file (4.0B, sparse)
+Generated  test_file (4.0B, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkj4tPn0$ git add test_file
++ /tmp/vcs_benchmarkj4tPn0$ git commit -m 'Add test_file'
+[master (root-commit) ab0d91c] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+        2                     4       4.0B        0.000        0.006                159744   156.0KiB
++ /tmp/vcs_benchmark4yZijs$ git init
+Initialized empty Git repository in /tmp/vcs_benchmark4yZijs/.git/
+Generating test_file (8.0B, sparse)
+Generated  test_file (8.0B, sparse) in 0.000 seconds
++ /tmp/vcs_benchmark4yZijs$ git add test_file
++ /tmp/vcs_benchmark4yZijs$ git commit -m 'Add test_file'
+[master (root-commit) 435a7bb] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+        3                     8       8.0B        0.000        0.009                159744   156.0KiB
++ /tmp/vcs_benchmark8xGzyU$ git init
+Initialized empty Git repository in /tmp/vcs_benchmark8xGzyU/.git/
+Generating test_file (16.0B, sparse)
+Generated  test_file (16.0B, sparse) in 0.000 seconds
++ /tmp/vcs_benchmark8xGzyU$ git add test_file
++ /tmp/vcs_benchmark8xGzyU$ git commit -m 'Add test_file'
+[master (root-commit) 76d81e9] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+        4                    16      16.0B        0.000        0.007                159744   156.0KiB
++ /tmp/vcs_benchmarkQplsMB$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkQplsMB/.git/
+Generating test_file (32.0B, sparse)
+Generated  test_file (32.0B, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkQplsMB$ git add test_file
++ /tmp/vcs_benchmarkQplsMB$ git commit -m 'Add test_file'
+[master (root-commit) 45b7f6a] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+        5                    32      32.0B        0.000        0.007                159744   156.0KiB
++ /tmp/vcs_benchmarkzo_E1S$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkzo_E1S/.git/
+Generating test_file (64.0B, sparse)
+Generated  test_file (64.0B, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkzo_E1S$ git add test_file
++ /tmp/vcs_benchmarkzo_E1S$ git commit -m 'Add test_file'
+[master (root-commit) d8f7491] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+        6                    64      64.0B        0.000        0.009                159744   156.0KiB
++ /tmp/vcs_benchmarkECanVs$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkECanVs/.git/
+Generating test_file (128.0B, sparse)
+Generated  test_file (128.0B, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkECanVs$ git add test_file
++ /tmp/vcs_benchmarkECanVs$ git commit -m 'Add test_file'
+[master (root-commit) 50ccff9] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+        7                   128     128.0B        0.000        0.007                159744   156.0KiB
++ /tmp/vcs_benchmarkkoysK3$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkkoysK3/.git/
+Generating test_file (256.0B, sparse)
+Generated  test_file (256.0B, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkkoysK3$ git add test_file
++ /tmp/vcs_benchmarkkoysK3$ git commit -m 'Add test_file'
+[master (root-commit) 8b62785] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+        8                   256     256.0B        0.000        0.009                159744   156.0KiB
++ /tmp/vcs_benchmarkQOhnMf$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkQOhnMf/.git/
+Generating test_file (512.0B, sparse)
+Generated  test_file (512.0B, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkQOhnMf$ git add test_file
++ /tmp/vcs_benchmarkQOhnMf$ git commit -m 'Add test_file'
+[master (root-commit) 02a9f70] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+        9                   512     512.0B        0.000        0.006                159744   156.0KiB
++ /tmp/vcs_benchmarknpcMli$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarknpcMli/.git/
+Generating test_file (1.0KiB, sparse)
+Generated  test_file (1.0KiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarknpcMli$ git add test_file
++ /tmp/vcs_benchmarknpcMli$ git commit -m 'Add test_file'
+[master (root-commit) 8dcc7fd] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       10                  1024     1.0KiB        0.000        0.008                159744   156.0KiB
++ /tmp/vcs_benchmarkNuVnun$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkNuVnun/.git/
+Generating test_file (2.0KiB, sparse)
+Generated  test_file (2.0KiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkNuVnun$ git add test_file
++ /tmp/vcs_benchmarkNuVnun$ git commit -m 'Add test_file'
+[master (root-commit) 1783093] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       11                  2048     2.0KiB        0.000        0.006                159744   156.0KiB
++ /tmp/vcs_benchmarkqkAYwI$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkqkAYwI/.git/
+Generating test_file (4.0KiB, sparse)
+Generated  test_file (4.0KiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkqkAYwI$ git add test_file
++ /tmp/vcs_benchmarkqkAYwI$ git commit -m 'Add test_file'
+[master (root-commit) 6432469] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       12                  4096     4.0KiB        0.000        0.006                159744   156.0KiB
++ /tmp/vcs_benchmarkJjvzoG$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkJjvzoG/.git/
+Generating test_file (8.0KiB, sparse)
+Generated  test_file (8.0KiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkJjvzoG$ git add test_file
++ /tmp/vcs_benchmarkJjvzoG$ git commit -m 'Add test_file'
+[master (root-commit) 210d0b8] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       13                  8192     8.0KiB        0.000        0.006                159744   156.0KiB
++ /tmp/vcs_benchmarkDFk4h4$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkDFk4h4/.git/
+Generating test_file (16.0KiB, sparse)
+Generated  test_file (16.0KiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkDFk4h4$ git add test_file
++ /tmp/vcs_benchmarkDFk4h4$ git commit -m 'Add test_file'
+[master (root-commit) 1926706] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       14                 16384    16.0KiB        0.000        0.006                159744   156.0KiB
++ /tmp/vcs_benchmarkfpbKeQ$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkfpbKeQ/.git/
+Generating test_file (32.0KiB, sparse)
+Generated  test_file (32.0KiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkfpbKeQ$ git add test_file
++ /tmp/vcs_benchmarkfpbKeQ$ git commit -m 'Add test_file'
+[master (root-commit) 0d42142] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       15                 32768    32.0KiB        0.000        0.009                159744   156.0KiB
++ /tmp/vcs_benchmarkzqsNiV$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkzqsNiV/.git/
+Generating test_file (64.0KiB, sparse)
+Generated  test_file (64.0KiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkzqsNiV$ git add test_file
++ /tmp/vcs_benchmarkzqsNiV$ git commit -m 'Add test_file'
+[master (root-commit) a430a4c] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       16                 65536    64.0KiB        0.000        0.008                159744   156.0KiB
++ /tmp/vcs_benchmarkaVvPZB$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkaVvPZB/.git/
+Generating test_file (128.0KiB, sparse)
+Generated  test_file (128.0KiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkaVvPZB$ git add test_file
++ /tmp/vcs_benchmarkaVvPZB$ git commit -m 'Add test_file'
+[master (root-commit) 6d5f6a1] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       17                131072   128.0KiB        0.000        0.008                159744   156.0KiB
++ /tmp/vcs_benchmarkWFgHoM$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkWFgHoM/.git/
+Generating test_file (256.0KiB, sparse)
+Generated  test_file (256.0KiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkWFgHoM$ git add test_file
++ /tmp/vcs_benchmarkWFgHoM$ git commit -m 'Add test_file'
+[master (root-commit) e1bec2c] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       18                262144   256.0KiB        0.000        0.010                159744   156.0KiB
++ /tmp/vcs_benchmarkCA5WU9$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkCA5WU9/.git/
+Generating test_file (512.0KiB, sparse)
+Generated  test_file (512.0KiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkCA5WU9$ git add test_file
++ /tmp/vcs_benchmarkCA5WU9$ git commit -m 'Add test_file'
+[master (root-commit) 874d5ea] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       19                524288   512.0KiB        0.000        0.014                159744   156.0KiB
++ /tmp/vcs_benchmarkQIXeZo$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkQIXeZo/.git/
+Generating test_file (1.0MiB, sparse)
+Generated  test_file (1.0MiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkQIXeZo$ git add test_file
++ /tmp/vcs_benchmarkQIXeZo$ git commit -m 'Add test_file'
+[master (root-commit) b00c441] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       20               1048576     1.0MiB        0.000        0.022                163840   160.0KiB
++ /tmp/vcs_benchmarkngkHZU$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkngkHZU/.git/
+Generating test_file (2.0MiB, sparse)
+Generated  test_file (2.0MiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkngkHZU$ git add test_file
++ /tmp/vcs_benchmarkngkHZU$ git commit -m 'Add test_file'
+[master (root-commit) ee59b20] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       21               2097152     2.0MiB        0.000        0.036                167936   164.0KiB
++ /tmp/vcs_benchmarkX8lzu7$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkX8lzu7/.git/
+Generating test_file (4.0MiB, sparse)
+Generated  test_file (4.0MiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkX8lzu7$ git add test_file
++ /tmp/vcs_benchmarkX8lzu7$ git commit -m 'Add test_file'
+[master (root-commit) de94686] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       22               4194304     4.0MiB        0.000        0.068                176128   172.0KiB
++ /tmp/vcs_benchmarkgfbC_g$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkgfbC_g/.git/
+Generating test_file (8.0MiB, sparse)
+Generated  test_file (8.0MiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkgfbC_g$ git add test_file
++ /tmp/vcs_benchmarkgfbC_g$ git commit -m 'Add test_file'
+[master (root-commit) abf921b] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       23               8388608     8.0MiB        0.000        0.123                192512   188.0KiB
++ /tmp/vcs_benchmarkacLu2Y$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkacLu2Y/.git/
+Generating test_file (16.0MiB, sparse)
+Generated  test_file (16.0MiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkacLu2Y$ git add test_file
++ /tmp/vcs_benchmarkacLu2Y$ git commit -m 'Add test_file'
+[master (root-commit) 41f8c6b] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       24              16777216    16.0MiB        0.000        0.232                233472   228.0KiB
++ /tmp/vcs_benchmarkHiQ58Q$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkHiQ58Q/.git/
+Generating test_file (32.0MiB, sparse)
+Generated  test_file (32.0MiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkHiQ58Q$ git add test_file
++ /tmp/vcs_benchmarkHiQ58Q$ git commit -m 'Add test_file'
+[master (root-commit) f125f1b] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       25              33554432    32.0MiB        0.000        0.460                307200   300.0KiB
++ /tmp/vcs_benchmarkpzXy4t$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkpzXy4t/.git/
+Generating test_file (64.0MiB, sparse)
+Generated  test_file (64.0MiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkpzXy4t$ git add test_file
++ /tmp/vcs_benchmarkpzXy4t$ git commit -m 'Add test_file'
+[master (root-commit) 393f19f] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       26              67108864    64.0MiB        0.000        0.561                454656   444.0KiB
++ /tmp/vcs_benchmarkXep4o3$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkXep4o3/.git/
+Generating test_file (128.0MiB, sparse)
+Generated  test_file (128.0MiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkXep4o3$ git add test_file
++ /tmp/vcs_benchmarkXep4o3$ git commit -m 'Add test_file'
+[master (root-commit) 1d3d83b] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       27             134217728   128.0MiB        0.000        1.114                745472   728.0KiB
++ /tmp/vcs_benchmarkTofja2$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkTofja2/.git/
+Generating test_file (256.0MiB, sparse)
+Generated  test_file (256.0MiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkTofja2$ git add test_file
++ /tmp/vcs_benchmarkTofja2$ git commit -m 'Add test_file'
+[master (root-commit) 6846ecf] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       28             268435456   256.0MiB        0.000        2.225               1331200     1.3MiB
++ /tmp/vcs_benchmark6_xWna$ git init
+Initialized empty Git repository in /tmp/vcs_benchmark6_xWna/.git/
+Generating test_file (512.0MiB, sparse)
+Generated  test_file (512.0MiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmark6_xWna$ git add test_file
++ /tmp/vcs_benchmark6_xWna$ git commit -m 'Add test_file'
+[master (root-commit) 3dfb6b5] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       29             536870912   512.0MiB        0.000        4.437               2502656     2.4MiB
++ /tmp/vcs_benchmarklyDgZ0$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarklyDgZ0/.git/
+Generating test_file (1.0GiB, sparse)
+Generated  test_file (1.0GiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarklyDgZ0$ git add test_file
++ /tmp/vcs_benchmarklyDgZ0$ git commit -m 'Add test_file'
+[master (root-commit) 952833f] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       30            1073741824     1.0GiB        0.000       10.397               1204224     1.1MiB
++ /tmp/vcs_benchmarkEjX82y$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkEjX82y/.git/
+Generating test_file (2.0GiB, sparse)
+Generated  test_file (2.0GiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkEjX82y$ git add test_file
++ /tmp/vcs_benchmarkEjX82y$ git commit -m 'Add test_file'
+[master (root-commit) 7d17f0f] Add test_file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test_file
+Commit finished
+       31            2147483648     2.0GiB        0.000       20.661               2248704     2.1MiB
++ /tmp/vcs_benchmarkJqVbVh$ git init
+Initialized empty Git repository in /tmp/vcs_benchmarkJqVbVh/.git/
+Generating test_file (4.0GiB, sparse)
+Generated  test_file (4.0GiB, sparse) in 0.000 seconds
++ /tmp/vcs_benchmarkJqVbVh$ git add test_file
++ /tmp/vcs_benchmarkJqVbVh$ git commit -m 'Add test_file'
+(computer froze)

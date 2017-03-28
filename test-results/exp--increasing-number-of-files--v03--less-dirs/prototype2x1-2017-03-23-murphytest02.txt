@@ -1,0 +1,88 @@
+# Committing increasingly large numbers of files
+# 
+# reformat_partition: /dev/murphytest02-vg/test
+# vcs:                prototype
+# vcs_version:        prototype: git version f464604 Tuning: Use 2x1 object dir structure
+# each_file_size:     0x400 bytes (1.0KiB)
+# data_gen:           random
+# 
+# date:          2017-03-23T10:53:38.025307
+# commandline:   ./increasing_number_of_files.py prototype 0 8 --mag-step=4 --data-gen=random --tmp=/test --reformat-partition /dev/murphytest02-vg/test
+# testversion:   31479dc Dirs: Use fewer dirs in many files test
+# hostname:      murphytest02
+# platform:      Linux-3.16.0-4-amd64-x86_64-with-debian-8.6
+# memtotal:      8064260 kB
+# memfree:       7341444 kB
+# 
+# pythonversion:
+#     2.7.9 (default, Jun 29 2016, 13:08:31) 
+#     [GCC 4.9.2]
+# 
+# cpuinfo:
+#     processor	: 0
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 1998.000
+#     cache size	: 6144 KB
+#     
+#     processor	: 1
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 3166.000
+#     cache size	: 6144 KB
+# 
+# fsinfo:
+#     Filesystem                         Size  Used Avail Use% Mounted on
+#     /dev/mapper/murphytest02--vg-test  197G   60M  197G   1% /test
+# 
+# diskinfo:
+#     sda	vendor: ATA, model: ST3250318AS	scheduler: noop deadline [cfq]
+# 
+# Command results:
+# ok:      Command completed successfully
+# no_exec: Command was never executed
+# failed:  Command failed
+# 
+# Verification results:
+# ver_err:  Could not verify due to error during verification
+# no_ver:   Verification was never performed
+# bad:      Verification discovered an error
+# verified: Verified OK
+# assumed:  Assumed ok because dependent commands successful
+# 
+mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    c1_ver   c1_repo     c1_user     c1_nice   c1_system     c1_idle   c1_iowait  stat1_time  stat1_cmd  stat2_time  stat2_cmd    c2_time       c2_size   c2_cmd    c2_ver   c2_repo     c2_user     c2_nice   c2_system     c2_idle   c2_iowait  cleanup_time
+  0             1  0x0000000400      0.000      0.004  0x0000010000       ok  verified   assumed           0           0           0           0           0       0.003         ok       0.003         ok      0.003  0x0000018000       ok  verified   assumed           0           0           1           0           0         2.703
+  0             2  0x0000000800      0.000      0.104  0x0000013000       ok  verified   assumed           1           0           1          15           4       0.004         ok       0.004         ok      0.003  0x000001b000       ok  verified   assumed           0           0           1           0           0         2.861
+  0             4  0x0000001000      0.001      0.104  0x0000019000       ok  verified   assumed           1           0           1          18           1       0.003         ok       0.003         ok      0.007  0x0000021000       ok  verified   assumed           1           0           0           1           0         2.798
+  0             6  0x0000001800      0.001      0.104  0x000001f000       ok  verified   assumed           1           0           1          18           1       0.003         ok       0.003         ok      0.004  0x0000027000       ok  verified   assumed           0           0           1           1           0         2.906
+  1            10  0x0000002800      0.001      0.114  0x000002b000       ok  verified   assumed           1           0           1          21           0       0.004         ok       0.003         ok      0.006  0x0000032000       ok  verified   assumed           0           0           0           1           0         2.757
+  1            25  0x0000006400      0.003      0.106  0x0000055000       ok  verified   assumed           1           0           0          19           0       0.004         ok       0.003         ok      0.107  0x000005f000       ok  verified   assumed           0           0           0          20           0         2.736
+  1            50  0x000000c800      0.006      0.109  0x00000a0000       ok  verified   assumed           1           0           2          17           1       0.004         ok       0.004         ok      0.111  0x00000ae000       ok  verified   assumed           0           0           1          22           0         2.815
+  1            75  0x0000012c00      0.009      0.110  0x00000e7000       ok  verified   assumed           1           0           2          19           1       0.005         ok       0.005         ok      0.116  0x00000f5000       ok  verified   assumed           2           0           1          22           0         2.775
+  2           100  0x0000019000      0.011      0.114  0x000012c000       ok  verified   assumed           2           0           2          18           1       0.007         ok       0.008         ok      0.116  0x000013d000       ok  verified   assumed           1           0           1          21           0         2.802
+  2           250  0x000003e800      0.029      0.122  0x00002f2000       ok  verified   assumed           1           0           4          20           0       0.011         ok       0.010         ok      0.127  0x0000320000       ok  verified   assumed           0           0           2          23           0         2.855
+  2           500  0x000007d000      0.061      0.142  0x000056a000       ok  verified   assumed           4           0           5          19           0       0.019         ok       0.018         ok      0.143  0x00005b5000       ok  verified   assumed           2           0           3          24           0         2.975
+  2           750  0x00000bb800      0.089      0.163  0x00007bc000       ok  verified   assumed           5           0           9          19           0       0.027         ok       0.025         ok      0.161  0x0000820000       ok  verified   assumed           3           0           4          25           0         3.019
+  3          1000  0x00000fa000      0.115      0.181  0x0000a03000       ok  verified   assumed           5           0          12          19           0       0.035         ok       0.033         ok      0.177  0x0000a84000       ok  verified   assumed           4           0           6          26           0         3.025
+  3          2500  0x0000271000      0.280      0.388  0x0001527000       ok  verified   assumed          12           0          26          38           0       0.070         ok       0.067         ok      0.324  0x00015e0000       ok  verified   assumed           7           0          19          40           0         3.239
+  3          5000  0x00004e2000      0.559      0.770  0x0002945000       ok  verified   assumed          29           0          48          69           7       0.136         ok       0.129         ok      0.552  0x0002ab3000       ok  verified   assumed          13           0          38          58           2         3.976
+  3          7500  0x0000753000      0.839      1.147  0x0003d63000       ok  verified   assumed          46           0          69         112           2       0.204         ok       0.192         ok      0.768  0x0003f86000       ok  verified   assumed          26           0          49          78           0         3.562
+  4         10000  0x00009c4000      1.126      1.636  0x0005181000       ok  verified   assumed          52           0         107         166           2       0.271         ok       0.257         ok      1.085  0x0005459000       ok  verified   assumed          29           0          72         115           2         4.054
+# CallFailedError(cmd='prototype status', exitcode='1')
+  4         25000  0x000186a000      2.870      4.028  0x000cac4000       ok  verified   assumed         148           0         240         374          42       0.004     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         5.395
+# CallFailedError(cmd='prototype status', exitcode='1')
+  4         50000  0x00030d4000      5.841      8.054  0x001948c000       ok  verified   assumed         289           0         496         731          91       0.005     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         7.823
+# CallFailedError(cmd='prototype status', exitcode='1')
+  4         75000  0x000493e000      8.693     12.149  0x0025da2000       ok  verified   assumed         422           0         760        1112         130       0.005     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.680
+# CallFailedError(cmd='prototype status', exitcode='1')
+  5        100000  0x00061a8000     11.621     18.637  0x00328e9000       ok  verified   assumed         573           0        1192        1087         841       0.006     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         5.383
+# CallFailedError(cmd='prototype status', exitcode='1')
+  5        250000  0x000f424000     30.602     50.159  0x007e064000       ok  verified   assumed        1456           0        2945        3830        1733       0.004     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         6.412
+# CallFailedError(cmd='prototype status', exitcode='1')
+  5        500000  0x001e848000     62.694    120.733  0x00fbe9d000       ok  verified   assumed        2922           0        6074        8862        6136       0.005     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         8.203
+# CallFailedError(cmd='prototype status', exitcode='1')
+  5        750000  0x002dc6c000     94.412    384.133  0x0179dc4000       ok  verified   assumed        5575           0       10605       25503       33882       0.638     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         9.299
+# CallFailedError(cmd='prototype status', exitcode='1')
+  6       1000000  0x003d090000    123.934    857.119  0x01f7c22000       ok  verified   assumed        8612           0       16300       52612       91909       1.253     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.561
+# CallFailedError(cmd='prototype status', exitcode='1')
+  6       2500000  0x0098968000    322.793   5833.996  0x04ec25f000       ok  verified   assumed       25505           0       48185      265037      820538       0.558     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        14.705
+# CallFailedError(cmd='prototype status', exitcode='1')
+  6       5000000  0x01312d0000    634.023  21839.347  0x09d81a8000       ok  verified   assumed       55320           0      101001     1077442     3107774       2.407     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        13.818

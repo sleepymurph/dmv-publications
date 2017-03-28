@@ -1,0 +1,135 @@
+# Committing increasingly large files
+# 
+# vcs:         hg
+# vcs_version: Mercurial Distributed SCM (version 3.1.2)
+# data_gen:    random
+# 
+# date:          2016-10-14T17:15:41.035144
+# commandline:   ./increasing_file_size.py hg 0 37 --mag-step=2 --data-gen=random --tmp=/test
+# testversion:   94e6f2a Shorten filehsize and create_time columns
+# hostname:      murphytest03
+# platform:      Linux-3.16.0-4-amd64-x86_64-with-debian-8.6
+# memtotal:      8064260 kB
+# memfree:       7904584 kB
+# 
+# pythonversion:
+#     2.7.9 (default, Jun 29 2016, 13:08:31) 
+#     [GCC 4.9.2]
+# 
+# cpuinfo:
+#     processor	: 0
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 3166.000
+#     cache size	: 6144 KB
+#     
+#     processor	: 1
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 1998.000
+#     cache size	: 6144 KB
+# 
+# fsinfo:
+#     Filesystem                         Size  Used Avail Use% Mounted on
+#     /dev/mapper/murphytest03--vg-test  197G   60M  197G   1% /test
+# 
+# diskinfo:
+#     sda	vendor: ATA, model: ST3250318AS	scheduler: noop deadline [cfq]
+# 
+# Command results:
+# ok:      Command completed successfully
+# no_exec: Command was never executed
+# failed:  Command failed
+# 
+# Verification results:
+# ver_err:  Could not verify due to error during verification
+# no_ver:   Verification was never performed
+# bad:      Verification discovered an error
+# verified: Verified OK
+# assumed:  Assumed ok because dependent commands successful
+# 
+mag     filebytes  filesize  cre_time   c1_time       c1_size   c1_cmd    c1_ver   c1_repo   c2_time       c2_size   c2_cmd    c2_ver   c2_repo   gc_time       gc_size   gc_cmd   gc_repo
+  0  0x0000000001      1.0B     0.000     0.105  0x0000014000       ok   assumed   assumed     0.057  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  0  0x0000000001      1.0B     0.000     0.102  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  1  0x0000000002      2.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  1  0x0000000003      3.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  2  0x0000000004      4.0B     0.000     0.102  0x0000014000       ok   assumed   assumed     0.055  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  2  0x0000000006      6.0B     0.000     0.102  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  3  0x0000000008      8.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  3  0x000000000c     12.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.055  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  4  0x0000000010     16.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  4  0x0000000018     24.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  5  0x0000000020     32.0B     0.000     0.102  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  5  0x0000000030     48.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  6  0x0000000040     64.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  6  0x0000000060     96.0B     0.000     0.102  0x0000014000       ok   assumed   assumed     0.055  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  7  0x0000000080    128.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  7  0x00000000c0    192.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.055  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  8  0x0000000100    256.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  8  0x0000000180    384.0B     0.000     0.102  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  9  0x0000000200    512.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.055  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+  9  0x0000000300    768.0B     0.000     0.101  0x0000014000       ok   assumed   assumed     0.055  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+ 10  0x0000000400    1.0KiB     0.000     0.106  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+ 10  0x0000000600    1.5KiB     0.000     0.101  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+ 11  0x0000000800    2.0KiB     0.000     0.104  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+ 11  0x0000000c00    3.0KiB     0.000     0.102  0x0000014000       ok   assumed   assumed     0.054  0x0000015000       ok   assumed   assumed     0.000  0x0000015000       ok   assumed
+ 12  0x0000001000    4.0KiB     0.000     0.102  0x0000015000       ok   assumed   assumed     0.055  0x0000016000       ok   assumed   assumed     0.000  0x0000016000       ok   assumed
+ 12  0x0000001800    6.0KiB     0.001     0.102  0x0000016000       ok   assumed   assumed     0.055  0x0000017000       ok   assumed   assumed     0.000  0x0000017000       ok   assumed
+ 13  0x0000002000    8.0KiB     0.001     0.102  0x0000017000       ok   assumed   assumed     0.055  0x0000018000       ok   assumed   assumed     0.000  0x0000018000       ok   assumed
+ 13  0x0000003000   12.0KiB     0.001     0.102  0x0000019000       ok   assumed   assumed     0.055  0x000001a000       ok   assumed   assumed     0.000  0x000001a000       ok   assumed
+ 14  0x0000004000   16.0KiB     0.001     0.102  0x000001b000       ok   assumed   assumed     0.055  0x000001c000       ok   assumed   assumed     0.000  0x000001c000       ok   assumed
+ 14  0x0000006000   24.0KiB     0.002     0.102  0x000001f000       ok   assumed   assumed     0.055  0x0000020000       ok   assumed   assumed     0.000  0x0000020000       ok   assumed
+ 15  0x0000008000   32.0KiB     0.002     0.102  0x0000023000       ok   assumed   assumed     0.055  0x0000024000       ok   assumed   assumed     0.000  0x0000024000       ok   assumed
+ 15  0x000000c000   48.0KiB     0.003     0.103  0x000002b000       ok   assumed   assumed     0.055  0x000002c000       ok   assumed   assumed     0.000  0x000002c000       ok   assumed
+ 16  0x0000010000   64.0KiB     0.004     0.104  0x0000033000       ok   assumed   assumed     0.056  0x0000034000       ok   assumed   assumed     0.000  0x0000034000       ok   assumed
+ 16  0x0000018000   96.0KiB     0.007     0.105  0x0000043000       ok   assumed   assumed     0.056  0x0000044000       ok   assumed   assumed     0.000  0x0000044000       ok   assumed
+ 17  0x0000020000  128.0KiB     0.009     0.107  0x0000054000       ok   assumed   assumed     0.057  0x0000055000       ok   assumed   assumed     0.000  0x0000055000       ok   assumed
+ 17  0x0000030000  192.0KiB     0.014     0.110  0x0000074000       ok   assumed   assumed     0.058  0x0000075000       ok   assumed   assumed     0.000  0x0000075000       ok   assumed
+ 18  0x0000040000  256.0KiB     0.017     0.112  0x0000094000       ok   assumed   assumed     0.063  0x0000095000       ok   assumed   assumed     0.000  0x0000095000       ok   assumed
+ 18  0x0000060000  384.0KiB     0.028     0.119  0x00000d4000       ok   assumed   assumed     0.062  0x00000d5000       ok   assumed   assumed     0.000  0x00000d5000       ok   assumed
+ 19  0x0000080000  512.0KiB     0.035     0.124  0x0000114000       ok   assumed   assumed     0.065  0x0000115000       ok   assumed   assumed     0.000  0x0000115000       ok   assumed
+ 19  0x00000c0000  768.0KiB     0.052     0.135  0x0000194000       ok   assumed   assumed     0.070  0x0000195000       ok   assumed   assumed     0.000  0x0000195000       ok   assumed
+ 20  0x0000100000    1.0MiB     0.069     0.146  0x0000214000       ok   assumed   assumed     0.075  0x0000215000       ok   assumed   assumed     0.000  0x0000215000       ok   assumed
+ 20  0x0000180000    1.5MiB     0.103     0.169  0x0000314000       ok   assumed   assumed     0.086  0x0000315000       ok   assumed   assumed     0.000  0x0000315000       ok   assumed
+ 21  0x0000200000    2.0MiB     0.137     0.192  0x0000414000       ok   assumed   assumed     0.096  0x0000415000       ok   assumed   assumed     0.000  0x0000415000       ok   assumed
+ 21  0x0000300000    3.0MiB     0.205     0.238  0x0000614000       ok   assumed   assumed     0.117  0x0000615000       ok   assumed   assumed     0.000  0x0000615000       ok   assumed
+ 22  0x0000400000    4.0MiB     0.273     0.283  0x0000814000       ok   assumed   assumed     0.138  0x0000816000       ok   assumed   assumed     0.000  0x0000816000       ok   assumed
+ 22  0x0000600000    6.0MiB     0.410     0.373  0x0000c14000       ok   assumed   assumed     0.180  0x0000c16000       ok   assumed   assumed     0.000  0x0000c16000       ok   assumed
+ 23  0x0000800000    8.0MiB     0.546     0.463  0x0001014000       ok   assumed   assumed     0.222  0x0001017000       ok   assumed   assumed     0.000  0x0001017000       ok   assumed
+ 23  0x0000c00000   12.0MiB     0.819     0.643  0x0001814000       ok   assumed   assumed     0.305  0x0001818000       ok   assumed   assumed     0.000  0x0001818000       ok   assumed
+ 24  0x0001000000   16.0MiB     1.092     0.824  0x0002014000       ok   assumed   assumed     0.388  0x0002019000       ok   assumed   assumed     0.000  0x0002019000       ok   assumed
+ 24  0x0001800000   24.0MiB     1.638     1.183  0x0003014000       ok   assumed   assumed     0.557  0x000301b000       ok   assumed   assumed     0.000  0x000301b000       ok   assumed
+ 25  0x0002000000   32.0MiB     2.185     1.541  0x0004014000       ok   assumed   assumed     0.735  0x000401d000       ok   assumed   assumed     0.000  0x000401d000       ok   assumed
+ 25  0x0003000000   48.0MiB     3.279     2.254  0x0006014000       ok   assumed   assumed     1.074  0x0006021000       ok   assumed   assumed     0.000  0x0006021000       ok   assumed
+ 26  0x0004000000   64.0MiB     4.370     2.960  0x0008014000       ok   assumed   assumed     1.414  0x0008025000       ok   assumed   assumed     0.000  0x0008025000       ok   assumed
+ 26  0x0006000000   96.0MiB     6.553     4.402  0x000c014000       ok   assumed   assumed     2.096  0x000c02d000       ok   assumed   assumed     0.000  0x000c02d000       ok   assumed
+ 27  0x0008000000  128.0MiB     8.737     5.794  0x0010014000       ok   assumed   assumed     2.794  0x0010035000       ok   assumed   assumed     0.000  0x0010035000       ok   assumed
+ 27  0x000c000000  192.0MiB    13.105     8.654  0x0018014000       ok   assumed   assumed     4.147  0x0018045000       ok   assumed   assumed     0.000  0x0018045000       ok   assumed
+ 28  0x0010000000  256.0MiB    17.477    11.460  0x0020014000       ok   assumed   assumed     5.512  0x0020055000       ok   assumed   assumed     0.000  0x0020055000       ok   assumed
+ 28  0x0018000000  384.0MiB    26.217    18.131  0x0030014000       ok   assumed   assumed     8.253  0x0030075000       ok   assumed   assumed     0.000  0x0030075000       ok   assumed
+ 29  0x0020000000  512.0MiB    34.954    24.102  0x0040014000       ok   assumed   assumed    10.993  0x0040096000       ok   assumed   assumed     0.000  0x0040096000       ok   assumed
+ 29  0x0030000000  768.0MiB    52.463    37.878  0x0060015000       ok   assumed   assumed    16.486  0x00600d7000       ok   assumed   assumed     0.000  0x00600d7000       ok   assumed
+ 30  0x0040000000    1.0GiB    70.064    53.475  0x0080016000       ok   assumed   assumed    22.074  0x0080117000       ok   assumed   assumed     0.000  0x0080117000       ok   assumed
+ 30  0x0060000000    1.5GiB   105.310    86.079  0x00c0016000       ok   assumed   assumed    36.476  0x00c0197000       ok   assumed   assumed     0.000  0x00c0197000       ok   assumed
+# Command failed (exit code 1): hg commit -m 'Add large_file'
+ 31  0x0080000000    2.0GiB   140.495    84.960        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 1): hg commit -m 'Add large_file'
+ 31  0x00c0000000    3.0GiB   210.709   127.427        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 1): hg commit -m 'Add large_file'
+ 32  0x0100000000    4.0GiB   280.535   176.083        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 1): hg commit -m 'Add large_file'
+ 32  0x0180000000    6.0GiB   421.180   462.208        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 1): hg commit -m 'Add large_file'
+ 33  0x0200000000    8.0GiB   562.028   827.114        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 137): hg commit -m 'Add large_file'
+ 33  0x0300000000   12.0GiB   842.723  1589.879        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 137): hg commit -m 'Add large_file'
+ 34  0x0400000000   16.0GiB  1124.251  1831.017        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 255): hg commit -m 'Add large_file'
+ 34  0x0600000000   24.0GiB  1687.724     0.142        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 255): hg commit -m 'Add large_file'
+ 35  0x0800000000   32.0GiB  2251.681     0.146        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 255): hg commit -m 'Add large_file'
+ 35  0x0c00000000   48.0GiB  3384.282     0.146        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 255): hg commit -m 'Add large_file'
+ 36  0x1000000000   64.0GiB  4525.502     0.135        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
+# Command failed (exit code 255): hg commit -m 'Add large_file'
+ 36  0x1800000000   96.0GiB  6751.650     0.157        (None)   failed       bad  verified    (None)        (None)  not_executed  not_verified  not_verified    (None)        (None)  not_executed  not_verified
