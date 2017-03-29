@@ -1,0 +1,54 @@
+# Committing increasingly large files
+# 
+# reformat_partition: /dev/murphytest02-vg/test
+# vcs:                prototype
+# timeout:            19800.0
+# vcs_version:        prototype: git version b134cca Chunk Size: Window 32k x Match 16k
+# data_gen:           random
+# 
+# date:          2017-03-29T19:13:28.840782
+# commandline:   ./increasing_file_size.py prototype 0 38 --mag-step=2 --data-gen=random --timeout=19800 --tmp=/test --reformat-partition /dev/murphytest02-vg/test
+# testversion:   3b66327 Fix process timeout so it actually kills process
+# hostname:      murphytest02
+# platform:      Linux-3.16.0-4-amd64-x86_64-with-debian-8.6
+# memtotal:      8064260 kB
+# memfree:       7658208 kB
+# 
+# pythonversion:
+#     2.7.9 (default, Jun 29 2016, 13:08:31) 
+#     [GCC 4.9.2]
+# 
+# cpuinfo:
+#     processor	: 0
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 1998.000
+#     cache size	: 6144 KB
+#     
+#     processor	: 1
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 1998.000
+#     cache size	: 6144 KB
+# 
+# fsinfo:
+#     Filesystem                         Size  Used Avail Use% Mounted on
+#     /dev/mapper/murphytest02--vg-test  197G   60M  197G   1% /test
+# 
+# diskinfo:
+#     sda	vendor: ATA, model: ST3250318AS	scheduler: noop deadline [cfq]
+# 
+# Command results:
+# ok:      Command completed successfully
+# no_exec: Command was never executed
+# failed:  Command failed
+# 
+# Verification results:
+# ver_err:  Could not verify due to error during verification
+# no_ver:   Verification was never performed
+# bad:      Verification discovered an error
+# verified: Verified OK
+# assumed:  Assumed ok because dependent commands successful
+# 
+mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_ver   c1_repo     c1_user     c1_nice   c1_system     c1_idle   c1_iowait    c2_time       c2_size   c2_cmd    c2_ver   c2_repo     c2_user     c2_nice   c2_system     c2_idle   c2_iowait    gc_time       gc_size   gc_cmd   gc_repo     gc_user     gc_nice   gc_system     gc_idle   gc_iowait
+  0  0x0000000001      1.0B      0.000      0.201  0x000000d000       ok  verified   assumed           0           0           1          40           0      0.201  0x0000013000       ok  verified   assumed           0           0           0          39           0      0.000  0x0000013000       ok   assumed           0           0           1           0           0
+  0  0x0000000001      1.0B      0.000      0.201  0x000000d000       ok  verified   assumed           1           0           1          34           5      0.201  0x0000013000       ok  verified   assumed           0           0           1          39           0      0.000  0x0000013000       ok   assumed           0           0           1           0           0
+  1  0x0000000002      2.0B      0.000      0.201  0x000000d000       ok  verified   assumed           0           0           1          39           0      0.201  0x0000013000       ok  verified   assumed           0           0           0          39           0      0.000  0x0000013000       ok   assumed           0           0           1           0           0
