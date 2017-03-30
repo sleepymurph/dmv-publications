@@ -1,0 +1,26 @@
+set xlabel "File Size (linear scale)"
+set xrange [512*2**20:8.5*2**30]
+set format x "%1.0b%BB"
+set xtics 1*2**30
+
+set ylabel "Time to commit"
+
+ticstring = "("
+do for [m=0:1200:10] {
+    ticstring = ticstring.'"'.m.'m" '.m.'*60, '
+}
+ticstring = ticstring.')'
+set ytics @ticstring
+
+set grid
+set key top left
+
+meantable(f)="< ./meantable.py --columns filebytes c1_time --files exp--increasing-file-size--v04--w-cpu/".f
+
+plot \
+    meantable('prototype-*') using 1:2:3 with errorlines title "prototype", \
+    meantable('prototype2x1-*') using 1:2:3 with errorlines title "prototype2x1", \
+    meantable('prototype2x1mem-*') using 1:2:3 with errorlines title "prototype2x1mem", \
+    meantable('prototype2x1membufwrite-*') using 1:2:3 with errorlines title "prototype2x1membufwrite", \
+    meantable('prototype2x1memcfqfilebuf-*') using 1:2:3 with errorlines title "prototype2x1memcfqfilebuf", \
+    meantable('prototype2x1chunks32kx16k-*') using 1:2:3 with errorlines title "prototype2x1chunks32kx16k", \
