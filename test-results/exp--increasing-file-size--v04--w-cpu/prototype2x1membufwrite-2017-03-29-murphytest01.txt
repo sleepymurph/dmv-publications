@@ -125,3 +125,6 @@ mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_v
 # Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.099, killsignal='SIGTERM', returncode=-15)
 # CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19810.001, killsignal='SIGKILL', returncode=-15)
  36  0x1800000000   96.0GiB   6751.737  19821.277        (None)   failed       bad   ver_err      152260           0       44153     1340895     2418485     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.037, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='prototype commit -m 'Add large_file'', returncode='1')
+ 37  0x2000000000  128.0GiB   9005.673  17685.943        (None)   failed       bad   ver_err      139485           0       41614     1137143     2211314     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
