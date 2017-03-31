@@ -125,3 +125,8 @@ mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_v
 # Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.036, killsignal='SIGTERM', returncode=-15)
 # CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19810.035, killsignal='SIGKILL', returncode=-15)
  36  0x1800000000   96.0GiB   6752.307  19811.499        (None)   failed       bad   ver_err      152390           0       41877     1320536     2439090     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.053, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='sudo umount /dev/murphytest03-vg/test', returncode='32')
+ 37  0x2000000000  128.0GiB   9004.681  17576.871        (None)   failed       bad   ver_err      141299           0       41799     1119789     2204633     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# CallFailedError(cmd='sudo umount /dev/murphytest03-vg/test', returncode='32')
+ 37  0x3000000000  192.0GiB      0.553     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
