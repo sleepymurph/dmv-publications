@@ -76,3 +76,24 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
   5        750000  0x002dc6c000     93.631    369.328  0x0177699000       ok  verified   assumed        7436           0        6284       26782       32713       1.604         ok      26.037         ok    168.024  0x01842bb000       ok  verified   assumed         970           0         780        9843       21881       272.200
   6       1000000  0x003d090000    128.221   1174.107  0x01f422a000       ok  verified   assumed       11462           0       11772       79267      129998       2.106         ok      50.869         ok    319.020  0x020513c000       ok  verified   assumed        1442           0        1133       19734       41288       337.464
   6       2500000  0x0098968000    321.273   8269.444  0x04e33a8000       ok  verified   assumed       32196           0       43543      425929     1138518       9.265         ok     267.959         ok   1793.216  0x050db60000       ok  verified   assumed        4312           0        5996      119218      227175        16.993
+# Timeout: 19800s, sending SIGTERM: git add many_files_dir
+# Timeout: 19800s, sending SIGTERM: git fsck
+# Could not verify repo: CallTimeoutError(cmd='git fsck', elapsed=19800.025, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='git add many_files_dir', elapsed=19800.019, killsignal='SIGTERM', returncode=-15)
+  6       5000000  0x01312d0000    650.227  19801.221        (None)   failed       bad   ver_err       44464           0       48020     1221692     2630055      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         8.554
+# Timeout: 19800s, sending SIGTERM: git add many_files_dir
+# Timeout: 19813s, sending SIGKILL: git add many_files_dir
+# Timeout: 19800s, sending SIGTERM: git fsck
+# Could not verify repo: CallTimeoutError(cmd='git fsck', elapsed=19800.091, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='git add many_files_dir', elapsed=19812.796, killsignal='SIGKILL', returncode=-9)
+  6       7500000  0x01c9c38000    970.287  19833.086        (None)   failed       bad   ver_err       42497           0       46016     1055352     2807707      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         9.082
+# Timeout: 19800s, sending SIGTERM: git fsck
+# Could not verify repo: CallTimeoutError(cmd='git fsck', elapsed=19800.054, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='git add many_files_dir', returncode='128')
+  7      10000000  0x02625a0000   1283.842  14129.074        (None)   failed       bad   ver_err       34779           0       38311      851360     1889185      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         9.087
+# IOError(28, 'No space left on device')
+  7      25000000  0x05f5e10000   1898.663     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.733
+# IOError(28, 'No space left on device')
+  7      50000000  0x0bebc20000   1851.431     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        13.201
+# IOError(28, 'No space left on device')
+  7      75000000  0x11e1a30000   1858.914     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.685
