@@ -1,0 +1,58 @@
+# Committing increasingly large numbers of files
+# 
+# reformat_partition: /dev/murphytest02-vg/test
+# data_gen:           random
+# vcs:                prototype
+# each_file_size:     0x400 bytes (1.0KiB)
+# timeout:            19800.0
+# vcs_version:        prototype: git version c9baf3a Debug: Fix bad read
+# 
+# date:          2017-04-04T08:20:44.849966
+# commandline:   ./increasing_number_of_files.py prototype 0 8 --mag-step=4 --data-gen=random --timeout=19800 --tmp=/test --reformat-partition /dev/murphytest02-vg/test
+# testversion:   7146442 Leave timeout info as comment in output
+# hostname:      murphytest02
+# platform:      Linux-3.16.0-4-amd64-x86_64-with-debian-8.6
+# memtotal:      8064260 kB
+# memfree:       7778364 kB
+# 
+# pythonversion:
+#     2.7.9 (default, Jun 29 2016, 13:08:31) 
+#     [GCC 4.9.2]
+# 
+# cpuinfo:
+#     processor	: 0
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 1998.000
+#     cache size	: 6144 KB
+#     
+#     processor	: 1
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 1998.000
+#     cache size	: 6144 KB
+# 
+# fsinfo:
+#     Filesystem                         Size  Used Avail Use% Mounted on
+#     /dev/mapper/murphytest02--vg-test  197G   60M  197G   1% /test
+# 
+# diskinfo:
+#     sda	vendor: ATA, model: ST3250318AS	scheduler: noop deadline [cfq]
+# 
+# Command results:
+# ok:      Command completed successfully
+# no_exec: Command was never executed
+# failed:  Command failed
+# 
+# Verification results:
+# ver_err:  Could not verify due to error during verification
+# no_ver:   Verification was never performed
+# bad:      Verification discovered an error
+# verified: Verified OK
+# assumed:  Assumed ok because dependent commands successful
+# 
+mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    c1_ver   c1_repo     c1_user     c1_nice   c1_system     c1_idle   c1_iowait  stat1_time  stat1_cmd  stat2_time  stat2_cmd    c2_time       c2_size   c2_cmd    c2_ver   c2_repo     c2_user     c2_nice   c2_system     c2_idle   c2_iowait  cleanup_time
+  0             1  0x0000000400      0.000      0.201  0x0000010000       ok  verified   assumed           0           0           0          40           0       0.101         ok       0.101         ok      0.201  0x0000018000       ok  verified   assumed           0           0           0          38           0         3.108
+  0             2  0x0000000800      0.001      0.201  0x0000013000       ok  verified   assumed           0           0           1          37           3       0.101         ok       0.101         ok      0.201  0x000001b000       ok  verified   assumed           0           0           0          36           3         3.008
+  0             4  0x0000001000      0.001      0.201  0x0000019000       ok  verified   assumed           0           0           0          38           2       0.101         ok       0.101         ok      0.201  0x0000021000       ok  verified   assumed           0           0           0          37           3         3.011
+  0             6  0x0000001800      0.001      0.201  0x000001f000       ok  verified   assumed           1           0           1          38           0       0.101         ok       0.101         ok      0.201  0x0000027000       ok  verified   assumed           0           0           1          40           0         3.007
+  1            10  0x0000002800      0.002      0.201  0x000002b000       ok  verified   assumed           0           0           1          36           3       0.101         ok       0.101         ok      0.201  0x0000033000       ok  verified   assumed           0           0           0          38           1         3.008
+  1            25  0x0000006400      0.005      0.201  0x0000057000       ok  verified   assumed           0           0           1          39           1       0.101         ok       0.101         ok      0.201  0x0000061000       ok  verified   assumed           2           0           0          38           0         2.908
