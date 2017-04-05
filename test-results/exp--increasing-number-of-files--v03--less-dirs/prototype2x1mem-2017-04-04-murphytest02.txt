@@ -82,3 +82,13 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
 # Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.026, killsignal='SIGTERM', returncode=-15)
 # CallTimeoutError(cmd='prototype commit -m 'Add many_files_dir'', elapsed=19800.094, killsignal='SIGTERM', returncode=-15)
   6       7500000  0x01c9c38000    973.684  19809.036        (None)   failed       bad   ver_err       57644           0       76509     1240887     2571064      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        14.287
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.005, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='sudo umount /dev/murphytest02-vg/test', returncode='32')
+  7      10000000  0x02625a0000   1291.757   7397.548        (None)   failed       bad   ver_err       35250           0       48714      438811      947805      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         0.215
+# CallFailedError(cmd='sudo umount /dev/murphytest02-vg/test', returncode='32')
+  7      25000000  0x05f5e10000     (None)     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         0.115
+# CallFailedError(cmd='sudo umount /dev/murphytest02-vg/test', returncode='32')
+  7      50000000  0x0bebc20000     (None)     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         0.114
+# CallFailedError(cmd='sudo umount /dev/murphytest02-vg/test', returncode='32')
+  7      75000000  0x11e1a30000     (None)     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         0.115
