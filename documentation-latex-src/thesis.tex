@@ -31,6 +31,21 @@
 \author{Michael Murphy}
 \maketitle
 
+\frontmatter
+
+\chapter{Abstract}
+  Nowadays...
+
+\tableofcontents
+
+\listoffigures
+\listoftables
+\lstlistoflistings
+
+\mainmatter
+
+\chapter{Introduction}
+
 \section{Idea}\label{idea}
 
 A low-level distributed data storage platform that makes data location and
@@ -69,6 +84,8 @@ updates. Consistency will be resolved during updates. Conflicting versions will
 be presented to the client application to resolve.
 
 
+\chapter{Architecture and Design}
+
 \section{Architecture}\label{architecture}
 
 Data will be distributed across several \newterm{stores}, which will each hold a
@@ -102,7 +119,7 @@ We are envisioning a filesystem with an \lstinline{ls} command that lists these
 hints as part of its output (in this example presented as a single estimated
 time to retrieve):
 
-\begin{lstlisting}
+\begin{lstlisting}[caption=Example ls output]
     -rw-r--r-- 1 user user  121306 Oct 21 18:28 local   filex
     -rw-r--r-- 1 user user   25475 Oct 21 17:52 100ms   filey
     -rw-r--r-- 1 user user   32031 Oct 21 17:52 20min   filez
@@ -145,6 +162,8 @@ save space. Algorithms and client applications must work with the blobs they
 have locally and the hints about the availability of remote blobs.
 
 
+\chapter{Implementation}
+
 \section{Implementation}\label{implementation}
 
 % TODO: DAG diagram
@@ -172,6 +191,7 @@ write applications on top of this system that automate more operations.
 
 \end{itemize}
 
+\backmatter
 
 % \nocite{*}  % Print all references even if they're not used
 % \bibliographystyle{plain}

@@ -7,6 +7,9 @@ default: \
 thesis.pdf: \
     thesis.tex
 	pdflatex thesis.tex
+	#bibtex $*.aux
+	pdflatex thesis.tex
+	pdflatex thesis.tex
 
 design-document.pdf: \
     design-document.tex \
