@@ -8,11 +8,23 @@ default: \
 
 thesis.pdf: \
     thesis.tex \
-    dia_architecture.pdf
+    research.bib \
+    dia_architecture.pdf \
+
 	pdflatex thesis.tex
-	#bibtex $*.aux
+	bibtex thesis.aux
 	pdflatex thesis.tex
 	pdflatex thesis.tex
+
+
+related-works.pdf: \
+    related-works.tex \
+    research.bib \
+
+	pdflatex related-works.tex
+	bibtex related-works.aux
+	pdflatex related-works.tex
+	pdflatex related-works.tex
 
 
 design-document.pdf: \
@@ -22,15 +34,14 @@ design-document.pdf: \
     dia_obj_db_and_wd.pdf \
     dia_workflow_personal.pdf \
     dia_workflow_corporate.pdf \
-    dia_workflow_sensors.pdf
-	pdflatex design-document.tex
+    dia_workflow_sensors.pdf \
+
 
 
 design-document-2-short.pdf: \
     design-document-2-short.tex \
     research.bib \
-    dia_architecture.pdf
-	pdflatex design-document-2-short.tex
+    dia_architecture.pdf \
 
 
 results.pdf: \
@@ -51,15 +62,10 @@ results.pdf: \
     plot-num-files--prototype-improvements--c1-time-detail.pdf \
     plot-rolling-hash.pdf \
 
-	pdflatex results.tex
-
-
 
 # General LaTeX
 
-%.pdf: %.tex research.bib
-	pdflatex $*.tex
-	bibtex $*.aux
+%.pdf: %.tex
 	pdflatex $*.tex
 	pdflatex $*.tex
 
