@@ -14,8 +14,8 @@ set yrange [0:60*60]
 set grid
 set key top left
 
-meantable="< ./meantable.py --columns filecount stat1_time --files exp--num-files--v02--w-cpu"
-meantable2="< ./meantable.py --columns filecount stat1_time --files exp--num-files--v03--less-dirs/"
+meantable="< ../data/meantable.py --columns filecount stat1_time --files exp--num-files--v02--w-cpu"
+meantable2="< ../data/meantable.py --columns filecount stat1_time --files exp--num-files--v03--less-dirs/"
 
 plot \
     meantable.'/git-*' using 1:2:3 with errorlines title "git", \
