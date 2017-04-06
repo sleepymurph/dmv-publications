@@ -15,7 +15,7 @@ thesis.pdf: \
 design-document.pdf: \
     design-document.tex \
     research.bib \
-    new-dag.pdf \
+    dia_new_dag.pdf \
     object-db-and-working-directory.pdf \
     workflow-personal.pdf \
     workflow-corporate.pdf \
