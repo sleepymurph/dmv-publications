@@ -1,6 +1,6 @@
-default: test-results.pdf
+default: results.pdf
 
-test-results.pdf: \
+results.pdf: \
     plot-filesystem-limits--directory-takeover.pdf \
     plot-file-size--c1-cpu-a.pdf \
     plot-file-size--c1-cpu-b.pdf \
