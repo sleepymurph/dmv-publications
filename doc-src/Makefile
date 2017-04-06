@@ -5,7 +5,8 @@ default: \
     ../thesis.pdf
 
 thesis.pdf: \
-    thesis.tex
+    thesis.tex \
+    architecture.pdf
 	pdflatex thesis.tex
 	#bibtex $*.aux
 	pdflatex thesis.tex
