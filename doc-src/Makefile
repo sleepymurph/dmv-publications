@@ -17,9 +17,9 @@ design-document.pdf: \
     research.bib \
     dia_new_dag.pdf \
     dia_obj_db_and_wd.pdf \
-    workflow-personal.pdf \
-    workflow-corporate.pdf \
-    workflow-sensors.pdf
+    dia_workflow_personal.pdf \
+    dia_workflow_corporate.pdf \
+    dia_workflow_sensors.pdf
 	pdflatex design-document.tex
 
 design-document-2-short.pdf: \
