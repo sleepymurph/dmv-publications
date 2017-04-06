@@ -223,62 +223,62 @@ Performance observations:
 
 \begin{figure}[p]
   \caption{Real time required to commit many 1KiB files to an empty repository}
-  \label{fig:graph--increasing-number-of-files--c1-time}
+  \label{fig:graph--num-files--c1-time}
   \centering
-    \includegraphics[]{graph--increasing-number-of-files--c1-time}
+    \includegraphics[]{graph--num-files--c1-time}
 \end{figure}
 
 \begin{figure}[p]
   \caption{Real time required to commit many 1KiB files to an empty repository
   (detail)}
-  \label{fig:graph--increasing-number-of-files--c1-time-detail}
+  \label{fig:graph--num-files--c1-time-detail}
   \centering
-    \includegraphics[]{graph--increasing-number-of-files--c1-time-detail}
+    \includegraphics[]{graph--num-files--c1-time-detail}
 \end{figure}
 
 \begin{figure}[p]
   \caption{Real time required to commit many 1KiB files to an empty repository
   (detail)}
-  \label{fig:graph--increasing-number-of-files--prototype-improvements--c1-time-detail}
+  \label{fig:graph--num-files--prototype-improvements--c1-time-detail}
   \centering
-    \includegraphics[]{graph--increasing-number-of-files--prototype-improvements--c1-time-detail}
+    \includegraphics[]{graph--num-files--prototype-improvements--c1-time-detail}
 \end{figure}
 
 \begin{figure}[p]
   \caption{CPU utilization while committing many 1KiB files to an empty
   repository}
-  \label{fig:graph--increasing-number-of-files--c1-cpu}
+  \label{fig:graph--num-files--c1-cpu}
   \centering
-    \includegraphics[]{graph--increasing-number-of-files--c1-cpu-a}
-    \includegraphics[]{graph--increasing-number-of-files--c1-cpu-b}
+    \includegraphics[]{graph--num-files--c1-cpu-a}
+    \includegraphics[]{graph--num-files--c1-cpu-b}
 \end{figure}
 
 \begin{figure}[p]
   \caption{Real time required to check the status of many 1KiB files after
   initial commit}
-  \label{fig:graph--increasing-number-of-files--stat1-time}
+  \label{fig:graph--num-files--stat1-time}
   \centering
-    \includegraphics[]{graph--increasing-number-of-files--stat1-time}
+    \includegraphics[]{graph--num-files--stat1-time}
 \end{figure}
 
 \begin{figure}[p]
   \caption{Total repository size after committing, editing, and committing again}
-  \label{fig:graph--increasing-number-of-files--repo-size}
+  \label{fig:graph--num-files--repo-size}
   \centering
-    \includegraphics[]{graph--increasing-number-of-files--repo-size}
+    \includegraphics[]{graph--num-files--repo-size}
 \end{figure}
 
-Figure \ref{fig:graph--increasing-number-of-files--c1-time} shows the time
+Figure \ref{fig:graph--num-files--c1-time} shows the time
 required for the initial commit, copying all files into a fresh empty
 repository.
 
-Figure \ref{fig:graph--increasing-number-of-files--c1-cpu} shows CPU utilization
+Figure \ref{fig:graph--num-files--c1-cpu} shows CPU utilization
 during the commit.
 
-Figure \ref{fig:graph--increasing-number-of-files--stat1-time} shows the time
+Figure \ref{fig:graph--num-files--stat1-time} shows the time
 required to check the changed status of all files just after committing.
 
-Figure \ref{fig:graph--increasing-number-of-files--repo-size} shows the total
+Figure \ref{fig:graph--num-files--repo-size} shows the total
 repository size, including the original files, after committing once, editing
 1/1024th of every sixteenth file, and committing again.
 

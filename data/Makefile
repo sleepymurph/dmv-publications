@@ -9,13 +9,13 @@ test-results.pdf: \
     graph--file-size--c1-time--detail-high-end--prototype-improvements.pdf \
     graph--file-size--c1-time--detail-low-end.pdf \
     graph--file-size--repo-size.pdf \
-    graph--increasing-number-of-files--c1-cpu-a.pdf \
-    graph--increasing-number-of-files--c1-cpu-b.pdf \
-    graph--increasing-number-of-files--c1-time.pdf \
-    graph--increasing-number-of-files--c1-time-detail.pdf \
-    graph--increasing-number-of-files--stat1-time.pdf \
-    graph--increasing-number-of-files--repo-size.pdf \
-    graph--increasing-number-of-files--prototype-improvements--c1-time-detail.pdf \
+    graph--num-files--c1-cpu-a.pdf \
+    graph--num-files--c1-cpu-b.pdf \
+    graph--num-files--c1-time.pdf \
+    graph--num-files--c1-time-detail.pdf \
+    graph--num-files--stat1-time.pdf \
+    graph--num-files--repo-size.pdf \
+    graph--num-files--prototype-improvements--c1-time-detail.pdf \
     graph--rolling-hash.pdf \
 
 
