@@ -1,7 +1,12 @@
 default: \
     ../design-document.pdf \
     ../design-document-2-short.pdf \
-    ../related-works.pdf
+    ../related-works.pdf \
+    ../thesis.pdf
+
+thesis.pdf: \
+    thesis.tex
+	pdflatex thesis.tex
 
 design-document.pdf: \
     design-document.tex \

@@ -1,0 +1,180 @@
+\documentclass[12pt,a4paper,two-side]{book}
+% vim: set ts=2 sts=2 sw=2 :
+
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+
+% Use a blank space between paragraphs instead of an indent.
+\usepackage[parfill]{parskip}
+
+% Source code listings
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
+
+\usepackage{url}
+% To actually link URLs in the PDF.
+%
+% The hyperref docs recommend declaring it after the other \usepackage
+% declarations, because it has to redefine several commands to work properly,
+% and other later redefinitions might interfere.
+% Remove the hidelinks parameter to get (ugly) visual highlights around the
+% links.
+\usepackage[hidelinks]{hyperref}
+
+% Create a short macro for newly-defined key terms.
+\newcommand{\newterm}{\textit}
+
+
+\begin{document}
+
+\title{Master's Thesis Design Document \\ (Terse Version)}
+\author{Michael Murphy}
+\maketitle
+
+\section{Idea}\label{idea}
+
+A low-level distributed data storage platform that makes data location and
+availability explicit, rather than trying to hide or abstract them away.
+
+The target use for this system is to spread a data set across many compute
+nodes, and to allow the sharding and replication of the data set to be
+customizable according to the location and availability of the nodes, and what
+data is needed where. The ultimate goal is to track the scattered data as a
+coherent data whole, and to allow the end user or client application to
+visualize and manage what data is stored on what nodes.
+
+The system aims to be a low-level service, providing information about the data
+and tools to manage it, but ultimately leaving decisions to the end user or
+client application.
+
+We assume that the data set and all nodes in the system are controlled by the
+user.
+
+The target data sets for this system include collections of media files (binary
+files ranging in size from hundreds of kilobytes to several gigabytes) numbering
+in the hundreds to millions. The system will not attempt to understand the
+internals of different media formats and will treat all files as opaque blobs.
+Such media data suggests a usage pattern where files are more often created or
+moved than they are updated in-place. Also, we assume writes will be infrequent
+compared to traditional online transactional databases (seconds to minutes, or
+longer, between updates).
+
+The system will be designed for high availability in the face of connections
+that are intermittent, high-latency, expensive, or otherwise restricted. At each
+node, the portion of data that is stored on that node will be available for
+reading and writing by local applications. Metadata about the non-local portions
+of the data set will be available as well, along with hints about the location
+of that data. Clients can use that information to schedule transfers and
+updates. Consistency will be resolved during updates. Conflicting versions will
+be presented to the client application to resolve.
+
+
+\section{Architecture}\label{architecture}
+
+Data will be distributed across several \newterm{stores}, which will each hold a
+portion of the data set. Stores can be diverse, from mobile devices to storage
+clusters. Distribution of the data will be determined by the end user or client
+application according to available resources and the needs of the user.
+
+The data store network will be decentralized and unstructured (Figure
+\ref{fig:architecture}). Stores can be connected to other stores in an ad-hoc
+manner, with a user- or application-defined topography. The number of
+connections will not be strictly limited, but extreme scalability of individual
+connections is not a priority. We are aiming for one, to tens, to perhaps
+hundreds of connections.
+
+\begin{figure}[h]
+  \caption{Stores in an ad-hoc network}
+  \label{fig:architecture}
+  \centering
+    \includegraphics[width=0.95\textwidth]{architecture}
+\end{figure}
+
+Each store will be autonomous, and local applications will be able to access and
+perform processing on any data that is stored locally. Data not currently
+available can be listed and requested. The listing will give hints about the
+estimated availability of each piece of data, with metrics including connection
+uptime, latency, and bandwidth to stores that have copies of the data. This
+metadata will naturally fall out of date between syncs with connected nodes. The
+age of that data can be part of the hint.
+
+We are envisioning a filesystem with an \lstinline{ls} command that lists these
+hints as part of its output (in this example presented as a single estimated
+time to retrieve):
+
+\begin{lstlisting}
+    -rw-r--r-- 1 user user  121306 Oct 21 18:28 local   filex
+    -rw-r--r-- 1 user user   25475 Oct 21 17:52 100ms   filey
+    -rw-r--r-- 1 user user   32031 Oct 21 17:52 20min   filez
+    -rw-r--r-- 1 user user   74968 Oct 18 17:12 missing filexx
+    -rw-r--r-- 1 user user   83977 Sep 22 21:23 unknown fileyy
+\end{lstlisting}
+
+A primary goal for the system is to detect storage errors and never lose data
+inadvertently. Local data stores will detect corruption, and data loss will be
+prevented by replication between stores. However, data can be explicitly removed
+from the data set. Data can be removed from the local store, relying on remote
+stores to keep replicas, though it will be up the end user/application to ensure
+that there are enough copies of the data to ensure its durability. Number of
+known replicas will be one of the metrics tracked by the system.
+
+
+\section{Design}\label{design}
+
+The data set will be a traditional hierarchical file structure, and it will be
+presented as a normal filesystem. We do not want to reinvent the filesystem, and
+we do not want to have to modify local applications to work with the data,
+though applications can be modified to be aware of and to work with the system.
+
+The storage will be modeled on version control systems, specifically Git and
+it's directed acyclic graph data structure (DAG). There will be a
+content-addressable blob store to de-duplicate and store data in a DAG
+structure, and a working tree where the files can be read and written by normal
+applications.
+
+Like in a version control system, previous versions of the data will be kept,
+along with metadata about the history of changes. Snapshots of the data will be
+explicitly \newterm{committed} to the system by the user/application. The chain
+of commit history can diverge into branches to be merged later, and each
+individual store is also naturally a branch. Syncs and merges with connected
+stores will be explicitly initiated.
+
+Individual stores are not required to store all blobs in the DAG. Some blobs may
+not be available on a given store, and history may be deliberately pruned to
+save space. Algorithms and client applications must work with the blobs they
+have locally and the hints about the availability of remote blobs.
+
+
+\section{Implementation}\label{implementation}
+
+% TODO: DAG diagram
+
+Files over a certain threshold will be broken into smaller chunks in the blob
+store, using a content-based splitting technique such as Rabin fingerprinting.
+
+
+\section{Possible extensions}
+
+The goal of the system is to be a low-level platform for tracking a single data
+set that is distributed across many nodes. Following the version-control
+paradigm, most operations will be explicit. However, it will be possible to
+write applications on top of this system that automate more operations.
+
+\begin{itemize}
+
+  \item A gossip protocol could spread information about availability of remote
+    stores that are not directly connected.
+
+  \item Daemons could auto-commit and auto-sync with other stores.
+
+  \item To save storage space, the working directory can be a virtual filesystem
+    that is a view into the object database.
+
+\end{itemize}
+
+
+% \nocite{*}  % Print all references even if they're not used
+% \bibliographystyle{plain}
+% \bibliography{research}
+
+\end{document}
