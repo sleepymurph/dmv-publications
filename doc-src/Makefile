@@ -2,7 +2,9 @@ default: \
     ../design-document.pdf \
     ../design-document-2-short.pdf \
     ../related-works.pdf \
-    ../thesis.pdf
+    ../results.pdf \
+    ../thesis.pdf \
+
 
 thesis.pdf: \
     thesis.tex \
@@ -11,6 +13,7 @@ thesis.pdf: \
 	#bibtex $*.aux
 	pdflatex thesis.tex
 	pdflatex thesis.tex
+
 
 design-document.pdf: \
     design-document.tex \
@@ -22,11 +25,37 @@ design-document.pdf: \
     dia_workflow_sensors.pdf
 	pdflatex design-document.tex
 
+
 design-document-2-short.pdf: \
     design-document-2-short.tex \
     research.bib \
     dia_architecture.pdf
 	pdflatex design-document-2-short.tex
+
+
+results.pdf: \
+    plot-filesystem-limits--directory-takeover.pdf \
+    plot-file-size--c1-cpu-a.pdf \
+    plot-file-size--c1-cpu-b.pdf \
+    plot-file-size--c1-time.pdf \
+    plot-file-size--c1-time--detail-high-end.pdf \
+    plot-file-size--c1-time--detail-high-end--prototype-improvements.pdf \
+    plot-file-size--c1-time--detail-low-end.pdf \
+    plot-file-size--repo-size.pdf \
+    plot-num-files--c1-cpu-a.pdf \
+    plot-num-files--c1-cpu-b.pdf \
+    plot-num-files--c1-time.pdf \
+    plot-num-files--c1-time-detail.pdf \
+    plot-num-files--stat1-time.pdf \
+    plot-num-files--repo-size.pdf \
+    plot-num-files--prototype-improvements--c1-time-detail.pdf \
+    plot-rolling-hash.pdf \
+
+	pdflatex results.tex
+
+
+
+# General LaTeX
 
 %.pdf: %.tex research.bib
 	pdflatex $*.tex
@@ -36,6 +65,12 @@ design-document-2-short.pdf: \
 
 ../%.pdf: %.pdf
 	cp $*.pdf ../$*.pdf
+
+
+# Plots with GnuPlot
+
+%.pdf: %.gpi ../data/** *.sh
+	gnuplot -e 'set terminal pdf' $*.gpi > $*.pdf
 
 
 # Diagrams with Graphviz
