@@ -53,7 +53,7 @@ design-document-2-short.pdf: \
 # program, you can create a more specific rule for that diagram.
 #
 
-DOT_INCLUDE=diagram-common.m4.dot
+DOT_INCLUDE=dia_common.m4.dot
 
 # Leave intermediate files after use (e.g. %.preprocessed.dot)
 .SECONDARY:
