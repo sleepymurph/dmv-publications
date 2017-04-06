@@ -6,7 +6,7 @@ default: \
 
 thesis.pdf: \
     thesis.tex \
-    architecture.pdf
+    dia_architecture.pdf
 	pdflatex thesis.tex
 	#bibtex $*.aux
 	pdflatex thesis.tex
@@ -25,7 +25,7 @@ design-document.pdf: \
 design-document-2-short.pdf: \
     design-document-2-short.tex \
     research.bib \
-    architecture.pdf
+    dia_architecture.pdf
 	pdflatex design-document-2-short.tex
 
 %.pdf: %.tex research.bib
