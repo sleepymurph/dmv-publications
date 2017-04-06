@@ -16,7 +16,7 @@ design-document.pdf: \
     design-document.tex \
     research.bib \
     dia_new_dag.pdf \
-    object-db-and-working-directory.pdf \
+    dia_obj_db_and_wd.pdf \
     workflow-personal.pdf \
     workflow-corporate.pdf \
     workflow-sensors.pdf
