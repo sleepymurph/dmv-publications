@@ -10,7 +10,7 @@ set grid
 set key top left
 
 set multiplot layout 2,2 rowsfirst
-meantable="< ../data/meantable.py --columns filecount c1_user c1_system c1_idle c1_iowait --files exp--num-files--v02--w-cpu"
+meantable="< ../data/meantable.py --columns filecount c1_user c1_system c1_idle c1_iowait --files ../data/exp--num-files--v02--w-cpu"
 POS="right at graph 0.95,0.88 front"
 USERPLOT='using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user"'
 SYSTEMPLOT='using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system"'

@@ -12,7 +12,7 @@ set style data histograms
 set style histogram cluster
 set style fill solid
 
-files="exp--filesystem-limits--micro/*murphytest03*"
+files="../data/exp--filesystem-limits--micro/*murphytest03*"
 cmdline(s)="\"< ./plot-filesystem-limits--directory-takeover--preprocess.sh ".s." ".files."\""
 plotline(s)=cmdline(s)." using 4 title \"".s." chars per dir\""
 

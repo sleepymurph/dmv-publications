@@ -15,7 +15,7 @@ set style histogram errorbars
 #set style fill solid
 
 cmdline(n) = "\"< awk '$2==".n." {print $0}'"\
-                ." exp--rolling-hash/2017-03-22--rolling-hash.txt\""
+                ." ../data/exp--rolling-hash/2017-03-22--rolling-hash.txt\""
 
 data8=cmdline(8)
 data9=cmdline(9)
