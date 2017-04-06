@@ -2,13 +2,13 @@ default: test-results.pdf
 
 test-results.pdf: \
     graph--filesystem-limits--directory-takeover.pdf \
-    graph--increasing-file-size--c1-cpu-a.pdf \
-    graph--increasing-file-size--c1-cpu-b.pdf \
-    graph--increasing-file-size--c1-time.pdf \
-    graph--increasing-file-size--c1-time--detail-high-end.pdf \
-    graph--increasing-file-size--c1-time--detail-high-end--prototype-improvements.pdf \
-    graph--increasing-file-size--c1-time--detail-low-end.pdf \
-    graph--increasing-file-size--repo-size.pdf \
+    graph--file-size--c1-cpu-a.pdf \
+    graph--file-size--c1-cpu-b.pdf \
+    graph--file-size--c1-time.pdf \
+    graph--file-size--c1-time--detail-high-end.pdf \
+    graph--file-size--c1-time--detail-high-end--prototype-improvements.pdf \
+    graph--file-size--c1-time--detail-low-end.pdf \
+    graph--file-size--repo-size.pdf \
     graph--increasing-number-of-files--c1-cpu-a.pdf \
     graph--increasing-number-of-files--c1-cpu-b.pdf \
     graph--increasing-number-of-files--c1-time.pdf \

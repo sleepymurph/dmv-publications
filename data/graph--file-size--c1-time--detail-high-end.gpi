@@ -15,7 +15,7 @@ set ytics @ticstring
 set grid
 set key top left
 
-meantable(f)="< ./meantable.py --columns filebytes c1_time --files exp--increasing-file-size--v04--w-cpu/".f
+meantable(f)="< ./meantable.py --columns filebytes c1_time --files exp--file-size--v04--w-cpu/".f
 
 plot \
     meantable('git-*') using 1:2:3 with errorlines title "git", \
