@@ -25,6 +25,13 @@
 \newcommand{\newterm}{\textit}
 
 
+
+
+
+
+
+
+
 \begin{document}
 
 \title{Master's Thesis}
@@ -34,8 +41,25 @@
 
 \frontmatter
 
+
+
+
+
+
+
+
+
 \chapter{Abstract}
-  Nowadays...
+
+Nowadays...
+
+
+
+
+
+
+
+
 
 \tableofcontents
 
@@ -53,9 +77,25 @@
 
 \mainmatter
 
+
+
+
+
+
+
+
+
 \chapter{Introduction}
 
-\section{Idea}\label{idea}
+
+
+
+
+
+
+
+
+\chapter{Idea}\label{idea}
 
 A low-level distributed data storage platform that makes data location and
 availability explicit, rather than trying to hide or abstract them away.
@@ -93,9 +133,14 @@ updates. Consistency will be resolved during updates. Conflicting versions will
 be presented to the client application to resolve.
 
 
-\chapter{Architecture and Design}
 
-\section{Architecture}\label{architecture}
+
+
+
+
+
+
+\chapter{Architecture}\label{architecture}
 
 Data will be distributed across several \newterm{stores}, which will each hold a
 portion of the data set. Stores can be diverse, from mobile devices to storage
@@ -145,7 +190,14 @@ that there are enough copies of the data to ensure its durability. Number of
 known replicas will be one of the metrics tracked by the system.
 
 
-\section{Design}\label{design}
+
+
+
+
+
+
+
+\chapter{Design}\label{design}
 
 The data set will be a traditional hierarchical file structure, and it will be
 presented as a normal filesystem. We do not want to reinvent the filesystem, and
@@ -171,9 +223,14 @@ save space. Algorithms and client applications must work with the blobs they
 have locally and the hints about the availability of remote blobs.
 
 
-\chapter{Implementation}
 
-\section{Implementation}\label{implementation}
+
+
+
+
+
+
+\chapter{Implementation}
 
 % TODO: DAG diagram
 
@@ -199,6 +256,12 @@ write applications on top of this system that automate more operations.
     that is a view into the object database.
 
 \end{itemize}
+
+
+
+
+
+
 
 
 
@@ -612,6 +675,22 @@ overtaking files as nesting goes deeper.
 
 
 
+
+
+
+
+
+
+\chapter{Discussion}
+
+
+
+
+
+
+
+
+
 \chapter{Related Works}
 
 \section{Distributed storage and synchronization systems}
@@ -735,7 +814,50 @@ whole repository can fit onto one filesystem.
 
 
 
+
+
+
+
+
+
+\chapter{Summary of Contributions}
+
+
+
+
+
+
+
+
+
+\chapter{Conclusions}
+
+
+
+
+
+
+
+
+
+\chapter{Future Work}
+
+
+
+
+
+
+
+
+
 \backmatter
+
+
+
+
+
+
+
 
 
 % Bibliography
