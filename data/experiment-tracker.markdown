@@ -48,7 +48,7 @@ Spring: Prototype and num-files re-tests
     murphytest01 [  p   pd          pbw             ]
     murphytest02 [  p                   pc          ]
     murphytest03 [  p   pd  pdm pfb pbw @           ]
-    murphytest04 [  p   pd  @   pfb         pcd     ]
+    murphytest04 [  p   pd  pdm pfb         pcd     ]
 
 
 ### Command lines
