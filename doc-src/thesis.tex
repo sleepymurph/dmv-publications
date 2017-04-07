@@ -616,7 +616,7 @@ overtaking files as nesting goes deeper.
 
 \section{Distributed storage and synchronization systems}
 
-\subsection{Camlistore}
+\paragraph{Camlistore}
 
 Camlistore \cite{camlistore_homepage} is an open-source project to create a
 private long-term data storage system for personal users. It allows storage of
@@ -625,7 +625,7 @@ store. However, it eschews normal filesystems and creates its own schemas to
 store various media.
 
 
-\subsection{Dat Data}
+\paragraph{Dat Data}
 
 Dat \cite{dat_homepage} is an open-source project for publishing and sharing
 scientific data sets for research. This project has a lot of overlap with ours,
@@ -649,7 +649,7 @@ We hope that our system could be used as a base to build something like Dat, but
 we intend to create something even more general than the Dat core.
 
 
-\subsection{Eyo}
+\paragraph{Eyo}
 
 Eyo \cite{Strauss:2011:EDP:2002181.2002216} is system for storing personal media
 and synchronizing it between devices. It utilizes a Git-like content-addressed
@@ -660,7 +660,7 @@ access files via Eyo rather than the filesystem, both of which are thorny and
 ambitious problems. We prefer to focus purely on storage and synchronization.
 
 
-\subsection{git-annex and git-media}
+\paragraph{git-annex and git-media}
 
 Git-annex \cite{git_annex_homepage} and git-media \cite{git_media_github} are
 open-source projects that extend Git with special handling for larger files.
@@ -678,7 +678,7 @@ it has the same limitations that Git does. All repositories must have all
 metadata, and performance suffers when metadata is too large to fit into RAM.
 
 
-\subsection{IPFS: The Interplanetary Filesystem}
+\paragraph{IPFS: The Interplanetary Filesystem}
 
 IPFS \cite{ipfs_github_main} is an open-source project to create a global
 content-addressed filesystem. By its global nature, all files are stored
@@ -694,7 +694,7 @@ since small changes in the plain text of a file would completely change the
 ciphertext, leaving no way to compress the redundancy.
 
 
-\subsection{Kademlia}
+\paragraph{Kademlia}
 
 Kademlia \cite{Maymounkov2002} is an advanced distributed hash table system that
 updates its network topology information as part of normal lookups. It is an
@@ -705,7 +705,7 @@ are trying to achieve.
 
 \section{Content-Addressed Storage and Backup}
 
-\subsection{Boar}
+\paragraph{Boar}
 
 Boar \cite{boar_homepage} is an open-source project to create a version control
 system for large binary files. It is one of the main inspirations for our
@@ -720,7 +720,7 @@ fit on one disk volume, and file metadata is assumed to fit into Ram. We aim to
 overcome both of those limitations.
 
 
-\subsection{Bup}
+\paragraph{Bup}
 
 Bup \cite{bup_homepage} is an open-source file backup system that is based on
 Git's repository format. A Bup backup is a valid Git repository and it can be
