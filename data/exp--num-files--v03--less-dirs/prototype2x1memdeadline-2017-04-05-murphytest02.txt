@@ -78,3 +78,17 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
   6       2500000  0x0098968000    341.330   5485.461  0x04ec1ab000       ok  verified   assumed       24302           0       42746      293825      729543     626.834         ok     412.405         ok   1388.110  0x0516d51000       ok  verified   assumed       15065           0       40155      108706      106904        15.520
   6       5000000  0x01312d0000    676.072  18009.874  0x09d8146000       ok  verified   assumed       51412           0       90282      925681     2520454    2089.675         ok    1884.383         ok   4133.191  0x0a2d8c7000       ok  verified   assumed       31019           0       80925      313676      386083        13.750
 # Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add many_files_dir'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.059, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add many_files_dir'', elapsed=19800.089, killsignal='SIGTERM', returncode=-15)
+  6       7500000  0x01c9c38000   1035.728  19829.238        (None)   failed       bad   ver_err       55858           0       70279      811898     3014945      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.341
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.027, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='prototype commit -m 'Add many_files_dir'', returncode='1')
+  7      10000000  0x02625a0000   1340.071   8593.297        (None)   failed       bad   ver_err       37620           0       47912      369222     1255340      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         9.905
+# IOError(28, 'No space left on device')
+  7      25000000  0x05f5e10000   1992.924     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        13.247
+# IOError(28, 'No space left on device')
+  7      50000000  0x0bebc20000   1921.745     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        12.138
+# IOError(28, 'No space left on device')
+  7      75000000  0x11e1a30000   1943.985     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.551

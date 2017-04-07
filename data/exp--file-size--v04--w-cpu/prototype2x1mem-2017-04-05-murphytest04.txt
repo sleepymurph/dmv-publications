@@ -123,3 +123,11 @@ mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_v
  35  0x0c00000000   48.0GiB   3375.161  11292.439  0x196332e000       ok  verified   assumed      108866           0       29228      723906     1391036   1320.178  0x196c330000       ok  verified   assumed       89186           0        6666      137826       29078      0.000  0x196c330000       ok   assumed           0           0           1           1           0
  36  0x1000000000   64.0GiB   4503.360  17078.777  0x21d97f5000       ok  verified   assumed      143440           0       39497     1117988     2107313   1882.887  0x21e579c000       ok  verified   assumed      119373           0        8949      194165       52384      0.000  0x21e579c000       ok   assumed           0           0           0           0           0
 # Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.031, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19800.093, killsignal='SIGTERM', returncode=-15)
+ 36  0x1800000000   96.0GiB   6749.750  19800.194        (None)   failed       bad   ver_err      161080           0       44654     1185781     2559744     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.034, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='prototype commit -m 'Add large_file'', returncode='1')
+ 37  0x2000000000  128.0GiB   9033.990  17209.318        (None)   failed       bad   ver_err      146169           0       38994     1018895     2229865     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
