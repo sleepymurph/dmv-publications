@@ -2,7 +2,6 @@ default: \
     ../design-document.pdf \
     ../design-document-2-short.pdf \
     ../related-works.pdf \
-    ../results.pdf \
     ../thesis.pdf \
 
 
@@ -10,6 +9,22 @@ thesis.pdf: \
     thesis.tex \
     research.bib \
     dia_architecture.pdf \
+    plot-filesystem-limits--directory-takeover.pdf \
+    plot-file-size--c1-cpu-a.pdf \
+    plot-file-size--c1-cpu-b.pdf \
+    plot-file-size--c1-time.pdf \
+    plot-file-size--c1-time--detail-high-end.pdf \
+    plot-file-size--c1-time--detail-high-end--prototype-improvements.pdf \
+    plot-file-size--c1-time--detail-low-end.pdf \
+    plot-file-size--repo-size.pdf \
+    plot-num-files--c1-cpu-a.pdf \
+    plot-num-files--c1-cpu-b.pdf \
+    plot-num-files--c1-time.pdf \
+    plot-num-files--c1-time-detail.pdf \
+    plot-num-files--stat1-time.pdf \
+    plot-num-files--repo-size.pdf \
+    plot-num-files--prototype-improvements--c1-time-detail.pdf \
+    plot-rolling-hash.pdf \
 
 	pdflatex thesis.tex
 	bibtex thesis.aux
@@ -42,25 +57,6 @@ design-document-2-short.pdf: \
     design-document-2-short.tex \
     research.bib \
     dia_architecture.pdf \
-
-
-results.pdf: \
-    plot-filesystem-limits--directory-takeover.pdf \
-    plot-file-size--c1-cpu-a.pdf \
-    plot-file-size--c1-cpu-b.pdf \
-    plot-file-size--c1-time.pdf \
-    plot-file-size--c1-time--detail-high-end.pdf \
-    plot-file-size--c1-time--detail-high-end--prototype-improvements.pdf \
-    plot-file-size--c1-time--detail-low-end.pdf \
-    plot-file-size--repo-size.pdf \
-    plot-num-files--c1-cpu-a.pdf \
-    plot-num-files--c1-cpu-b.pdf \
-    plot-num-files--c1-time.pdf \
-    plot-num-files--c1-time-detail.pdf \
-    plot-num-files--stat1-time.pdf \
-    plot-num-files--repo-size.pdf \
-    plot-num-files--prototype-improvements--c1-time-detail.pdf \
-    plot-rolling-hash.pdf \
 
 
 # General LaTeX
