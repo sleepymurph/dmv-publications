@@ -1,7 +1,6 @@
 default: \
     ../design-document.pdf \
     ../design-document-2-short.pdf \
-    ../related-works.pdf \
     ../thesis.pdf \
 
 
@@ -30,16 +29,6 @@ thesis.pdf: \
 	bibtex thesis.aux
 	pdflatex thesis.tex
 	pdflatex thesis.tex
-
-
-related-works.pdf: \
-    related-works.tex \
-    research.bib \
-
-	pdflatex related-works.tex
-	bibtex related-works.aux
-	pdflatex related-works.tex
-	pdflatex related-works.tex
 
 
 design-document.pdf: \
