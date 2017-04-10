@@ -31,8 +31,8 @@ Torvalds, the creator of Linux and Git, once famously joked that he doesn't keep
 backups, he simply publishes his work on the internet and lets others copy it
 \cite{linus_no_backups}.
 
-The trouble with distributed version control systems is that they are designed
-to store program source code: plain text files in the range of tens of
+The major limitation distributed version control systems is that they are
+designed to store program source code: plain text files in the range of tens of
 kilobytes. They often have trouble with larger media files, becoming sluggish or
 wasteful of disk space. Many a web-design team has come to regret checking their
 graphical assets into version control. In addition, many will have trouble
@@ -46,3 +46,37 @@ complete history, and allowed each replica to choose what subsets of the files
 and the history to store, according to the replica's capacity and need? The
 answer could be a new abstraction for tracking a data set and its history as a
 cohesive whole, even when it is physically spread over many different nodes.
+
+
+\section{Availability Over All}
+
+Distributed systems are ruled by the \newterm{CAP-theorem} \cite{cap_origin},
+which states that a system cannot be completely consistent (\newterm{C}),
+available (\newterm{A}), and tolerant of network partitions (\newterm{P}) all at
+the same time. One area must always suffer, and since network partitions are
+always a possibility, a distributed system must make trade-offs between
+availability and consistency.
+
+TODO: Traditional ACID
+
+TODO: Modern NoSQL/BASE
+
+TODO: New thinking (CAP years later)
+   - partitions rare
+   - partitions are just latency
+   - "the partition decision": cancel and decrease availability, proceed and
+   risk inconsistency
+   - general problem of resolving conflicts is not solvable
+   \cite{cap_years_later}
+
+TODO: DVCS is always available
+
+
+\section{Git and the DAG}
+
+TODO: Explain Git and DAG
+    - Append only
+    - Easy to sync
+    - Trick is merging
+
+TODO: Diagram of Git DAG
