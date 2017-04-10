@@ -1,33 +1,48 @@
 \chapter{Introduction}
 
-% TODO: Cloud neat but requires connectivity, privacy concerns
-% TODO: Individual users: photos, music, documents
-% TODO: Corporate or government data to keep on own servers
-% TODO: programmers have DVCS but it's for source code
-% TODO: "It's a folder that syncs" -- https://www.quora.com/Why-is-Dropbox-more-popular-than-other-programs-with-similar-functionality
-% TODO: Linus: no backups, just upload -- http://www.webcitation.org/6P8EBZqQX
-
 It is still surprisingly difficult to keep backups and synchronize data. Many of
 us have several computers, perhaps a laptop, a phone, and a work computer, and
 we would like to synchronize data between them. We want to keep a Word document
 synchronized between home and work. We want to put new music on our phones, and
-pull photos off of camera SD cards. We have these data sets that tend to
-fragment themselves across our devices, and we lose track of what is where.
+pull photos off of camera SD cards. We have backups on removable drives, but we
+don't remember when it was that we last did a backup, or what is new since then.
+We have these sets of files that tend to fragment themselves across our devices,
+and we lose track of what is where.
 
-Cloud computing offers to centralize and safeguard our data. Google Drive gives
-us a shared document that many people can edit in real time. Spotify offers
-endless music streams. Instagram lets us save and share photos. DropBox gives us
-a folder that syncs. But many of these solutions are specialized for specific
-media, most require constant network connectivity, and all require entrusting
-your data to a third-party. Why can't we just track the files we have across the
-devices we have?
+Cloud computing offers to centralize and safeguard our data, keeping it all in
+one place and taking care of the backups for us. Google Drive gives us a shared
+document that many people can edit in real time. Spotify offers endless music
+streams. Instagram lets us save and share photos. DropBox gives us a folder that
+syncs. But many of these solutions are specialized applications for specific
+media, which can limit their general usefulness; most require constant network
+connectivity, making them ill-suited for intermittent or high-latency
+connections; and all require entrusting your data to a third-party service,
+which raises concerns about privacy and storage longevity. Why can't we simply
+track the files we have across the devices we have?
 
-Those of us who are programmers have an excellent system for backup and sync
-right at our fingertips: \newterm{distributed version control systems (DVCSs)},
-such as Git and Mercurial. Version control systems track all changes to a
-collection of files, allowing collaborators to work independently and then
-synchronize and share their work. In a distributed version control system, every
-collaborator has a full copy of the project's history, and that redundancy
-functions as a backup as well. Linus Torvalds, the creator of Linux and Git,
-once famously said that he doesn't keep backups, he simply publishes his work
-and lets others copy it \cite{linus_no_backups}.
+Software programmers have an excellent system for backup and sync right at their
+fingertips: \newterm{distributed version control systems (DVCSs)}, such as Git
+and Mercurial. Version control systems track all changes to a collection of
+files, allowing collaborators to work independently and then synchronize and
+share their work. Additionally, in a distributed version control system, every
+collaborator has a full copy of the project's history. That redundancy not only
+allows collaborators to work offline, but it also functions as a backup. Linus
+Torvalds, the creator of Linux and Git, once famously joked that he doesn't keep
+backups, he simply publishes his work on the internet and lets others copy it
+\cite{linus_no_backups}.
+
+The trouble with distributed version control systems is that they are designed
+to store program source code: plain text files in the range of tens of
+kilobytes. They often have trouble with larger media files, becoming sluggish or
+wasteful of disk space. Many a web-design team has come to regret checking their
+graphical assets into version control. In addition, many will have trouble
+scaling up as the number of files increases or the history grows increasingly
+long.
+
+What if we could generalize the distributed version control concept to store a
+wide variety of file sizes, from kilobyte text files to multi-gigabyte videos?
+In addition, what if we relaxed the assumption that every replica contain the
+complete history, and allowed each replica to choose what subsets of the files
+and the history to store, according to the replica's capacity and need? The
+answer could be a new abstraction for tracking a data set and its history as a
+cohesive whole, even when it is physically spread over many different nodes.
