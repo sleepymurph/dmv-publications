@@ -75,3 +75,20 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
   5        500000  0x001e848000     62.655    143.429  0x00fbde6000       ok  verified   assumed        3347           0        6250       10610        8311      16.127         ok      13.022         ok    153.522  0x010459f000       ok  verified   assumed        2537           0        3662        5888       18557       192.659
   5        750000  0x002dc6c000     95.882    337.896  0x0179df4000       ok  verified   assumed        5684           0       10356       24207       26967      48.173         ok      19.532         ok    315.327  0x0186a98000       ok  verified   assumed        3891           0        5581       16177       37296       157.931
   6       1000000  0x003d090000    126.564    860.313  0x01f7b6f000       ok  verified   assumed        8970           0       15320       54843       91214      96.360         ok     130.193         ok    362.318  0x0208b5d000       ok  verified   assumed        5076           0        7686       19113       40345         9.422
+  6       2500000  0x0098968000    322.005   4827.060  0x04ec199000       ok  verified   assumed       27245           0       44669      260927      623938     632.032         ok     859.718         ok   1447.461  0x0516d32000       ok  verified   assumed       17379           0       41538      102205      120634        15.088
+  6       5000000  0x01312d0000    653.735  17586.121  0x09d8317000       ok  verified   assumed       58432           0       97345     1071300     2272009    1985.647         ok    2024.384         ok   3690.424  0x0a2db05000       ok  verified   assumed       32574           0       82896      269728      336058        15.433
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add many_files_dir'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.086, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add many_files_dir'', elapsed=19800.059, killsignal='SIGTERM', returncode=-15)
+  6       7500000  0x01c9c38000    970.762  19800.467        (None)   failed       bad   ver_err       50467           0       72910     1313262     2503633      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.364
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.055, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='prototype commit -m 'Add many_files_dir'', returncode='1')
+  7      10000000  0x02625a0000   1294.441   7823.614        (None)   failed       bad   ver_err       34983           0       48866      435557     1033923      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        16.180
+# IOError(28, 'No space left on device')
+  7      25000000  0x05f5e10000   1909.220     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        13.842
+# IOError(28, 'No space left on device')
+  7      50000000  0x0bebc20000   1864.014     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        12.667
+# IOError(28, 'No space left on device')
+  7      75000000  0x11e1a30000   1867.942     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.479
