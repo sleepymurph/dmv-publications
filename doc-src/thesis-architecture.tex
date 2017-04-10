@@ -1,16 +1,17 @@
 \chapter{Architecture}
 
-Data will be distributed across several \newterm{stores}, which will each hold a
-portion of the data set. Stores can be diverse, from mobile devices to storage
-clusters. Distribution of the data will be determined by the end user or client
-application according to available resources and the needs of the user.
+TODO: Stores
 
-The data store network will be decentralized and unstructured (Figure
-\ref{fig:dia_architecture}). Stores can be connected to other stores in an ad-hoc
-manner, with a user- or application-defined topography. The number of
-connections will not be strictly limited, but extreme scalability of individual
-connections is not a priority. We are aiming for one, to tens, to perhaps
-hundreds of connections.
+TODO: Network decentralized and unstructured
+
+TODO: Each store autonomous
+
+\begin{figure}[h!]
+  \caption{Distributed Version Control}
+  \label{fig:dia_obj_db_and_wd}
+  \centering
+    \includegraphics[width=0.5\textwidth]{dia_obj_db_and_wd}
+\end{figure}
 
 \begin{figure}[h]
   \caption{Stores in an ad-hoc network}
@@ -19,17 +20,7 @@ hundreds of connections.
     \includegraphics[width=0.95\textwidth]{dia_architecture}
 \end{figure}
 
-Each store will be autonomous, and local applications will be able to access and
-perform processing on any data that is stored locally. Data not currently
-available can be listed and requested. The listing will give hints about the
-estimated availability of each piece of data, with metrics including connection
-uptime, latency, and bandwidth to stores that have copies of the data. This
-metadata will naturally fall out of date between syncs with connected nodes. The
-age of that data can be part of the hint.
-
-We are envisioning a filesystem with an \lstinline{ls} command that lists these
-hints as part of its output (in this example presented as a single estimated
-time to retrieve):
+TODO: Envisioned LS output
 
 \begin{lstlisting}[caption=Example ls output]
     -rw-r--r-- 1 user user  121306 Oct 21 18:28 local   filex
@@ -39,10 +30,6 @@ time to retrieve):
     -rw-r--r-- 1 user user   83977 Sep 22 21:23 unknown fileyy
 \end{lstlisting}
 
-A primary goal for the system is to detect storage errors and never lose data
-inadvertently. Local data stores will detect corruption, and data loss will be
-prevented by replication between stores. However, data can be explicitly removed
-from the data set. Data can be removed from the local store, relying on remote
-stores to keep replicas, though it will be up the end user/application to ensure
-that there are enough copies of the data to ensure its durability. Number of
-known replicas will be one of the metrics tracked by the system.
+TODO: Detect errors and never lose data
+
+TODO: Replication
