@@ -2,7 +2,10 @@
 
 TODO: Based on version control and DAG
 
-TODO: Media files (wide variety of sizes)
+TODO: Data set scalability goals
+    - Media files (wide variety of sizes)
+    - Large quantities (millions)
+    - Too large to fit in conventional hard drive
 
 TODO: End-to-end argument
 
@@ -11,6 +14,48 @@ TODO: Neutral
     - No prescribed file formats
     - Files editable with normal applications
 
+TODO: Based on version control but
+    - Break up large files
+    - Relax requirement to store all
+
+TODO: Concept of data set in multiple dimensions: subset of set, subset of
+history
+
+TODO: Make everything explicit. Let user decide
+
+
+TODO: Envisioned LS output
+
+\begin{lstlisting}[caption=Example ls output]
+    -rw-r--r-- 1 user user  121306 Oct 21 18:28 local   filex
+    -rw-r--r-- 1 user user   25475 Oct 21 17:52 100ms   filey
+    -rw-r--r-- 1 user user   32031 Oct 21 17:52 20min   filez
+    -rw-r--r-- 1 user user   74968 Oct 18 17:12 missing filexx
+    -rw-r--r-- 1 user user   83977 Sep 22 21:23 unknown fileyy
+\end{lstlisting}
+
+
+
+\subsection{Main principles}
+
+\begin{itemize}
+
+  \item Data must never be lost accidentally.
+
+  \item However, history may be deliberately truncated to save space, and
+    sensitive data may be deliberately redacted.
+
+  \item Data integrity must be verifiable: The system must be able to detect
+    errors and, if possible, repair them.
+
+  \item Changes to the dataset should be tracked, versions should be explicitly
+    labeled, and history should be kept.
+
+  \item Like with distributed version control, updates can be made independently
+    and merged later. Different sites can have different versions. Updates
+    (commits) and synchronization are deliberate, explicit, and manual.
+
+\end{itemize}
 
 \section{A Note on the Name}
 

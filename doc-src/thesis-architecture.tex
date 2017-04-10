@@ -1,6 +1,6 @@
 \chapter{Architecture}
 
-TODO: Stores
+TODO: Working directories and object stores
 
 TODO: Network decentralized and unstructured
 
@@ -13,6 +13,18 @@ TODO: Each store autonomous
     \includegraphics[width=0.5\textwidth]{dia_obj_db_and_wd}
 \end{figure}
 
+TODO: Replication
+
+TODO: Ad-hoc network topography
+    - Decentralized and unstructured
+    - Human scale
+    - No need for complicated network membership schemes
+    - Replica network topologies reflect the connections between their users and
+    their workflows.
+    - Small projects use hub and spoke, large projects hierarchy
+
+TODO: Different workflow diagrams?
+
 \begin{figure}[h]
   \caption{Stores in an ad-hoc network}
   \label{fig:dia_architecture}
@@ -20,16 +32,18 @@ TODO: Each store autonomous
     \includegraphics[width=0.95\textwidth]{dia_architecture}
 \end{figure}
 
-TODO: Envisioned LS output
+\subsection{Important assumptions}
 
-\begin{lstlisting}[caption=Example ls output]
-    -rw-r--r-- 1 user user  121306 Oct 21 18:28 local   filex
-    -rw-r--r-- 1 user user   25475 Oct 21 17:52 100ms   filey
-    -rw-r--r-- 1 user user   32031 Oct 21 17:52 20min   filez
-    -rw-r--r-- 1 user user   74968 Oct 18 17:12 missing filexx
-    -rw-r--r-- 1 user user   83977 Sep 22 21:23 unknown fileyy
-\end{lstlisting}
+\begin{itemize}
 
-TODO: Detect errors and never lose data
+  \item Contact between repositories is intermittent. Repositories may be on
+    removable drives or mobile devices. Updates may require physical connection
+    and reconnection. It is important to track the state of other repositories,
+    so that the user can know what needs to be synchronized.
 
-TODO: Replication
+  \item Assume all actors are honest for now. No malicious components.
+
+  \item However, components can and will fail. The system must discover and
+    recover from errors (checksums, replication).
+
+\end{itemize}
