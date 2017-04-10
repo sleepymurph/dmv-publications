@@ -1,0 +1,33 @@
+\chapter{Introduction}
+
+% TODO: Cloud neat but requires connectivity, privacy concerns
+% TODO: Individual users: photos, music, documents
+% TODO: Corporate or government data to keep on own servers
+% TODO: programmers have DVCS but it's for source code
+% TODO: "It's a folder that syncs" -- https://www.quora.com/Why-is-Dropbox-more-popular-than-other-programs-with-similar-functionality
+% TODO: Linus: no backups, just upload -- http://www.webcitation.org/6P8EBZqQX
+
+It is still surprisingly difficult to keep backups and synchronize data. Many of
+us have several computers, perhaps a laptop, a phone, and a work computer, and
+we would like to synchronize data between them. We want to keep a Word document
+synchronized between home and work. We want to put new music on our phones, and
+pull photos off of camera SD cards. We have these data sets that tend to
+fragment themselves across our devices, and we lose track of what is where.
+
+Cloud computing offers to centralize and safeguard our data. Google Drive gives
+us a shared document that many people can edit in real time. Spotify offers
+endless music streams. Instagram lets us save and share photos. DropBox gives us
+a folder that syncs. But many of these solutions are specialized for specific
+media, most require constant network connectivity, and all require entrusting
+your data to a third-party. Why can't we just track the files we have across the
+devices we have?
+
+Those of us who are programmers have an excellent system for backup and sync
+right at our fingertips: \newterm{distributed version control systems (DVCSs)},
+such as Git and Mercurial. Version control systems track all changes to a
+collection of files, allowing collaborators to work independently and then
+synchronize and share their work. In a distributed version control system, every
+collaborator has a full copy of the project's history, and that redundancy
+functions as a backup as well. Linus Torvalds, the creator of Linux and Git,
+once famously said that he doesn't keep backups, he simply publishes his work
+and lets others copy it \cite{linus_no_backups}.

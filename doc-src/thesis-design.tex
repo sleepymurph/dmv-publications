@@ -1,0 +1,24 @@
+\chapter{Design}
+
+The data set will be a traditional hierarchical file structure, and it will be
+presented as a normal filesystem. We do not want to reinvent the filesystem, and
+we do not want to have to modify local applications to work with the data,
+though applications can be modified to be aware of and to work with the system.
+
+The storage will be modeled on version control systems, specifically Git and
+it's directed acyclic graph data structure (DAG). There will be a
+content-addressable blob store to de-duplicate and store data in a DAG
+structure, and a working tree where the files can be read and written by normal
+applications.
+
+Like in a version control system, previous versions of the data will be kept,
+along with metadata about the history of changes. Snapshots of the data will be
+explicitly \newterm{committed} to the system by the user/application. The chain
+of commit history can diverge into branches to be merged later, and each
+individual store is also naturally a branch. Syncs and merges with connected
+stores will be explicitly initiated.
+
+Individual stores are not required to store all blobs in the DAG. Some blobs may
+not be available on a given store, and history may be deliberately pruned to
+save space. Algorithms and client applications must work with the blobs they
+have locally and the hints about the availability of remote blobs.

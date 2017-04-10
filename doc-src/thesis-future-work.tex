@@ -1,0 +1,21 @@
+\chapter{Future Work}
+
+
+\section{Possible extensions}
+
+The goal of the system is to be a low-level platform for tracking a single data
+set that is distributed across many nodes. Following the version-control
+paradigm, most operations will be explicit. However, it will be possible to
+write applications on top of this system that automate more operations.
+
+\begin{itemize}
+
+  \item A gossip protocol could spread information about availability of remote
+    stores that are not directly connected.
+
+  \item Daemons could auto-commit and auto-sync with other stores.
+
+  \item To save storage space, the working directory can be a virtual filesystem
+    that is a view into the object database.
+
+\end{itemize}

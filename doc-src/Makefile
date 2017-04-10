@@ -6,6 +6,7 @@ default: \
 
 thesis.pdf: \
     thesis.tex \
+    thesis-*.tex \
     research.bib \
     dia_architecture.pdf \
     plot-filesystem-limits--directory-takeover.pdf \

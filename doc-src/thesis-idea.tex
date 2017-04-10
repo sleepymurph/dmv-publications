@@ -1,0 +1,36 @@
+\chapter{Idea}
+
+A low-level distributed data storage platform that makes data location and
+availability explicit, rather than trying to hide or abstract them away.
+
+The target use for this system is to spread a data set across many compute
+nodes, and to allow the sharding and replication of the data set to be
+customizable according to the location and availability of the nodes, and what
+data is needed where. The ultimate goal is to track the scattered data as a
+coherent data whole, and to allow the end user or client application to
+visualize and manage what data is stored on what nodes.
+
+The system aims to be a low-level service, providing information about the data
+and tools to manage it, but ultimately leaving decisions to the end user or
+client application.
+
+We assume that the data set and all nodes in the system are controlled by the
+user.
+
+The target data sets for this system include collections of media files (binary
+files ranging in size from hundreds of kilobytes to several gigabytes) numbering
+in the hundreds to millions. The system will not attempt to understand the
+internals of different media formats and will treat all files as opaque blobs.
+Such media data suggests a usage pattern where files are more often created or
+moved than they are updated in-place. Also, we assume writes will be infrequent
+compared to traditional online transactional databases (seconds to minutes, or
+longer, between updates).
+
+The system will be designed for high availability in the face of connections
+that are intermittent, high-latency, expensive, or otherwise restricted. At each
+node, the portion of data that is stored on that node will be available for
+reading and writing by local applications. Metadata about the non-local portions
+of the data set will be available as well, along with hints about the location
+of that data. Clients can use that information to schedule transfers and
+updates. Consistency will be resolved during updates. Conflicting versions will
+be presented to the client application to resolve.
