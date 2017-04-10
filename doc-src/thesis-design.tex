@@ -13,6 +13,8 @@ TODO: Neutral
 TODO: Prototype copies working directory and object store. Disadvantage: disk
 space. Could use FUSE
 
+TODO: Explicit commits
+
 TODO: Breaking files into chunks, modified DAG
 
 \begin{figure}[h!]
@@ -22,6 +24,14 @@ TODO: Breaking files into chunks, modified DAG
         \includegraphics[width=0.5\textwidth]{dia_new_dag}
 \end{figure}
 
+TODO: Not required to store all of the DAG
+
+TODO: No security model
+    - Assume data set and all nodes controlled by user
+
+TODO: Usage assumptions
+    - Assume more reads than writes
+    - Assume more appends or rewrites than in-place updates
 
 
 \subsection{What the system should not do}
