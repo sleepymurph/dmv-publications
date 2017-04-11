@@ -8,6 +8,9 @@ user, and making it easy to transfer data to other nodes as desired. The
 ultimate goal is to create a new abstraction, of \newterm{many devices, one data
 item} in varying states of synchronization.
 
+% TODO: simple diagram showing nodes and subsets of data
+
+\paragraph{General storage}
 DMV is a generalized storage platform that places no restriction on file types.
 Its data model is a classic hierarchical filesystem, but with history.
 Applications on each node can read and write to the files via the filesystem as
@@ -21,6 +24,7 @@ wide range of file quantities, from one to hundreds to millions. Where the data
 set is too large to fit on one node, it can be spread over many nodes, divided
 with the user's guidance according to data locality needs.
 
+\paragraph{Based on version control}
 DMV is inspired by distributed version control. Its core data structure is a
 DAG, based on Git's but modified to store a wider range of file sizes. The key
 difference is that large files are broken into smaller chunks (around 64
@@ -29,6 +33,7 @@ structure to naturally de-duplicate parts of files that do not change. For
 example, if a large media file has its metadata block updated, only the chunk
 containing the updated metadata is new. The other chunks will simply be reused.
 
+\paragraph{Always writable}
 Like in version control, the DAG structure records all history of the data set
 and allows many different branches of development to exist in parallel. This
 allows high availability. Any node can always make updates autonomously, without
@@ -37,6 +42,7 @@ later via merging. DMV only requires a connection to another node during
 explicit synchronize operations, and so it is well-suited for applications with
 intermittent or high-latency connectivity.
 
+\paragraph{Configurable sharding}
 The DAG structure tracks the data set in three dimensions:
 
 \begin{tight_enumerate}
@@ -45,15 +51,17 @@ The DAG structure tracks the data set in three dimensions:
     \item The parallel branches of development in the history
 \end{tight_enumerate}
 
+Traditional distributed version control systems tend to assume that each replica
+has the full history of all files, though not every branch of development. In
+contrast, each DMV node can store a subset of the data along any of those
+dimensions, configurable by the user. A node could keep the full history of only
+a small subset of files, or only the most recent few versions of the full set of
+files, or only a few branches, or any combination.
 
+% TODO: Consistent "node" vs "replica"
+
+\paragraph{Explicit commands}
 TODO: Make everything explicit. Let user decide
-
-TODO: Based on version control but
-    - Break up large files
-    - Relax requirement to store all
-
-TODO: Concept of data set in multiple dimensions: subset of set, subset of
-history
 
 
 TODO: Envisioned LS output
@@ -100,5 +108,6 @@ command line control, in the grand tradition of \lstinline{cvs},
 the acronym is associated with a Department of Motor Vehicles, it does not seem
 to have any prior conflicting uses in the computing domain (possibly because of
 negative associations with the Department of Motor Vehicles). It is also an nod
-to Michael's home town of Washington DC, where the Washington metro area in DC,
-Maryland, and Virginia is sometimes referred to as "The DMV."
+to Michael's home town of Washington DC, where the Washington metropolitan area
+is sometimes referred to as "The DMV" as it spills out of the District of
+Columbia and into Maryland and Virgina.
