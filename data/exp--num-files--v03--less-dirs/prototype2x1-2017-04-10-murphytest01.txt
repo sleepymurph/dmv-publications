@@ -75,3 +75,31 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
   4         75000  0x000493e000      8.791     12.919  0x0025d8f000       ok  verified   assumed         449           0         746        1200         180       0.101     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        12.831
 # CallFailedError(cmd='prototype status', returncode='1')
   5        100000  0x00061a8000     11.727     18.635  0x0032903000       ok  verified   assumed         560           0        1214         966         966       0.202     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         7.414
+# CallFailedError(cmd='prototype status', returncode='1')
+  5        250000  0x000f424000     30.983     50.874  0x007e063000       ok  verified   assumed        1442           0        2990        3285        2384       0.102     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         6.814
+# CallFailedError(cmd='prototype status', returncode='1')
+  5        500000  0x001e848000     62.327    118.780  0x00fbdee000       ok  verified   assumed        2933           0        6014        9204        5444       0.102     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         8.058
+# CallFailedError(cmd='prototype status', returncode='1')
+  5        750000  0x002dc6c000     95.446    353.549  0x0179db9000       ok  verified   assumed        5536           0       10688       25625       27848       0.703     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         9.925
+# CallFailedError(cmd='prototype status', returncode='1')
+  6       1000000  0x003d090000    130.956    881.070  0x01f7b22000       ok  verified   assumed        8455           0       16152       58898       90683       1.103     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.326
+# CallFailedError(cmd='prototype status', returncode='1')
+  6       2500000  0x0098968000    326.216   5765.447  0x04ec19f000       ok  verified   assumed       22669           0       46461      268408      807472       0.806     failed      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        16.153
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add many_files_dir'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.081, killsignal='SIGTERM', returncode=-15)
+# CommitFailedButVerifiedException()
+  6       5000000  0x01312d0000    636.305  19800.726        (None)   failed  verified   ver_err       50426           0       86680      981262     2816048      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        17.991
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add many_files_dir'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.009, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='sudo umount /dev/murphytest01-vg/test', returncode='32')
+  6       7500000  0x01c9c38000    973.916  19802.121        (None)   failed       bad   ver_err       49574           0       73993     1009171     2803009      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         0.348
+# CallFailedError(cmd='sudo umount /dev/murphytest01-vg/test', returncode='32')
+  7      10000000  0x02625a0000    113.586     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         0.744
+# CallFailedError(cmd='sudo umount /dev/murphytest01-vg/test', returncode='32')
+  7      25000000  0x05f5e10000     (None)     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         0.116
+# CallFailedError(cmd='sudo umount /dev/murphytest01-vg/test', returncode='32')
+  7      50000000  0x0bebc20000     (None)     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         0.116
+# CallFailedError(cmd='sudo umount /dev/murphytest01-vg/test', returncode='32')
+  7      75000000  0x11e1a30000     (None)     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         0.116
