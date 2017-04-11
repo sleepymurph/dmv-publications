@@ -30,9 +30,18 @@
 % Use a sans-serif font
 \renewcommand{\familydefault}{\sfdefault}
 
-% Create a short macro for newly-defined key terms.
+
+% Custom commands:
+
+% Newly defined terms
 \newcommand{\newterm}{\textit}
 
+% An enumerated list with less spacing between items
+\newenvironment{tight_enumerate}{
+\begin{enumerate}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+}{\end{enumerate}}
 
 
 \begin{document}
