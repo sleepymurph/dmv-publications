@@ -18,6 +18,7 @@
 
 \usepackage[
   backend=bibtex,
+  backref=true, % add back-references from bib to citations
   urldate=long, % use date like "Apr. 7, 2017" instead of American "04/07/2017"
 ]{biblatex}
 \addbibresource{research.bib}
@@ -30,9 +31,9 @@
 % The hyperref docs recommend declaring it after the other \usepackage
 % declarations, because it has to redefine several commands to work properly,
 % and other later redefinitions might interfere.
-% Remove the hidelinks parameter to get (ugly) visual highlights around the
-% links.
-\usepackage[hidelinks]{hyperref}
+\usepackage[
+  hidelinks,  % Do not style links. I think this is classier.
+]{hyperref}
 
 
 % Use a sans-serif font
@@ -54,14 +55,14 @@
 
 \begin{document}
 
+\frontmatter
+
 \title{Master's Thesis}
 \author{Michael J. Murphy}
 \date{May 2017}
 \maketitle
 
 
-
-\frontmatter
 
 \include{thesis-abstract}
 
