@@ -11,8 +11,10 @@
 \usepackage{listings}
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
 
-% Add toc, and listings to toc
-\usepackage{tocbibind}
+% Add bibliography, listings, and other pseudo-chapters to table of contents
+\usepackage[
+  nottoc  % skip the table of contents itself
+]{tocbibind}
 
 \usepackage[
   backend=bibtex,
@@ -20,8 +22,10 @@
 ]{biblatex}
 \addbibresource{research.bib}
 
+% Provide \url command
 \usepackage{url}
-% To actually link URLs in the PDF, and provide a index in PDF metadata
+
+% Link URLs in the PDF, and link references within the PDF itself
 %
 % The hyperref docs recommend declaring it after the other \usepackage
 % declarations, because it has to redefine several commands to work properly,
@@ -61,7 +65,12 @@
 
 \include{thesis-abstract}
 
+% Put table of contents in the PDF index
+\cleardoublepage
+\phantomsection
+\currentpdfbookmark{Contents}{contents}
 \tableofcontents
+
 \listoffigures
 %\listoftables
 %\lstlistoflistings
