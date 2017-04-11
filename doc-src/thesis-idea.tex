@@ -69,6 +69,29 @@ files, or only a few branches, or any combination.
 % TODO: Consistent "node" vs "replica"
 
 
+\paragraph{Data integrity}
+
+Because the DAG is append-only, and DAG objects are addressed by a cryptographic
+hash of their contents, it is easy to verify data integrity and detect corrupted
+objects. A corrupted object can easily be replaced by an intact copy from
+another replica. DMV should never lose data accidentally. However, because DMV
+tolerates an incomplete DAG, objects can be deliberately deleted from all nodes
+to save space or to redact sensitive information.
+
+
+\paragraph{Security Model}
+
+TODO: DAG provides protection via append-only and crypto-seal
+
+TODO: Missing objects weaken verifiability. Theoretically use hash of missing
+object as nonce value that can be manipulated to hopefully find a collision. But
+we discount that possibility for now.
+
+TODO: Assume only accept new data from trusted nodes
+
+TODO: Can keep data private by keeping it only on owned nodes on private network
+
+
 \paragraph{Explicit operations}
 
 Like with version control, file changes in DMV are explicitly committed by user
@@ -90,27 +113,6 @@ TODO: Envisioned LS output
 \fi
 
 
-
-\subsection{Main principles}
-
-\begin{itemize}
-
-  \item Data must never be lost accidentally.
-
-  \item However, history may be deliberately truncated to save space, and
-    sensitive data may be deliberately redacted.
-
-  \item Data integrity must be verifiable: The system must be able to detect
-    errors and, if possible, repair them.
-
-  \item Changes to the dataset should be tracked, versions should be explicitly
-    labeled, and history should be kept.
-
-  \item Like with distributed version control, updates can be made independently
-    and merged later. Different sites can have different versions. Updates
-    (commits) and synchronization are deliberate, explicit, and manual.
-
-\end{itemize}
 
 \section{A Note on the Name DMV}
 
