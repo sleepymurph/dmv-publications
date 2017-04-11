@@ -81,15 +81,17 @@ to save space or to redact sensitive information.
 
 \paragraph{Security Model}
 
-TODO: DAG provides protection via append-only and crypto-seal
-
-TODO: Missing objects weaken verifiability. Theoretically use hash of missing
-object as nonce value that can be manipulated to hopefully find a collision. But
-we discount that possibility for now.
-
-TODO: Assume only accept new data from trusted nodes
-
-TODO: Can keep data private by keeping it only on owned nodes on private network
+The DAG's append-only nature and cryptographic content-addressing provide
+protection from tampering. As long as the complete DAG is available, its
+integrity can be verified. Allowing an incomplete DAG does introduce an opening
+for tampering, because not all objects are available to verify, but we ignore
+such a possibility for now. Because DMV is primarily meant to allow individuals
+or organizations to manage their own data on their own hardware, we assume that
+all nodes will be under the user's control, and that users will only accept
+additions to the DAG from trusted collaborators. This makes the aforementioned
+tampering less of a concern. It is also why we do not consider byzantine
+failures or guard against malicious nodes. Data can be kept private by keeping
+all DMV nodes on a private network.
 
 
 \paragraph{Explicit operations}
