@@ -10,21 +10,25 @@ item} in varying states of synchronization.
 
 % TODO: simple diagram showing nodes and subsets of data
 
+
 \paragraph{General storage}
+
 DMV is a generalized storage platform that places no restriction on file types.
 Its data model is a classic hierarchical filesystem, but with history.
 Applications on each node can read and write to the files via the filesystem as
 normal. DMV is dogmatic about the end-to-end argument \cite{endtoendargument},
 that it cannot anticipate all the needs of end users and applications. So it
-aims to be as general and neutral as possible, focusing only on storage and
-tracking, providing a platform for other applications to build on. DMV stores
-files as binary large objects (BLOBs), and it can handle a wide variety of file
-sizes, from empty files to files tens of gigabytes in size. It also stores a
-wide range of file quantities, from one to hundreds to millions. Where the data
-set is too large to fit on one node, it can be spread over many nodes, divided
-with the user's guidance according to data locality needs.
+aims to be as general and neutral as possible, focusing on the core task of
+storage and tracking, and providing a platform for other applications to build
+on. DMV stores files as binary large objects (BLOBs), and it can handle a wide
+variety of file sizes, from empty files to files tens of gigabytes in size. It
+also stores a wide range of file quantities, from one to hundreds to millions.
+Where the data set is too large to fit on one node, it can be spread over many
+nodes, divided with the user's guidance according to data locality needs.
+
 
 \paragraph{Based on version control}
+
 DMV is inspired by distributed version control. Its core data structure is a
 DAG, based on Git's but modified to store a wider range of file sizes. The key
 difference is that large files are broken into smaller chunks (around 64
@@ -33,7 +37,9 @@ structure to naturally de-duplicate parts of files that do not change. For
 example, if a large media file has its metadata block updated, only the chunk
 containing the updated metadata is new. The other chunks will simply be reused.
 
+
 \paragraph{Always writable}
+
 Like in version control, the DAG structure records all history of the data set
 and allows many different branches of development to exist in parallel. This
 allows high availability. Any node can always make updates autonomously, without
@@ -42,7 +48,9 @@ later via merging. DMV only requires a connection to another node during
 explicit synchronize operations, and so it is well-suited for applications with
 intermittent or high-latency connectivity.
 
+
 \paragraph{Configurable sharding}
+
 The DAG structure tracks the data set in three dimensions:
 
 \begin{tight_enumerate}
@@ -60,19 +68,26 @@ files, or only a few branches, or any combination.
 
 % TODO: Consistent "node" vs "replica"
 
-\paragraph{Explicit commands}
-TODO: Make everything explicit. Let user decide
+
+\paragraph{Explicit operations}
+
+Like with version control, file changes in DMV are explicitly committed by user
+command. Synchronization is an explicit command as well. Applications built on
+DMV may add daemons to automatically commit and sync, but DMV focuses only on
+providing the commands.
 
 
+\iffalse
 TODO: Envisioned LS output
 
-\begin{lstlisting}[caption=Example ls output]
+\begin{lstlisting}[float,caption=Example ls output]
     -rw-r--r-- 1 user user  121306 Oct 21 18:28 local   filex
     -rw-r--r-- 1 user user   25475 Oct 21 17:52 100ms   filey
     -rw-r--r-- 1 user user   32031 Oct 21 17:52 20min   filez
     -rw-r--r-- 1 user user   74968 Oct 18 17:12 missing filexx
     -rw-r--r-- 1 user user   83977 Sep 22 21:23 unknown fileyy
 \end{lstlisting}
+\fi
 
 
 
