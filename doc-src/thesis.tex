@@ -7,6 +7,11 @@
 % Use a blank space between paragraphs instead of an indent.
 \usepackage[parfill]{parskip}
 
+% Smart quotes
+% Provides \enquote command
+\usepackage [strict=true]{csquotes}
+\MakeOuterQuote{"}  % Automatically treat quoted strings as quotes
+
 % Source code listings
 \usepackage{listings}
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
