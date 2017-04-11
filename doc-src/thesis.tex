@@ -11,8 +11,17 @@
 \usepackage{listings}
 \lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
 
+% Add toc, and listings to toc
+\usepackage{tocbibind}
+
+\usepackage[
+  backend=bibtex,
+  urldate=long, % use date like "Apr. 7, 2017" instead of American "04/07/2017"
+]{biblatex}
+\addbibresource{research.bib}
+
 \usepackage{url}
-% To actually link URLs in the PDF.
+% To actually link URLs in the PDF, and provide a index in PDF metadata
 %
 % The hyperref docs recommend declaring it after the other \usepackage
 % declarations, because it has to redefine several commands to work properly,
@@ -21,11 +30,6 @@
 % links.
 \usepackage[hidelinks]{hyperref}
 
-\usepackage[
-  backend=bibtex,
-  urldate=long, % use date like "Apr. 7, 2017" instead of American "04/07/2017"
-]{biblatex}
-\addbibresource{research.bib}
 
 % Use a sans-serif font
 \renewcommand{\familydefault}{\sfdefault}
@@ -58,18 +62,9 @@
 \include{thesis-abstract}
 
 \tableofcontents
-
-\phantomsection
-\addcontentsline{toc}{chapter}{Lists}
-
 \listoffigures
-\addcontentsline{toc}{section}{List of Figures}
-
 %\listoftables
-%\addcontentsline{toc}{section}{List of Tables}
-
-\lstlistoflistings
-\addcontentsline{toc}{section}{Listings}
+%\lstlistoflistings
 
 
 
@@ -91,14 +86,8 @@
 
 \backmatter
 
-% Bibliography
-
-\cleardoublepage
-\phantomsection
-\addcontentsline{toc}{chapter}{Bibliography}
-
 %\nocite{*}  % Print all references even if they're not used
-\printbibliography
+\printbibliography[heading=bibintoc]
 
 
 
