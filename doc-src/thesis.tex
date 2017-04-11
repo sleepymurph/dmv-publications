@@ -21,6 +21,9 @@
 % links.
 \usepackage[hidelinks]{hyperref}
 
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{research.bib}
+
 % Use a sans-serif font
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -83,8 +86,7 @@
 \addcontentsline{toc}{chapter}{Bibliography}
 
 %\nocite{*}  % Print all references even if they're not used
-\bibliographystyle{plain}
-\bibliography{research}
+\printbibliography
 
 
 
