@@ -5,7 +5,7 @@ flows from that.
 
 Each DMV node is a \newterm{repository} consisting of a content-addressable
 \newterm{object store} for immutable DAG objects and a \newterm{working
-directory} for active file editing (Figure \ref{fig:dia_obj_db_and_wd}).
+directory} for active file editing (\autoref{fig:dia_obj_db_and_wd}).
 Repositories that are used only for storage can omit the working directory,
 similar to a Git bare repository.
 
@@ -21,8 +21,8 @@ it at any time. However, it can transfer DAG objects to and from other
 repositories, and it can cache data about what DAG objects are available at a
 remote repository. Thus, DMV forms an ad-hoc, unstructured network of
 repositories, and each repository can inform the user about what data is
-available where. Together, the repositories hold the entire data set (Figure
-\ref{fig:dia_architecture}).
+available where. Together, the repositories hold the entire data set
+(\autoref{fig:dia_architecture}).
 
 \begin{figure}[h]
   \caption{Repositories in an ad-hoc network}
