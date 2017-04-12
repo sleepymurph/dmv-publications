@@ -1,49 +1,41 @@
-\chapter{Architecture}
+\chapter{DMV Architecture}
 
-TODO: Working directories and object stores
+DMV's data set and its history are represented as a DAG, and its architecture
+flows from that.
 
-TODO: Network decentralized and unstructured
+Each DMV node is a \newterm{repository} consisting of a content-addressable
+\newterm{object store} for immutable DAG objects and a \newterm{working
+directory} for active file editing (Figure \ref{fig:dia_obj_db_and_wd}).
+Repositories that are used only for storage can omit the working directory,
+similar to a Git bare repository.
 
-TODO: Each store autonomous
-
-\begin{figure}[h!]
-  \caption{Distributed Version Control}
+\begin{figure}[h]
+  \caption{Repositories, object stores, and working directories}
   \label{fig:dia_obj_db_and_wd}
   \centering
     \includegraphics[width=0.5\textwidth]{dia_obj_db_and_wd}
 \end{figure}
 
-TODO: Replication
-
-TODO: Ad-hoc network topography
-    - Decentralized and unstructured
-    - Human scale
-    - No need for complicated network membership schemes
-    - Replica network topologies reflect the connections between their users and
-    their workflows.
-    - Small projects use hub and spoke, large projects hierarchy
-
-TODO: Different workflow diagrams?
+Each repository is autonomous, storing a portion of the DAG, and able to add to
+it at any time. However, it can transfer DAG objects to and from other
+repositories, and it can cache data about what DAG objects are available at a
+remote repository. Thus, DMV forms an ad-hoc, unstructured network of
+repositories, and each repository can inform the user about what data is
+available where. Together, the repositories hold the entire data set (Figure
+\ref{fig:dia_architecture}).
 
 \begin{figure}[h]
-  \caption{Stores in an ad-hoc network}
+  \caption{Repositories in an ad-hoc network}
   \label{fig:dia_architecture}
   \centering
     \includegraphics[width=0.95\textwidth]{dia_architecture}
 \end{figure}
 
-\subsection{Important assumptions}
+DMV assumes that each node will connect to a human-scale number of other nodes,
+maybe tens or hundreds. DMV does not dictate networks structure. The user or a
+higher-level application may determine the network topology and workflow
+according to their needs.
 
-\begin{itemize}
-
-  \item Contact between repositories is intermittent. Repositories may be on
-    removable drives or mobile devices. Updates may require physical connection
-    and reconnection. It is important to track the state of other repositories,
-    so that the user can know what needs to be synchronized.
-
-  \item Assume all actors are honest for now. No malicious components.
-
-  \item However, components can and will fail. The system must discover and
-    recover from errors (checksums, replication).
-
-\end{itemize}
+Actual network connects need only be made when transferring objects or updating
+lists of available nodes. So intermittent or high-latency networks are not a
+problem.
