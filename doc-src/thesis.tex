@@ -22,6 +22,14 @@
 \usepackage[
   nottoc  % skip the table of contents itself
 ]{tocbibind}
+% Add list of listings to toc via tocbibind
+\renewcommand{\lstlistoflistings}{\begingroup
+\tocfile{\lstlistlistingname}{lol}
+\endgroup}
+% Add list of todos to toc via tocbibind
+\renewcommand{\listoftodos}{\begingroup
+\tocfile{Todo List}{tdo}
+\endgroup}
 
 \usepackage[
   backend=bibtex,
@@ -105,10 +113,11 @@
 \tableofcontents
 
 \listoffigures
-%\listoftables
-%\lstlistoflistings
+\listoftables
 
-\todototoc
+\renewcommand{\lstlistlistingname}{List of Code Listings}
+\lstlistoflistings
+
 \listoftodos
 
 
