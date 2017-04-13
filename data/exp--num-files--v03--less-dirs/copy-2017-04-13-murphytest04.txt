@@ -1,0 +1,61 @@
+# Committing increasingly large numbers of files
+# 
+# reformat_partition: /dev/murphytest04-vg/test
+# data_gen:           random
+# vcs:                copy
+# each_file_size:     0x400 bytes (1.0KiB)
+# timeout:            19800.0
+# vcs_version:        Dummy copy repo -- version 1
+# 
+# date:          2017-04-13T12:01:31.706524
+# commandline:   ./increasing_number_of_files.py copy 0 8 --mag-step=4 --data-gen=random --timeout=19800 --tmp=/test --reformat-partition /dev/murphytest04-vg/test
+# testversion:   7146442 Leave timeout info as comment in output
+# hostname:      murphytest04
+# platform:      Linux-3.16.0-4-amd64-x86_64-with-debian-8.6
+# memtotal:      8064260 kB
+# memfree:       7605792 kB
+# 
+# pythonversion:
+#     2.7.9 (default, Jun 29 2016, 13:08:31) 
+#     [GCC 4.9.2]
+# 
+# cpuinfo:
+#     processor	: 0
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 3166.000
+#     cache size	: 6144 KB
+#     
+#     processor	: 1
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 3166.000
+#     cache size	: 6144 KB
+# 
+# fsinfo:
+#     Filesystem                         Size  Used Avail Use% Mounted on
+#     /dev/mapper/murphytest04--vg-test  197G   60M  197G   1% /test
+# 
+# diskinfo:
+#     sda	vendor: ATA, model: ST3250318AS	scheduler: noop deadline [cfq]
+# 
+# Command results:
+# ok:      Command completed successfully
+# no_exec: Command was never executed
+# failed:  Command failed
+# 
+# Verification results:
+# ver_err:  Could not verify due to error during verification
+# no_ver:   Verification was never performed
+# bad:      Verification discovered an error
+# verified: Verified OK
+# assumed:  Assumed ok because dependent commands successful
+# 
+mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    c1_ver   c1_repo     c1_user     c1_nice   c1_system     c1_idle   c1_iowait  stat1_time  stat1_cmd  stat2_time  stat2_cmd    c2_time       c2_size   c2_cmd    c2_ver   c2_repo     c2_user     c2_nice   c2_system     c2_idle   c2_iowait  cleanup_time
+  0             1  0x0000000400      0.000      0.101  0x0000007000       ok  verified   assumed           0           0           0          20           0       0.000         ok       0.000         ok      0.101  0x0000007000       ok  verified   assumed           0           0           0          20           0         3.208
+  0             2  0x0000000800      0.001      0.101  0x0000009000       ok  verified   assumed           0           0           0          20           0       0.000         ok       0.000         ok      0.101  0x0000009000       ok  verified   assumed           0           0           0          21           0         2.908
+  0             4  0x0000001000      0.001      0.101  0x000000d000       ok  verified   assumed           0           0           1          20           0       0.000         ok       0.000         ok      0.101  0x000000d000       ok  verified   assumed           0           0           1          20           0         3.008
+  0             6  0x0000001800      0.001      0.101  0x0000011000       ok  verified   assumed           0           0           1          20           0       0.000         ok       0.000         ok      0.101  0x0000011000       ok  verified   assumed           0           0           0          20           0         2.908
+  1            10  0x0000002800      0.002      0.101  0x0000019000       ok  verified   assumed           0           0           0          21           0       0.000         ok       0.000         ok      0.101  0x0000019000       ok  verified   assumed           0           0           1          20           0         3.008
+  1            25  0x0000006400      0.005      0.101  0x0000037000       ok  verified   assumed           0           0           0          20           0       0.000         ok       0.000         ok      0.101  0x0000037000       ok  verified   assumed           0           0           1          20           0         2.810
+  1            50  0x000000c800      0.009      0.101  0x0000069000       ok  verified   assumed           0           0           0          20           0       0.000         ok       0.000         ok      0.101  0x0000069000       ok  verified   assumed           0           0           0          20           0         2.808
+  1            75  0x0000012c00      0.008      0.101  0x000009b000       ok  verified   assumed           0           0           1          20           0       0.000         ok       0.000         ok      0.101  0x000009b000       ok  verified   assumed           0           0           1          18           1         2.908
+  2           100  0x0000019000      0.016      0.101  0x00000cd000       ok  verified   assumed           0           0           1          19           0       0.000         ok       0.000         ok      0.101  0x00000cd000       ok  verified   assumed           0           0           1          19           0         3.108

@@ -30,10 +30,10 @@ Spring: Prototype and num-files re-tests
                     |   |   |   |   |   |   |   prototype2x1memnoop
                     |   |   |   |   |   |   |   |   prototype2x1memcfqfilebuf
                     |   |   |   |   |   |   |   |   |   prototype2x1membufwrite
-    murphytest01 [  c   g   h   b   pd  pdm             pwb]
+    murphytest01 [  c   g   h   b   pd  pdm @           pwb]
     murphytest02 [  c   g   h   b   pd  pdm pdd pnp pfb pwb]
-    murphytest03 [  c           b       pdm         pfb    ]
-    murphytest04 [      g                   pdd            ]
+    murphytest03 [  c   @       b       pdm         pfb    ]
+    murphytest04 [  @   g                   pdd            ]
 
 
                     File size
