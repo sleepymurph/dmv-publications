@@ -1,5 +1,20 @@
 \chapter{Implementation}
 
+We have written a DMV prototype as a proof-of-concept. It is written in the Rust
+programming language and it runs from the Unix command line.
+
+
+\paragraph{Rust}
+
+Rust is a new C-like systems language that uses a sophisticated static type
+system to guarantee memory safety, avoiding data races in concurrent code as
+well as the segmentation faults and buffer overflows that are so easy to write
+in C. We chose Rust primarily because it is a compiled language. Compiling to
+machine code gives us the best chance of porting DMV to low-powered or mobile
+devices, and it allows us to compile DMV as a library that other applications
+can link to and build on. Rust is also just a very pleasant language to work in.
+
+
 \towrite{Prototype in Rust
     - Compiled for low-level control and high perf
     - Compiled for goal of running on mobile / low-powered systems
