@@ -30,7 +30,7 @@ Spring: Prototype and num-files re-tests
                     |   |   |   |   |   |   |   prototype2x1memnoop
                     |   |   |   |   |   |   |   |   prototype2x1memcfqfilebuf
                     |   |   |   |   |   |   |   |   |   prototype2x1membufwrite
-    murphytest01 [  c   g   h   b   pd  @               pwb]
+    murphytest01 [  c   g   h   b   pd  pdm             pwb]
     murphytest02 [  c   g   h   b   pd  pdm pdd pnp pfb pwb]
     murphytest03 [  c           b       pdm         pfb    ]
     murphytest04 [      g                   pdd            ]
@@ -47,8 +47,8 @@ Spring: Prototype and num-files re-tests
                     |   |   |   |   |   |   |   prototype2x1chunks32kx16knoop
     murphytest01 [  p   pd          pbw             ]
     murphytest02 [  p   @               pc          ]
-    murphytest03 [  p   pd  pdm pfb pbw pc  pcd @   ]
-    murphytest04 [  p   pd  pdm pfb pbw pc  pcd @   ]
+    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn ]
+    murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn ]
 
 
 ### Command lines
