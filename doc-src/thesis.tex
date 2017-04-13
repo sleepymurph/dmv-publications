@@ -1,6 +1,8 @@
 \documentclass[12pt,a4paper,two-side]{book}
 % vim: set ts=2 sts=2 sw=2 :
 
+\usepackage{todonotes}
+
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 
@@ -60,7 +62,6 @@
 
 % to-write
 \usepackage{xcolor}
-\newcommand\note[1]{\textcolor{orange}{NOTE: #1}}
 \newcommand\towrite[1]{\textcolor{blue}{TODO: #1}}
 
 
@@ -106,6 +107,9 @@
 \listoffigures
 %\listoftables
 %\lstlistoflistings
+
+\todototoc
+\listoftodos
 
 
 

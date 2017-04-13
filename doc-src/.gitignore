@@ -10,5 +10,6 @@
 *.pdf
 *.preprocessed.dot
 *.run.xml
+*.tdo
 *.toc
 vc_version.tex
