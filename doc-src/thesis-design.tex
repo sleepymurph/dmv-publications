@@ -1,34 +1,69 @@
-\chapter{Design}
+\chapter{DMV Design}
 
-\towrite{Low-level}
 
-\towrite{Wide variety of platforms}
+\section{DMV's DAG}
 
-\towrite{Neutral
-    - Normal hierarchy FS
-    - No prescribed file formats
-    - Normal files locally
-    - Files editable with normal applications
-}
+The heart of DMV is the directed acyclic graph it uses to store data and
+history. DMV's DAG is based on Git's, but it adds a new object type, the
+\newterm{chunked blob}, which represents a blob\todo{Consistent capitalization
+of "blob"} that has been broken into several smaller chunks. The objects that
+make up the DMV DAG are as follows:
 
-\towrite{Prototype copies working directory and object store. Disadvantage: disk
-space. Could use FUSE}
+\begin{description}
 
-\towrite{Explicit commits}
+    \item[Blob] As with Git, a blob simply holds binary data.
 
-\towrite{Breaking files into chunks, modified DAG}
+    \item[Chunked blob] Unlike with Git, larger blobs in DMV are broken into
+        chunks. Each chunked blob is simply an index of blobs (or other chunked
+        blobs) that make up the larger blob. A file that is stored in the system
+        may be represented by a blob or a chunked blob.
 
-\begin{figure}[h!]
-    \caption{Modified Git DAG}
+    \item[Tree] As with Git, a directory that is stored in the system is
+        represented by a tree object. The tree refers to the blob, chunked blob,
+        or tree that represents each file or subdirectory, along with metadata
+        such as the filename.
+
+    \item[Commit] As with Git, a commit represents a given state of the data
+        set. It refers to the tree that represents the top-level directory of
+        the data set at that state, along with metadata such as author, date,
+        and description. It also refers to the previous commit (or commits) that
+        represented the previous state of the data set.
+
+    \item[Ref] As with Git, a ref is a reference to a particular commit. A ref
+        might represent the current state of a branch of development, or a
+        particular state to save for later (a tag).
+
+\end{description}
+
+The DAG begins with refs. Each repository has a list of refs that lead into the
+DAG. Each ref refers to a commit. Each commit refers to a tree that represents
+the state at the time of committing, plus one or more parent commits. A tree
+refers to the blob, chunked blob, or tree that makes up each entry in the
+directory. A chunked blob can refer to other chunked blobs or to blobs. And
+finally, the blobs are the leaves of the graph. This relationship is illustrated
+in \autoref{fig:dia_new_dag}.
+
+
+\begin{figure}[h]
+    \caption{DMV DAG Object Types}
     \label{fig:dia_new_dag}
     \centering
         \includegraphics[width=0.5\textwidth]{dia_new_dag}
 \end{figure}
 
+\missingfigure{Example DMV DAG (Modify visualizer script?)}
+
+
+\towrite{Low-level}
+
+\towrite{Wide variety of platforms}
+
+
 \towrite{Not required to store all of the DAG}
 
-\towrite{No security model
-- Assume data set and all nodes controlled by user}
+\towrite{Subtree commits}
+
+\towrite{Sparse commits}
 
 \towrite{Usage assumptions
     - Assume more reads than writes
@@ -37,6 +72,9 @@ space. Could use FUSE}
 
 
 \subsection{What the system should not do}
+\todo{Update tense}
+\todo{Break this up?}
+\todo{Move it to Idea section? As a sidebar?}
 
 We want to focus on the problem of storing file history and synchronizing files
 between replicas.

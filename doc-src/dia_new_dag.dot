@@ -2,34 +2,30 @@ digraph {
 
     define(OPTIONAL, `style=dashed')
     define(NEW, `style=filled,fillcolor=grey')
-    define(BACKBONE, `style=filled,fillcolor=grey50')
+    define(INGIT, `style=filled,fillcolor=grey50')
 
     {
         // In Git
-        node[]
-        blobs[OPTIONAL]
-        trees[BACKBONE]
-        commits[BACKBONE]
-        refs[BACKBONE]
+        node[INGIT]
+        blob
+        tree
+        commit
+        ref
     }
 
     {
         // New
         node[NEW]
-        largeblobs[label="large blob indexes"]
+        chunkedblob[label="chunked blob\nindex"]
     }
 
-    refs -> { commits }
-    commits -> { trees }
-    trees -> trees [label=" subtrees"]
-    trees -> largeblobs
+    ref -> commit [label=" current commit"]
+    commit -> tree [label=" directory state"]
+    tree -> tree [label=" subdirectory"]
+    tree -> { chunkedblob, blob }[label=" file"]
 
-    {
-        // optional connections
-        edge[OPTIONAL]
-        commits -> commits [label=" previous commits"]
-        trees -> { blobs }
-        largeblobs -> blobs [label=" chunks"]
-    }
+    commit -> commit [label=" parent commit"]
+    chunkedblob -> blob [label=" chunk"]
+    chunkedblob -> chunkedblob [label=" chunk"]
 
 }
