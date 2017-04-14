@@ -8,6 +8,7 @@ thesis.pdf: \
     thesis.tex \
     thesis-*.tex \
     vc_version.tex \
+    lst-*.txt \
     research.bib \
     dia_architecture.pdf \
     dia_new_dag.pdf \
