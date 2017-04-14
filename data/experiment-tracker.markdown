@@ -33,7 +33,7 @@ Spring: Prototype and num-files re-tests
     murphytest01 [  c   g   h   b   pd  pdm @           pwb]
     murphytest02 [  c   g   h   b   pd  pdm pdd pnp pfb pwb]
     murphytest03 [  c   @       b       pdm         pfb    ]
-    murphytest04 [  c   g                   pdd            ]
+    murphytest04 [  c   g   @               pdd            ]
 
 
                     File size
