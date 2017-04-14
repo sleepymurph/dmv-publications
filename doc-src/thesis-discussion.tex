@@ -50,6 +50,42 @@ We are thinking about data across a number of dimensions:
 \end{description}
 
 
+
+\section{What the system should not do}
+
+\todo{Update tense}
+We want to focus on the problem of storing file history and synchronizing files
+between replicas.
+We should be careful not to expand across the wrong abstraction boundaries or to
+try to do too much.
+In particular:
+
+\begin{itemize}
+
+  \item We do not want to reinvent the filesystem. The system should place and
+    update files on the filesystem (or offer a filesystem view, such as with
+    FUSE) for applications to use normally. Applications such as editors should
+    not have to be rewritten to use our system.
+
+  \item We do not want to create new exotic file formats. We believe that the
+    classic tree of files is our best chance for long-term storage.
+
+  \item We hope this system could eventually be used as a piece of
+    infrastructure on which to build useful applications. It should not
+    incorporate functionality that would better be left to an application.
+
+  \item We do not want to deal with media metadata and categorization. Metadata
+    and categorization is best left to the applications that produce and consume
+    those media formats. We will merely provide the storage.
+
+  \item However, knowledge of media formats might be used for behind-the-scenes
+    optimization such as more efficient compression. E.g. recognizing that only
+    tag data has changed in an audio file.
+
+\end{itemize}
+
+
+
 \section{Limitations}
 
 \towrite{non-programmers (and even some programmers) cannot handle Git
