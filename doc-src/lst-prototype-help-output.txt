@@ -1,0 +1,27 @@
+dmv 0.1.0 (8498895) (debug)
+Distributed Media Versioning: distributed version-control for media files
+
+USAGE:
+    dmv [SUBCOMMAND]
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+SUBCOMMANDS:
+    branch            show/update branch information
+    cache-status      show cache status of a file
+    checkout          check out another revision
+    commit            commit current files to the repository
+    extract-object    extract a file or tree
+    fsck              verify repository integrity
+    hash-object       store a file or directory in the object store
+    help              Prints this message or the help of the given subcommand(s)
+    init              initialize repository
+    log               show commit history
+    ls-files          list files
+    merge             combine revisions
+    merge-base        find common ancestor
+    parents           show current parent commits
+    show-object       print information about an object
+    status            show status of files
