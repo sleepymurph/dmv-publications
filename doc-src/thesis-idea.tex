@@ -31,11 +31,12 @@ nodes, divided with the user's guidance according to data locality needs.
 
 DMV is inspired by distributed version control. Its core data structure is a
 DAG, based on Git's but modified to store a wider range of file sizes. The key
-difference is that large files are broken into smaller chunks (around 64
-kilobytes) for easier handling. Breaking files into chunks also allows the data
-structure to naturally de-duplicate parts of files that do not change. For
-example, if a large media file has its metadata block updated, only the chunk
-containing the updated metadata is new. The other chunks will simply be reused.
+difference is that large files are broken into smaller chunks (around
+\SI{52}{\kibi\byte}) for easier handling. Breaking files into chunks also allows
+the data structure to naturally de-duplicate parts of files that do not change.
+For example, if a large media file has its metadata block updated, only the
+chunk containing the updated metadata is new. The other chunks will simply be
+reused.
 
 
 \paragraph{Always writable}

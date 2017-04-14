@@ -4,7 +4,7 @@ We have written a DMV prototype as a proof-of-concept. The DMV prototype is
 written in the Rust programming language and it runs from the Unix command line.
 
 
-\paragraph{Rust}
+\section{Rust}
 
 Rust is a new C-like systems language that uses a sophisticated static type
 system to guarantee memory safety, avoiding data races in concurrent code as
@@ -18,7 +18,30 @@ can link to and build on. Rust is also just a pleasant language to work in.
 
 \towrite{Lib + CLI code layout}
 
-\towrite{Chunking details -- Rabin fingerprinting, Rsync protocol}
+
+\section{Chunking algorithm}
+
+Files are broken into chunks using the same rolling hash algorithm used by Gzip
+and Rsyncrypto\cite{rsyncrypto_algorithm} to respectively compress and encrypt
+files by chunks so that the result is "rsyncable"-- a remote copy of the
+compressed or encrypted file can be updated by transferring only those chunks
+that have changed.
+
+The algorithm keeps a sum of the previous \num{8196} bytes of input data, and
+creates a chunk boundary when that sum is evenly divisible by \num{4096}. We
+increased the parameters to yield larger chunks, summing the previous
+\num{32768} bytes (\SI{32}{\kibi\byte}) and dividing by \num{16384}
+(\SI{16}{\kibi\relax}).
+
+\begin{equation*}
+    \left( \sum_{i = n - \num{32768} }^{n}{P_i} \right) \mod \num{16384} = 0
+\end{equation*}
+
+This gives a mean chunk size of \SI{52}{\kibi\byte} with a standard deviation of
+\SI{21}{\kibi\byte}. The experiments used to measure and tune chunk sizes are
+described in \autoref{rolling-hash-exp}.
+
+
 
 \towrite{Prototype copies working directory and object store. Disadvantage: disk
 space. Could use FUSE}

@@ -53,7 +53,10 @@ in \autoref{fig:dia_new_dag}.
 
 \missingfigure{Example DMV DAG (Modify visualizer script?)}
 
-\towrite{Content-based chunking, rolling hash, Rabin fingerprinting}
+
+Files are split into chunks by content, using a rolling hash algorithm. This
+keeps the chunks the same even if content is added or removed from the beginning
+or middle of the file.
 
 
 \towrite{Not required to store all of the DAG}
