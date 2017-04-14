@@ -79,3 +79,11 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
   6       5000000  0x01312d0000    641.743   1218.547  0x099658d000       ok  verified   assumed        2826           0       41372       65186      125963       0.000         ok       0.000         ok   2109.814  0x099658d000       ok  verified   assumed        3148           0       44447      183844      181972        15.465
 # CallFailedError(cmd='cp -r many_files_dir .backup/', returncode='1')
   6       7500000  0x01c9c38000    972.132   1426.268        (None)   failed       bad  verified        3467           0       46870       85048      140040      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        15.265
+# CallFailedError(cmd='cp -r many_files_dir .backup/', returncode='1')
+  7      10000000  0x02625a0000   1278.442    860.992        (None)   failed       bad  verified        2160           0       26433       50304       87811      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        14.075
+# IOError(28, 'No space left on device')
+  7      25000000  0x05f5e10000   1867.720     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        12.774
+# IOError(28, 'No space left on device')
+  7      50000000  0x0bebc20000   1853.991     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.316
+# IOError(28, 'No space left on device')
+  7      75000000  0x11e1a30000   1847.659     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.479

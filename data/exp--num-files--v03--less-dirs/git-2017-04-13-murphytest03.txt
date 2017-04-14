@@ -76,3 +76,8 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
   5        750000  0x002dc6c000     95.689    392.623  0x017746e000       ok  verified   assumed        7897           0        6229       28225       35411       1.605         ok      27.638         ok    183.446  0x018409e000       ok  verified   assumed        1035           0         809        8700       26040       308.327
   6       1000000  0x003d090000    127.933   1176.561  0x01f4485000       ok  verified   assumed       12757           0       11585       76823      131756       2.106         ok      34.047         ok    352.062  0x0205391000       ok  verified   assumed        1451           0        1156       20580       47008       383.818
   6       2500000  0x0098968000    329.550   8605.387  0x04e322f000       ok  verified   assumed       34957           0       44542      431064     1196885      10.944         ok     225.800         ok   2267.445  0x050da7e000       ok  verified   assumed        4799           0        6297      157354      282893        16.646
+# Timeout: 19800s, sending SIGTERM: git add many_files_dir
+# Timeout: 19800s, sending SIGTERM: git fsck
+# Could not verify repo: CallTimeoutError(cmd='git fsck', elapsed=19800.001, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='git add many_files_dir', elapsed=19800.041, killsignal='SIGTERM', returncode=-15)
+  6       5000000  0x01312d0000    643.428  19805.681        (None)   failed       bad   ver_err       44592           0       46940     1306192     2545993      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         9.347
