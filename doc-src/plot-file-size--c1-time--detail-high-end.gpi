@@ -6,7 +6,7 @@ set xtics 1*2**30
 set ylabel "Time to commit"
 
 ticstring = "("
-do for [m=0:1200:10] {
+do for [m=0:1200:2] {
     ticstring = ticstring.'"'.m.'m" '.m.'*60, '
 }
 ticstring = ticstring.')'
@@ -15,11 +15,11 @@ set ytics @ticstring
 set grid
 set key top left
 
-meantable(f)="< ../data/meantable.py --columns filebytes c1_time --files ../data/exp--file-size--v04--w-cpu/".f
+vcslist = "git hg bup prototype2x1mem copy"
 
-plot \
-    meantable('git-*') using 1:2:3 with errorlines title "git", \
-    meantable('hg-*') using 1:2:3 with errorlines title "hg", \
-    meantable('bup-*') using 1:2:3 with errorlines title "bup", \
-    meantable('prototype-*') using 1:2:3 with errorlines title "prototype", \
-    meantable('copy-*') using 1:2:3 with errorlines title "cp", \
+meantable(f) = "< ../data/meantable.py" \
+    ." --columns filebytes c1_time" \
+    ." --files ../data/exp--file-size--v04--w-cpu/".f.'-*'
+
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:2:3 with errorlines title vcs
