@@ -17,6 +17,7 @@ thesis.pdf: \
     plot-file-size--c1-cpu-b.pdf \
     plot-file-size--c1-time--detail-high-end--prototype-improvements.pdf \
     plot-file-size--c1-time.pdf \
+    plot-file-size--c2-time.pdf \
     plot-file-size--repo-size.pdf \
     plot-filesystem-limits--directory-takeover.pdf \
     plot-num-files--c1-cpu-a.pdf \

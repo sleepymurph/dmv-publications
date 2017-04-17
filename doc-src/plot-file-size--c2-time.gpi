@@ -1,0 +1,56 @@
+#set xlabel "File Size (linear scale)"
+set format x "%1.0b%BB"
+
+#set ylabel "Time to commit"
+
+set grid
+unset key
+
+megs(n) = n * 2**20
+gigs(n) = n * 2**30
+
+vcslist = "git hg bup prototype2x1mem copy"
+
+meantable(f) = "< ../data/meantable.py \
+    --columns filebytes c2_time \
+    --where-not-bad c2_ver c2_repo \
+    --files ../data/exp--file-size--v04--w-cpu/".f.'-*'
+
+
+set multiplot layout 2,2 rowsfirst
+
+set xrange [megs(128):gigs(1)+megs(128)]
+set xtics megs(256)
+set ytics 10
+set format y "%1.0fs"
+
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:2:3 with errorlines title vcs
+
+
+set xrange [gigs(1):gigs(9)]
+set xtics gigs(2)
+set ytics 5
+set format y "%1.0fm"
+
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:($2/60):($3/60) with errorlines title vcs
+
+
+set xrange [gigs(8):gigs(56)]
+set xtics gigs(16)
+set ytics 60
+set format y "%1.0fm"
+
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:($2/60):($3/60) with errorlines title vcs
+
+set xrange [8*2**30:104*2**30]
+set yrange [400*60*60:500*60*60]
+unset xtics
+unset ytics
+unset grid
+unset border
+set key center center
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:2:3 with errorlines title vcs
