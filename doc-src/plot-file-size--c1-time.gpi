@@ -28,8 +28,8 @@ plot for [vcs in vcslist] \
     meantable(vcs) using 1:2:3 with errorlines title vcs
 
 
-set xrange [gigs(2):gigs(18)]
-set xtics gigs(4)
+set xrange [gigs(1):gigs(9)]
+set xtics gigs(2)
 set ytics 5
 set format y "%1.0fm"
 
@@ -37,8 +37,8 @@ plot for [vcs in vcslist] \
     meantable(vcs) using 1:($2/60):($3/60) with errorlines title vcs
 
 
-set xrange [gigs(16):gigs(104)]
-set xtics gigs(32)
+set xrange [gigs(8):gigs(56)]
+set xtics gigs(16)
 set ytics 60
 set format y "%1.0fm"
 
