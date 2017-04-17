@@ -1,0 +1,57 @@
+# Committing increasingly large numbers of files
+# 
+# reformat_partition: /dev/murphytest04-vg/test
+# data_gen:           random
+# vcs:                bup
+# each_file_size:     0x400 bytes (1.0KiB)
+# timeout:            19800.0
+# vcs_version:        debian/0.25-1
+# 
+# date:          2017-04-17T11:01:06.424421
+# commandline:   ./increasing_number_of_files.py bup 0 8 --mag-step=4 --data-gen=random --timeout=19800 --tmp=/test --reformat-partition /dev/murphytest04-vg/test
+# testversion:   7146442 Leave timeout info as comment in output
+# hostname:      murphytest04
+# platform:      Linux-3.16.0-4-amd64-x86_64-with-debian-8.6
+# memtotal:      8064260 kB
+# memfree:       7610748 kB
+# 
+# pythonversion:
+#     2.7.9 (default, Jun 29 2016, 13:08:31) 
+#     [GCC 4.9.2]
+# 
+# cpuinfo:
+#     processor	: 0
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 3166.000
+#     cache size	: 6144 KB
+#     
+#     processor	: 1
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 1998.000
+#     cache size	: 6144 KB
+# 
+# fsinfo:
+#     Filesystem                         Size  Used Avail Use% Mounted on
+#     /dev/mapper/murphytest04--vg-test  197G   60M  197G   1% /test
+# 
+# diskinfo:
+#     sda	vendor: ATA, model: ST3250318AS	scheduler: noop deadline [cfq]
+# 
+# Command results:
+# ok:      Command completed successfully
+# no_exec: Command was never executed
+# failed:  Command failed
+# 
+# Verification results:
+# ver_err:  Could not verify due to error during verification
+# no_ver:   Verification was never performed
+# bad:      Verification discovered an error
+# verified: Verified OK
+# assumed:  Assumed ok because dependent commands successful
+# 
+mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    c1_ver   c1_repo     c1_user     c1_nice   c1_system     c1_idle   c1_iowait  stat1_time  stat1_cmd  stat2_time  stat2_cmd    c2_time       c2_size   c2_cmd    c2_ver   c2_repo     c2_user     c2_nice   c2_system     c2_idle   c2_iowait  cleanup_time
+  0             1  0x0000000400      0.000      0.604  0x0000025000       ok  verified   assumed          19           0           8          78          15       1.705         ok       2.006         ok      1.205  0x0000027000       ok  verified   assumed          20           0           7         210           4         3.108
+  0             2  0x0000000800      0.001      0.804  0x0000026000       ok  verified   assumed          20           0           8         130           5       1.606         ok       2.006         ok      1.205  0x0000028000       ok  verified   assumed          21           0           6         210           4         3.108
+  0             4  0x0000001000      0.001      0.904  0x0000029000       ok  verified   assumed          22           0           5         150           4       1.706         ok       2.006         ok      1.205  0x000002b000       ok  verified   assumed          18           0           9         210           5         3.108
+  0             6  0x0000001800      0.001      0.803  0x000002b000       ok  verified   assumed          21           0           5         129           6       1.706         ok       2.006         ok      1.305  0x000002d000       ok  verified   assumed          18           0          10         228           5         3.008
+  1            10  0x0000002800      0.002      0.804  0x0000030000       ok  verified   assumed          18           0          12         125           7       1.706         ok       2.006         ok      1.205  0x0000032000       ok  verified   assumed          19           0           8         205           8         3.108
