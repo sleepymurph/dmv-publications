@@ -15,9 +15,7 @@ thesis.pdf: \
     dia_obj_db_and_wd.pdf \
     plot-file-size--c1-cpu-a.pdf \
     plot-file-size--c1-cpu-b.pdf \
-    plot-file-size--c1-time--detail-high-end.pdf \
     plot-file-size--c1-time--detail-high-end--prototype-improvements.pdf \
-    plot-file-size--c1-time--detail-low-end.pdf \
     plot-file-size--c1-time.pdf \
     plot-file-size--repo-size.pdf \
     plot-filesystem-limits--directory-takeover.pdf \
