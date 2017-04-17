@@ -17,6 +17,8 @@ def parse_args(args=None):
             help='columns from tables to average')
     parser.add_argument('--files', metavar='file', nargs='+', required=True,
             help='table files to use as input')
+    parser.add_argument('--where-not-bad', metavar='col', nargs="+",
+            help='only include data rows where this verify column is not "bad"')
 
     return parser.parse_args(args)
 
@@ -88,7 +90,12 @@ class ColumnAggregator(object):
     def extract_value_map(self, column_map, value_line):
         strings = value_line.split()
         # column name -> value in row
-        return { col: ast.literal_eval( strings[ column_map[col] ] ) for col in self.columns }
+        def literal_eval(s):
+            try:
+                return ast.literal_eval(s)
+            except:
+                return s
+        return { col: literal_eval( strings[ column_map[col] ] ) for col in column_map.keys() }
 
     def append_values(self, value_map):
         for col in self.other_cols:
@@ -161,7 +168,12 @@ def main():
                 line = read_skip(f)
                 if not line: break
                 vals = aggregator.extract_value_map(column_map, line)
-                aggregator.append_values(vals)
+                bad = None
+                if args.where_not_bad:
+                    verify = [vals[col] for col in args.where_not_bad]
+                    bad = [i for i in verify if i=='bad']
+                if not bad:
+                    aggregator.append_values(vals)
 
     rows = aggregator.build_output_table()
     for line in tabulate(rows):

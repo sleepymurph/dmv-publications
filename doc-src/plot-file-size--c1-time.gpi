@@ -13,6 +13,7 @@ vcslist = "git hg bup prototype2x1mem copy"
 
 meantable(f) = "< ../data/meantable.py \
     --columns filebytes c1_time \
+    --where-not-bad c1_ver c1_repo \
     --files ../data/exp--file-size--v04--w-cpu/".f.'-*'
 
 
