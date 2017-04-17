@@ -121,3 +121,21 @@ mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_v
  34  0x0600000000   24.0GiB   1693.741   4048.999  0x0cb16c8000       ok  verified   assumed       53194           0       13558      263827      476980    511.184  0x0cb5ec2000       ok  verified   assumed       44451           0        2996       49601        4542      0.000  0x0cb5ec2000       ok   assumed           0           0           0           0           0
  35  0x0800000000   32.0GiB   2255.327   6284.106  0x10ecb7d000       ok  verified   assumed       71065           0       18588      425861      738122    686.346  0x10f2b59000       ok  verified   assumed       59336           0        4131       67723        5222      0.000  0x10f2b59000       ok   assumed           0           0           0           0           0
  35  0x0c00000000   48.0GiB   3378.807  13052.938  0x19631ce000       ok  verified   assumed      107644           0       29181      871435     1596928   1439.323  0x196c1a4000       ok  verified   assumed       90004           0        6919      150312       39285      0.000  0x196c1a4000       ok   assumed           0           0           0           0           0
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.079, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19800.069, killsignal='SIGTERM', returncode=-15)
+ 36  0x1000000000   64.0GiB   4499.611  19804.743        (None)   failed       bad   ver_err      140785           0       37660     1009524     2764176     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.010, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19800.027, killsignal='SIGTERM', returncode=-15)
+ 36  0x1800000000   96.0GiB   6762.254  19807.137        (None)   failed       bad   ver_err      147286           0       40063     1173957     2592172     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
+# Timeout: 19810s, sending SIGKILL: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.065, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19810.068, killsignal='SIGKILL', returncode=-15)
+ 37  0x2000000000  128.0GiB   9005.756  19825.888        (None)   failed       bad   ver_err      135173           0       39931      783890     2996638     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# CallFailedError(cmd='prototype commit -m 'Add large_file'', returncode='1')
+ 37  0x3000000000  192.0GiB  13520.887    243.268        (None)   failed       bad  verified        9137           0        2085       15412       21822     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)

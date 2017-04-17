@@ -81,3 +81,19 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
 # Could not verify repo: CallTimeoutError(cmd='git fsck', elapsed=19800.001, killsignal='SIGTERM', returncode=-15)
 # CallTimeoutError(cmd='git add many_files_dir', elapsed=19800.041, killsignal='SIGTERM', returncode=-15)
   6       5000000  0x01312d0000    643.428  19805.681        (None)   failed       bad   ver_err       44592           0       46940     1306192     2545993      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         9.347
+# Timeout: 19800s, sending SIGTERM: git add many_files_dir
+# Timeout: 19810s, sending SIGKILL: git add many_files_dir
+# Timeout: 19800s, sending SIGTERM: git fsck
+# Could not verify repo: CallTimeoutError(cmd='git fsck', elapsed=19800.009, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='git add many_files_dir', elapsed=19810.039, killsignal='SIGKILL', returncode=-9)
+  6       7500000  0x01c9c38000    974.054  19823.112        (None)   failed       bad   ver_err       43618           0       45048     1244855     2614569      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         8.567
+# Timeout: 19800s, sending SIGTERM: git fsck
+# Could not verify repo: CallTimeoutError(cmd='git fsck', elapsed=19800.047, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='git add many_files_dir', returncode='128')
+  7      10000000  0x02625a0000   1288.485  13476.018        (None)   failed       bad   ver_err       40131           0       38378      728167     1875074      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         8.909
+# IOError(28, 'No space left on device')
+  7      25000000  0x05f5e10000   1887.355     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        13.035
+# IOError(28, 'No space left on device')
+  7      50000000  0x0bebc20000   1867.384     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.843
+# IOError(28, 'No space left on device')
+  7      75000000  0x11e1a30000   1874.147     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.829
