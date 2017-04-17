@@ -6,6 +6,9 @@ set format x "%1.0b%BB"
 set grid
 unset key
 
+megs(n) = n * 2**20
+gigs(n) = n * 2**30
+
 vcslist = "git hg bup prototype2x1mem copy"
 
 meantable(f) = "< ../data/meantable.py" \
@@ -15,8 +18,8 @@ meantable(f) = "< ../data/meantable.py" \
 
 set multiplot layout 2,2 rowsfirst
 
-set xrange [1*2**20:1.05*2**30]
-set xtics 256*2**20
+set xrange [megs(128):gigs(1)+megs(128)]
+set xtics megs(256)
 
 ticstring = "("
 do for [s=0:1200:10] {
@@ -29,11 +32,11 @@ plot for [vcs in vcslist] \
     meantable(vcs) using 1:2:3 with errorlines title vcs
 
 
-set xrange [512*2**20:16.5*2**30]
-set xtics 4*2**30
+set xrange [gigs(2):gigs(18)]
+set xtics gigs(4)
 
 ticstring = "("
-do for [m=0:1200:5] {
+do for [m=0:330:5] {
     ticstring = ticstring.'"'.m.'m" '.m.'*60, '
 }
 ticstring = ticstring.')'
@@ -43,11 +46,11 @@ plot for [vcs in vcslist] \
     meantable(vcs) using 1:2:3 with errorlines title vcs
 
 
-set xrange [8*2**30:104*2**30]
-set xtics 32*2**30
+set xrange [gigs(16):gigs(104)]
+set xtics gigs(32)
 
 ticstring = "("
-do for [m=0:1200:60] {
+do for [m=0:330:60] {
     ticstring = ticstring.'"'.m.'m" '.m.'*60, '
 }
 ticstring = ticstring.')'
