@@ -1,9 +1,5 @@
-set xlabel "File Size (linear scale)"
 set xrange [1*2**20:1.05*2**30]
-set format x "%1.0b%BB"
 set xtics 128*2**20
-
-set ylabel "Time to commit"
 
 ticstring = "("
 do for [s=0:1200:10] {
@@ -12,14 +8,4 @@ do for [s=0:1200:10] {
 ticstring = ticstring.')'
 set ytics @ticstring
 
-set grid
-set key top left
-
-vcslist = "git hg bup prototype2x1mem copy"
-
-meantable(f) = "< ../data/meantable.py  \
-                    --columns filebytes c1_time \
-                    --files ../data/exp--file-size--v04--w-cpu/".f."-*"
-
-plot for [vcs in vcslist] \
-    meantable(vcs) using 1:2:3 with errorlines title vcs
+load "plot-file-size--c1-time--detail--common.gpi"
