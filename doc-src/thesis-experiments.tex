@@ -110,6 +110,7 @@ Additional details can be found in \autoref{test-machine-specs}.
     \caption{Test computer specifications}
     \label{test-machine-specs}
     \begin{tabular}{ l l }
+        \\
         Vendor & Hewlett Packard \\
         CPU & Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz \\
         RAM & \SI{8}{\gibi\byte} \\
@@ -120,7 +121,7 @@ Additional details can be found in \autoref{test-machine-specs}.
         \hline
         Test partition & \SI{197}{\gibi\byte} LVM partition \\
         Filesystem & ext4 \\
-        I/O scheduler & cqf (unless otherwise noted) \\
+        I/O scheduler & cfq (unless otherwise noted) \\
     \end{tabular}
 \end{table}
 
@@ -137,28 +138,28 @@ because the test machines are identical, there was little real variation.
 
 \section{VCS Scaling: File Size}
 
-\begin{figure}[p]
+\begin{figure}[]
   \caption{Real time required to commit one file to an empty repository}
   \label{fig:plot-file-size--c1-time}
   \centering
     \includegraphics[]{plot-file-size--c1-time}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[]
   \caption{Commit 2}
   \label{fig:plot-file-size--c2-time}
   \centering
     \includegraphics[]{plot-file-size--c2-time}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[]
   \caption{Increasing file size: prototype improvements}
   \label{fig:plot-file-size--c1-time--prototype-improvements}
   \centering
     \includegraphics[]{plot-file-size--c1-time--detail-high-end--prototype-improvements}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[]
   \caption{CPU utilization while committing one file to an empty repository}
   \label{fig:plot-file-size--c1-cpu}
   \centering
@@ -166,7 +167,7 @@ because the test machines are identical, there was little real variation.
     \includegraphics[]{plot-file-size--c1-cpu-b}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[]
   \caption{Total repository size after committing, editing, and committing again}
   \label{fig:plot-file-size--repo-size}
   \centering
