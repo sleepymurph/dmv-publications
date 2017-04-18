@@ -19,6 +19,32 @@ the effect of file numbers, we would commit increasing number of small
 (\SI{1}{\kibi\byte}) files to each target VCS.
 
 
+
+\subsection{Version Control Systems Tested}
+
+We ran each experiment using four different version control systems: Git,
+Mercurial (also known as \newterm{hg}), Bup, and our DMV prototype (specific
+versions listed in \autoref{vcs-versions}). As a control we also ran the
+experiments using a dummy VCS that simple made a copy of the files. We chose Git
+and Mercurial because they are the two most widely used distributed version
+control systems available. We also included Bup because it uses Git's storage
+format but, like DMV, it also breaks files into chunks. For discussion on the
+similarities and differences between DMV and Bup, see \autoref{related_bup}.
+
+\begin{table}
+    \caption{Version control systems tested and their versions}
+    \label{vcs-versions}
+    \centering
+    \begin{tabular}{ l l }
+        \\
+        Git & 2.1.4 \\
+        Mercurial (hg) & 3.1.2 \\
+        Bup & debian/0.25-1 \\
+        DMV prototype & exp\_prototype2x1mem (c9baf3a) \\
+    \end{tabular}
+\end{table}
+
+
 \subsection{Procedure}
 
 For each experiment, the procedure for a single trial was as follows:
