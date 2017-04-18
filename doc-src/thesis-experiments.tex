@@ -1,10 +1,9 @@
-\chapter{Experiments and Results}
+\chapter{Experiments}
 
 
 
 
-\section{Version Control System Scalability Experiments: File Size and Number of
-Files}
+\section{Version Control System Scaling Experiments}
 
 We performed experiments to probe the limits of existing version control
 systems, to see how they would cope with file sizes and file numbers in ranges
@@ -131,46 +130,12 @@ because the test machines are identical, there was little real variation.
 
 
 
-\subsection{Committing a single file of increasing size}
 
-\iffalse
 
-\subsubsection{Methodology}
 
-The experiment was written as a script in Python. For each version control
-system, and each file size, this script would do the following:
+\chapter{Results}
 
-\begin{enumerate}
-    \setlength{\itemsep}{0pt}
-    \setlength{\parskip}{0pt}
-    \setlength{\parsep}{0pt}
-    \item Initialize an empty repository
-    \item Generate a test file of the given size from random binary data
-    \item Commit the file
-    \item Overwrite a small part of the file (1/1024th of the data)
-    \item Commit the file again
-    \item Run the garbage collection / compaction algorithm (Git only)
-\end{enumerate}
-
-Times were measured by the Python script, checking the time of the real-time
-clock before and after the relevant command was run.
-
-Total repository size was measured via the Unix \lstinline{du} command, and it
-includes the original file in the working directory, as well as the repository.
-
-Trials were performed four times each, on four identical computers. Because the
-computers are identical, the performance across trials was nearly identical.
-These graphs display the mean values and have error bars for standard deviation,
-but the error bars are difficult to see.
-
-\subsubsection{Platform and Configuration}
-
-Each identical experiment computer had a 3GHz Intel processor, 8GiB of RAM, and
-about 200GiB of free hard disk space.
-
-\fi
-
-\subsubsection{Results}
+\section{VCS Scaling: File Size}
 
 \begin{figure}[p]
   \caption{Real time required to commit one file to an empty repository}
@@ -313,7 +278,7 @@ Performance observations:
 
 \fi
 
-\subsection{Committing an increasing number of small files}
+\section{VCS Scaling: Number of Files}
 
 \subsubsection{Results}
 
