@@ -1,6 +1,135 @@
 \chapter{Experiments and Results}
 
-\section{Version Control System Behavior Experiments}
+
+
+
+\section{Version Control System Scalability Experiments: File Size and Number of
+Files}
+
+We performed experiments to probe the limits of existing version control
+systems, to see how they would cope with file sizes and file numbers in ranges
+beyond what would be expected in a source code tree. We wanted to see how long
+it would take for each VCS to store that amount of data, how much disk space it
+used, and what CPU utilization was like during storage. And since version
+controls systems track changes, so we also wanted to see what would happen when
+a small subset of that data was modified and then committed again.
+
+We conducted two major experiments. To measure the effect of file size, we would
+commit a single file of increasing size to each target VCS. And to measure
+the effect of file numbers, we would commit increasing number of small
+(\SI{1}{\kibi\byte}) files to each target VCS.
+
+
+\subsection{Procedure}
+
+For each experiment, the procedure for a single trial was as follows:
+
+\begin{tight_enumerate}
+
+    \item Create an empty repository of the target VCS in a temporary directory
+
+    \item Generate target data to store, either a single file of the target
+        size, or the target number of \SI{1}{\kibi\byte} files
+
+    \item Commit the target data to the repository
+
+    \item Verify that the commit succeeded
+
+    \item Overwrite a fraction of each target file
+
+    \item Commit again
+
+    \item Verify that the commit succeeded
+
+    \item Delete temporary directory and all trial files
+
+\end{tight_enumerate}
+
+We increased file sizes exponentially by powers of two from \SI{1}{\byte} up to
+\SI{128}{\gibi\byte}, adding an additional step at \num{1.5} times the base size
+at each order of magnitude. For example, starting at \SI{1}{\mebi\byte}, we
+would run trails with \SI{1}{\mebi\byte}, \SI{1.5}{\mebi\byte},
+\SI{2}{\mebi\byte}, \SI{3}{\mebi\byte}, \SI{4}{\mebi\byte}, \SI{6}{\mebi\byte},
+\SI{8}{\mebi\byte}, \SI{12}{\mebi\byte}, and so on.
+
+We increased numbers of files exponentially by powers of ten from one file to
+ten million files, adding additional steps at \num{2.5}, \num{5}, and \num{7.5}
+times the base number at each order of magnitude. For example, starting at
+\num{100} files we would run trials with \num{100}, \num{250}, \num{500},
+\num{750}, \num{1000}, \num{2500}, \num{5000}, \num{7500}, \num{10000}, and so
+on.
+
+Test data files consisted simply of pseudo-random bytes taken from the operating
+system's pseudo-random number generator (\lstinline{/dev/urandom} on Linux).
+
+When updating data files for the second commit, we would overwrite a single
+contiguous section of each file with new pseudo-random bytes. We would start
+one-quarter of the way into the file, and overwrite \num{1/1024}th of the file's
+size (or 1 byte if the file was smaller than \SI{1024}{\kibi\byte}). So a
+\SI{1}{\mebi\byte} file would have \SI{1}{\kibi\byte} overwritten, a
+\SI{1}{\gibi\byte} file would have \SI{1}{\mebi\byte} overwritten, and so on.
+
+
+\subsection{Automation and Measurement}
+
+The trials were run via a Python script that would set up, run, and clean up
+each trial in a loop, covering the full range of sizes or numbers for a given
+VCS. The script would measure the wall-clock time duration taken by each commit
+command and collect CPU utilization metrics. It would also terminate any
+individual VCS operation that ran longer than five hours. After commit and
+verification, the script would also measure repository size.
+
+The script measured the wall-clock time duration for each commit by checking the
+system time (\lstinline{time.time()}) just before and just after using Python's
+\lstinline{subprocess} module to execute the necessary VCS command. CPU
+utilization was measured by sampling the CPU status lines provided in Linux's
+\lstinline{/proc/stat} information. The status lines show a cumulative count of
+time slices that the CPU has spent in user mode, system mode, and waiting for
+I/O. Like with the time measurements, the script samples CPU utilization before
+and after executing a VCS command, and then subtracts to get the number of time
+slices spent in each state during execution. We then compare the relative number
+of time slices in each state to get an idea of whether the operation is
+CPU-bound or I/O-bound.
+
+The script measures repository size using the standard Unix disk usage command
+(\lstinline{du}) and measures the size of the trial's entire temporary
+directory, which includes the generated test data itself along with the VCS's
+storage.
+
+
+\subsection{Test Environment}
+
+We ran the trials on four identical, dedicated test computers with no other
+load. Each was a typical office desktop with a \SI{3.16}{\giga\hertz}
+\num{64}-bit dual-core processor and \SI{8}{\gibi\byte} of RAM, running Debian
+version 8.6 ("Jessie"). Each computer had one normal SATA hard disk (spinning
+platter, not solid-state), and trials were conducted on a dedicated
+\SI{197}{\gibi\byte} LVM partition formatted with the ext4 filesystem.
+Additional details can be found in \autoref{test-machine-specs}.
+
+\begin{table}
+    \caption{Test computer specifications}
+    \label{test-machine-specs}
+    \begin{tabular}{ l l }
+        Vendor & Hewlett Packard \\
+        CPU & Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz \\
+        RAM & \SI{8}{\gibi\byte} \\
+        Hard disk & ATA model ST3250318AS \\
+        \hline
+        Operating system & Debian 8.6 ("Jessie") \\
+        Kernel & Linux 3.16.0 \\
+        \hline
+        Test partition & \SI{197}{\gibi\byte} LVM partition \\
+        Filesystem & ext4 \\
+        I/O scheduler & cqf (unless otherwise noted) \\
+    \end{tabular}
+\end{table}
+
+We ran every trial four times, once on each of the test computers, and took the
+mean and standard deviation of each time and disk space measurement. However,
+because the test machines are identical, there was little real variation.
+
+
 
 \subsection{Committing a single file of increasing size}
 
