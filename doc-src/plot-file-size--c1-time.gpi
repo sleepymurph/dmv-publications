@@ -19,18 +19,18 @@ meantable(f) = "< ../data/meantable.py \
 
 set multiplot layout 2,2 rowsfirst
 
-set xrange [megs(128):gigs(1)+megs(128)]
-set xtics megs(256)
-set ytics 10
-set format y "%1.0fs"
+set xrange [megs(1):megs(11)]
+set xtics megs(2)
+set ytics 0.5
+set format y "%1.1fs"
 
 plot for [vcs in vcslist] \
     meantable(vcs) using 1:2:3 with errorlines title vcs
 
 
-set xrange [gigs(1):gigs(9)]
-set xtics gigs(2)
-set ytics 5
+set xrange [gigs(.5):gigs(4.5)]
+set xtics gigs(1)
+set ytics 2
 set format y "%1.0fm"
 
 plot for [vcs in vcslist] \
