@@ -99,20 +99,31 @@
 
 
 \frontmatter
+\pagestyle{empty}
+
 
 % Put title page in PDF index
 \phantomsection
 \currentpdfbookmark{Title Page}{title}
+
 \maketitle
 
-\input{thesis-title-reverse.tex}
 
+% Colophon on reverse of title page
+\vspace*{\fill}
+\input{thesis-colophon.tex}
+\clearpage
+
+
+\pagestyle{headings}
 \include{thesis-abstract}
+
 
 % Put table of contents in the PDF index
 \cleardoublepage
 \phantomsection
 \currentpdfbookmark{Contents}{contents}
+
 \tableofcontents
 
 \listoffigures
