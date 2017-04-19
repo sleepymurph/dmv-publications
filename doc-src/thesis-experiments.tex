@@ -261,18 +261,26 @@ used a new \SI{100}{\mebi\byte} LVM partition.
 \section{VCS Scaling: File Size}
 
 \begin{figure}[]
-  \caption{Real time required to commit one file to an empty repository}
+  \caption{Committing one large file to a fresh repository}
   \label{fig:plot-file-size--c1-time}
   \centering
     \includegraphics[]{plot-file-size--c1-time}
 \end{figure}
 
+\autoref{fig:plot-file-size--c1-time} shows the time required for
+the initial commit, adding a file of the given size to a fresh repository.
+
+
 \begin{figure}[]
-  \caption{Commit 2}
+    \caption{Committing changes to a large file}
   \label{fig:plot-file-size--c2-time}
   \centering
     \includegraphics[]{plot-file-size--c2-time}
 \end{figure}
+
+\autoref{fig:plot-file-size--c2-time} shows the time required for the second
+commit, after \num{1/1024}th of the file was updated.
+
 
 \begin{figure}[]
   \caption{CPU utilization while committing one file to an empty repository}
@@ -282,6 +290,10 @@ used a new \SI{100}{\mebi\byte} LVM partition.
     \includegraphics[]{plot-file-size--c1-cpu-b}
 \end{figure}
 
+\autoref{fig:plot-file-size--c1-cpu} shows the
+CPU usage during the initial commit.
+
+
 \begin{figure}[]
   \caption{Total repository size after committing, editing, and committing again}
   \label{fig:plot-file-size--repo-size}
@@ -289,19 +301,10 @@ used a new \SI{100}{\mebi\byte} LVM partition.
     \includegraphics[]{plot-file-size--repo-size}
 \end{figure}
 
-\autoref{fig:plot-file-size--c1-time} shows time required for
-the initial commit, copying the file into a fresh empty repository.
-
-\autoref{fig:plot-file-size--c1-time--detail-high-end} shows
-detailed views of \autoref{fig:plot-file-size--c1-time}, zooming
-in and using a linear scale.
-
-\autoref{fig:plot-file-size--c1-cpu} shows the
-CPU usage during the initial commit.
-
 \autoref{fig:plot-file-size--repo-size} shows the total
 repository size, including the original file, after committing once, editing
 1/1024th of the file, and committing again.
+
 
 \iffalse
 
