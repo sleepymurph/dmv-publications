@@ -1,14 +1,10 @@
 set xlabel "Window size (log scale)"
-#set logscale x 2
-#set xrange [.8 * 2**8: 1.2 * 2**15]
-set format x "%1.0b%BB"
 
 set ylabel "Chunk size (log scale)"
 set logscale y 2
-#set yrange [2**10:2**21]
 set format y "%1.0b%BB"
 
-set key below
+set key below title "\ndivisor" # The "\n" creates a space between x axis label and key
 
 set style data histograms
 set style histogram errorbars
@@ -27,11 +23,11 @@ data14=cmdline(14)
 data15=cmdline(15)
 
 plot \
-    @data8    using 3:4:xticlabels(1) title " 8 bits match", \
-    @data9    using 3:4:xticlabels(1) title " 9 bits match", \
-    @data10   using 3:4:xticlabels(1) title "10 bits match", \
-    @data11   using 3:4:xticlabels(1) title "11 bits match", \
-    @data12   using 3:4:xticlabels(1) title "12 bits match", \
-    @data13   using 3:4:xticlabels(1) title "13 bits match", \
-    @data14   using 3:4:xticlabels(1) title "14 bits match", \
-    @data15   using 3:4:xticlabels(1) title "15 bits match", \
+    @data8    using 3:4:xticlabels(1) title "mod 256", \
+    @data9    using 3:4:xticlabels(1) title "mod 512", \
+    @data10   using 3:4:xticlabels(1) title "mod 1Ki", \
+    @data11   using 3:4:xticlabels(1) title "mod 2Ki", \
+    @data12   using 3:4:xticlabels(1) title "mod 4Ki", \
+    @data13   using 3:4:xticlabels(1) title "mod 8Ki", \
+    @data14   using 3:4:xticlabels(1) title "mod 16Ki", \
+    @data15   using 3:4:xticlabels(1) title "mod 32Ki", \
