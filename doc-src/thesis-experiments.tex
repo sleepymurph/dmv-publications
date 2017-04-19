@@ -157,6 +157,42 @@ because the test machines are identical, there was little real variation.
 
 
 
+\section{Tuning Chunk Size}
+
+The algorithm used to divide files into chunks (described in
+\autoref{chunking-algoritm}) involves moving a window across the data, and
+setting a chunk boundary where the sum of the bytes in that window is evenly
+divisible by a given number. We ran an experiment to determine the effects of
+these two parameters on chunk size.
+
+\paragraph{Procedure}
+
+For each combination of window size and divisor, we would run the rolling hash
+algorithm on a stream of pseudo-random bytes until it had identified \num{100}
+chunks. Then we would compute the mean and standard deviation of the chunk
+sizes.
+
+We used window sizes in powers of two from \SI{128}{\byte} ($2^7$) to
+\SI{256}{\kibi\byte} ($2^{18}$), and divisors in powers of two from \num{256}
+($2^8$) to \SI{128}{\kibi\relax} ($2^{17}$).
+
+The pseudo-random number generator used was an XOR shift RNG\cite{xorshift_rng}.
+The experiment itself was automated as a unit test in the DMV prototype's Rust
+code.
+
+\paragraph{Environment}
+
+Because this experiment measures only the output of calculations, the
+environment in which it is run should make no difference in the outcome. In
+fact, if the Xorshift RNG is given the same initial seed value, the resulting
+random byte stream will be identical, which will lead to an identical sequence
+of chunks, which will lead to an identical average chunk size. This experiment
+is deterministic.
+
+%
+
+
+
 
 \chapter{Results}
 
