@@ -28,11 +28,27 @@ a library.
 
 
 
-\section{Working Directory and Object Store}
+\section{Working Directory and Object Store}\label{dir-impl}
 
-\towrite{Prototype copies working directory and object store. Disadvantage: disk
-space. Could use FUSE}
+The DMV prototype stores its objects as regular files on the file system, using
+the same structure that Git does. The object store is in a hidden directory
+inside the working directory (\lstinline{.dmv/objects}). Objects are stored
+using their SHA-1 hash as their filename, with the first two hex digits removed
+to create a directory name (\autoref{dir-scheme-example}). This leads to
+\num{256} subdirectories, each holding roughly \num{1/256}th of all the objects
+stored. We experimented with other schemes to divide the objects
+(\autoref{dir-experiment}), but found Git's to be the most reasonable.
 
+\begin{figure}[h]
+    \caption{Example object file name}
+    \label{dir-scheme-example}
+    \begin{tabular}{ l r }
+        Object SHA-1 hash & \lstinline{c6e2f43ddee3c00041cdae8fedc3bd6961e61f69} \\
+        Object file name & \lstinline{.dmv/objects/c6/e2f43ddee3c00041cdae8fedc3bd6961e61f69} \\
+    \end{tabular}
+\end{figure}
+
+%
 
 
 \section{Chunking algorithm}\label{chunking-algoritm}

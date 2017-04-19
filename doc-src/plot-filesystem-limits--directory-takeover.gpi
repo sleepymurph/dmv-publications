@@ -14,7 +14,6 @@ set style fill solid
 
 files="../data/exp--filesystem-limits--micro/*murphytest03*"
 cmdline(s)="\"< ./plot-filesystem-limits--directory-takeover--preprocess.sh ".s." ".files."\""
-plotline(s)=cmdline(s)." using 4 title \"".s." chars per dir\""
 
 datacmd1=cmdline(1)
 datacmd2=cmdline(2)
@@ -23,22 +22,22 @@ datacmd4=cmdline(4)
 
 set multiplot layout 2,2 rowsfirst
 
-set label 1 '1 char per dir' @labelpos
+set label 1 '1 hex digit per dir' @labelpos
 plot \
     @datacmd1 using 4:xticlabels(3) title "files",\
     @datacmd1 using 5:xticlabels(3) title "dirs"
 
-set label 1 '2 chars per dir' @labelpos
+set label 1 '2 hex digits per dir' @labelpos
 plot \
     @datacmd2 using 4:xticlabels(3) title "files",\
     @datacmd2 using 5:xticlabels(3) title "dirs"
 
-set label 1 '3 chars per dir' @labelpos
+set label 1 '3 hex digits per dir' @labelpos
 plot \
     @datacmd3 using 4:xticlabels(3) title "files",\
     @datacmd3 using 5:xticlabels(3) title "dirs"
 
-set label 1 '4 chars per dir' @labelpos
+set label 1 '4 hex digits per dir' @labelpos
 plot \
     @datacmd4 using 4:xticlabels(3) title "files",\
     @datacmd4 using 5:xticlabels(3) title "dirs"
