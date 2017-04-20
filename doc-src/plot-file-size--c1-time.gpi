@@ -13,7 +13,7 @@ vcslist = "git hg bup prototype2x1mem copy"
 
 meantable(f) = "< ../data/meantable.py \
     --columns filebytes c1_time \
-    --where-not-bad c1_ver c1_repo \
+    --where-not-bad c1_ver \
     --files ../data/exp--file-size--v04--w-cpu/".f.'-*'
 
 
@@ -37,8 +37,8 @@ plot for [vcs in vcslist] \
     meantable(vcs) using 1:($2/60):($3/60) with errorlines title vcs
 
 
-set xrange [gigs(8):gigs(56)]
-set xtics gigs(16)
+set xrange [gigs(16):gigs(112)]
+set xtics gigs(32)
 set ytics 60
 set format y "%1.0fm"
 

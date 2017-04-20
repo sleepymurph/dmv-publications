@@ -33,6 +33,10 @@ control systems available. We also included Bup because it uses Git's storage
 format but, like DMV, it also breaks files into chunks. For discussion on the
 similarities and differences between DMV and Bup, see \autoref{related_bup}.
 
+\towrite{Include more background about Git, Mercurial, and Bup: Git and Hg
+conceptually use same DAG but implemented differently. Bup uses Git's file
+format directly but is rewritten.}
+
 \begin{table}
     \caption{Version control systems tested and their versions}
     \label{vcs-versions}
@@ -57,15 +61,22 @@ For each experiment, the procedure for a single trial was as follows:
     \item Generate target data to store, either a single file of the target
         size, or the target number of \SI{1}{\kibi\byte} files
 
-    \item Commit the target data to the repository
+    \item Commit the target data to the repository, measuring wall clock time to
+        commit
 
-    \item Verify that the commit succeeded
+    \item Verify that the first commit exists in the repository, and if there
+        was any kind of error, run the repository's integrity check operation
+
+    \item Measure the total repository size
 
     \item Overwrite a fraction of each target file
 
-    \item Commit again
+    \item Commit again, measuring wall clock time to commit
 
-    \item Verify that the commit succeeded
+    \item Verify that the second commit exists in the repository, and if there
+        was any kind of error, run the repository's integrity check operation
+
+    \item Measure the total repository size again
 
     \item Delete temporary directory and all trial files
 
@@ -206,6 +217,8 @@ requires an inode on an ext4 filesystem, a storage scheme that creates too many
 subdirectories will use up all the available inodes with directories rather than
 data.
 
+\todo{Note mysterious seek times}
+
 \paragraph{Procedure}
 
 To test the effects of different object storage schemes, we created a new
@@ -259,6 +272,59 @@ used a new \SI{100}{\mebi\byte} LVM partition.
 \chapter{Results}
 
 \section{VCS Scaling: File Size}
+
+\subsection{File Size Limits}
+
+Both Git and Mercurial had limits to the size of file they could store
+successfully. With the \SI{2}{\gibi\byte} file, Mercurial would issue a warning,
+saying "up to 6442 MB of RAM may be required to manage this file," but the
+commit would be stored successfully. With a file \SI{4}{\gibi\byte} or larger,
+Mercurial's commit operation would exit with an error message and the commit
+would not be stored. However, the repository would be left in a consistent empty
+state. The atomicity of the commit operation held.
+
+Git's behavior was more erratic. Starting with a file \SI{12}{\gibi\byte} and
+larger, Git's commit operation would exit with an error code, reporting a fatal
+out-of-memory error that \lstinline{malloc} failed to allocate
+\SI{12}{\gibi\byte}. However, the commit would be successfully stored with no
+consistency errors in the repository reported by \lstinline{git fsck}. Starting
+at \SI{24}{\gibi\byte}, the commit operation would report the same error, the
+commit would still be written, but the \lstinline{git fsck} integrity check
+would exit with an error code. However, the error it reported in its output was
+a similar "fatal" error as Git's \lstinline{malloc} error as the commit
+operation, and it did not report any actual integrity errors in the repository.
+
+We thought it was possible that, like the commit operation, the fsck operation
+was reporting a fatal error but still completing its task. So to test, we
+deliberately corrupted the repository by writing some random data to a file in
+the Git's object store and then reran \lstinline{git fsck}. It reported both the
+\lstinline{malloc} and the integrity error (\autoref{git-fsck-error-output}).
+So, when evaluating Git data collected by the experiment script, we assume that
+the Git repository was intact even when the \lstinline{git fsck} exited with an
+error code.
+
+\begin{figure}[]
+    \caption{Git fsck output after committing a \SI{24}{\gibi\byte} file and
+        deliberately corrupting the repository, showing both "fatal" memory
+        error and actual data integrity error}
+    \label{git-fsck-error-output}
+    \missingfigure{Git fsck output showing "fatal" error and integrity error}
+\end{figure}
+
+We were able to store a file up to \SI{64}{\gibi\byte} in size with our DMV
+prototype, but time became a limiting factor as file size increased. At
+\SI{96}{\gibi\byte}, our experiment script timed out and terminated the commit
+after five and a half hours.
+
+Our test environment itself limited the largest file stored by any VCS to
+\SI{96}{\gibi\byte}. Any larger and it was simply impossible to store a second
+copy of the file on our \SI{197}{\gibi\byte} test partition. Bup was able to
+store a \SI{96}{\gibi\byte} file with no errors in just under two hours. Git
+could also store such a large file, but one must ignore the false-alarm "fatal"
+errors being reported by the user interface.
+
+
+\subsection{Commit Time}
 
 \begin{figure}[]
   \caption{Committing one large file to a fresh repository}
