@@ -47,6 +47,11 @@ vc_version.tex: ../.git/logs/HEAD Makefile
 		>> vc_version.tex
 	echo "	\\gdef\\GITTags{$$(git tag --points-at HEAD | sed 's/_/\\_/g')}" >> vc_version.tex
 
+plot-file-size--c1-time.pdf: \
+    plot-file-size--c1-time.gpi \
+    ../data/exp--file-size--v04--w-cpu/*.txt \
+    ../data/meantable.py
+	gnuplot -e 'set terminal pdf size 4.5in,5in' plot-file-size--c1-time.gpi > plot-file-size--c1-time.pdf
 
 design-document.pdf: \
     design-document.tex \

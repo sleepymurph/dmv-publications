@@ -6,6 +6,7 @@ set format x "%1.0b%BB"
 set grid
 unset key
 
+kilos(n) = n * 2**10
 megs(n) = n * 2**20
 gigs(n) = n * 2**30
 
@@ -17,7 +18,30 @@ meantable(f) = "< ../data/meantable.py \
     --files ../data/exp--file-size--v04--w-cpu/".f.'-*'
 
 
-set multiplot layout 2,2 rowsfirst
+set multiplot layout 3,2 rowsfirst
+
+set logscale x 2
+set logscale y 60
+set xrange [kilos(1):gigs(128)]
+set ytics ("10ms" .01, "100ms" .1, "1s" 1, "1m" 60, "1h" 60*60)
+set xtics (kilos(1), megs(1), gigs(1), gigs(128))
+
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:2 with lines title vcs
+
+unset logscale xy
+
+
+set xrange [kilos(128):megs(1)+kilos(128)]
+set xtics kilos(512)
+set mxtics 2
+show mxtics
+set ytics 0.5
+set format y "%1.1fs"
+
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:2:3 with errorlines title vcs
+
 
 set xrange [megs(1):megs(11)]
 set xtics megs(2)
