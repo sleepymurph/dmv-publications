@@ -17,6 +17,9 @@ meantable(f) = "< ../data/meantable.py \
     --where-not-bad c2_ver \
     --files ../data/exp--file-size--v04--w-cpu/".f.'-*'
 
+#set xtics rotate by 30 offset character -2.2, -1.3
+#set xtics font ",9"
+#set ytics font ",9"
 
 set multiplot layout 3,2 rowsfirst
 
@@ -25,11 +28,13 @@ set logscale y 60
 set xrange [kilos(1):gigs(128)]
 set ytics ("10ms" .01, "100ms" .1, "1s" 1, "1m" 60, "1h" 60*60)
 set xtics (kilos(1), megs(1), gigs(1), gigs(128))
+set yrange [.001:4*60*60]
 
 plot for [vcs in vcslist] \
     meantable(vcs) using 1:2 with lines title vcs
 
 unset logscale xy
+set yrange [*:*]
 
 set mxtics 2
 set mytics 2
@@ -63,7 +68,7 @@ plot for [vcs in vcslist] \
 
 set xrange [gigs(16):gigs(112)]
 set xtics gigs(32)
-set ytics 60
+set ytics 10
 set format y "%1.0fm"
 
 plot for [vcs in vcslist] \

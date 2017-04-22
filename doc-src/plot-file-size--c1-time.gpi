@@ -28,11 +28,13 @@ set logscale y 60
 set xrange [kilos(1):gigs(128)]
 set ytics ("10ms" .01, "100ms" .1, "1s" 1, "1m" 60, "1h" 60*60)
 set xtics (kilos(1), megs(1), gigs(1), gigs(128))
+set yrange [.001:4*60*60]
 
 plot for [vcs in vcslist] \
     meantable(vcs) using 1:2 with lines title vcs
 
 unset logscale xy
+set yrange [*:*]
 
 set mxtics 2
 set mytics 2
