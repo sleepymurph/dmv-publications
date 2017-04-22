@@ -45,10 +45,11 @@ Spring: Prototype and num-files re-tests
                     |   |   |   |   |   prototype2x1chunks32kx16k
                     |   |   |   |   |   |   prototype2x1chunks32kx16kdeadline
                     |   |   |   |   |   |   |   prototype2x1chunks32kx16knoop
-    murphytest01 [  p   pd  @       pbw             ]
-    murphytest02 [  p   pd  pdm pfb @   pc          ]
-    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn ]
-    murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn ]
+                    |   |   |   |   |   |   |   |   gitallowrepoerr
+    murphytest01 [  p   pd  @       pbw                 ]
+    murphytest02 [  p   pd  pdm pfb @   pc              ]
+    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn     ]
+    murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn     ]
 
 
 ### Command lines
