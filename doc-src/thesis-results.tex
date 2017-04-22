@@ -33,6 +33,9 @@ not report the \lstinline{malloc} error that it did before. So for the other
 trials with larger files, we assumed that Git's errors were a false alarm and
 allowed the trail to continue.
 
+\towrite{After corruption, answer instantaneous rather than 7m before. Some
+sorcery detected tampering, even though we fixed the mod time?}
+
 Our DMV prototype was able to store a file up to \SI{64}{\gibi\byte} in size,
 but time became a limiting factor as file size increased. At
 \SI{96}{\gibi\byte}, our experiment script timed out and terminated the commit
@@ -85,29 +88,57 @@ These findings are summarized in \autoref{file-sizes-table} and
 \end{table}
 
 
-\subsection{Commit Time}
+\subsection{Time for File-Size Initial Commit}
+
+\autoref{fig:plot-file-size--c1-time} shows the time required for the initial
+commit, adding a single file of the given size to a fresh repository. Over all,
+the trend is clear and unsurprising: commit time increases with file size.
 
 \begin{figure}[]
-  \caption{Committing one large file to a fresh repository}
-  \label{fig:plot-file-size--c1-time}
-  \centering
+    \caption{Time to commit one large file to a fresh repository}
+    \label{fig:plot-file-size--c1-time}
+    \centering
+    The top left graph shows the whole data set on a logarithmic scale. The
+    others show certain interesting ranges on a linear scale.
     \includegraphics[]{plot-file-size--c1-time}
 \end{figure}
 
-\autoref{fig:plot-file-size--c1-time} shows the time required for
-the initial commit, adding a file of the given size to a fresh repository.
+At file sizes below around \SI{2}{\mebi\byte}, commit times are dominated by
+overhead-- around \SI{5}{\ms} for Git, \SI{100}{\ms} for Mercurial,
+\SI{180}{\ms} for DMV, and \SI{900}{\ms} for Bup, vs only \SI{2}{\ms} for the
+copy.
+
+Bup, after starting with the highest overhead, goes on to have the fastest
+inital commit of all the systems tested for large files. It takes the lead at
+\SI{2}{\gibi\byte}, where Mercurial drops out. To commit the \SI{2}{\gibi\byte}
+file, Git's average time is \SI{91.1}{\s}, Bup's is \SI{89.1}{\s}, and DMV's is
+\SI{90.8}{\s}. All of these are a factor of around ten times slower than the
+direct copy at \SI{9.1}{\s}. The differences get more pronounced as the file
+sizes continue to increase. At \SI{64}{\gibi\byte}, Git's average time is
+\SI{110}{\minute}, Bup's is \SI{72}{\minute}, DMV's is \SI{298}{\minute}. The
+average \SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
 
 
-\begin{figure}[]
-    \caption{Committing changes to a large file}
-  \label{fig:plot-file-size--c2-time}
-  \centering
-    \includegraphics[]{plot-file-size--c2-time}
-\end{figure}
+\subsection{Time for File-Size Update Commit}
 
 \autoref{fig:plot-file-size--c2-time} shows the time required for the second
 commit, after \num{1/1024}th of the file was updated.
 
+
+\begin{figure}[]
+    \caption{Time to commit changes to one large file}
+    \label{fig:plot-file-size--c2-time}
+    \centering
+    Sizes given are the total size of the file. The updated portion was
+    \num{1/1024}th of the total file size.
+    \includegraphics[]{plot-file-size--c2-time}
+\end{figure}
+
+
+\subsection{CPU Usage During File-Size Initial Commit}
+
+\autoref{fig:plot-file-size--c1-cpu} shows the
+CPU usage during the initial commit.
 
 \begin{figure}[]
   \caption{CPU utilization while committing one file to an empty repository}
@@ -117,8 +148,12 @@ commit, after \num{1/1024}th of the file was updated.
     \includegraphics[]{plot-file-size--c1-cpu-b}
 \end{figure}
 
-\autoref{fig:plot-file-size--c1-cpu} shows the
-CPU usage during the initial commit.
+
+\subsection{Repository Size after File-Size Update Commit}
+
+\autoref{fig:plot-file-size--repo-size} shows the total
+repository size, including the original file, after committing once, editing
+1/1024th of the file, and committing again.
 
 
 \begin{figure}[]
@@ -127,11 +162,6 @@ CPU usage during the initial commit.
   \centering
     \includegraphics[]{plot-file-size--repo-size}
 \end{figure}
-
-\autoref{fig:plot-file-size--repo-size} shows the total
-repository size, including the original file, after committing once, editing
-1/1024th of the file, and committing again.
-
 
 \iffalse
 
