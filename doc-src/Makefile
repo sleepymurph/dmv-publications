@@ -53,6 +53,12 @@ plot-file-size--c1-time.pdf: \
     ../data/meantable.py
 	gnuplot -e 'set terminal pdf size 4.5in,5in' plot-file-size--c1-time.gpi > plot-file-size--c1-time.pdf
 
+plot-file-size--c2-time.pdf: \
+    plot-file-size--c2-time.gpi \
+    ../data/exp--file-size--v04--w-cpu/*.txt \
+    ../data/meantable.py
+	gnuplot -e 'set terminal pdf size 4.5in,5in' plot-file-size--c2-time.gpi > plot-file-size--c2-time.pdf
+
 design-document.pdf: \
     design-document.tex \
     research.bib \
