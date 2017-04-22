@@ -129,3 +129,14 @@ mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_v
  36  0x1000000000   64.0GiB   4501.984  19827.757        (None)   failed       bad   ver_err      142518           0       42205     1416844     2356346     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
 # Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
 # Timeout: 19810s, sending SIGKILL: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.027, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19810.099, killsignal='SIGKILL', returncode=-15)
+ 36  0x1800000000   96.0GiB   6754.431  19815.907        (None)   failed       bad   ver_err      134138           0       38015     1293518     2490180     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.061, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19800.016, killsignal='SIGTERM', returncode=-15)
+ 37  0x2000000000  128.0GiB   9006.537  19804.223        (None)   failed       bad   ver_err      131885           0       39608     1275700     2506420     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# CallFailedError(cmd='prototype commit -m 'Add large_file'', returncode='1')
+ 37  0x3000000000  192.0GiB  13521.744    244.086        (None)   failed       bad  verified        9136           0        2215       14710       22580     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
