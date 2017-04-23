@@ -71,7 +71,7 @@ plot for [vcs in vcslist] \
 
 set xrange [500:10500]
 set xtics 2000
-set ytics 0.5
+set ytics 1
 set format y "%1.1fs"
 
 plot for [vcs in vcslist] \
@@ -80,7 +80,7 @@ plot for [vcs in vcslist] \
 
 set xrange [50000:1050000]
 set xtics 200000
-set ytics 2
+set ytics 5
 set format y "%1.0fm"
 
 plot for [vcs in vcslist] \
