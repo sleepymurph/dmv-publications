@@ -1,18 +1,25 @@
+kilos(n) = n * 2**10
+megs(n) = n * 2**20
+gigs(n) = n * 2**30
+
 set xlabel "File Size (log scale)"
 set logscale x 2
-set xrange [2**20:96*2**30]
+set xrange [megs(1):gigs(96)]
 set format x "%1.0b%BB"
-set xtics (2**20, 2**25, 2**30, 2**35)
+set xtics (megs(1), megs(96), gigs(1), gigs(96))
 
 set ylabel "CPU Usage"
 set yrange [0:100]
 set format y "%1.0f%%"
 
+set xtics out
+set ytics out
+
 set grid
 set key top left
 
 set multiplot layout 3,2 rowsfirst
-meantable="< ../data/meantable.py --columns filebytes c1_user c1_system c1_idle c1_iowait --files ../data/exp--file-size--v04--w-cpu"
+meantable="< ../data/meantable.py --columns filebytes c1_user c1_system c1_idle c1_iowait --where-not-bad c1_ver --files ../data/exp--file-size--v04--w-cpu"
 POS="right at graph 0.95,0.88 front"
 USERPLOT='using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user"'
 SYSTEMPLOT='using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system"'
