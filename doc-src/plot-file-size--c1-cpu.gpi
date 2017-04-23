@@ -2,13 +2,11 @@ kilos(n) = n * 2**10
 megs(n) = n * 2**20
 gigs(n) = n * 2**30
 
-set xlabel "File Size (log scale)"
 set logscale x 2
 set xrange [megs(1):gigs(96)]
 set format x "%1.0b%BB"
 set xtics (megs(1), megs(96), gigs(1), gigs(96))
 
-set ylabel "CPU Usage"
 set yrange [0:100]
 set format y "%1.0f%%"
 
@@ -26,27 +24,22 @@ SYSTEMPLOT='using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "sy
 IOWAITPLOT='using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowait"'
 
 set label 1 'git' @POS
-set ylabel "Git CPU Usage"
 gittable=meantable."/git-*"
 plot gittable @USERPLOT, gittable @SYSTEMPLOT, gittable @IOWAITPLOT
 
 set label 1 'hg' @POS
-set ylabel "Hg CPU Usage"
 hgtable=meantable."/hg-*"
 plot hgtable @USERPLOT, hgtable @SYSTEMPLOT, hgtable @IOWAITPLOT
 
 set label 1 'bup' @POS
-set ylabel "Bup CPU Usage"
 buptable=meantable."/bup-*"
 plot buptable @USERPLOT, buptable @SYSTEMPLOT, buptable @IOWAITPLOT
 
 set label 1 'prototype' @POS
-set ylabel "Prototype CPU Usage"
 prototypetable=meantable."/prototype2x1mem-*"
 plot prototypetable @USERPLOT, prototypetable @SYSTEMPLOT, prototypetable @IOWAITPLOT
 
 set label 1 'copy' @POS
-set ylabel "Copy CPU Usage"
 copytable=meantable."/copy-*"
 plot copytable @USERPLOT, copytable @SYSTEMPLOT, copytable @IOWAITPLOT
 
