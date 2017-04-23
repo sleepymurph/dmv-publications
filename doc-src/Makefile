@@ -21,7 +21,6 @@ thesis.pdf: \
     plot-file-size--repo-size.pdf \
     plot-filesystem-limits--directory-takeover.pdf \
     plot-num-files--c1-cpu.pdf \
-    plot-num-files--c1-time-detail.pdf \
     plot-num-files--c1-time.pdf \
     plot-num-files--c2-cpu.pdf \
     plot-num-files--prototype-improvements--c1-time-detail.pdf \
@@ -61,6 +60,12 @@ plot-file-size--c2-time.pdf: \
     ../data/exp--file-size--v04--w-cpu/*.txt \
     ../data/meantable.py
 	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-file-size--c2-time.gpi > plot-file-size--c2-time.pdf
+
+plot-num-files--c1-time.pdf: \
+    plot-num-files--c1-time.gpi \
+    ../data/exp--num-files--v03--less-dirs/*.txt \
+    ../data/meantable.py
+	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-num-files--c1-time.gpi > plot-num-files--c1-time.pdf
 
 
 design-document.pdf: \
