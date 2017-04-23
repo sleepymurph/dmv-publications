@@ -148,6 +148,14 @@ CPU usage during the initial commit.
 \end{figure}
 
 
+\begin{figure}[]
+  \caption{CPU utilization while committing changes to one large file}
+  \label{fig:plot-file-size--c2-cpu}
+  \centering
+    \includegraphics[]{plot-file-size--c2-cpu}
+\end{figure}
+
+
 \subsection{Repository Size after File-Size Update Commit}
 
 \autoref{fig:plot-file-size--repo-size} shows the total
@@ -222,6 +230,14 @@ Performance observations:
 \begin{figure}[p]
   \caption{CPU utilization while committing many 1KiB files to a fresh
   repository}
+  \label{fig:plot-num-files--c1-cpu}
+  \centering
+    \includegraphics[]{plot-num-files--c1-cpu}
+\end{figure}
+
+\begin{figure}[p]
+    \caption{CPU utilization while committing many 1KiB files after one of every
+        \num{16} files have been updated}
   \label{fig:plot-num-files--c1-cpu}
   \centering
     \includegraphics[]{plot-num-files--c1-cpu}

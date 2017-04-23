@@ -1,0 +1,49 @@
+
+set yrange [0:100]
+set format y "%1.0f%%"
+
+set xtics out
+set ytics out
+
+set grid front
+unset key
+
+set multiplot layout 3,2 rowsfirst
+POS="left at graph 0.05,0.88 front"
+USERPLOT='using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user"'
+SYSTEMPLOT='using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system"'
+IOWAITPLOT='using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowait"'
+
+set label 1 'git' @POS
+gittable=meantable."/git-*"
+plot gittable @USERPLOT, gittable @SYSTEMPLOT, gittable @IOWAITPLOT
+
+set label 1 'hg' @POS
+hgtable=meantable."/hg-*"
+plot hgtable @USERPLOT, hgtable @SYSTEMPLOT, hgtable @IOWAITPLOT
+
+set label 1 'bup' @POS
+buptable=meantable."/bup-*"
+plot buptable @USERPLOT, buptable @SYSTEMPLOT, buptable @IOWAITPLOT
+
+set label 1 'prototype' @POS
+prototypetable=meantable."/prototype2x1mem-*"
+plot prototypetable @USERPLOT, prototypetable @SYSTEMPLOT, prototypetable @IOWAITPLOT
+
+set label 1 'copy' @POS
+copytable=meantable."/copy-*"
+plot copytable @USERPLOT, copytable @SYSTEMPLOT, copytable @IOWAITPLOT
+
+# Separate key: do another plot with outlandish ranges and all decoration off
+unset label 1
+unset xlabel
+unset ylabel
+unset xtics
+unset ytics
+unset grid
+unset border
+set key center center
+set xrange[256*2**30:1024*2**30]
+set yrange[-200:-100]
+copytable=meantable."/copy-*"
+plot copytable @USERPLOT, copytable @SYSTEMPLOT, copytable @IOWAITPLOT

@@ -16,12 +16,14 @@ thesis.pdf: \
     plot-file-size--c1-cpu.pdf \
     plot-file-size--c1-time--detail-high-end--prototype-improvements.pdf \
     plot-file-size--c1-time.pdf \
+    plot-file-size--c2-cpu.pdf \
     plot-file-size--c2-time.pdf \
     plot-file-size--repo-size.pdf \
     plot-filesystem-limits--directory-takeover.pdf \
     plot-num-files--c1-cpu.pdf \
     plot-num-files--c1-time-detail.pdf \
     plot-num-files--c1-time.pdf \
+    plot-num-files--c2-cpu.pdf \
     plot-num-files--prototype-improvements--c1-time-detail.pdf \
     plot-num-files--repo-size.pdf \
     plot-num-files--stat1-time.pdf \
@@ -90,7 +92,11 @@ design-document-2-short.pdf: \
 
 # Plots with GnuPlot
 
-%.pdf: %.gpi ../data/** *.sh
+%.pdf: %.gpi \
+    *-common.gpi \
+    ../data/** \
+    ../data/meantable.py \
+    *.sh
 	gnuplot -e 'set terminal pdf' $*.gpi > $*.pdf
 
 

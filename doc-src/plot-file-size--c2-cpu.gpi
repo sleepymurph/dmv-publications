@@ -1,4 +1,4 @@
-meantable="< ../data/meantable.py --columns filebytes c1_user c1_system c1_idle c1_iowait --where-not-bad c1_ver --files ../data/exp--file-size--v04--w-cpu"
+meantable="< ../data/meantable.py --columns filebytes c2_user c2_system c2_idle c2_iowait --where-not-bad c2_ver --files ../data/exp--file-size--v04--w-cpu"
 
 kilos(n) = n * 2**10
 megs(n) = n * 2**20

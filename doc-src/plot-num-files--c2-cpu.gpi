@@ -1,0 +1,11 @@
+meantable="< ../data/meantable.py --columns filecount c2_user c2_system c2_idle c2_iowait --where-not-bad c2_ver --files ../data/exp--num-files--v03--less-dirs/"
+
+kilos(n) = n * 2**10
+megs(n) = n * 2**20
+gigs(n) = n * 2**30
+
+set logscale x 10
+set xrange [100:10e6]
+set format x "%1.0s%c"
+
+load "plot-cpu-common.gpi"
