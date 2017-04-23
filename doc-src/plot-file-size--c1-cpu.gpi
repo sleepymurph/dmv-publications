@@ -13,7 +13,7 @@ set format y "%1.0f%%"
 set xtics out
 set ytics out
 
-set grid
+set grid front
 unset key
 
 set multiplot layout 3,2 rowsfirst
