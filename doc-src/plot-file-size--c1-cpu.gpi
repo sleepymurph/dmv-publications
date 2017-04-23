@@ -42,7 +42,7 @@ plot buptable @USERPLOT, buptable @SYSTEMPLOT, buptable @IOWAITPLOT
 
 set label 1 'prototype' @POS
 set ylabel "Prototype CPU Usage"
-prototypetable=meantable."/prototype-*"
+prototypetable=meantable."/prototype2x1mem-*"
 plot prototypetable @USERPLOT, prototypetable @SYSTEMPLOT, prototypetable @IOWAITPLOT
 
 set label 1 'copy' @POS
