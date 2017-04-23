@@ -60,18 +60,6 @@ plot-file-size--c2-time.pdf: \
     ../data/meantable.py
 	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-file-size--c2-time.gpi > plot-file-size--c2-time.pdf
 
-plot-file-size--c1-cpu.pdf: \
-    plot-file-size--c1-cpu.gpi \
-    ../data/exp--file-size--v04--w-cpu/*.txt \
-    ../data/meantable.py
-	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-file-size--c1-cpu.gpi > plot-file-size--c1-cpu.pdf
-
-plot-num-files--c1-cpu.pdf: \
-    plot-num-files--c1-cpu.gpi \
-    ../data/exp--num-files--v03--less-dirs/*.txt \
-    ../data/meantable.py
-	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-num-files--c1-cpu.gpi > plot-num-files--c1-cpu.pdf
-
 
 design-document.pdf: \
     design-document.tex \
