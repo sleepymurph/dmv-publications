@@ -1,5 +1,10 @@
+kilos(n) = n * 2**10
+megs(n) = n * 2**20
+gigs(n) = n * 2**30
+
 set xlabel "Number of files (log scale)"
 set logscale x 10
+set xrange [100:10e6]
 set format x "%1.0s%c"
 
 set ylabel "CPU Usage"
@@ -10,11 +15,11 @@ set xtics out
 set ytics out
 
 set grid
-set key top left
+unset key
 
 set multiplot layout 3,2 rowsfirst
 meantable="< ../data/meantable.py --columns filecount c1_user c1_system c1_idle c1_iowait --where-not-bad c1_ver --files ../data/exp--num-files--v03--less-dirs/"
-POS="right at graph 0.95,0.88 front"
+POS="left at graph 0.05,0.88 front"
 USERPLOT='using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user"'
 SYSTEMPLOT='using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system"'
 IOWAITPLOT='using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowait"'
@@ -36,10 +41,24 @@ plot buptable @USERPLOT, buptable @SYSTEMPLOT, buptable @IOWAITPLOT
 
 set label 1 'prototype' @POS
 set ylabel "Prototype CPU Usage"
-copytable=meantable."/prototype2x1mem-*"
-plot copytable @USERPLOT, copytable @SYSTEMPLOT, copytable @IOWAITPLOT
+prototypetable=meantable."/prototype2x1mem-*"
+plot prototypetable @USERPLOT, prototypetable @SYSTEMPLOT, prototypetable @IOWAITPLOT
 
 set label 1 'copy' @POS
 set ylabel "Copy CPU Usage"
+copytable=meantable."/copy-*"
+plot copytable @USERPLOT, copytable @SYSTEMPLOT, copytable @IOWAITPLOT
+
+# Separate key: do another plot with outlandish ranges and all decoration off
+unset label 1
+unset xlabel
+unset ylabel
+unset xtics
+unset ytics
+unset grid
+unset border
+set key center center
+set xrange[gigs(256):gigs(1024)]
+set yrange[-200:-100]
 copytable=meantable."/copy-*"
 plot copytable @USERPLOT, copytable @SYSTEMPLOT, copytable @IOWAITPLOT
