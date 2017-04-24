@@ -12,7 +12,7 @@ gigs(n) = n * 2**30
 
 mins(n) = n * 60
 
-vcslist = "git hg bup prototype2x1mem copy"
+vcslist = "gitallowrepoerr hg bup prototype2x1mem copy"
 
 meantable(f) = "< ../data/meantable.py \
     --columns filebytes c1_time \

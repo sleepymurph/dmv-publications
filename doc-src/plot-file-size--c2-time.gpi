@@ -10,7 +10,7 @@ kilos(n) = n * 2**10
 megs(n) = n * 2**20
 gigs(n) = n * 2**30
 
-vcslist = "git hg bup prototype2x1mem copy"
+vcslist = "gitallowrepoerr hg bup prototype2x1mem copy"
 
 meantable(f) = "< ../data/meantable.py \
     --columns filebytes c2_time \
@@ -84,7 +84,7 @@ plot for [vcs in vcslist] \
 
 set xrange [gigs(16):gigs(112)]
 set xtics gigs(32)
-set ytics 10
+set ytics 20
 set format y "%1.0fm"
 
 plot for [vcs in vcslist] \
