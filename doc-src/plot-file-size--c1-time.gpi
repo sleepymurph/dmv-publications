@@ -67,7 +67,8 @@ set mytics 2
 
 set xrange [kilos(128):megs(1)+kilos(128)]
 set xtics kilos(512)
-set ytics 0.5
+set yrange [0:1]
+set ytics 0.2
 set format y "%1.1fs"
 
 plot for [vcs in vcslist] \
@@ -76,6 +77,7 @@ plot for [vcs in vcslist] \
 
 set xrange [megs(1):megs(11)]
 set xtics megs(2)
+set yrange [0:2]
 set ytics 0.5
 set format y "%1.1fs"
 
@@ -85,6 +87,7 @@ plot for [vcs in vcslist] \
 
 set xrange [gigs(.5):gigs(4.5)]
 set xtics gigs(1)
+set yrange [0:10]
 set ytics 2
 set format y "%1.0fm"
 
@@ -94,6 +97,7 @@ plot for [vcs in vcslist] \
 
 set xrange [gigs(16):gigs(112)]
 set xtics gigs(32)
+set yrange [0:360]
 set ytics 60
 set format y "%1.0fm"
 
