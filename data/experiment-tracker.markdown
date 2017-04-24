@@ -33,7 +33,7 @@ Spring: Prototype and num-files re-tests
     murphytest01 [  c   g   h   b   pd  pdm pdd pnp pfb pwb]
     murphytest02 [  c   g   h   b   pd  pdm pdd pnp pfb pwb]
     murphytest03 [  c   g   h   b   pd  pdm         pfb    ]
-    murphytest04 [  c   g   h   b   pd  pdm pdd @          ]
+    murphytest04 [  c   g   h   b   pd  pdm pdd pnp        ]
 
 
                     File size
@@ -47,8 +47,8 @@ Spring: Prototype and num-files re-tests
                     |   |   |   |   |   |   |   prototype2x1chunks32kx16knoop
                     |   |   |   |   |   |   |   |   gitallowrepoerr
     murphytest01 [  p   pd  pdm @   pbw                 ]
-    murphytest02 [  p   pd  pdm pfb pbw pc  @           ]
-    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn @   ]
+    murphytest02 [  p   pd  pdm pfb pbw pc  pcd         ]
+    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn ga  ]
     murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn     ]
 
 

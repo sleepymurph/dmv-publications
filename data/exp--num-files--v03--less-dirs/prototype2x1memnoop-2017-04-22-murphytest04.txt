@@ -79,3 +79,17 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
   6       5000000  0x01312d0000    664.485  13849.920  0x09d84e4000       ok  verified   assumed       50361           0       89362      917610     1701508    2054.421         ok    2043.688         ok   4260.655  0x0a2dbff000       ok  verified   assumed       31082           0       77867      340382      387495        15.331
 # Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add many_files_dir'
 # Timeout: 19874s, sending SIGKILL: prototype commit -m 'Add many_files_dir'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.052, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add many_files_dir'', elapsed=19873.965, killsignal='SIGKILL', returncode=-15)
+  6       7500000  0x01c9c38000    999.758  19904.676        (None)   failed       bad   ver_err       51224           0       68455     1219965     2633539      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        14.856
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.069, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='prototype commit -m 'Add many_files_dir'', returncode='1')
+  7      10000000  0x02625a0000   1342.395   8562.884        (None)   failed       bad   ver_err       34370           0       46640      563328     1061603      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        12.519
+# IOError(28, 'No space left on device')
+  7      25000000  0x05f5e10000   1947.796     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.228
+# IOError(28, 'No space left on device')
+  7      50000000  0x0bebc20000   1917.317     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.835
+# IOError(28, 'No space left on device')
+  7      75000000  0x11e1a30000   1911.509     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        10.671
