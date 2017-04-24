@@ -122,7 +122,9 @@ average \SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
 \subsection{Time for File-Size Update Commit}
 
 \autoref{fig:plot-file-size--c2-time} shows the time required for the second
-commit, after \num{1/1024}th of the file was updated.
+commit, after updating \num{1/1024}th of the file. Ideally this operation should
+be faster than the first commit, because the system should only be storing the
+changed portion of the file.
 
 
 \begin{figure}[]
@@ -222,6 +224,16 @@ Performance observations:
 \end{figure}
 
 \begin{figure}[p]
+    \caption{Time to commit many 1KiB files after one of every \num{16} files
+    has been updated}
+    \label{fig:plot-num-files--c2-time}
+    \centering
+    The top left graph shows the whole data set on a logarithmic scale. The
+    others show certain interesting ranges on a linear scale.
+    \includegraphics[]{plot-num-files--c2-time}
+\end{figure}
+
+\begin{figure}[p]
   \caption{CPU utilization while committing many 1KiB files to a fresh
   repository}
   \label{fig:plot-num-files--c1-cpu}
@@ -231,10 +243,10 @@ Performance observations:
 
 \begin{figure}[p]
     \caption{CPU utilization while committing many 1KiB files after one of every
-        \num{16} files have been updated}
-  \label{fig:plot-num-files--c1-cpu}
+        \num{16} files has been updated}
+  \label{fig:plot-num-files--c2-cpu}
   \centering
-    \includegraphics[]{plot-num-files--c1-cpu}
+    \includegraphics[]{plot-num-files--c2-cpu}
 \end{figure}
 
 \begin{figure}[p]

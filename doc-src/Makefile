@@ -23,6 +23,7 @@ thesis.pdf: \
     plot-num-files--c1-cpu.pdf \
     plot-num-files--c1-time.pdf \
     plot-num-files--c2-cpu.pdf \
+    plot-num-files--c2-time.pdf \
     plot-num-files--prototype-improvements--c1-time-detail.pdf \
     plot-num-files--repo-size.pdf \
     plot-num-files--stat1-time.pdf \
@@ -66,6 +67,12 @@ plot-num-files--c1-time.pdf: \
     ../data/exp--num-files--v03--less-dirs/*.txt \
     ../data/meantable.py
 	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-num-files--c1-time.gpi > plot-num-files--c1-time.pdf
+
+plot-num-files--c2-time.pdf: \
+    plot-num-files--c2-time.gpi \
+    ../data/exp--num-files--v03--less-dirs/*.txt \
+    ../data/meantable.py
+	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-num-files--c2-time.gpi > plot-num-files--c2-time.pdf
 
 
 design-document.pdf: \
