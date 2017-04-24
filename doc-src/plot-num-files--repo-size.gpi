@@ -1,20 +1,75 @@
-set xlabel "Number of files (log scale)"
-set logscale x 10
-set format x "%1.0s%c"
-
-set ylabel "Ratio of total storage used to file size"
-set format y "%.0fx"
-set yrange [0:20]
-
-set grid
-set key top right
-
-meantable="< ../data/meantable.py --columns filecount c2_size --files ../data/exp--num-files--v02--w-cpu"
-meantable2="< ../data/meantable.py --columns filecount c2_size --files ../data/exp--num-files--v03--less-dirs/"
+meantable="< ../data/meantable.py --columns filecount c2_size --files ../data/exp--num-files--v03--less-dirs/"
 eachbytes=1024
 
+set multiplot layout 2,2 rowsfirst
+
+set grid
+set border
+unset key
+
+set xlabel "Number of files (log scale)"
+set logscale x 10
+set xrange [*:*]
+set xtics (10, 1e3, 100e3, 10e6)
+set mxtics
+set format x "%1.0s%c"
+
+set ylabel "Storage (log scale)"
+set logscale y 2
+set yrange [*:*]
+set ytics
+set mytics
+set format y "%1.0b%BB"
+
 plot \
-    meantable."/git-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with errorlines title "git (two commits)", \
-    meantable."/hg-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with errorlines title "hg (two commits)", \
-    meantable."/bup-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with errorlines title "bup (two commits)", \
-    meantable2."/prototype2x1mem-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with errorlines title "prototype (two commits)", \
+    meantable."/git-*" using 1:2:3 with lines title "git (two commits)", \
+    meantable."/hg-*" using 1:2:3 with lines title "hg (two commits)", \
+    meantable."/bup-*" using 1:2:3 with lines title "bup (two commits)", \
+    meantable."/prototype2x1mem-*" using 1:2:3 with lines title "prototype (two commits)", \
+
+unset logscale y
+
+
+# Separate key: do another plot with outlandish ranges and all decoration off
+
+unset xlabel
+unset xtics
+unset ylabel
+unset ytics
+unset grid
+unset border
+set key center center
+set yrange [0:6]
+plot \
+    meantable."/git-*" using 1:2:3 with lines title "git (two commits)", \
+    meantable."/hg-*" using 1:2:3 with lines title "hg (two commits)", \
+    meantable."/bup-*" using 1:2:3 with lines title "bup (two commits)", \
+    meantable."/prototype2x1mem-*" using 1:2:3 with lines title "prototype (two commits)", \
+
+
+# Reestablish decorations
+
+set grid
+set border
+unset key
+
+
+set xlabel "Number of files (log scale)"
+set logscale x 10
+set xrange [*:*]
+set xtics
+set mxtics
+set format x "%1.0s%c"
+
+set ylabel "Storage ratio"
+set yrange [0:20]
+set ytics
+set mytics
+set format y "%.0fx"
+
+set size 1,0.5
+plot \
+    meantable."/git-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with lines title "git (two commits)", \
+    meantable."/hg-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with lines title "hg (two commits)", \
+    meantable."/bup-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with lines title "bup (two commits)", \
+    meantable."/prototype2x1mem-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with lines title "prototype (two commits)", \
