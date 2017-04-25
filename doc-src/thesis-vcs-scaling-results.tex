@@ -1,6 +1,4 @@
-\chapter{Results}
-
-\section{VCS Scaling: File Size}
+\section{Results: File Size}
 
 \subsection{File Size Limits}
 
@@ -94,15 +92,6 @@ These findings are summarized in \autoref{file-sizes-table} and
 commit, adding a single file of the given size to a fresh repository. Over all,
 the trend is clear and unsurprising: commit time increases with file size.
 
-\begin{figure}[]
-    \caption{Time to commit one large file to a fresh repository}
-    \label{fig:plot-file-size--c1-time}
-    \centering
-    The top left graph shows the whole data set on a logarithmic scale. The
-    others show certain interesting ranges on a linear scale.
-    \includegraphics[]{plot-file-size--c1-time}
-\end{figure}
-
 At file sizes below around \SI{2}{\mebi\byte}, commit times are dominated by
 overhead-- around \SI{5}{\ms} for Git, \SI{100}{\ms} for Mercurial,
 \SI{180}{\ms} for DMV, and \SI{900}{\ms} for Bup, vs only \SI{2}{\ms} for the
@@ -117,6 +106,16 @@ direct copy at \SI{9.1}{\s}. The differences get more pronounced as the file
 sizes continue to increase. At \SI{64}{\gibi\byte}, Git's average time is
 \SI{110}{\minute}, Bup's is \SI{72}{\minute}, DMV's is \SI{298}{\minute}. The
 average \SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
+
+
+\begin{figure}[]
+    \caption{Time to commit one large file to a fresh repository}
+    \label{fig:plot-file-size--c1-time}
+    \centering
+    The top left graph shows the whole data set on a logarithmic scale. The
+    others show certain interesting ranges on a linear scale.
+    \includegraphics[]{plot-file-size--c1-time}
+\end{figure}
 
 
 \subsection{Time for File-Size Update Commit}
@@ -210,7 +209,7 @@ Performance observations:
 
 \fi
 
-\section{VCS Scaling: Number of Files}
+\section{Results: Number of Files}
 
 \subsubsection{Results}
 
@@ -348,87 +347,3 @@ Observations:
 \end{itemize}
 
 \fi
-
-
-\section{Performance Tuning}
-
-
-\subsection{Rolling Hash Chunk Size}\label{rolling-hash-exp}
-
-\subsubsection{Methodology}
-
-This experiment is written as a unit test in the prototype Rust code. The test
-is found in the \texttt{rolling\_hash} module, under the name
-\texttt{chunk\_size\_experiment}.
-
-\begin{itemize}
-
-  \item Generate random data and pass it through the rolling hash algorithm with
-    the given window size and match parameters.
-
-  \item Continue generating data until the rolling hash has flagged 100 chunks.
-
-  \item Calculate the mean chunk size and standard deviation.
-
-\end{itemize}
-
-\subsubsection{Results}
-
-\begin{figure}[p]
-  \caption{Mean chunk size}
-  \label{fig:plot-rolling-hash}
-  \centering
-    \includegraphics[]{plot-rolling-hash}
-\end{figure}
-
-\autoref{fig:plot-rolling-hash} shows the mean chunk size.
-
-\subsubsection{Observations}
-
-\begin{itemize}
-
-  \item The mean chunk size is approximately the sum of the window size and
-    match parameter.
-
-  \item When the match parameter is less than the window size, the standard
-    deviation is approximately the match parameter.
-
-\end{itemize}
-
-
-\subsection{Directory Structure}
-
-\subsubsection{Methodology}
-
-\begin{itemize}
-
-  \item Create an empty 100MiB partition.
-
-  \item Write 4KiB objects according to the given object directory scheme, until
-    the disk is reported as full.
-
-  \item Track the total number of files written and total number of directories
-    created.
-
-\end{itemize}
-
-\subsubsection{Results}
-
-\begin{figure}[p]
-  \caption{Overwhelmed by subdirectories}
-  \label{fig:plot-filesystem-limits--directory-takeover}
-  \centering
-    \includegraphics[]{plot-filesystem-limits--directory-takeover}
-\end{figure}
-
-\autoref{fig:plot-filesystem-limits--directory-takeover} shows directories
-overtaking files as nesting goes deeper.
-
-\subsubsection{Observations}
-
-\begin{itemize}
-
-  \item In hindsight, it should have been easy to see that the number of
-    directories would grow exponentially.
-
-\end{itemize}

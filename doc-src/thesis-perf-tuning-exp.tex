@@ -1,0 +1,141 @@
+\chapter{Performance Tuning Experiments}
+
+\section{Tuning Chunk Size}
+
+The algorithm used to divide files into chunks (described in
+\autoref{chunking-algoritm}) involves moving a window across the data, and
+setting a chunk boundary where the sum of the bytes in that window is evenly
+divisible by a given number. We ran an experiment to determine the effects of
+these two parameters on chunk size.
+
+\paragraph{Procedure}
+
+For each combination of window size and divisor, we would run the rolling hash
+algorithm on a stream of pseudo-random bytes until it had identified \num{100}
+chunks. Then we would compute the mean and standard deviation of the chunk
+sizes.
+
+We used window sizes in powers of two from \SI{128}{\byte} ($2^7$) to
+\SI{256}{\kibi\byte} ($2^{18}$), and divisors in powers of two from \num{256}
+($2^8$) to \SI{128}{\kibi\relax} ($2^{17}$).
+
+The pseudo-random number generator used was an xorshift RNG\cite{xorshift_rng}.
+The experiment itself was automated as a unit test in the DMV prototype's Rust
+code.
+
+\paragraph{Environment}
+
+Because this experiment measures only the output of calculations, the
+environment in which it is run should make no difference in the outcome. In
+fact, if the xorshift RNG is given the same initial seed value, the resulting
+random byte stream will be identical, which will lead to an identical sequence
+of chunks, which will lead to an identical average chunk size. This experiment
+is deterministic.
+
+
+\subsection{Results}
+
+\begin{figure}[]
+  \caption{Mean chunk size}
+  \label{fig:plot-rolling-hash}
+  \centering
+    \includegraphics[]{plot-rolling-hash}
+\end{figure}
+
+\autoref{fig:plot-rolling-hash} shows the mean chunk size.
+
+\subsection{Observations}
+
+\begin{itemize}
+
+  \item The mean chunk size is approximately the sum of the window size and
+    match parameter.
+
+  \item When the match parameter is less than the window size, the standard
+    deviation is approximately the match parameter.
+
+\end{itemize}
+
+
+%
+
+
+\section{Tuning Object Store Directory Layout}\label{dir-experiment}
+
+During initial runs of the "many-files" experiment
+(\autoref{num-files-exp-desc}), we would often notice the disk being reported as
+full even though the total bytes used was less than the capacity of the disk
+partition. This had to do with the way we divided the test files into
+directories, and how the version control systems stored their objects (see
+\autoref{dir-impl} for DMV's object storage scheme). Since every directory
+requires an inode on an ext4 filesystem, a storage scheme that creates too many
+subdirectories will use up all the available inodes with directories rather than
+data.
+
+\todo{Note mysterious seek times}
+
+\paragraph{Procedure}
+
+To test the effects of different object storage schemes, we created a new
+\SI{100}{\mebi\byte} partition on a test computer, and then generated a series
+of pseudo-random files of \SI{4}{\kibi\byte} each until the disk was reported
+full. For each file, we would give it a pseudo-random name that resembled an
+SHA-1 hash, and store it according to the object storage scheme under test. We
+increased a counter each time we created a file, and another each time we
+created a new directory.
+
+We followed the basic scheme of taking leading hex digits of the SHA-1 hash to
+form directories. We varied the number of directories taken (depth) and the
+number of hex digits per directory (see
+\autoref{sample-directory-scheme-variations} for examples). We tried depths from
+\num{0} to \num{6} and digits per directory from \num{0} to \num{16}, discarding
+combinations that did not make sense, such as combinations involving \num{0} and
+another number (which would all simply be undivided), or those that required
+more than the \num{40} hex digits of a \num{160}-byte SHA-1 hash.
+
+\begin{table}[]
+    \caption{Sample object store directory variations}
+    \label{sample-directory-scheme-variations}
+    \centering
+    \begin{tabular}{l l l}
+        Hex digits & Depth & Example \\
+        \midrule
+        0 & 0 & \lstinline{03d37679d1fab86e5286decd6cd2a94efcfe083f} \\
+        1 & 1 & \lstinline{7/9332ca7ce9163f78e3c115a2173bd8fd853d286} \\
+        1 & 3 & \lstinline{6/8/c/40e64f3e74e6ebefdcf2f5f30fb8da004792c} \\
+        2 & 1 & \lstinline{9f/4ec22c3e0289b29eefefe4728dece14e67e6ac} \\
+        2 & 2 & \lstinline{dd/52/bcccff156a179cdac0793ef049039372d8a1} \\
+        3 & 1 & \lstinline{cc5/199084d70f7c5ba325a240e1927579ee24bb1} \\
+        3 & 4 & \lstinline{472/e98/e88/0b1/c5905065c70cbe806361d32f6429} \\
+        4 & 3 & \lstinline{1ed2/bd51/01fe/5b23763e8c76852739f59201280f} \\
+    \end{tabular}
+\end{table}
+
+\paragraph{Environment}
+
+Like the "many files" experiment, this was automated as a Python script and run
+on one of the dedicated test computers used for that experiment (specs shown in
+\autoref{test-machine-specs}). However, rather than spending hours to fill the
+\SI{197}{\gibi\byte} partition used for the other experiments, this experiment
+used a new \SI{100}{\mebi\byte} LVM partition.
+
+\subsection{Results}
+
+\begin{figure}[]
+  \caption{Overwhelmed by subdirectories}
+  \label{fig:plot-filesystem-limits--directory-takeover}
+  \centering
+    \includegraphics[]{plot-filesystem-limits--directory-takeover}
+\end{figure}
+
+\autoref{fig:plot-filesystem-limits--directory-takeover} shows directories
+overtaking files as nesting goes deeper.
+
+\subsection{Observations}
+
+\begin{itemize}
+
+  \item In hindsight, it should have been easy to see that the number of
+    directories would grow exponentially.
+
+\end{itemize}
