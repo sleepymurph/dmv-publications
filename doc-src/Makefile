@@ -11,6 +11,8 @@ thesis.pdf: \
     lst-*.txt \
     research.bib \
     dia_architecture.pdf \
+    dia_git_dag_example_simple_tree.pdf \
+    dia_git_dag_example_three_commits.pdf \
     dia_new_dag.pdf \
     dia_obj_db_and_wd.pdf \
     plot-file-size--c1-cpu.pdf \

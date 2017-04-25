@@ -1,0 +1,80 @@
+/* ------------------------ 
+
+git rev-list master
+5c2d94ce07acd8753e430e394c1e192ba4f70e1d
+7db2bfd3560e58ba1de171bc8b1455948bedfbb1
+7d80797f5514ede6f47c313d60ebe0d65aafb5cf
+
+examining {5c2d94ce07acd8753e430e394c1e192ba4f70e1d} (commit, 241) - msg: Add new file, links: af3e025a372d976d9c8c0c280c5bce37f33ac3dd,7db2bfd3560e58ba1de171bc8b1455948bedfbb1
+examining {af3e025a372d976d9c8c0c280c5bce37f33ac3dd} (tree, 116) - TREE
+examining {362cd1d3448db147f56ee294ccfca422f136a758} (blob, 15) - BLOB
+examining {6fe15651b4035c516e5bdcd331bda314fe241e82} (blob, 14) - BLOB
+examining {1a7af81d50752796480d43d01eb7f3cc5e198177} (tree, 84) - TREE
+examining {609d3ea4e68fa53c5d6d288b57ffab2d710add93} (blob, 34) - BLOB
+examining {a44a571f219fef7762c4b992fbf75dd0abc97ff3} (blob, 40) - BLOB
+examining {7db2bfd3560e58ba1de171bc8b1455948bedfbb1} (commit, 244) - msg: Update greeting, links: 802fc45bb65cc1d97e384d4a00c804d0b57d4596,7d80797f5514ede6f47c313d60ebe0d65aafb5cf
+examining {802fc45bb65cc1d97e384d4a00c804d0b57d4596} (tree, 76) - TREE
+examining {7d80797f5514ede6f47c313d60ebe0d65aafb5cf} (commit, 195) - msg: Initial commit, links: c6520ad3a20ca1f5ef883205125d309ae1510f7e
+examining {c6520ad3a20ca1f5ef883205125d309ae1510f7e} (tree, 76) - TREE
+examining {8ab686eafeb1f44702738c8b0f24f2567c36da6d} (blob, 14) - BLOB
+
+
+ * ------------------------ */ 
+
+digraph git {
+
+
+// Refs
+{
+   "refs/heads/master";
+}
+
+
+// Commits
+{
+  rank=same
+   "5c2d94ce07acd8753e430e394c1e192ba4f70e1d"[label="Commit 5c2d94c\nAdd new file"]
+   "7d80797f5514ede6f47c313d60ebe0d65aafb5cf"[label="Commit 7d80797\nInitial commit"]
+   "7db2bfd3560e58ba1de171bc8b1455948bedfbb1"[label="Commit 7db2bfd\nUpdate greeting"]
+}
+
+
+// Trees
+{
+
+   "af3e025a372d976d9c8c0c280c5bce37f33ac3dd"[label="Tree\naf3e025"]
+   "c6520ad3a20ca1f5ef883205125d309ae1510f7e"[label="Tree\nc6520ad"]
+   "802fc45bb65cc1d97e384d4a00c804d0b57d4596"[label="Tree\n802fc45"]
+   "1a7af81d50752796480d43d01eb7f3cc5e198177"[label="Tree\n1a7af81"]
+}
+
+
+// Blobs
+{
+
+   "362cd1d3448db147f56ee294ccfca422f136a758"[label="Blob\n362cd1d"]
+   "609d3ea4e68fa53c5d6d288b57ffab2d710add93"[label="Blob\n609d3ea"]
+   "8ab686eafeb1f44702738c8b0f24f2567c36da6d"[label="Blob\n8ab686e"]
+   "6fe15651b4035c516e5bdcd331bda314fe241e82"[label="Blob\n6fe1565"]
+   "a44a571f219fef7762c4b992fbf75dd0abc97ff3"[label="Blob\na44a571"]
+}
+
+
+// Links
+"refs/heads/master" -> "5c2d94ce07acd8753e430e394c1e192ba4f70e1d"
+"5c2d94ce07acd8753e430e394c1e192ba4f70e1d" -> "af3e025a372d976d9c8c0c280c5bce37f33ac3dd"
+"af3e025a372d976d9c8c0c280c5bce37f33ac3dd" -> "362cd1d3448db147f56ee294ccfca422f136a758" [label="hello.txt"]
+"af3e025a372d976d9c8c0c280c5bce37f33ac3dd" -> "6fe15651b4035c516e5bdcd331bda314fe241e82" [label="new_file.txt"]
+"af3e025a372d976d9c8c0c280c5bce37f33ac3dd" -> "1a7af81d50752796480d43d01eb7f3cc5e198177" [label="subdirectory"]
+"1a7af81d50752796480d43d01eb7f3cc5e198177" -> "609d3ea4e68fa53c5d6d288b57ffab2d710add93" [label="sub_file_a.txt"]
+"1a7af81d50752796480d43d01eb7f3cc5e198177" -> "a44a571f219fef7762c4b992fbf75dd0abc97ff3" [label="sub_file_b.txt"]
+"5c2d94ce07acd8753e430e394c1e192ba4f70e1d" -> "7db2bfd3560e58ba1de171bc8b1455948bedfbb1"
+"7db2bfd3560e58ba1de171bc8b1455948bedfbb1" -> "802fc45bb65cc1d97e384d4a00c804d0b57d4596"
+"802fc45bb65cc1d97e384d4a00c804d0b57d4596" -> "362cd1d3448db147f56ee294ccfca422f136a758" [label="hello.txt"]
+"802fc45bb65cc1d97e384d4a00c804d0b57d4596" -> "1a7af81d50752796480d43d01eb7f3cc5e198177" [label="subdirectory"]
+"7db2bfd3560e58ba1de171bc8b1455948bedfbb1" -> "7d80797f5514ede6f47c313d60ebe0d65aafb5cf"
+"7d80797f5514ede6f47c313d60ebe0d65aafb5cf" -> "c6520ad3a20ca1f5ef883205125d309ae1510f7e"
+"c6520ad3a20ca1f5ef883205125d309ae1510f7e" -> "8ab686eafeb1f44702738c8b0f24f2567c36da6d" [label="hello.txt"]
+"c6520ad3a20ca1f5ef883205125d309ae1510f7e" -> "1a7af81d50752796480d43d01eb7f3cc5e198177" [label="subdirectory"]
+
+}

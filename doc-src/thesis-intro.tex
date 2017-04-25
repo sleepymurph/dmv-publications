@@ -95,13 +95,63 @@ special access or editing modes}
 
 \towrite{Git grew out of Linus's frustration with other VCSs}
 
-\towrite{Blob, tree, commit (from README \cite{git_initial_readme}) -- SHA1 --
-DAG}
+%
+
+\subsection{How Data is Stored in Git}
+
+One of the key aspects of Git is that data is stored according to its content. A
+file is stored by prepending a short Git header and then taking the SHA-1 hash
+of the resulting \newterm{blob} (binary large object). That SHA-1 hash becomes
+the blob's ID. A directory is stored as a list of file names to each file's
+SHA-1 blob ID. This list is called a \newterm{tree}, and its binary
+representation is also hashed by SHA-1 to get a tree ID. Trees can refer not
+only to blobs, but to other trees, representing subdirectories. Thus, a file
+hierarchy in a given state is represented by a hash tree, with \newterm{tree}
+objects as nodes and \newterm{blobs} as leaves, and the entire state can be
+referred to by a single hash ID, that of the top-level tree object. A simple
+example is shown in \autoref{dia_git_dag_example_simple_tree}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{dia_git_dag_example_simple_tree}
+    \caption{A simple file hierarchy represented by Git \newterm{tree} and
+        \newterm{blob} objects and their SHA-1 hash IDs}
+    \label{dia_git_dag_example_simple_tree}
+\end{figure}
+
+Git then links different file hierarchy states with \newterm{commit} objects,
+which include the hash ID of a tree plus the hash IDs of the commit (or multiple
+commits) that represent the previous state of the file hierarchy. The resulting
+data structure is a directed graph, with new commits pointing to previous
+commits, and with each commit pointing to a tree that represents the state of
+the file set at the time. This graph is append-only-- objects are immutable and
+referenced by cryptographic hash, and new objects can only refer to existing
+objects, which makes the graph acyclic. Storing history in this way will
+naturally de-duplicate unchanged files and directories, because the resulting
+blobs and trees will be the same and have the same hash ID. The directed acyclic
+graph is referred to as the \newterm{DAG}. It can be referenced by the hash IDs
+of those commits which do not yet have child commits to refer to them, the
+\newterm{heads} of each current branch of development. A simple example is shown
+in \autoref{dia_git_dag_example_three_commits}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{dia_git_dag_example_three_commits}
+    \caption{A simple Git DAG with three commits}
+    \label{dia_git_dag_example_three_commits}
+\end{figure}
+
+A Git repository, then, is a collection of the blob, tree, and commit objects
+that make up the file set's history, stored by hash ID in an \newterm{object
+store}, with references (\newterm{refs}) to the hash IDs of the current head
+commits\cite{git_initial_readme}.
+
+%
+
+\subsection{The Power of the DAG}
 
 \towrite{DAG has many useful properties
     - Append only
     - Easy to sync
     - Trick is merging
 }
-
-\missingfigure{Diagram of Git DAG (I have a git history visualizer script)}

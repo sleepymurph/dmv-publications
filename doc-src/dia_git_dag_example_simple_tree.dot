@@ -1,0 +1,41 @@
+/* ------------------------ 
+
+git rev-list master
+7d80797f5514ede6f47c313d60ebe0d65aafb5cf
+
+examining {7d80797f5514ede6f47c313d60ebe0d65aafb5cf} (commit, 195) - msg: Initial commit, links: c6520ad3a20ca1f5ef883205125d309ae1510f7e
+examining {c6520ad3a20ca1f5ef883205125d309ae1510f7e} (tree, 76) - TREE
+examining {8ab686eafeb1f44702738c8b0f24f2567c36da6d} (blob, 14) - BLOB
+examining {1a7af81d50752796480d43d01eb7f3cc5e198177} (tree, 84) - TREE
+examining {609d3ea4e68fa53c5d6d288b57ffab2d710add93} (blob, 34) - BLOB
+examining {a44a571f219fef7762c4b992fbf75dd0abc97ff3} (blob, 40) - BLOB
+
+
+ * ------------------------ */ 
+
+digraph git {
+
+// Trees
+{
+
+   "1a7af81d50752796480d43d01eb7f3cc5e198177"[label="Tree\n1a7af81"]
+   "c6520ad3a20ca1f5ef883205125d309ae1510f7e"[label="Tree\nc6520ad"]
+}
+
+
+// Blobs
+{
+
+   "8ab686eafeb1f44702738c8b0f24f2567c36da6d"[label="Blob\n8ab686e"]
+   "a44a571f219fef7762c4b992fbf75dd0abc97ff3"[label="Blob\na44a571"]
+   "609d3ea4e68fa53c5d6d288b57ffab2d710add93"[label="Blob\n609d3ea"]
+}
+
+
+// Links
+"c6520ad3a20ca1f5ef883205125d309ae1510f7e" -> "8ab686eafeb1f44702738c8b0f24f2567c36da6d" [label="hello.txt"]
+"c6520ad3a20ca1f5ef883205125d309ae1510f7e" -> "1a7af81d50752796480d43d01eb7f3cc5e198177" [label="subdirectory"]
+"1a7af81d50752796480d43d01eb7f3cc5e198177" -> "609d3ea4e68fa53c5d6d288b57ffab2d710add93" [label="sub_file_a.txt"]
+"1a7af81d50752796480d43d01eb7f3cc5e198177" -> "a44a571f219fef7762c4b992fbf75dd0abc97ff3" [label="sub_file_b.txt"]
+
+}
