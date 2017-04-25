@@ -1,14 +1,23 @@
 \chapter{Idea: Distributed Media Versioning (DMV)}
 
 \newterm{Distributed Media Versioning (DMV)} is our new low-level distributed
-data storage platform. It allows a data set to be replicated or sharded across
-many nodes according to the capacity of nodes and the needs of local users. Its
-focus is on tracking what data is where, presenting that information to the
+data storage platform. The core idea is relatively simple-- store data in a
+Git-like DAG, but make the following changes:
+
+\begin{tight_enumerate}
+
+    \item{Store data at a finer granularity than the file}
+
+    \item{Allow notes to store only a portion of the DAG as a whole}
+
+\end{tight_enumerate}
+
+Doing so allows a data set to be replicated or sharded across many nodes
+according to the capacity of nodes and the needs of local users. The focus is on
+data locality: tracking what data is where, presenting that information to the
 user, and making it easy to transfer data to other nodes as desired. The
 ultimate goal is to create a new abstraction, of \newterm{many devices, one data
 item} in varying states of synchronization.
-
-\missingfigure{simple diagram showing nodes and subsets of data}
 
 
 \paragraph{General storage}
