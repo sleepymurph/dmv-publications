@@ -150,7 +150,8 @@ commits\cite{git_initial_readme}.
 
 \subsection{The Power of the DAG}
 
-Such a DAG has many properties that make it useful for long-term data storage.
+Such a DAG has many properties that make it useful for distributed collaborative
+work and for long-term data storage.
 
 \begin{description}
 
@@ -160,9 +161,14 @@ Such a DAG has many properties that make it useful for long-term data storage.
 
     \item[Distributability and Availability] Because the DAG is immutable and
         append-only, it can be replicated simply by copying all of its objects.
-        Then any replica can make its own updates by appending to the DAG, and
-        replicas can synchronize simply by exchanging new objects that the other
-        does not have.
+        Any replica can make its own updates by appending to the DAG. Rather
+        than have a centralized notion of "current" version, development in Git
+        naturally diverges into different branches, as different users with
+        their own replica of the DAG make changes. Branches created on one
+        replica can be synchronized to another simply by comparing sets of
+        objects and transferring new objects that that the other does not have.
+        Branches are reconciled with a \newterm{merge} operation, creating a new
+        commit that incorporates changes from both branches.
 
     \item[Atomicity] Commits are atomic, since all objects that they refer to
         have to be added first, then the commit object, then finally the ref is
