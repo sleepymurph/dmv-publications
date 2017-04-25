@@ -151,18 +151,45 @@ commits\cite{git_initial_readme}.
 \subsection{The Power of the DAG}
 
 Such a DAG has many properties that make it useful for long-term data storage.
-As noted above, unchanged and duplicate files are naturally de-duplicated by the
-content addressing, if two files are identical, they will have the same hash and
-thus be the same blob. Because the DAG is immutable and append-only, any copy of
-the DAG can be updated independently, and replicas can synchronize easily. Two
-replicas need only compare object sets and then exchange objects that are
-missing. Commits are atomic, since all objects that they refer to have to be
-added first, then the commit object, then finally the ref is updated to point to
-the new commit. If the ref is updated, the commit was successful. An interrupted
-commit operation may leave orphaned objects in the object database, but it
-cannot corrupt previously-written data, nor can it leave the repository in an
-inconsistent state. Orphaned objects can be swept up during a garbage-collection
-phase, walking the DAG and marking all objects that are reachable from the
-current refs. And, perhaps most importantly, since objects are identified by a
-cryptographic hash, data integrity can be verified at any time by re-computing
-the object's hash and comparing it to the ID.
+
+\begin{description}
+
+    \item[De-duplication] As noted above, unchanged and duplicate files are
+        naturally de-duplicated by the content addressing, if two files are
+        identical, they will have the same hash and thus be the same blob.
+
+    \item[Distributability and Availability] Because the DAG is immutable and
+        append-only, it can be replicated simply by copying all of its objects.
+        Then any replica can make its own updates by appending to the DAG, and
+        replicas can synchronize simply by exchanging new objects that the other
+        does not have.
+
+    \item[Atomicity] Commits are atomic, since all objects that they refer to
+        have to be added first, then the commit object, then finally the ref is
+        updated to point to the new commit. If the ref is updated, the commit
+        was successful. An interrupted commit operation may leave orphaned
+        objects in the object database, but it cannot corrupt previously-written
+        data, nor can it leave the repository in an inconsistent state. Orphaned
+        objects can be swept up during a garbage-collection phase, walking the
+        DAG and marking all objects that are reachable from the current refs.
+
+    \item[Verifiability] Perhaps most importantly, since objects are identified
+        by a cryptographic hash, data integrity can be verified at any time by
+        re-computing an object's hash and comparing it to its ID. Corrupt
+        objects can be replaced with an intact copy from another replica.
+
+\end{description}
+
+The main weakness of Git's DAG is that blobs and files are one and the same.
+This makes the file the unit of de-duplication, which can lead to inefficient
+storage of larger files. Git gets around this by "packing" objects during its
+garbage-collection phase, storing similar objects as bases and deltas behind the
+scenes. But this is an optimization. There can also be trouble when a very large
+file becomes a large object, breaking assumptions that algorithms might have
+about fitting objects into memory or transferring objects across the network.
+
+If the DAG operated at a granularity smaller than the file, it could become even
+more powerful. It could naturally de-duplicate chunks of files the way that Git
+already de-duplicates whole files, and it could ensure that all objects are of a
+reasonable size. That is the core idea behind the our new distributed media
+versioning system.
