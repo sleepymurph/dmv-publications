@@ -51,6 +51,9 @@ and the history to store, according to the replica's capacity and need? The
 answer could be a new abstraction for tracking a data set and its history as a
 cohesive whole, even when it is physically spread over many different nodes.
 
+%
+
+
 
 \section{CAP Theorem and the Importance of Availability}
 
@@ -78,10 +81,24 @@ availability and consistency.
     - Branches: No global concept of recent version
 }
 
+%
 
-\section{Git and the DAG}
 
-\towrite{Explain Git and DAG
+
+\section{Version Control, Git, and The DAG}
+
+\towrite{Quick recap of history of version
+control\cite{history_of_version_control}: CVS, SVN, Git}
+
+\towrite{Version control checks files in and out to filesystem, does not require
+special access or editing modes}
+
+\towrite{Git grew out of Linus's frustration with other VCSs}
+
+\towrite{Blob, tree, commit (from README \cite{git_initial_readme}) -- SHA1 --
+DAG}
+
+\towrite{DAG has many useful properties
     - Append only
     - Easy to sync
     - Trick is merging
