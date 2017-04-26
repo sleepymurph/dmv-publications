@@ -22,6 +22,7 @@ thesis.pdf: \
     plot-file-size--c2-time.pdf \
     plot-file-size--repo-size.pdf \
     plot-filesystem-limits--directory-takeover.pdf \
+    plot-iosched-num-files--c1-time.pdf \
     plot-num-files--c1-cpu.pdf \
     plot-num-files--c1-time.pdf \
     plot-num-files--c2-cpu.pdf \

@@ -1,65 +1,5 @@
 \chapter{Performance Tuning Experiments}
 
-\section{Tuning Chunk Size}\label{rolling-hash-exp}
-
-The algorithm used to divide files into chunks (described in
-\autoref{chunking-algoritm}) involves moving a window across the data, and
-setting a chunk boundary where the sum of the bytes in that window is evenly
-divisible by a given number. We ran an experiment to determine the effects of
-these two parameters on chunk size.
-
-\paragraph{Procedure}
-
-For each combination of window size and divisor, we would run the rolling hash
-algorithm on a stream of pseudo-random bytes until it had identified \num{100}
-chunks. Then we would compute the mean and standard deviation of the chunk
-sizes.
-
-We used window sizes in powers of two from \SI{128}{\byte} ($2^7$) to
-\SI{256}{\kibi\byte} ($2^{18}$), and divisors in powers of two from \num{256}
-($2^8$) to \SI{128}{\kibi\relax} ($2^{17}$).
-
-The pseudo-random number generator used was an xorshift RNG\cite{xorshift_rng}.
-The experiment itself was automated as a unit test in the DMV prototype's Rust
-code.
-
-\paragraph{Environment}
-
-Because this experiment measures only the output of calculations, the
-environment in which it is run should make no difference in the outcome. In
-fact, if the xorshift RNG is given the same initial seed value, the resulting
-random byte stream will be identical, which will lead to an identical sequence
-of chunks, which will lead to an identical average chunk size. This experiment
-is deterministic.
-
-
-\subsection{Results}
-
-\begin{figure}[]
-  \caption{Mean chunk size}
-  \label{fig:plot-rolling-hash}
-  \centering
-    \includegraphics[]{plot-rolling-hash}
-\end{figure}
-
-\autoref{fig:plot-rolling-hash} shows the mean chunk size.
-
-\subsection{Observations}
-
-\begin{itemize}
-
-  \item The mean chunk size is approximately the sum of the window size and
-    match parameter.
-
-  \item When the match parameter is less than the window size, the standard
-    deviation is approximately the match parameter.
-
-\end{itemize}
-
-
-%
-
-
 \section{Tuning Object Store Directory Layout}\label{dir-experiment}
 
 During initial runs of the "many-files" experiment
@@ -139,3 +79,110 @@ overtaking files as nesting goes deeper.
     directories would grow exponentially.
 
 \end{itemize}
+
+%
+
+
+
+\section{Effect of Different Linux I/O Schedulers}
+
+Since the anticipatory I/O scheduler was removed in version 2.6.33
+\cite{as_removed_linux_release_notes}, Linux has included three different I/O
+schedulers to choose between\cite{ioschedulers}:
+
+\begin{description}
+
+    \item[Completely Fair Queueing] The \lstinline{cfq} scheduler is the default
+        I/O scheduler as of Linux 2.6.18 \cite{cfq_default_linux_release_notes}.
+        It creates a separate queue for each process and handles requests in a
+        round, preventing any one process from dominating I/O.
+
+    \item[Deadline] The \lstinline{deadline} scheduler tries to set hard limits
+        on wait time for scheduled I/O operation.
+
+    \item[No-op] The \lstinline{noop} scheduler does as little as possible,
+        passing requests directly to the device for it to manage.
+
+\end{description}
+
+We were curious if the choice of scheduler would have any effect on performance.
+In particular, we hoped it might alleviate the high seek times we were seeing.
+So we ran extra trials of our VCS scaling experiments using the DMV prototype
+and different I/O schedulers.
+
+\begin{figure}[]
+    \caption{Time for DMV prototype to commit many 1KiB files to a fresh
+    repository, by I/O scheduler}
+    \label{fig:plot-iosched-num-files--c1-time}
+    \centering
+    The top left graph shows the whole data set on a logarithmic scale. The
+    others show certain interesting ranges on a linear scale.
+    \includegraphics[]{plot-iosched-num-files--c1-time}
+\end{figure}
+
+The results of the "many files" experiment are shown in
+\autoref{fig:plot-iosched-num-files--c1-time}. The I/O scheduler used made
+little difference.
+
+%
+
+
+
+\section{Tuning Chunk Size}\label{rolling-hash-exp}
+
+The algorithm used to divide files into chunks (described in
+\autoref{chunking-algoritm}) involves moving a window across the data, and
+setting a chunk boundary where the sum of the bytes in that window is evenly
+divisible by a given number. We ran an experiment to determine the effects of
+these two parameters on chunk size.
+
+\paragraph{Procedure}
+
+For each combination of window size and divisor, we would run the rolling hash
+algorithm on a stream of pseudo-random bytes until it had identified \num{100}
+chunks. Then we would compute the mean and standard deviation of the chunk
+sizes.
+
+We used window sizes in powers of two from \SI{128}{\byte} ($2^7$) to
+\SI{256}{\kibi\byte} ($2^{18}$), and divisors in powers of two from \num{256}
+($2^8$) to \SI{128}{\kibi\relax} ($2^{17}$).
+
+The pseudo-random number generator used was an xorshift RNG\cite{xorshift_rng}.
+The experiment itself was automated as a unit test in the DMV prototype's Rust
+code.
+
+\paragraph{Environment}
+
+Because this experiment measures only the output of calculations, the
+environment in which it is run should make no difference in the outcome. In
+fact, if the xorshift RNG is given the same initial seed value, the resulting
+random byte stream will be identical, which will lead to an identical sequence
+of chunks, which will lead to an identical average chunk size. This experiment
+is deterministic.
+
+
+\subsection{Results}
+
+\begin{figure}[]
+  \caption{Mean chunk size}
+  \label{fig:plot-rolling-hash}
+  \centering
+    \includegraphics[]{plot-rolling-hash}
+\end{figure}
+
+\autoref{fig:plot-rolling-hash} shows the mean chunk size.
+
+\subsection{Observations}
+
+\begin{itemize}
+
+  \item The mean chunk size is approximately the sum of the window size and
+    match parameter.
+
+  \item When the match parameter is less than the window size, the standard
+    deviation is approximately the match parameter.
+
+\end{itemize}
+
+
+%
