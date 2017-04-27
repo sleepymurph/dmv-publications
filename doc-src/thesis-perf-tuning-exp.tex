@@ -100,18 +100,39 @@ used a new \SI{100}{\mebi\byte} LVM partition.
 \label{seek-times-results}
 
 \begin{figure}[]
-    \caption{Overwhelmed by subdirectories}
+    \caption{Files vs. directories created when organizing an object directory
+    by the given scheme}
     \label{fig:plot-filesystem-limits--directory-takeover}
     \centering
 
-    Files vs. directories created when organizing an object directory by the
-    given scheme
+    The number of files and directories present when the disk reported that it
+    was full under the given directory scheme, shown by number of hex digits per
+    directory (the different plots) and levels of depth (x axis)
 
     \includegraphics[]{plot-filesystem-limits--directory-takeover}
 \end{figure}
 
-\autoref{fig:plot-filesystem-limits--directory-takeover} shows directories
-overtaking files as nesting goes deeper.
+\autoref{fig:plot-filesystem-limits--directory-takeover} shows how quickly
+directories overtake files as subdirectory nesting goes deeper. Presented
+visually, the connection between files and directories becomes obvious. The
+maximum number of files plus directories is constant: the number of inodes on
+the filesystem. However, the number of directories created increases
+exponentially with both the number of hex digits per directory and then again by
+directory depth. This can be expressed mathematically. Let $f$, $d$, and $i$ be
+the number of files, directories, and inodes on the filesystem, and let $h$ and
+$n$ be the number of hex digits per subdirectory and the subdirectory depth.
+Then the following equations govern the number of files that can fit on the
+filesystem:
+
+\begin{equation*}
+    \begin{aligned}
+        f+d = i, \quad
+        d = \left( 16^h \right)^n, \quad
+        f = i - \left( 16^h \right)^n
+    \end{aligned}
+\end{equation*}
+
+
 
 
 \begin{figure}[]
