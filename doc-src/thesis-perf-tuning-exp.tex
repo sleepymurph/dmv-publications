@@ -131,7 +131,18 @@ filesystem:
     \end{aligned}
 \end{equation*}
 
+So, only very low values for the number of hex digits (\num{3} or less) and
+subdirectory depth (\num{3} or less) are acceptable.
 
+From there, we turn to the mysterious, intermittent long write times. In our
+experiment, \num{312813} of \num{315601} writes (\SI{99.1}{\percent}) of writes
+completed in less than \SI{1}{\ms}. The others are plotted in
+\autoref{plot-seek-times}. The spikes are as high as \SI{2}{\s}, though most
+seem to be under \SI{1}{\s}. There is no clear pattern to their occurrence in
+terms of number of files or directories, though they tend to get longer as both
+increase. They are spaced apart somewhat regularly. It would seem they are
+caused by upkeep that the filesystem has to do periodically, and that there is
+no obvious way to avoid them, at least not while storing many small files.
 
 \begin{figure}[]
     \caption{Unusually high write times}
@@ -141,23 +152,11 @@ filesystem:
     \SI{4}{\kib} files that took \SI{1}{\ms} or longer to write, plotted
     according to the number of files and directories on the disk already, and
     colored by the time it took to write the file. \\
-    Not shown: \num{312813} writes that were faster than \SI{1}{\ms}.
+    Not shown: The (\SI{99.1}{\percent} of writes that were faster than
+    \SI{1}{\ms}.
 
     \includegraphics[]{plot-seek-times}
 \end{figure}
-
-\autoref{plot-seek-times} shows unusual write times by number of files and
-directories already present on the filesystem.
-
-
-\subsection{Observations}
-
-\begin{itemize}
-
-  \item In hindsight, it should have been easy to see that the number of
-    directories would grow exponentially.
-
-\end{itemize}
 
 %
 
