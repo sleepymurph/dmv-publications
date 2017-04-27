@@ -1,19 +1,52 @@
 \chapter{Performance Tuning Experiments}
 
-\section{Tuning Object Store Directory Layout}\label{dir-experiment}
+\section{Object Store Directory Layout}
+\label{dir-experiment}
 
 During initial runs of the "many files" experiment
 (\autoref{num-files-exp-desc}), we would often notice the disk being reported as
 full even though the total bytes used was less than the capacity of the disk
-partition. This had to do with the way we divided the test files into
-directories, and how the version control systems stored their objects (see
-\autoref{dir-impl} for DMV's object storage scheme). Since every directory
-requires an inode on an ext4 filesystem, a storage scheme that creates too many
-subdirectories will use up all the available inodes with directories rather than
-data.
+partition. This had to do with how each system stores its objects as files on
+the filesystem and who it organizes them into directories. Each file and
+directory on a Unix filesystem requires one \newterm{inode}, of which the
+filesystem has only a finite number. A storage scheme that allocates too many
+files or directories will exhaust the filesystem's available inodes before it
+uses all the available disk space.
 
-\todo{Note mysterious seek times}
-\label{seek-times-results}
+We also noticed that total write speed would slow down as the operation
+progressed. The progress meter we added to DMV's commit operation would show a
+rate of \SIrange{30}{40}{\mib\s} at the beginning of an operation but slow to
+less than \SI{300}{\kib} by the end of a long one. We added log output to print
+the write times for individual objects, and we discovered that while most
+objects would be written in milliseconds, occasionally a single object write
+would take multiple seconds or tens of seconds, even though there was no
+appreciable difference in size between the objects
+(\autoref{write-times-log-output}).
+
+\begin{figure}
+    \caption{DMV log output showing varying object write times}
+    \label{write-times-log-output}
+    \centering
+
+    Not shown: many objects written in under \SI{10}{\ms}, which are logged at
+    \lstinline{TRACE} level.
+
+    \lstinputlisting[nolol,basicstyle=\scriptsize]{lst-storing-long-write-times.txt}
+\end{figure}
+
+DMV stores its objects as individual files in an object-store directory, in the
+same manner as Git. The object's SHA-1 hash is used as its file name, except
+that the first two hex digits are removed and used as a subdirectory (also
+described in \autoref{dir-impl}). Our prototype originally took the first four
+hex digits to create two levels of subdirectories, under the assumption that we
+would store more objects than Git and need to spread them out with more
+subdirectories. That original prototype was showing this odd behavior, and it
+stored files much more slowly than Git. We suspected that the number of
+subdirectories could be at fault, so we experimented with different subdirectory
+schemes to see their effects.
+
+%
+
 
 \paragraph{Procedure}
 
@@ -23,16 +56,19 @@ of pseudo-random files of \SI{4}{\kibi\byte} each until the disk was reported
 full. For each file, we would give it a pseudo-random name that resembled an
 SHA-1 hash, and store it according to the object storage scheme under test. We
 increased a counter each time we created a file, and another each time we
-created a new directory.
+created a new directory. We also checked the number of files already in the
+target directory before writing, timed the write, and used the Unix
+\lstinline{df} utility to measure free disk space in bytes and the number of
+free inodes.
 
-We followed the basic scheme of taking leading hex digits of the SHA-1 hash to
-form directories. We varied the number of directories taken (depth) and the
-number of hex digits per directory (see
-\autoref{sample-directory-scheme-variations} for examples). We tried depths from
-\num{0} to \num{6} and digits per directory from \num{0} to \num{16}, discarding
-combinations that did not make sense, such as combinations involving \num{0} and
-another number (which would all simply be undivided), or those that required
-more than the \num{40} hex digits of a \num{160}-byte SHA-1 hash.
+The directory schemes we tested were all variations of the basic scheme of
+taking leading hex digits of the SHA-1 hash to form directories. We varied the
+number of directories taken (depth) and the number of hex digits per directory
+(see \autoref{sample-directory-scheme-variations} for examples). We tried depths
+from \num{0} to \num{6} and digits per directory from \num{0} to \num{16},
+discarding combinations that did not make sense, such as combinations involving
+\num{0} and another number (which would all simply be undivided), or those that
+required more than the \num{40} hex digits of a \num{160}-byte SHA-1 hash.
 
 \begin{table}[]
     \caption{Sample object store directory variations}
@@ -60,7 +96,8 @@ on one of the dedicated test computers used for that experiment (specs shown in
 \SI{197}{\gibi\byte} partition used for the other experiments, this experiment
 used a new \SI{100}{\mebi\byte} LVM partition.
 
-\subsection{Results}
+\paragraph{Results}
+\label{seek-times-results}
 
 \begin{figure}[]
     \caption{Overwhelmed by subdirectories}

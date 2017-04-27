@@ -1,0 +1,5 @@
+DEBUG:prototype::object_store: store blob 23a74606 --   28.3 KiB stored in 0.062s ( 454.3 KiB/s)
+WARN:prototype::object_store: store blob ff2942d6 --    6.8 KiB stored in 24.735s ( 281 bytes/s)
+DEBUG:prototype::object_store: store blob 415dba44 --   16.9 KiB stored in 0.223s (  75.5 KiB/s)
+WARN:prototype::object_store: store blob 9e810318 --   15.2 KiB stored in 24.132s ( 644 bytes/s)
+  Hashing:    1.5 GiB/   1.5 GiB 100.0% 199.6s    7.7 MiB/s done
