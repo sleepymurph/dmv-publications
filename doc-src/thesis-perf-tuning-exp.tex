@@ -133,16 +133,15 @@ filesystem:
 
 
 
-
 \begin{figure}[]
     \caption{Unusually high write times}
     \label{plot-seek-times}
     \centering
 
-    \SI{4}{\kib} files that took longer than \SI{1}{\ms} to write, plotted
+    \SI{4}{\kib} files that took \SI{1}{\ms} or longer to write, plotted
     according to the number of files and directories on the disk already, and
     colored by the time it took to write the file. \\
-    Not shown: \num{315153} writes that took \SI{1}{\ms} or less.
+    Not shown: \num{312813} writes that were faster than \SI{1}{\ms}.
 
     \includegraphics[]{plot-seek-times}
 \end{figure}
