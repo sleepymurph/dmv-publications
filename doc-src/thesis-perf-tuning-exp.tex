@@ -100,8 +100,7 @@ used a new \SI{100}{\mebi\byte} LVM partition.
 \label{seek-times-results}
 
 \begin{figure}[]
-    \caption{Files vs. directories created when organizing an object directory
-    by the given scheme}
+    \caption{Files vs. directories filling a disk}
     \label{fig:plot-filesystem-limits--directory-takeover}
     \centering
 
@@ -142,7 +141,8 @@ filesystem:
 
     \SI{4}{\kib} files that took longer than \SI{1}{\ms} to write, plotted
     according to the number of files and directories on the disk already, and
-    colored by the time it took to write the file
+    colored by the time it took to write the file. \\
+    Not shown: \num{315153} writes that took \SI{1}{\ms} or less.
 
     \includegraphics[]{plot-seek-times}
 \end{figure}
