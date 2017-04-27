@@ -17,5 +17,14 @@ set ylabel "Total number of directories"
 set logscale cb
 set cblabel "Write time (s)"
 
+set palette defined ( \
+    0 "green", \
+    1 "yellow", \
+    2 "orange", \
+    3 "red", \
+    3.5 "dark-violet", \
+    4 "black" \
+)
+
 plot high_times_table using 4:5:8 with points palette linetype 1 title "write", \
     inodes-x with lines title "total inodes on disk"
