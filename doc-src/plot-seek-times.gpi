@@ -3,12 +3,19 @@ high_times_table = "< \
     awk -e '$7==\"ok\" && $8 > 0.001 {print $0}' \
     ../data/exp--filesystem-limits--micro/*murphytest04.txt"
 
+inodes=25688
+
+#set logscale x
+#set logscale y
+
+set xrange[1:inodes]
+set yrange[1:inodes]
+
 set xlabel "Total number of files"
 set ylabel "Total number of directories"
 
 set logscale cb
 set cblabel "Write time (s)"
 
-set key off
-
-plot high_times_table using 4:5:8 with points palette
+plot high_times_table using 4:5:8 with points palette linetype 1 title "write", \
+    inodes-x with lines title "total inodes on disk"
