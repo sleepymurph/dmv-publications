@@ -1,56 +1,77 @@
 \chapter{Discussion}
 
 
-\section{Source of File Size Limits in Tested Systems}
+\section{Data Granularity and Storage Schemes}
 \label{chunk-then-recombine}
 
-\towrite{All limited by granularity of objects they work with. Git and Mercurial
-by file, DMV and Bup by chunk, Bup also packs so better performance.}
+All four of the systems we examined in detail-- Git, Mercurial, Bup, and our DMV
+prototype-- model data and its history with a similar directed acyclic graph.
+The major difference is the granularity at which they work with data, and how
+they store it.
 
-Mercurial and Git seem to be limited by available RAM. Mercurial is especially
-curious, because it seems to require three times the file size. When trying to
-commit a \SI{2}{\gibi\byte} file, it prints a warning that "up to 6442 MB of RAM
-may be required to manage this file." On a computer with \SI{8}{\gibi\byte} of
-RAM, that operation failed. The reason might have to do with Mercurial's method
-of storing files. Each file is stored as a base revision and then a series of
-deltas \cite[Chapter 4]{hgbook}, so every commit requires a diff operation. It
-is likely that Mercurial loads multiple copies of the file in RAM in order to
-calculate this diff, and files cannot be stored at all without sufficient
-available RAM.
+Both Git and Mercurial take the file as the basic unit of data granularity,
+though they approach storage differently. Git stores files whole as blobs during
+commit, storing them and other objects as files in object directories (as tested
+in \autoref{dir-experiment}). Later, an optional packing phase will compact
+objects together into \newterm{pack files}, where similar objects are stored as
+deltas against a base revision \cite[Section 10.4]{git_book}. Mercurial stores
+each file's different revisions as deltas against a base revision in a
+\newterm{filelog} structure \cite[Chapter 4]{hgbook}. This is Mercurial's
+primary storage format, and it is constructed during commit.
 
-Git also calculates deltas to pack similar files together, but this is a
-secondary operation. It first stores the file as a separate whole object, and
-then packs similar objects together in a separate phase. This might explain why
-Git reports errors on large files but then still completes the commit operation:
-it can do the essential part of the commit in a streaming fashion, but then it
-needs to allocate more RAM for comparisons on the secondary packing phase, and
-it is this secondary packing phase that fails. Git's errors begin appearing at
-\SI{12}{\gibi\byte}, the first size tested that cannot possibly fit in the test
-machine's \SI{8}{\gibi\byte} of RAM, and its error message says that
-\lstinline{malloc} failed to allocate \SI{12}{\gibi\byte}. So whatever the
-purpose, Git is attempting to allocate enough RAM to hold a complete copy of the
-file.
+By using files as the basic unit of storage, and storing files as deltas against
+a base revision, both Git and Mercurial will at some point load an entire file
+into memory in order to compare it to another version. This ties the maximum
+file size that the system can work with to the amount of available RAM. In
+Mercurial's case, the error message that appears when attempting to commit a
+\SI{2}{\gib} file warns that \SI{6}{\gib} will be required to manage it. And
+because it has to calculate deltas in order to store a file at all, Mercurial
+simply cannot work with any file that it can't fit into memory three times over.
+This is why Mercurial could not store files larger than \SI{1.5}{\gib} in our
+file-size experiments (\autoref{file-size-limits-results}).
 
-This need to operate on whole files is a limiting factor for both Git and
-Mercurial. DMV and Bup get around this by using a rolling hash to break files
-into chunks. Interestingly, Bup does this even while using Git's own DAG and
-repository format\cite{bup_design}. Git has no notion of file chunks, but Bup
-reuses Git's tree objects to index them. A large file in Bup thus becomes a
-directory of chunk files in the Git repository format.
+Because Git's delta calculation happens in a secondary behind-the-scenes phase,
+it can still manage to commit files larger than available RAM, but it prints
+errors as the other operations fail. The two-phase approach also requires extra
+disk space and processing power. If a large file is changed, the at first both
+revisions will be written in full, taking twice the disk space. Then a separate
+operation will have to reread both blobs in full to calculate deltas and pack
+the objects.
 
-Bup also writes directly to Git's pack file format, splitting into chunks but
-then writing many chunks back to one pack file. It does this in one pass, rather
-than following Git's two phases of storing then packing. This proves to be the
-most efficient design for dealing with both large files and numerous files. So
-far, our DMV prototype naively stores chunks (indeed, all objects) as individual
-files on the file system. This uses disk space inefficiently and leads to seek
-time slowdown as inodes become scarce. It seems that the key to storing large
-files efficiently is to break them into chunks first, then recombine those
-chunks into larger packed files. Future versions of DMV should incorporate this
-insight.
+Both DMV and Bup avoid these pitfalls by operating with a finer granularity,
+using a rolling hash to divide files into chunks by their content. It is the
+chunks and their indexes that must fit into memory, not the entire file. And
+then since chunks are only a few kilobytes and chunk indexes are hierarchical,
+file size becomes theoretically unlimited. Dividing into chunks by rolling hash
+also makes delta compression unnecessary, because identical chunks in different
+files or file revisions will naturally de-duplicate. At this point, it is the
+method of object storage that becomes the bottleneck.
 
+Our current DMV prototype stores objects loose as files on the filesystem. This
+proves to be wasteful of disk space, taking up whole filesystem blocks with tiny
+objects and with directories. It also causes dramatic slowdown as the disk gets
+full and the filesystem has to work harder to find free blocks (as seen in
+\autoref{seek-times-results}). Dividing into chunks solves the problem of
+storing large files by turning it into the problem of storing many files.
 
-\towrite{Git store then pack with changed file: 3x then 2x}
+Bup's storage strategy is the best of both worlds. It first divides files into
+chunks, but then re-packs objects together into pack files. In fact, Bup uses
+Git's pack file format\footnotemark, but it writes it directly without the
+separate compacting phase, and without bothering to calculate deltas
+\cite{bup_design}. This makes efficient use of disk space, and allows the pack
+files to be written sequentially, minimizing disk seeks. This is why Bup was
+clearly the fastest of the systems tested in both file size and number of files.
+
+\footnotetext{Git has no notion of chunks, but Bup reuses Git's tree objects as
+chunk indices. Git can read a repository written by Bup, but it will see a large
+file as a directory full of small chunk files.}
+
+So we see that the key to handling large files is to break them into many
+smaller files, and the key to storing many small files is to combine them into
+larger files. The magic is in the combination, where files and revisions of
+files are broken into chunks by content, so that identical chunks are naturally
+de-duplicated in storage. That is what gives significant disk space savings over
+simply zipping up snapshots of the data.
 
 %
 
