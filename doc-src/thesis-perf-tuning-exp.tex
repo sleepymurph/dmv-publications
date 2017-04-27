@@ -63,14 +63,35 @@ used a new \SI{100}{\mebi\byte} LVM partition.
 \subsection{Results}
 
 \begin{figure}[]
-  \caption{Overwhelmed by subdirectories}
-  \label{fig:plot-filesystem-limits--directory-takeover}
-  \centering
+    \caption{Overwhelmed by subdirectories}
+    \label{fig:plot-filesystem-limits--directory-takeover}
+    \centering
+
+    Files vs. directories created when organizing an object directory by the
+    given scheme
+
     \includegraphics[]{plot-filesystem-limits--directory-takeover}
 \end{figure}
 
 \autoref{fig:plot-filesystem-limits--directory-takeover} shows directories
 overtaking files as nesting goes deeper.
+
+
+\begin{figure}[]
+    \caption{Unusually high write times}
+    \label{plot-seek-times}
+    \centering
+
+    \SI{4}{\kib} files that took longer than \SI{1}{\ms} to write, plotted
+    according to the number of files and directories on the disk already, and
+    colored by the time it took to write the file
+
+    \includegraphics[]{plot-seek-times}
+\end{figure}
+
+\autoref{plot-seek-times} shows unusual write times by number of files and
+directories already present on the filesystem.
+
 
 \subsection{Observations}
 
