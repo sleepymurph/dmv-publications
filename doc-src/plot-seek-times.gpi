@@ -1,15 +1,15 @@
 # Use only one set of results, to get a less cluttered graph
-high_times_table = "< \
-    awk -e '$7==\"ok\" && $8 > 0.001 {print $0}' \
-    ../data/exp--filesystem-limits--micro/*murphytest04.txt"
+high_times_table(p) = "< \
+    awk -e '$7==\"ok\" && $8 > 0.000 {print $0}' \
+    ../data/exp--filesystem-limits--micro/".p."--2017-03-22-murphytest04.txt"
 
 inodes=25688
 
 #set logscale x
 #set logscale y
 
-set xrange[1:inodes]
-set yrange[1:inodes]
+set xrange[1:27500]
+set yrange[1:27500]
 
 set xlabel "Total number of files"
 set ylabel "Total number of directories"
@@ -26,5 +26,63 @@ set palette defined ( \
     4 "black" \
 )
 
-plot high_times_table using 4:5:8 with points palette linetype 1 title "write", \
-    inodes-x with lines title "total inodes on disk"
+perms="\
+4096x00x00 \
+4096x01x01 \
+4096x01x02 \
+4096x01x03 \
+4096x01x04 \
+4096x01x05 \
+4096x01x06 \
+4096x01x07 \
+4096x01x08 \
+4096x01x09 \
+4096x01x10 \
+4096x02x01 \
+4096x02x02 \
+4096x02x03 \
+4096x02x04 \
+4096x02x05 \
+4096x02x06 \
+4096x02x07 \
+4096x02x08 \
+4096x02x09 \
+4096x02x10 \
+4096x03x01 \
+4096x03x02 \
+4096x03x03 \
+4096x03x04 \
+4096x03x05 \
+4096x03x06 \
+4096x03x07 \
+4096x03x08 \
+4096x03x09 \
+4096x03x10 \
+4096x04x01 \
+4096x04x02 \
+4096x04x03 \
+4096x04x04 \
+4096x04x05 \
+4096x04x06 \
+4096x04x07 \
+4096x04x08 \
+4096x04x09 \
+"
+
+set key off
+
+set style data impulses
+
+set view 40, 345
+set ticslevel 0
+
+set xlabel rotate parallel offset character 0,-2,0
+set ylabel rotate parallel offset character -4,-1,0
+
+set grid
+
+splot \
+    for [perm in perms] \
+        high_times_table(perm) using 4:5:8 palette linetype 1 title "write",
+
+    #inodes-x with lines title "total inodes on disk"
