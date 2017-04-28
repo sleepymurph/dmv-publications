@@ -126,23 +126,28 @@ filesystem:
 \begin{equation*}
     \begin{aligned}
         f+d = i, \quad
-        d = \left( 16^h \right)^n, \quad
-        f = i - \left( 16^h \right)^n
+        d = \sum_{i=1}^n \left( 16^h \right)^i, \quad
+        f = i - \sum_{i=1}^n \left( 16^h \right)^i
     \end{aligned}
 \end{equation*}
 
-So, only very low values for the number of hex digits (\num{3} or less) and
-subdirectory depth (\num{3} or less) are acceptable.
+So we can see that DMV's original scheme, with two hex digits per directory and
+a depth of two, would yield \SI{65792} subdirectories, which by itself is more
+than \num{2.5} times the total number of inodes available on the \SI{100}{\mib}
+test partition.
 
-From there, we turn to the mysterious, intermittent long write times. In our
-experiment, \num{312813} of \num{315601} writes (\SI{99.1}{\percent}) of writes
-completed in less than \SI{1}{\ms}. The others are plotted in
-\autoref{plot-seek-times}. The spikes are as high as \SI{2}{\s}, though most
-seem to be under \SI{1}{\s}. There is no clear pattern to their occurrence in
-terms of number of files or directories, though they tend to get longer as both
-increase. They are spaced apart somewhat regularly. It would seem they are
-caused by upkeep that the filesystem has to do periodically, and that there is
-no obvious way to avoid them, at least not while storing many small files.
+From there, we turn our attention to the mysterious, intermittent long write
+times. In our experiment, across all directory schemes, there were \num{315601}
+total writes. Of those, \num{312813} (\SI{99.1}{\percent}) completed in less
+than \SI{1}{\ms}. The others are plotted in \autoref{plot-seek-times}, and the
+top ten longest writes are listed in \autoref{longest-writes}. The spikes in the
+graph are arranged in curves radiating out from zero files and zero directories,
+each curve representing the run of one of the different directory schemes. No
+single directory scheme stands out as worse than the others, though having more
+directories does seem to lead to more frequent and longer long writes. The
+scheme with the fewest and shortest long writes is the one that has no
+subdirectories at all. So we conclude that there is no penalty for storing many
+thousands of files in one directory.
 
 \begin{figure}[]
     \caption{Unusually high write times}
@@ -152,11 +157,51 @@ no obvious way to avoid them, at least not while storing many small files.
     \SI{4}{\kib} files that took \SI{1}{\ms} or longer to write, plotted
     according to the number of files and directories on the disk already, and
     colored by the time it took to write the file. \\
-    Not shown: The (\SI{99.1}{\percent} of writes that were faster than
+    Not shown: The \SI{99.1}{\percent} of writes that were faster than
     \SI{1}{\ms}.
 
     \includegraphics[]{plot-seek-times}
 \end{figure}
+
+\begin{table}
+    \caption{Top-ten longest writes}
+    \label{longest-writes}
+    % To generate:
+    % awk -e '$7=="ok" && $8 >= 0.5 {print $0}' \
+    %   exp--filesystem-limits--micro/*murphytest04.txt \
+    %   | sort -r -k 8 \
+    %   | awk -e '{ printf "%d & %d & %5d & %5d & %2d & %05.3f & %04.1f \\\\ \n", \
+    %                       $2, $3, $4, $5, $6, $8, $13*100/$12 }' \
+    %   | head -n10
+    \begin{tabular}{c c r r c r r}
+        Digits & Depth & Files & Dirs & Files in Dir & Time & \% inodes used \\
+        \midrule
+1 & 4 & 10699 & 13997 &  1 & 2.306 & 96.2 \\
+1 & 4 & 11025 & 14289 &  1 & 2.180 & 98.6 \\
+3 & 1 & 16321 &  4008 &  5 & 1.775 & 79.2 \\
+1 & 5 &  5834 & 14755 &  1 & 1.654 & 80.2 \\
+3 & 2 & 10831 & 14635 &  1 & 1.646 & 99.2 \\
+1 & 5 &  5389 & 13790 &  1 & 1.466 & 74.7 \\
+2 & 3 &  8393 & 16550 &  1 & 1.456 & 97.1 \\
+4 & 2 &  7823 & 15225 &  1 & 1.443 & 89.8 \\
+1 & 5 &  5922 & 14949 &  1 & 1.434 & 81.3 \\
+1 & 6 &  5302 & 18885 &  1 & 1.379 & 94.2 \\
+    \end{tabular}
+\end{table}
+
+The single longest write took \SI{2.306}{\s}, but it is only one of two writes
+that took more than \SI{2}{\s}. Both of the two-second writes occurred under the
+scheme with one hex digit per directory at a depth of four. Only five took
+longer than \SI{1.5}{\s}. Sixteen are longer than \SI{1}{\s}, \num{155} are
+longer than \SI{0.5}{\s}, and \num{340} are longer than \SI{0.1}{\s}.
+
+There is no clear pattern to the occurrence of long writes in terms of number of
+files or directories, though they tend to get longer as both increase. The long
+writes are spaced apart somewhat regularly. That suggests that they are caused
+by upkeep that the filesystem has to do periodically, and that there is no
+obvious way to avoid them, at least not while storing many small files.
+Aggregating objects into pack files as discussed in
+\autoref{chunk-then-recombine} might be a better strategy.
 
 %
 
