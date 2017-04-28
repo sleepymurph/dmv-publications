@@ -10,24 +10,11 @@ set style data histograms
 set style histogram errorbars
 #set style fill solid
 
-cmdline(n) = "\"< awk '$2==".n." {print $0}'"\
-                ." ../data/exp--rolling-hash/2017-03-22--rolling-hash.txt\""
+cmdline(n) = "< awk '$2==".n." {print $0}' \
+                ../data/exp--rolling-hash/2017-03-22--rolling-hash.txt"
 
-data8=cmdline(8)
-data9=cmdline(9)
-data10=cmdline(10)
-data11=cmdline(11)
-data12=cmdline(12)
-data13=cmdline(13)
-data14=cmdline(14)
-data15=cmdline(15)
+modstr(n) = "mod ".gprintf("%1.0b%B",2**n)
 
 plot \
-    @data8    using 3:4:xticlabels(1) title "mod 256", \
-    @data9    using 3:4:xticlabels(1) title "mod 512", \
-    @data10   using 3:4:xticlabels(1) title "mod 1Ki", \
-    @data11   using 3:4:xticlabels(1) title "mod 2Ki", \
-    @data12   using 3:4:xticlabels(1) title "mod 4Ki", \
-    @data13   using 3:4:xticlabels(1) title "mod 8Ki", \
-    @data14   using 3:4:xticlabels(1) title "mod 16Ki", \
-    @data15   using 3:4:xticlabels(1) title "mod 32Ki", \
+    for [u=8:15] \
+        cmdline(u) using 3:4:xticlabels(1) title modstr(u)
