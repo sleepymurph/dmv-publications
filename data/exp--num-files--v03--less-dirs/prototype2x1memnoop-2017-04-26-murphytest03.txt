@@ -82,3 +82,13 @@ mag     filecount    totalbytes   cre_time    c1_time       c1_size   c1_cmd    
 # Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.091, killsignal='SIGTERM', returncode=-15)
 # CallTimeoutError(cmd='prototype commit -m 'Add many_files_dir'', elapsed=19800.046, killsignal='SIGTERM', returncode=-15)
   6       7500000  0x01c9c38000   1021.915  19822.088        (None)   failed       bad   ver_err       46921           0       63621     1329218     2510698      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)         9.768
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.058, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='prototype commit -m 'Add many_files_dir'', returncode='1')
+  7      10000000  0x02625a0000   1341.311   9049.803        (None)   failed       bad   ver_err       33243           0       43901      568633     1154563      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        16.051
+# IOError(28, 'No space left on device')
+  7      25000000  0x05f5e10000   1982.527     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        13.025
+# IOError(28, 'No space left on device')
+  7      50000000  0x0bebc20000   1923.345     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.918
+# IOError(28, 'No space left on device')
+  7      75000000  0x11e1a30000   1930.988     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)      (None)    no_exec      (None)    no_exec     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)        11.172
