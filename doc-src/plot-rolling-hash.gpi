@@ -1,4 +1,6 @@
 set xlabel "Window size (log scale)"
+#set logscale x 2
+#set format x "%1.0b%BB"
 
 set ylabel "Chunk size (log scale)"
 set logscale y 2
@@ -6,15 +8,20 @@ set format y "%1.0b%BB"
 
 set key below title "\ndivisor" # The "\n" creates a space between x axis label and key
 
+set bars .8
 set style data histograms
+#set style data errorlines
+#set style fill solid 1 border lt -1
 set style histogram errorbars
+#set boxwidth .8 relative
 #set style fill solid
 
 cmdline(n) = "< awk '$2==".n." {print $0}' \
-                ../data/exp--rolling-hash/2017-03-22--rolling-hash.txt"
+                ../data/exp--rolling-hash/2017-03-20--rolling-hash.txt"
 
 modstr(n) = "mod ".gprintf("%1.0b%B",2**n)
+si2(n)=gprintf("%1.0b%B",n)
 
 plot \
     for [u=8:15] \
-        cmdline(u) using 3:4:xticlabels(1) title modstr(u)
+        cmdline(2**u) using 3:4:xticlabels(si2($1)) title modstr(u)
