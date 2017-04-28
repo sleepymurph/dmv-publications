@@ -10,11 +10,10 @@ set key below title "\ndivisor" # The "\n" creates a space between x axis label 
 
 set bars .8
 set style data histograms
-#set style data errorlines
-#set style fill solid 1 border lt -1
+set style fill solid 1
 set style histogram errorbars
-#set boxwidth .8 relative
-#set style fill solid
+set boxwidth .4 relative
+set xtics rotate by 20 offset char -1.3,-.8
 
 cmdline(n) = "< awk '$2==".n." {print $0}' \
                 ../data/exp--rolling-hash/2017-03-20--rolling-hash.txt"
@@ -24,4 +23,4 @@ si2(n)=gprintf("%1.0b%B",n)
 
 plot \
     for [u=8:15] \
-        cmdline(2**u) using 3:4:xticlabels(si2($1)) title modstr(u)
+        cmdline(2**u) using 3:4:xticlabels(si2($1)) title si2(2**u)
