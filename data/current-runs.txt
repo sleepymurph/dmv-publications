@@ -1,5 +1,5 @@
 # vim: set nowrap tw=0 :
-murphytest01 exp--file-size--v04--w-cpu/prototype2x1chunks32kx16k-2017-04-28-{host}.txt
+#murphytest01 exp--file-size--v04--w-cpu/prototype2x1chunks32kx16k-2017-04-28-{host}.txt
 #murphytest02 exp--file-size--v04--w-cpu/prototype2x1chunks32kx16knoop-2017-04-26-{host}.txt
 murphytest03 exp--num-files--v03--less-dirs/prototype2x1membufwrite-2017-04-28-{host}.txt
-murphytest04 exp--num-files--v03--less-dirs/prototype2x1membufwrite-2017-04-27-{host}.txt
+#murphytest04 exp--num-files--v03--less-dirs/prototype2x1membufwrite-2017-04-27-{host}.txt
