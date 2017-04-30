@@ -46,7 +46,7 @@ Spring: Prototype and num-files re-tests
                     |   |   |   |   |   |   @rototype2x1chunks32kx16kdeadline
                     |   |   |   |   |   |   |   prototype2x1chunks32kx16knoop
                     |   |   |   |   |   |   |   |   gitallowrepoerr
-    murphytest01 [  p   pd  pdm pfb pbw pc  @       ga  ]
+    murphytest01 [  p   pd  pdm pfb pbw pc  pcd     ga  ]
     murphytest02 [  p   pd  pdm pfb pbw pc  pcd pcn ga  ]
     murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn ga  ]
     murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn ga  ]
