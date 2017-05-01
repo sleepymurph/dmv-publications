@@ -53,31 +53,49 @@ cohesive whole, even when it is physically spread over many different nodes.
 
 \section{CAP Theorem and the Importance of Availability}
 
+Traditional databases that operated on one powerful server could focus on data
+integrity and the \newterm{ACID} guarantees: Atomicity, Consistency, Isolation,
+and Durability. As demand increased, the server would be scaled up, beefing up
+the server hardware with more disk space, more RAM, and more and faster CPUs.
+But there is a limit to this kind of scaling, and as data kept growing, a new
+wave of systems appeared that scaled \emph{out} to many commodity servers,
+distributed systems.
+
+Spreading data across different computers creates new problems of
+synchronization. How does one ensure that replicated data is updated correctly
+on all replicas? How can separate machines agree on the order of updates?
+
 Distributed systems are ruled by the \newterm{CAP-theorem} \cite{cap_origin},
 which states that a system cannot be completely consistent (\newterm{C}),
 available (\newterm{A}), and tolerant of network partitions (\newterm{P}) all at
-the same time. One area must always suffer, and since network partitions are
-always a possibility, a distributed system must make trade-offs between
-availability and consistency.
+the same time. When communication between replicas breaks down and they cannot
+all acknowledge an operation, the system is faced with \newterm{the partition
+decision}: block the operation and decrease availability, or proceed and risk
+inconsistency\cite{cap_years_later}.
 
-\towrite{Traditional ACID}
+Much research is aimed at improving consistency. Vector
+clocks\cite{lamport_ordering} and consensus algorithms such as
+Paxos\cite{paxos_made_simple,paxos_made_moderately_complex} make sure the same
+updates are applied in the same order on all replicas even if a minority cannot
+respond. Clever data types are designed to be commutative, so that the resulting
+data will be the same regardless of the order in which updates are
+applied\cite{crdt_orig}. But in general, when systems cannot communicate, the
+CAP theorem cannot be avoided\cite{cap_proof}, and the system is still faced
+with the partition decision.
 
-\towrite{Modern NoSQL/BASE}
-
-\towrite{Dynamo keeps different versions to be reconciled later}
-
-\towrite{New thinking (CAP years later)
-   - partitions rare
-   - partitions are just latency
-   - "the partition decision": cancel and decrease availability, proceed and
-   risk inconsistency
-   - general problem of resolving conflicts is not solvable
-   \cite{cap_years_later}
-}
+Amazon's Dynamo\cite{dynamo} was a pioneer in relaxing consistency guarantees to
+ensure availability. Dynamo is a key-value store that can accept updates to to a
+value even if not all replicas respond. This can lead to inconsistencies, where
+different replicas have differing versions of a particular value. In such
+situations, Dynamo keeps each version and presents them together during a read.
+That way, the higher-level application that is using Dynamo as a data store can
+resolve the conflict and write a new, reconciled value.
 
 \towrite{DVCS is always available
     - Branches: No global concept of recent version
 }
+
+\towrite{Data locality}
 
 %
 
@@ -112,7 +130,7 @@ special access or editing modes}
 
 %
 
-\subsection{How Data is Stored in Git}
+\section{How Data is Stored in Git}
 
 One of the key aspects of Git is that data is stored according to its content. A
 file is stored by prepending a short Git header and then taking the SHA-1 hash
@@ -212,5 +230,5 @@ about fitting objects into memory or transferring objects across the network.
 If the DAG operated at a granularity smaller than the file, it could become even
 more powerful. It could naturally de-duplicate chunks of files the way that Git
 already de-duplicates whole files, and it could ensure that all objects are of a
-reasonable size. That is the core idea behind the our new distributed media
+reasonable size. That is the core idea behind our new distributed media
 versioning system.

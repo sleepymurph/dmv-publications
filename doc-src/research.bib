@@ -13,6 +13,24 @@ keywords={Internet;fault tolerant computing;parallel programming;Internet applic
 doi={10.1109/HOTOS.1999.798396}, 
 month={},}
 
+@article{cap_proof,
+ author = {Gilbert, Seth and Lynch, Nancy},
+ title = {Brewer's Conjecture and the Feasibility of Consistent, Available, Partition-tolerant Web Services},
+ journal = {SIGACT News},
+ issue_date = {June 2002},
+ volume = {33},
+ number = {2},
+ month = jun,
+ year = {2002},
+ issn = {0163-5700},
+ pages = {51--59},
+ numpages = {9},
+ url = {http://doi.acm.org/10.1145/564585.564601},
+ doi = {10.1145/564585.564601},
+ acmid = {564601},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
 
 @ARTICLE{cap_years_later, 
 author={E. Brewer}, 
@@ -27,6 +45,80 @@ doi={10.1109/MC.2012.37},
 ISSN={0018-9162}, 
 month={02},
 }
+
+
+# Consensus
+
+@article{paxos_made_simple,
+  title={Paxos made simple},
+  author={Lamport, Leslie and others},
+  journal={ACM Sigact News},
+  volume={32},
+  number={4},
+  pages={18--25},
+  year={2001},
+  url={http://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/past/03F/notes/paxos-simple.pdf},
+  urldate={2017-05-01},
+}
+
+@article{paxos_made_moderately_complex,
+ author = {Van Renesse, Robbert and Altinbuken, Deniz},
+ title = {Paxos Made Moderately Complex},
+ journal = {ACM Comput. Surv.},
+ issue_date = {April 2015},
+ volume = {47},
+ number = {3},
+ month = feb,
+ year = {2015},
+ issn = {0360-0300},
+ pages = {42:1--42:36},
+ articleno = {42},
+ numpages = {36},
+ url = {http://doi.acm.org/10.1145/2673577},
+ doi = {10.1145/2673577},
+ acmid = {2673577},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Replicated state machines, consensus, voting},
+}
+
+@article{lamport_ordering,
+ author = {Lamport, Leslie},
+ title = {Time, Clocks, and the Ordering of Events in a Distributed System},
+ journal = {Commun. ACM},
+ issue_date = {July 1978},
+ volume = {21},
+ number = {7},
+ month = jul,
+ year = {1978},
+ issn = {0001-0782},
+ pages = {558--565},
+ numpages = {8},
+ url = {http://doi.acm.org/10.1145/359545.359563},
+ doi = {10.1145/359545.359563},
+ acmid = {359563},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {clock synchronization, computer networks, distributed systems, multiprocess systems},
+}
+
+
+# CRDTs
+
+@techreport{crdt_orig,
+  TITLE = {{Designing a commutative replicated data type}},
+  AUTHOR = {Shapiro, Marc and Pregui{\c c}a, Nuno},
+  URL = {https://hal.inria.fr/inria-00177693},
+  TYPE = {Research Report},
+  NUMBER = {RR-6320},
+  INSTITUTION = {{INRIA}},
+  YEAR = {2007},
+  KEYWORDS = {Data replication ; optimistic replication ; commutative operations},
+  PDF = {https://hal.inria.fr/inria-00177693/file/RR-6320.pdf},
+  HAL_ID = {inria-00177693},
+  HAL_VERSION = {v2},
+}
+
 
 # End-to-end argument
 
@@ -165,6 +257,27 @@ month={02},
     author = "Max Ogden and Mathias Buus and Karissa McKelvey and others",
     title = "{Dat Data}",
     url = {http://dat-data.com/},
+}
+
+
+# Dynamo
+
+@inproceedings{dynamo,
+ author = {DeCandia, Giuseppe and Hastorun, Deniz and Jampani, Madan and Kakulapati, Gunavardhan and Lakshman, Avinash and Pilchin, Alex and Sivasubramanian, Swaminathan and Vosshall, Peter and Vogels, Werner},
+ title = {Dynamo: Amazon's Highly Available Key-value Store},
+ booktitle = {Proceedings of Twenty-first ACM SIGOPS Symposium on Operating Systems Principles},
+ series = {SOSP '07},
+ year = {2007},
+ isbn = {978-1-59593-591-5},
+ location = {Stevenson, Washington, USA},
+ pages = {205--220},
+ numpages = {16},
+ url = {http://doi.acm.org/10.1145/1294261.1294281},
+ doi = {10.1145/1294261.1294281},
+ acmid = {1294281},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {performance, reliability, scalability},
 }
 
 
