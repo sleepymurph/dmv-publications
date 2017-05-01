@@ -1,8 +1,8 @@
 \chapter{Introduction}
 
-It is still surprisingly difficult to keep backups and synchronize data. Many of
-us have several computers, perhaps a laptop, a phone, and a work computer, and
-we would like to synchronize data between them. We want to keep a Word document
+It is still strangely difficult to keep backups and synchronize data. Many of us
+have several computers, perhaps a laptop, a phone, and a work computer, and we
+would like to synchronize data between them. We want to keep a Word document
 synchronized between home and work. We want to put new music on our phones, and
 pull photos off of camera SD cards. We have backups on removable drives, but we
 don't remember when it was that we last did a backup, or what is new since then.
@@ -12,19 +12,15 @@ and we lose track of what is where.
 Cloud computing offers to centralize and safeguard our data, keeping it all in
 one place and taking care of the backups for us. Google Drive gives us a shared
 document that many people can edit in real time. Spotify offers endless music
-streams. Instagram lets us save and share photos. DropBox gives us a folder that
-syncs\todo{cite "folder that syncs"?}. But many of these solutions are
-specialized applications for specific media, which can limit their general
-usefulness; most require constant network connectivity, making them ill-suited
-for intermittent or high-latency connections; and all require entrusting your
-data to a third-party service, which raises concerns about privacy and storage
-longevity. Why can't we simply track the files we have across the devices we
-have?
+streams. Instagram lets us save and share photos. DropBox gives us a centralized
+cloud filesystem. But many of these solutions are specialized applications for
+specific media, which can limit their general usefulness; most require constant
+network connectivity, making them ill-suited for intermittent or high-latency
+connections; and all require entrusting your data to a third-party service,
+which raises concerns about privacy and storage longevity. Why can't we simply
+track the files we have across the devices we have?
 
-% Origin of "folder that syncs"
-% https://www.quora.com/Why-is-Dropbox-more-popular-than-other-programs-with-similar-functionality
-
-Software programmers have an excellent system for backup and sync right at their
+Software developers have an excellent system for backup and sync right at their
 fingertips: \newterm{distributed version control systems (DVCSs)}, such as Git
 and Mercurial. Version control systems track all changes to a collection of
 files, allowing collaborators to work independently and then synchronize and
@@ -68,6 +64,8 @@ availability and consistency.
 
 \towrite{Modern NoSQL/BASE}
 
+\towrite{Dynamo keeps different versions to be reconciled later}
+
 \towrite{New thinking (CAP years later)
    - partitions rare
    - partitions are just latency
@@ -90,10 +88,27 @@ availability and consistency.
 \towrite{Quick recap of history of version
 control\cite{history_of_version_control}: CVS, SVN, Git}
 
+\towrite{Git grew out of Linus's frustration with other VCSs}
+
+\towrite{DVCS in terms of distributed system and CAP theorem: partition by
+default, local writes}
+
+\towrite{Partitions not just the norm but the default}
+
+\towrite{ "The big thing about distributed source control is that it makes one
+of the main issues with SCM's go away - the politics around "who can make
+changes." BK showed that you can avoid that by just giving everybody their own
+source repository." }
+
+\towrite{Ability to always write locally moves problems like security outside of
+the system, separate from data storage. Access to repositories, which
+repositories are considered official, follows network of developers and their
+needs.}
+
+\towrite{DVCS revolutionized how we develop and collaborate on software}
+
 \towrite{Version control checks files in and out to filesystem, does not require
 special access or editing modes}
-
-\towrite{Git grew out of Linus's frustration with other VCSs}
 
 %
 

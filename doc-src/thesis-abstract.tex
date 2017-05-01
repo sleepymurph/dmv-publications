@@ -1,4 +1,13 @@
 \chapter{Abstract}
 
-This paper represents an attempt to generalize distributed version control (such
-as Git or Mercurial) to store more than source code.
+As we ponder the problems of big data, we programmers and computer scientists
+often make use of humble tools that elegantly store small data: version control
+systems. The current wave of version control systems such as Git and Mercurial
+are, in a sense, small-scale distributed systems. Interestingly, with
+distributed version control, network partitions are not a failure mode or an
+obstacle to be overcome but the default mode of operation. This paper argues
+that the distributed version control concept has potential applications to large
+scale distributed systems. And to that end, it explores the scalability limits
+of existing version control systems and presents a design and prototype for a
+new, more-scalable system that we call \newterm{DMV}, for \newterm{Distributed
+Media Versioning}.
