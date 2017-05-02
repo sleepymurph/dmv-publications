@@ -221,10 +221,12 @@ work and for long-term data storage.
 
     \item[Atomicity] Commits are atomic, since all objects that they refer to
         have to be added first, then the commit object, then finally the ref is
-        updated to point to the new commit. If the ref is updated, the commit
-        was successful. An interrupted commit operation may leave orphaned
-        objects in the object database, but it cannot corrupt previously-written
-        data, nor can it leave the repository in an inconsistent state. Orphaned
+        updated to point to the new commit. The ref is the size of the hash
+        digest (in Git's case, \num{160} bytes for an SHA-1 hash), and so it
+        easy to update atomically. If the ref is updated, the commit was
+        successful. An interrupted commit operation may leave orphaned objects
+        in the object database, but it cannot corrupt previously-written data,
+        nor can it leave the repository in an inconsistent state. Orphaned
         objects can be swept up during a garbage-collection phase, walking the
         DAG and marking all objects that are reachable from the current refs.
 
@@ -246,5 +248,5 @@ about fitting objects into memory or transferring objects across the network.
 If the DAG operated at a granularity smaller than the file, it could become even
 more powerful. It could naturally de-duplicate chunks of files the way that Git
 already de-duplicates whole files, and it could ensure that all objects are of a
-reasonable size. That is the core idea behind our new distributed media
-versioning system.
+reasonable RAM-friendly size. That is the core idea behind our new distributed
+media versioning system.
