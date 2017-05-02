@@ -3,11 +3,11 @@ set xlabel "Window size (log scale)"
 #set format x "%1.0b%BB"
 
 set ylabel "Chunk size (log scale)"
-#set logscale y 2
+set logscale y 2
 set format y "%1.0b%BB"
-set yrange [0:48*1024]
-set ytics 8*1024
-set mytics 2
+set yrange [1:256*1024]
+#set ytics 8*1024
+#set mytics 2
 
 set key below title "\ndivisor" # The "\n" creates a space between x axis label and key
 
