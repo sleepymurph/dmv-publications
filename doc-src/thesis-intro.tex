@@ -76,26 +76,42 @@ inconsistency\cite{cap_years_later}.
 Much research is aimed at improving consistency. Vector
 clocks\cite{lamport_ordering} and consensus algorithms such as
 Paxos\cite{paxos_made_simple,paxos_made_moderately_complex} make sure the same
-updates are applied in the same order on all replicas even if a minority cannot
-respond. Clever data types are designed to be commutative, so that the resulting
-data will be the same regardless of the order in which updates are
-applied\cite{crdt_orig}. But in general, when systems cannot communicate, the
-CAP theorem cannot be avoided\cite{cap_proof}, and the system is still faced
-with the partition decision.
+updates are applied in the same order on all replicas even, if a minority cannot
+respond. There are also data types are cleverly designed to be commutative, so
+that the resulting data will be the same regardless of the order in which
+updates are applied\cite{crdt_orig}. But in general, when systems cannot
+communicate, the CAP theorem cannot be avoided\cite{cap_proof}, and the system
+is still faced with the partition decision.
 
 Amazon's Dynamo\cite{dynamo} was a pioneer in relaxing consistency guarantees to
-ensure availability. Dynamo is a key-value store that can accept updates to to a
-value even if not all replicas respond. This can lead to inconsistencies, where
-different replicas have differing versions of a particular value. In such
-situations, Dynamo keeps each version and presents them together during a read.
-That way, the higher-level application that is using Dynamo as a data store can
-resolve the conflict and write a new, reconciled value.
+ensure availability. Dynamo is a key-value store that can accept updates to a
+value even if not all replicas respond. This can lead to inconsistencies, but
+for a global shopping website like Amazon, any outage represents lost revenue
+and so availability is more important. Dynamo's answer to the partition decision
+is to always proceed.
 
-\towrite{DVCS is always available
-    - Branches: No global concept of recent version
-}
+When multiple Dynamo replicas receive updates to the same value and the order of
+those updates cannot be determined, Dynamo keeps the different versions of the
+value and presents them together during a read. That way, the higher-level
+application that is using Dynamo as a data store can resolve the conflict and
+write a new, reconciled value. Dynamo recognizes the end-to-end
+argument\cite{endtoendargument}, that conflicting updates cannot be resolved
+generally by a storage platform or network protocol. Resolution is dependent on
+the structure of the data and on the needs of the application using it.
 
-\towrite{Data locality}
+Though maybe not designed with the CAP theorem explicitly in mind, a distributed
+version control system can be thought of as a small-scale distributed system
+that takes the availability-first approach to the extreme. Rather than a set of
+connected nodes that may occasionally lose contact in a network partition, a
+distributed version control system's repositories are self-contained, allowing
+writes to local data at any time, and only connecting to other repositories
+intermittently by user command to exchange updates. Concurrent and updates are
+not only allowed but embraced as different \newterm{branches} of development. A
+distributed version control system can track many different branches at a time,
+and conflicting branches can be combined and resolved by the user.
+
+The distributed version control concept may have something to teach larger-scale
+systems about availability.
 
 %
 
@@ -130,7 +146,7 @@ special access or editing modes}
 
 %
 
-\section{How Data is Stored in Git}
+\subsection{How Data is Stored in Git}
 
 One of the key aspects of Git is that data is stored according to its content. A
 file is stored by prepending a short Git header and then taking the SHA-1 hash
