@@ -117,48 +117,71 @@ systems about availability.
 
 
 
-\section{Version Control, Git, and The DAG}
+\section{Version Control, Git, and the DAG}
 
-\towrite{Quick recap of history of version
-control\cite{history_of_version_control}: CVS, SVN, Git}
+Version control started as a way to efficiently store different versions of a
+source code files by encoding them as a series of deltas
+\cite{history_of_version_control}. CVS introduced a collaborative client-server
+model. Subversion kept the client-server model but began focusing on the
+versions of the whole collection of files together, rather than individual
+files. Doing so made branching easier, and branching quickly became a key
+feature for collaborative work.
 
-\towrite{Git grew out of Linus's frustration with other VCSs}
+BitKeeper, a commercial source code manager, pioneered the distributed version
+control concept by giving each developer a local copy of the whole repository,
+allowing local writes, and then making it easy to push the local changes to a
+central server. BitKeeper was for a time the main source code manager for the
+Linux kernel, but licensing issues caused a rift between Linux developers and
+BitMover, the company behind BitKeeper. Unsatisfied with the other source code
+managers available at the time, Linus Torvalds, the creator of Linux, wrote his
+own, Git.
 
-\towrite{DVCS in terms of distributed system and CAP theorem: partition by
-default, local writes}
+The ability to always write locally separates problems like security from the
+underlying problem of storing the data. Repositories are private by default
+unless they are specifically hosted on a public server, any user can write to
+their own repositories, and any ad-hoc group of users can exchange updates. Each
+developer can decide what updates they want to incorporate into their particular
+repository, and the group of developers can decide which repositories and which
+versions are official and what is to be included into official releases. These
+are human questions that groups of collaborators can solve by arranging their
+networks and policies how they see fit, enabled by the tool rather than
+constrained by it. As Torvalds put it:
 
-\towrite{Partitions not just the norm but the default}
+\blockcquote{git_10_years_interview}{The big thing about distributed source
+    control is that it makes one of the main issues with SCM's go away - the
+    politics around \enquote{who can make changes.} BK \textins{BitKeeper}
+    showed that you can avoid that by just giving everybody their own source
+repository. }
 
-\towrite{ "The big thing about distributed source control is that it makes one
-of the main issues with SCM's go away - the politics around "who can make
-changes." BK showed that you can avoid that by just giving everybody their own
-source repository." }
+\towrite{key: pull rather than push}
 
-\towrite{Ability to always write locally moves problems like security outside of
-the system, separate from data storage. Access to repositories, which
-repositories are considered official, follows network of developers and their
-needs.}
+Since the release of Git, distributed version control has become the dominant
+paradigm for source code control. Git itself is the dominant version control
+system in use today, followed by Mercurial, another distributed version control
+system that has its roots in Subversion\todo{find citation}.
 
-\towrite{DVCS revolutionized how we develop and collaborate on software}
-
-\towrite{Version control checks files in and out to filesystem, does not require
-special access or editing modes}
+While Git and Mercurial both have a similar data model, with commits
+representing states of the whole collection of files, Mercurial's actual storage
+implementation is rooted in the per-file delta encoding of previous systems.
+Git's storage implementation is more directly related to the data model.
 
 %
 
+
 \subsection{How Data is Stored in Git}
 
-One of the key aspects of Git is that data is stored according to its content. A
-file is stored by prepending a short Git header and then taking the SHA-1 hash
-of the resulting \newterm{blob} (binary large object). That SHA-1 hash becomes
-the blob's ID. A directory is stored as a list of file names to each file's
-SHA-1 blob ID. This list is called a \newterm{tree}, and its binary
-representation is also hashed by SHA-1 to get a tree ID. Trees can refer not
-only to blobs, but to other trees, representing subdirectories. Thus, a file
-hierarchy in a given state is represented by a hash tree, with \newterm{tree}
-objects as nodes and \newterm{blobs} as leaves, and the entire state can be
-referred to by a single hash ID, that of the top-level tree object. A simple
-example is shown in \autoref{dia_git_dag_example_simple_tree}.
+One of the key aspects of Git is that data is stored according to its content;
+it is \newterm{content-addressable}. A file is stored by prepending a short Git
+header and then taking the SHA-1 hash of the resulting \newterm{blob} (binary
+large object). That SHA-1 hash becomes the blob's ID. A directory is stored as a
+list of file names to each file's SHA-1 blob ID. This list is called a
+\newterm{tree}, and its binary representation is also hashed by SHA-1 to get a
+tree ID. Trees can refer not only to blobs, but to other trees, representing
+subdirectories. Thus, a file hierarchy in a given state is represented by a hash
+tree, with \newterm{tree} objects as nodes and \newterm{blobs} as leaves, and
+the entire state can be referred to by a single hash ID, that of the top-level
+tree object. A simple example is shown in
+\autoref{dia_git_dag_example_simple_tree}.
 
 \begin{figure}[h]
     \centering
