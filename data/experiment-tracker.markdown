@@ -47,10 +47,11 @@ Spring: Prototype and num-files re-tests
                     |   |   |   |   |   |   |   prototype2x1chunks32kx16knoop
                     |   |   |   |   |   |   |   |   gitallowrepoerr
                     |   |   |   |   |   |   |   |   |   nochunkreset
-    murphytest01 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @   ]
-    murphytest02 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @   ]
-    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @   ]
-    murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @   ]
+                    |   |   |   |   |   |   |   |   |   |   nochunkreset32kx16k
+    murphytest01 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @       ]
+    murphytest02 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @       ]
+    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @       ]
+    murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @       ]
 
 
 ### Command lines
