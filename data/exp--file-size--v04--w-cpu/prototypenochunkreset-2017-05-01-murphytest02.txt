@@ -120,3 +120,12 @@ mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_v
  34  0x0400000000   16.0GiB   1129.462   2276.872  0x08c7050000       ok  verified   assumed       38259           0       10728      132371      272595    288.455  0x08cb137000       ok  verified   assumed       24508           0        2782       27617        2498      0.000  0x08cb137000       ok   assumed           0           0           0           0           0
  34  0x0600000000   24.0GiB   1689.279   5371.235  0x0d2a1a0000       ok  verified   assumed       47513           0       19905      266429      736859    480.962  0x0d30300000       ok  verified   assumed       36589           0        4508       47668        6952      0.000  0x0d30300000       ok   assumed           0           0           0           0           0
  35  0x0800000000   32.0GiB   2252.167   9193.978  0x118da6e000       ok  verified   assumed       63601           0       24303      589896     1156816    636.390  0x1195c26000       ok  verified   assumed       48696           0        5933       63349        8684      0.000  0x1195c26000       ok   assumed           0           0           0           0           0
+ 35  0x0c00000000   48.0GiB   3377.028  13717.127  0x1a54df0000       ok  verified   assumed       96910           0       36488      646558     1956114   1504.625  0x1a610da000       ok  verified   assumed       74026           0        9419      148978       67367      0.000  0x1a610da000       ok   assumed           0           0           0           0           0
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
+# Timeout: 19810s, sending SIGKILL: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.040, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19810.075, killsignal='SIGKILL', returncode=-15)
+ 36  0x1000000000   64.0GiB   4501.160  19849.485        (None)   failed       bad   ver_err      106947           0       39470     1184653     2630409     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
+# Timeout: 19810s, sending SIGKILL: prototype commit -m 'Add large_file'
