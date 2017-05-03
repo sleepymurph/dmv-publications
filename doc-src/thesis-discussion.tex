@@ -118,33 +118,42 @@ subtree commit}
 %
 
 
-\section{Possible Applications}
+\section{Potential Applications}
 
-\begin{itemize}
+As a general distributed storage platform, DMV could have a wide range of
+potential applications:
 
-  \item Individual users might use it to maintain a collection of important
-    documents, photos, and media, making it easier to keep up-to-date backups
-    and to synchronize between computers, mobile devices, and removable drives.
+\begin{description}
 
-  \item Professional users that work with files too large for traditional
-    version control, such as graphic designers, audio engineers, or maybe even
-    video editors, might finally be able to adopt a version-control workflow.
+    \item[Private data storage] Individual users might use DMV to maintain a
+        collection of important documents, photos, and media on their own
+        devices, making it easier to keep up-to-date backups and to synchronize
+        between computers, mobile devices, and removable drives without giving
+        their data to a third-party cloud service.
 
-  \item Corporate or government users might use it to maintain large archives of
-    data with full history.
+    \item[Large-file version control] Professional users that work with files
+        too large for traditional version control, such as graphic designers,
+        audio engineers, or video editors, might finally be able to adopt a
+        version-control workflow.
 
-  \item Far-flung networks with high-latency or rare connectivity, such as
-    remote wildlife sensors or Mars rovers, could use it to manage and
-    synchronize data.
+    \item[Long-term data archiving] Corporate or government users might use it
+        to maintain large archives of data with full revision history.
 
-\end{itemize}
+    \item[Low-connectivity networks] Far-flung networks with high-latency or
+        rare connectivity, such as remote wildlife sensors or Mars rovers, could
+        use it to manage and synchronize data.
+
+\end{description}
 
 %
 
 
-\section{As an Abstraction of Data Space and Time}
+\section{Aggregating Data about a Sharded DAG}
 
-We are thinking about data across a number of dimensions:
+Though not implemented in the DMV prototype, we would like a DMV node to be able
+to aggregate data about what DAG objects are available at its neighbors and
+throughout the network. The data could be analyzed to give metrics about the
+data set in several dimensions:
 
 \begin{description}
 
@@ -165,6 +174,12 @@ We are thinking about data across a number of dimensions:
     neighboring nodes? What is the latency?
 
 \end{description}
+
+Such data could be useful for monitoring the health of the data set, alerting
+the user to shards of data that risk being lost without further replication.
+
+\todo[inline]{Move this section to design chapter? It's not in the actual
+prototype, but it's part of the design we wanted to build.}
 
 %
 
