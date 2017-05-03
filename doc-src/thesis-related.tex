@@ -32,7 +32,7 @@ small enough to fit on a typical disk on a workstation, while we want to scale
 even larger.
 
 We hope that our system could be used as a base to build something like Dat, but
-we intend to create something even more general than the Dat core.
+we intend for DMV to be more general than the Dat core.
 
 
 \paragraph{Eyo}
@@ -46,33 +46,32 @@ access files via Eyo rather than the filesystem, both of which are thorny and
 ambitious problems. We prefer to focus purely on storage and synchronization.
 
 
-\paragraph{git-annex and git-media}
+\paragraph{Git-Annex and Git-Media}
 
 Git-annex \cite{git_annex_homepage} and git-media \cite{git_media_github} are
 open-source projects that extend Git with special handling for larger files.
-Both store the metadata of larger files in the normal Git repository and then
-store the files themselves in a separate location. Git-media stores all the
+Both store information about the larger files in the normal Git repository and
+then store the files themselves in a separate location. Git-media stores all the
 larger files in a separate data store which may be remote. Git-annex is more
 flexible. Annex files may be spread across several different remote repository
 clones or data stores, and git-annex has features for tracking the locations of
 annex files in different remote repositories and moving them from one repository
 to another. These tracking and distribution features are very similar to our
-goals. However, git-annex is not quite as flexible as we aim for in our system.
-It considers the large files atomic units, and it does not break them into
-smaller chunks for de-duplication. Also, because metadata is processed by Git,
-it has the same limitations that Git does. All repositories must have all
-metadata, and performance suffers when metadata is too large to fit into RAM.
+goals. However, git-annex is not quite as flexible as we aim for with DMV. It
+considers the large files atomic units, and it does not break them into smaller
+chunks for de-duplication. Also, because metadata is processed by Git, it has
+the same limitations that Git does. All repositories must have all metadata, and
+performance suffers when metadata is too large to fit into RAM.
 
 
 \paragraph{IPFS: The Interplanetary Filesystem}
 
 IPFS \cite{ipfs_github_main} is an open-source project to create a global
 content-addressed filesystem. By its global nature, all files are stored
-together, publicly, in a global network of nodes with global addressing. IPFS
-should be an excellent resource for storing published information, but we wanted
-to work on a smaller, more private scale with discrete data sets. We want
-individuals and organizations to be able manage their own data stores privately
-on their own hardware.
+publicly, in a global network of nodes with global addressing. IPFS should be an
+excellent resource for storing published information, but we want DMV to work
+with private data sets. We want individuals and organizations to be able manage
+their own data stores privately on their own hardware.
 
 It should be noted that IPFS does have support for storing private objects by
 way of object-level encryption. However, this seems wasteful of disk space,
@@ -108,8 +107,8 @@ version control paradigm, with a central repository that working directories
 must connect to to check files in or out. We want to provide the advantages of
 Boar in a flexible distributed version control model. Boar also has practical
 limitations on repository size and number of files. Repositories are assumed to
-fit on one disk volume, and file metadata is assumed to fit into Ram. We aim to
-overcome both of those limitations.
+fit on one disk volume, and file metadata is assumed to fit into Ram. DMV tries
+to avoid both of those limitations.
 
 
 \paragraph{Bup}\label{related_bup}
