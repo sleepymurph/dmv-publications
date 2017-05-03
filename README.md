@@ -1,4 +1,4 @@
-DMV: Distributed Media Versioning -- Source Code
+DMV: Distributed Media Versioning -- Publications
 ==================================================
 
 DMV is a project to generalize version control beyond source code and into
