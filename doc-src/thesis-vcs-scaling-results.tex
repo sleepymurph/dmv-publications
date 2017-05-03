@@ -126,6 +126,7 @@ commit, after updating \num{1/1024}th of the file. Ideally this operation should
 be faster than the first commit, because the system should only be storing the
 changed portion of the file.
 
+\towrite{Prose description of results}
 
 \begin{figure}[]
     \caption{Time to commit changes to one large file}
@@ -141,6 +142,8 @@ changed portion of the file.
 
 \autoref{fig:plot-file-size--c1-cpu} shows the
 CPU usage during the initial commit.
+
+\towrite{Prose description of results}
 
 \begin{figure}[]
   \caption{CPU utilization while committing one large file to a fresh repository}
@@ -164,7 +167,6 @@ CPU usage during the initial commit.
 repository size, including the original file, after committing once, editing
 1/1024th of the file, and committing again.
 
-
 \begin{figure}[]
   \caption{Total repository size after committing, editing, and committing again}
   \label{fig:plot-file-size--repo-size}
@@ -172,11 +174,7 @@ repository size, including the original file, after committing once, editing
     \includegraphics[]{plot-file-size--repo-size}
 \end{figure}
 
-\iffalse
-
-\subsubsection{Observations}
-
-Performance observations:
+\todo[inline]{Rewrite items here as prose description of results}
 
 \begin{itemize}
 
@@ -208,11 +206,20 @@ Performance observations:
 
 \end{itemize}
 
-\fi
+%
+
+
 
 \section{Results: Number of Files}
 
-\subsubsection{Results}
+
+\subsection{Time for Number-of-Files Initial Commit}
+
+\autoref{fig:plot-num-files--c1-time} shows the time
+required for the initial commit, copying all files into a fresh empty
+repository.
+
+\towrite{Prose description of results}
 
 \begin{figure}[p]
     \caption{Time to commit many 1KiB files to a fresh repository}
@@ -222,6 +229,13 @@ Performance observations:
     others show certain interesting ranges on a linear scale.
     \includegraphics[]{plot-num-files--c1-time}
 \end{figure}
+
+%
+
+
+\subsection{Time for Number-of-Files Update Commit}
+
+\towrite{Prose description of results}
 
 \begin{figure}[p]
     \caption{Time to commit many 1KiB files after one of every \num{16} files
@@ -233,6 +247,16 @@ Performance observations:
     \includegraphics[]{plot-num-files--c2-time}
 \end{figure}
 
+%
+
+
+\subsection{CPU Usage During Number-of-Files Initial Commit}
+
+\autoref{fig:plot-num-files--c1-cpu} shows CPU utilization
+during the commit.
+
+\towrite{Prose description of results}
+
 \begin{figure}[p]
   \caption{CPU utilization while committing many 1KiB files to a fresh
   repository}
@@ -240,6 +264,13 @@ Performance observations:
   \centering
     \includegraphics[]{plot-num-files--c1-cpu}
 \end{figure}
+
+%
+
+
+\subsection{CPU Usage During Number-of-Files Update Commit}
+
+\towrite{Prose description of results}
 
 \begin{figure}[p]
     \caption{CPU utilization while committing many 1KiB files after one of every
@@ -249,6 +280,16 @@ Performance observations:
     \includegraphics[]{plot-num-files--c2-cpu}
 \end{figure}
 
+%
+
+
+\subsection{Time for Number-of-Files Update Status Check}
+
+\autoref{fig:plot-num-files--stat1-time} shows the time
+required to check the changed status of all files just after committing.
+
+\towrite{Prose description of results}
+
 \begin{figure}[p]
   \caption{Real time required to check the status of many 1KiB files after
   initial commit}
@@ -257,6 +298,17 @@ Performance observations:
     \includegraphics[]{plot-num-files--stat1-time}
 \end{figure}
 
+%
+
+
+\subsection{Repository Size after Number-of-Files Update Commit}
+
+\autoref{fig:plot-num-files--repo-size} shows the total
+repository size, including the original files, after committing once, editing
+1/1024th of every sixteenth file, and committing again.
+
+\towrite{Prose description of results}
+
 \begin{figure}[p]
   \caption{Total repository size after committing, editing, and committing again}
   \label{fig:plot-num-files--repo-size}
@@ -264,46 +316,13 @@ Performance observations:
     \includegraphics[]{plot-num-files--repo-size}
 \end{figure}
 
-\autoref{fig:plot-num-files--c1-time} shows the time
-required for the initial commit, copying all files into a fresh empty
-repository.
 
-\autoref{fig:plot-num-files--c1-cpu} shows CPU utilization
-during the commit.
-
-\autoref{fig:plot-num-files--stat1-time} shows the time
-required to check the changed status of all files just after committing.
-
-\autoref{fig:plot-num-files--repo-size} shows the total
-repository size, including the original files, after committing once, editing
-1/1024th of every sixteenth file, and committing again.
-
-
-\iffalse
-
-We performed a test where increasingly large sets of files were committed to the
-different version control repositories. The procedure was as follows:
-
-\begin{enumerate}
-    \setlength{\itemsep}{0pt}
-    \setlength{\parskip}{0pt}
-    \setlength{\parsep}{0pt}
-    \item Initialize an empty repository
-    \item Generate a test file set of the given size. Each file is 1KiB of
-        random binary data
-    \item Commit the file set
-    \item Check the status of the files
-    \item Overwrite a small part of some of the files (1/1024th of the data in
-        1/16 files)
-    \item Check the status of the files again
-    \item Commit the file set again
-\end{enumerate}
+\todo[inline]{Update these points and move them to appropriate prose
+descriptions}
 
 Unlike the test with a single large file, the numerous small files did not
 quickly hit error-causing disk space or RAM limitations. The version control
 systems happily crunched the data as test times grew into hours.
-
-Observations:
 
 \begin{itemize}
 
@@ -347,4 +366,4 @@ Observations:
 
 \end{itemize}
 
-\fi
+%
