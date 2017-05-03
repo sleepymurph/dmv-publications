@@ -126,12 +126,6 @@
 \maketitle
 
 
-% Colophon on reverse of title page
-\vspace*{\fill}
-\input{thesis-colophon.tex}
-\clearpage
-
-
 \pagestyle{headings}
 \include{thesis-abstract}
 
@@ -175,6 +169,13 @@
 
 %\nocite{*}  % Print all references even if they're not used
 \printbibliography[heading=bibintoc]
+
+
+% Colophon
+\clearpage
+\vspace*{\fill}
+\input{thesis-colophon.tex}
+\clearpage
 
 
 
