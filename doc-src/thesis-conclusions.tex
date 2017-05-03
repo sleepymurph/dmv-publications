@@ -1,5 +1,20 @@
 \section{Conclusions}
 
-\towrite{Key to handling large files: break up. Key to storing many files:
-recombine. In the middle, content based chunking and de-duplication.
-(\autoref{chunk-then-recombine}).}
+We conclude that the version control concept has great potential for distributed
+private data storage, and for tracking a large collection of files across time
+and space. This is especially true in situations where data locality is
+important, such as where nodes have intermittent connectivity or differing
+security requirements.
+
+The cryptographic directed acyclic graph is an excellent data structure for
+long-term data storage, because of the way it naturally de-duplicates identical
+data and provides checksums to verify data integrity. It also lends itself to
+sharding, because it can be divided by time or by subset of data, or both. The
+key to using a DAG for larger files is to break them into smaller chunks by
+content, so that identical pieces of files can naturally be de-duplicated as
+well. But when storing a large number of small chunks, they should be
+re-aggregated into packed files to use disk space efficiently.
+
+The DMV prototype is not ready for production use yet, but we believe that it
+has potential to be a useful and versatile data storage platform with uses in
+long term-bulk data storage and collaborative work.

@@ -1,21 +1,22 @@
 \section{Future Work}
 
+The primary goal of DMV is to be a general low-level storage platform for
+storing and tracking a data set across many nodes. The next step would be to
+complete the networking features of the prototype so that it can actually be
+used in real-life applications. Applications could layer additional technologies
+on top of DMV to create interesting systems. For example, a gossip protocol
+could spread information about object availability on remote data stores that
+are not directly connected, allowing data to be spread and transfered across
+far-flung networks. To focus on usability, daemons could automatically commit
+changes and sync with other nodes, shielding users from the complexity of
+branching where possible and trying to present a coherent current state of the
+data set. An important optimization would be to create a virtual filesystem that
+is a view into a tree in the DMV repository. The virtual filesystem could be
+used as the working directory, eliminating the wasted disk space of having a
+second writable copy of all files, and it would eliminate the copying of those
+files back into the immutable data store on commit. A virtual filesystem would
+also make it much easier to write an auto-commit daemon, since writes would have
+to go through the filesystem.
 
-\subsection{Possible extensions}
-
-The goal of the system is to be a low-level platform for tracking a single data
-set that is distributed across many nodes. Following the version-control
-paradigm, most operations will be explicit. However, it will be possible to
-write applications on top of this system that automate more operations.
-
-\begin{itemize}
-
-  \item A gossip protocol could spread information about availability of remote
-    stores that are not directly connected.
-
-  \item Daemons could auto-commit and auto-sync with other stores.
-
-  \item To save storage space, the working directory can be a virtual filesystem
-    that is a view into the object database.
-
-\end{itemize}
+We look forward to continuing to work on and expand the system. The project is
+open source and the code is available at \towrite{link to source code}.
