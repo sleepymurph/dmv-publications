@@ -79,6 +79,10 @@ simply zipping up snapshots of the data.
 
 \section{Prototype development}
 
+\towrite{Mistakes along the way: storing whole status tree in memory}
+
+\towrite{Graph walk abstraction}
+
 
 \section{Prototype performance tuning}
 
@@ -97,6 +101,21 @@ simply zipping up snapshots of the data.
     \includegraphics[]{plot-num-files--prototype-improvements--c1-time-detail}
 \end{figure}
 
+%
+
+
+\section{Limitations}
+
+\towrite{Did not get to implementing networking features, but did pull off
+subtree commit}
+
+\towrite{non-programmers (and even some programmers) cannot handle Git
+    - Key to usability would be to make as linear a history as possible with
+        auto-updates, but that is the job of a separate app
+    - Cite redesign of Git\cite{redesign_of_git}
+}
+
+%
 
 
 \section{Possible Applications}
@@ -120,6 +139,7 @@ simply zipping up snapshots of the data.
 
 \end{itemize}
 
+%
 
 
 \section{As an Abstraction of Data Space and Time}
@@ -146,6 +166,7 @@ We are thinking about data across a number of dimensions:
 
 \end{description}
 
+%
 
 
 \section{What the system should not do}
@@ -180,13 +201,3 @@ In particular:
     tag data has changed in an audio file.
 
 \end{itemize}
-
-
-
-\section{Limitations}
-
-\towrite{non-programmers (and even some programmers) cannot handle Git
-    - Key to usability would be to make as linear a history as possible with
-        auto-updates, but that is the job of a separate app
-    - Cite redesign of Git\cite{redesign_of_git}
-}
