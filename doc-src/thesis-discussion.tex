@@ -77,14 +77,21 @@ simply zipping up snapshots of the data.
 
 
 
-\section{Prototype development}
+\section{DMV Prototype development}
 
 \towrite{Mistakes along the way: storing whole status tree in memory}
 
 \towrite{Graph walk abstraction}
 
 
-\section{Prototype performance tuning}
+\subsection{Prototype performance tuning}
+
+\towrite{Talk about different improvements and what difference the made
+    \autoref{fig:plot-file-size--c1-time--prototype-improvements}
+    \autoref{fig:plot-num-files--prototype-improvements--c1-time-detail}
+}
+
+\todo[inline]{overhaul performance graphs}
 
 \begin{figure}[]
   \caption{Increasing file size: prototype improvements}
@@ -93,7 +100,7 @@ simply zipping up snapshots of the data.
     \includegraphics[]{plot-file-size--c1-time--detail-high-end--prototype-improvements}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure}[]
   \caption{Real time required to commit many 1KiB files to an empty repository
   (detail)}
   \label{fig:plot-num-files--prototype-improvements--c1-time-detail}
