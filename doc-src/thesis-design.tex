@@ -44,14 +44,19 @@ finally, the blobs are the leaves of the graph. This relationship is illustrated
 in \autoref{fig:dia_new_dag}.
 
 
-\begin{figure}[h]
+\begin{figure}[]
     \centering
         \includegraphics[width=0.5\textwidth]{dia_new_dag}
     \caption{DMV DAG Object Types}
     \label{fig:dia_new_dag}
 \end{figure}
 
-\missingfigure{Example DMV DAG (Modify visualizer script?)}
+\begin{figure}[]
+    \centering
+    \missingfigure{Example DMV DAG (Modify visualizer script?)}
+    \caption{Example DMV DAG}
+    \label{dia_example_dmv_dag}
+\end{figure}
 
 
 Files are split into chunks by content, using a rolling hash algorithm. This
@@ -59,14 +64,43 @@ keeps the chunks the same even if content is added or removed from the beginning
 or middle of the file.
 
 
-\towrite{Not required to store all of the DAG}
+\section{Working with an Incomplete DAG}
 
-\towrite{Subtree commits}
+The DAG stores the full history of a data set, and it can be sliced to partition
+the data in space and time.
 
-\towrite{Sparse commits}
+\begin{description}
 
+    \item[Partial history of full data set] Keep a subset of commits, plus all
+        trees, blobs, and chunked blob indexes reachable from them.
 
-\towrite{Usage assumptions
-    - Assume more reads than writes
-    - Assume more appends or rewrites than in-place updates
-}
+    \item[Full history of part of data set] Keep all commits, but keep only the
+        trees, blobs, and chunked blob indexes for certain paths.
+
+    \item[Full history of metadata] Keep all commits and trees, but
+        omit blobs and chunked blob indexes.
+
+\end{description}
+
+A DMV node can use any combination of these slicing techniques to keep only
+those objects needed at that location. New commits can still be made to a
+partial DAG. A node that stores only part of the data set can create new commits
+that represent changes to that portion of the data set by assuming that
+everything else remains unchanged. Even a metadata-only node can create new
+commits that represent renames and reorganization of the same files.
+
+So the DAG can be spread across many nodes, sliced according to what is needed
+at each location. Nodes can keep a record of what objects exist at their
+neighbor nodes, and statistics about latency to those nodes, which allow them to
+estimate how long it would take to transfer a file that is not currently present
+on the system.
+
+Though we did not have time to implement this feature, we are envisioning an
+enhanced \lstinline{ls} command output that shows these estimates, as
+illustrated in \autoref{example-ls-output}.
+
+\begin{figure}[]
+    \caption{Speculative DMV ls output showing remote files}
+    \label{example-ls-output}
+    \lstinputlisting[nolol]{lst-example-ls-output.txt}
+\end{figure}
