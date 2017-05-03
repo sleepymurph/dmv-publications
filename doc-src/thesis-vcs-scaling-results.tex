@@ -86,6 +86,8 @@ These findings are summarized in \autoref{file-sizes-table} and
     \end{tabular}
 \end{table}
 
+%
+
 
 \subsection{Time for File-Size Initial Commit}
 
@@ -118,15 +120,19 @@ average \SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
     \includegraphics[]{plot-file-size--c1-time}
 \end{figure}
 
+%
+
 
 \subsection{Time for File-Size Update Commit}
 
 \autoref{fig:plot-file-size--c2-time} shows the time required for the second
 commit, after updating \num{1/1024}th of the file. Ideally this operation should
 be faster than the first commit, because the system should only be storing the
-changed portion of the file.
-
-\towrite{Prose description of results}
+changed portion of the file. Indeed this is the case for Mercurial, Bup, and
+DMV, which do store only the changed portion. Git, however, copies the entire
+updated file into its repository as a new object, and so its commit time is
+virtually identical. The same is true of the copy control, though for sizes
+smaller than \SI{8}{\gib} it is still faster than all the other systems.
 
 \begin{figure}[]
     \caption{Time to commit changes to one large file}
@@ -136,6 +142,8 @@ changed portion of the file.
     \num{1/1024}th of the total file size.
     \includegraphics[]{plot-file-size--c2-time}
 \end{figure}
+
+%
 
 
 \subsection{CPU Usage During File-Size Initial Commit}
@@ -160,12 +168,14 @@ CPU usage during the initial commit.
     \includegraphics[]{plot-file-size--c2-cpu}
 \end{figure}
 
+%
+
 
 \subsection{Repository Size after File-Size Update Commit}
 
-\autoref{fig:plot-file-size--repo-size} shows the total
-repository size, including the original file, after committing once, editing
-1/1024th of the file, and committing again.
+\autoref{fig:plot-file-size--repo-size} shows the total repository size after
+the update commit, including the original file. This is after committing,
+updating \num{1/1024}th of the file, and committing again.
 
 \begin{figure}[]
   \caption{Total repository size after committing, editing, and committing again}
@@ -174,37 +184,21 @@ repository size, including the original file, after committing once, editing
     \includegraphics[]{plot-file-size--repo-size}
 \end{figure}
 
-\todo[inline]{Rewrite items here as prose description of results}
-
-\begin{itemize}
-
-    \item After some initial overhead, performance increases linearly with size.
-        This is to be expected, since the operations are IO bound, copying all
-        data to the repository.
-
-    \item Times for the Mercurial update are faster than for Git's update,
-        because Mercurial's archive format only saves deltas to the file.
-
-    \item Mercurial has more initial time overhead, this is probably due to the
-        fact that it is written in Python and requires starting the Python
-        interpreter each time. This overhead is only 50 or 100ms, and quickly
-        becomes insignificant compared to the IO operation time.
-
-    \item Mercurial has less initial space overhead than Git.
-
-        \begin{itemize}
-            \setlength{\itemsep}{0pt}
-            \setlength{\parskip}{0pt}
-            \setlength{\parsep}{0pt}
-            \item Minimum Mercurial repository size: 80KiB.
-            \item Minimum Git repository size: 16KiB.
-        \end{itemize}
-
-        This can be seen in the disk space graph in the way the Mercurial usage
-        converges towards 2x faster than Git usage does. But again, this quickly
-        becomes insignificant compared to the size of the file.
-
-\end{itemize}
+The stored data overtakes the initial repository overhead after a file size of
+around \SI{1}{\mib}, and the repository size for all systems converges to about
+twice the size of the file. This is to be expected, since each measurement
+includes the original file, the first copy of the file, and the updated
+\num{1/1024}th. The exception is Git, which stores the entire updated file
+during the update commit, leading to a total disk space usage of three times the
+file size. However, Git has a separate garbage collection stage where it cleans
+up the repository and aggregates similar objects together in \newterm{pack
+files}. The post-garbage collection size for Git is shown as a separate line on
+the graph. This post-GC size converges to double the original file size, but
+then jumps to three times at a file size of \SI{1.5}{\gib}. This suggests that
+the pack step is failing silently at \SI{1.5}{\gib} and larger. This is probably
+related to the way Mercurial's commits begin failing at \SI{2}{\gib} and larger.
+Both operations are trying to load multiple versions of the file into memory to
+calculate deltas for packing.
 
 %
 
