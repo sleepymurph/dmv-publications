@@ -126,3 +126,21 @@ mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_v
  35  0x0c00000000   48.0GiB   3375.843  17922.401  0x1a53f5a000       ok  verified   assumed       96698           0       40903      994011     2443049   1596.449  0x1a601fb000       ok  verified   assumed       74554           0        9790      158381       75387      0.000  0x1a601fb000       ok   assumed           0           0           0           0           0
 # Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
 # Timeout: 19810s, sending SIGKILL: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.075, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19810.085, killsignal='SIGKILL', returncode=-15)
+ 36  0x1000000000   64.0GiB   4499.889  19865.251        (None)   failed       bad   ver_err      106548           0       39494     1322061     2496599     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
+# Timeout: 19810s, sending SIGKILL: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.018, killsignal='SIGTERM', returncode=-15)
+# CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19810.047, killsignal='SIGKILL', returncode=-15)
+ 36  0x1800000000   96.0GiB   6752.846  19831.275        (None)   failed       bad   ver_err      109056           0       41289     1239276     2567972     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
+# Timeout: 19810s, sending SIGKILL: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.013, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='sudo umount /dev/murphytest03-vg/test', returncode='32')
+ 37  0x2000000000  128.0GiB   9003.619  19837.521        (None)   failed       bad   ver_err       91112           0       43273     1443588     2382233     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# IOError(28, 'No space left on device')
+ 37  0x3000000000  192.0GiB    865.791     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)

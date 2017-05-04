@@ -1,6 +1,5 @@
 # vim: set nowrap tw=0 :
-murphytest01 exp--file-size--v04--w-cpu/prototypenochunkreset-2017-05-01-{host}.txt
-murphytest02 exp--file-size--v04--w-cpu/prototypenochunkreset-2017-05-01-{host}.txt
-murphytest03 exp--file-size--v04--w-cpu/prototypenochunkreset-2017-05-01-{host}.txt
-murphytest04 exp--file-size--v04--w-cpu/prototypenochunkreset-2017-05-01-{host}.txt
-
+#murphytest01 exp--file-size--v04--w-cpu/prototypenochunkreset-2017-05-01-{host}.txt
+#murphytest02 exp--file-size--v04--w-cpu/prototypenochunkreset-2017-05-01-{host}.txt
+#murphytest03 exp--file-size--v04--w-cpu/prototypenochunkreset-2017-05-01-{host}.txt
+#murphytest04 exp--file-size--v04--w-cpu/prototypenochunkreset-2017-05-01-{host}.txt

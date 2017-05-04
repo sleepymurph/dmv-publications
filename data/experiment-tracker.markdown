@@ -46,12 +46,12 @@ Spring: Prototype and num-files re-tests
                     |   |   |   |   |   |   prototype2x1chunks32kx16kdeadline
                     |   |   |   |   |   |   |   prototype2x1chunks32kx16knoop
                     |   |   |   |   |   |   |   |   gitallowrepoerr
-                    |   |   |   |   |   |   |   |   |   nochunkreset
-                    |   |   |   |   |   |   |   |   |   |   nochunkreset32kx16k
-    murphytest01 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @       ]
-    murphytest02 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @       ]
-    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @       ]
-    murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn ga  @       ]
+                    |   |   |   |   |   |   |   |   |   prototypenochunkreset
+                    |   |   |   |   |   |   |   |   |   |   prototypenochunkreset32kx16k
+    murphytest01 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc     ]
+    murphytest02 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc     ]
+    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc     ]
+    murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc     ]
 
 
 ### Command lines
@@ -64,6 +64,8 @@ Spring: Prototype and num-files re-tests
     # prototype2x1memcfqfilebuf:    bfd6f31
     # prototype2x1membufwrite:      856d3ea
     # prototype2x1chunks32kx16k:    b134cca
+    # prototypenochunkreset:        a660730
+    # prototypenochunkreset32kx16k: 3e599e3
 
     # File size
     export RUST_LOG=warn,disk_backed=debug

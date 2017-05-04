@@ -128,3 +128,11 @@ mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_v
 # CallTimeoutError(cmd='prototype commit -m 'Add large_file'', elapsed=19810.066, killsignal='SIGKILL', returncode=-15)
  36  0x1000000000   64.0GiB   4500.965  19815.097        (None)   failed       bad   ver_err       94887           0       43137     1066793     2748913     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
 # Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.064, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='sudo umount /dev/murphytest01-vg/test', returncode='32')
+ 36  0x1800000000   96.0GiB   6753.250  19803.729        (None)   failed       bad   ver_err      106046           0       45545     1359094     2440540     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# IOError(28, 'No space left on device')
+ 37  0x2000000000  128.0GiB   2504.871     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# CallFailedError(cmd='prototype commit -m 'Add large_file'', returncode='1')
+ 37  0x3000000000  192.0GiB  13514.179    227.961        (None)   failed       bad  verified        7335           0        2793       12981       22282     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)

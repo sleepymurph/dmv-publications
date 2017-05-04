@@ -129,3 +129,11 @@ mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_v
  36  0x1000000000   64.0GiB   4501.160  19849.485        (None)   failed       bad   ver_err      106947           0       39470     1184653     2630409     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
 # Timeout: 19800s, sending SIGTERM: prototype commit -m 'Add large_file'
 # Timeout: 19810s, sending SIGKILL: prototype commit -m 'Add large_file'
+# Timeout: 19800s, sending SIGTERM: prototype fsck
+# Could not verify repo: CallTimeoutError(cmd='prototype fsck', elapsed=19800.045, killsignal='SIGTERM', returncode=-15)
+# CallFailedError(cmd='sudo umount /dev/murphytest02-vg/test', returncode='32')
+ 36  0x1800000000   96.0GiB   6749.290  19833.961        (None)   failed       bad   ver_err       99396           0       42510     1322662     2492488     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# IOError(28, 'No space left on device')
+ 37  0x2000000000  128.0GiB   2782.402     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
+# CallFailedError(cmd='prototype commit -m 'Add large_file'', returncode='1')
+ 37  0x3000000000  192.0GiB  13512.626    228.446        (None)   failed       bad  verified        7283           0        2615       12753       22810     (None)        (None)  no_exec    no_ver    no_ver      (None)      (None)      (None)      (None)      (None)     (None)        (None)  no_exec    no_ver      (None)      (None)      (None)      (None)      (None)
