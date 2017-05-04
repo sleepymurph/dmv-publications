@@ -1,0 +1,51 @@
+# Committing increasingly large files
+# 
+# reformat_partition: /dev/murphytest03-vg/test
+# vcs:                prototype
+# timeout:            19800.0
+# vcs_version:        prototype 0.1.0 (3e599e3 Merge branch 'chunksize' into fix_chunking) (release)
+# data_gen:           random
+# 
+# date:          2017-05-04T15:34:33.942016
+# commandline:   ./increasing_file_size.py prototype 0 38 --mag-step=2 --data-gen=random --timeout=19800 --tmp=/test --reformat-partition /dev/murphytest03-vg/test
+# testversion:   e7463c7 Allow trial to continue after repo verify error
+# hostname:      murphytest03
+# platform:      Linux-3.16.0-4-amd64-x86_64-with-debian-8.6
+# memtotal:      8064260 kB
+# memfree:       7591320 kB
+# 
+# pythonversion:
+#     2.7.9 (default, Jun 29 2016, 13:08:31) 
+#     [GCC 4.9.2]
+# 
+# cpuinfo:
+#     processor	: 0
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 3166.000
+#     cache size	: 6144 KB
+#     
+#     processor	: 1
+#     model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+#     cpu MHz		: 3166.000
+#     cache size	: 6144 KB
+# 
+# fsinfo:
+#     Filesystem                         Size  Used Avail Use% Mounted on
+#     /dev/mapper/murphytest03--vg-test  197G   60M  197G   1% /test
+# 
+# diskinfo:
+#     sda	vendor: ATA, model: ST3250318AS	scheduler: noop deadline [cfq]
+# 
+# Command results:
+# ok:      Command completed successfully
+# no_exec: Command was never executed
+# failed:  Command failed
+# 
+# Verification results:
+# ver_err:  Could not verify due to error during verification
+# no_ver:   Verification was never performed
+# bad:      Verification discovered an error
+# verified: Verified OK
+# assumed:  Assumed ok because dependent commands successful
+# 
+mag     filebytes  filesize   cre_time    c1_time       c1_size   c1_cmd    c1_ver   c1_repo     c1_user     c1_nice   c1_system     c1_idle   c1_iowait    c2_time       c2_size   c2_cmd    c2_ver   c2_repo     c2_user     c2_nice   c2_system     c2_idle   c2_iowait    gc_time       gc_size   gc_cmd   gc_repo     gc_user     gc_nice   gc_system     gc_idle   gc_iowait

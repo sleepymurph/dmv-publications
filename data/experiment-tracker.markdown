@@ -48,10 +48,10 @@ Spring: Prototype and num-files re-tests
                     |   |   |   |   |   |   |   |   gitallowrepoerr
                     |   |   |   |   |   |   |   |   |   prototypenochunkreset
                     |   |   |   |   |   |   |   |   |   |   prototypenochunkreset32kx16k
-    murphytest01 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc     ]
-    murphytest02 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc     ]
-    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc     ]
-    murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc     ]
+    murphytest01 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc @   ]
+    murphytest02 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc @   ]
+    murphytest03 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc @   ]
+    murphytest04 [  p   pd  pdm pfb pbw pc  pcd pcn ga  pnc @   ]
 
 
 ### Command lines
