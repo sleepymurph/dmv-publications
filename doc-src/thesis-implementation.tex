@@ -45,8 +45,9 @@ using their SHA-1 hash as their filename, with the first two hex digits removed
 to create a directory name (\autoref{dir-scheme-example}). This leads to
 \num{256} subdirectories, each holding roughly \num{1/256}th of all the objects
 stored. We experimented with other schemes to divide the objects
-(\autoref{dir-experiment}), but found Git's to be the most
-reasonable\perotto{Vague}.
+(\autoref{dir-experiment}), but we found that other schemes tended to create too
+many subdirectories, exhausting the filesystem's available inodes before using
+the available disk space.
 
 \begin{figure}[h]
     \caption{Example object file name}
