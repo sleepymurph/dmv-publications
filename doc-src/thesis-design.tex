@@ -3,11 +3,11 @@
 
 \section{DMV's DAG}
 
-The heart\perotto{"Heart" too oral. Try "a central component" or something} of DMV is the directed acyclic graph it uses to store data and
-history. DMV's DAG is based on Git's, but it adds a new object type, the
-\newterm{chunked blob}, which represents a blob\todo{Consistent capitalization
-of "blob"} that has been broken into several smaller chunks. The objects that
-make up the DMV DAG are as follows:
+DMV's data set and its history are represented as a DAG, and the rest of the
+design flows from that. DMV's DAG is based on Git's, but it adds a new object
+type, the \newterm{chunked blob}, which represents a blob\todo{Consistent
+capitalization of "blob"} that has been broken into several smaller chunks. The
+objects that make up the DMV DAG are as follows:
 
 \begin{description}
 
@@ -59,10 +59,13 @@ in \autoref{fig:dia_new_dag}.
 \end{figure}
 
 
-Files are split into chunks by content, using a rolling hash
-algorithm\perotto{cite}. This
-keeps the chunks the same\perotto{clarify} even if content is added or removed from the beginning
-or middle of the file.
+Files are split into chunks using a rolling hash algorithm such as Rabin-Karp
+fingerprinting\cite{rabin_karp_fingerprinting}. This splits the files into
+chunks by content rather than positition, so that identical chunks within files
+(and especially different versions of the same file) will be found and stored as
+identical objects, regardless of their position within the file. This way,
+identical chunks will be naturally de-duplicated by the DAG, and only the
+changed portions of files need to be stored as new objects.
 
 %
 

@@ -1,8 +1,5 @@
 \chapter{DMV Architecture}
 
-DMV's data set and its history are represented as a DAG, and its architecture
-flows from that.
-
 Each DMV node is a \newterm{repository} consisting of a content-addressable
 \newterm{object store} for immutable DAG objects and a \newterm{working
 directory} for active file editing (\autoref{fig:dia_obj_db_and_wd}).
@@ -35,7 +32,3 @@ DMV assumes that each node will connect to a human-scale number of other nodes,
 maybe tens or hundreds. DMV does not dictate network structure. The user or a
 higher-level application may determine the network topology and workflow
 according to their needs.
-
-Actual network connects need only be made when transferring objects or updating
-lists of available nodes. So intermittent or high-latency networks are not a
-problem\perotto{already said}.
