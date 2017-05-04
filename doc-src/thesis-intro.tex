@@ -202,18 +202,21 @@ example is shown in \autoref{dia_git_dag_example_simple_tree}.
 
 Git then links different file hierarchy states with \newterm{commit} objects,
 which include the hash ID of a tree plus the hash IDs of the commit (or multiple
-commits) that represent the previous state of the file hierarchy. The resulting
-data structure is a directed graph, with new commits pointing to previous
-commits, and with each commit pointing to a tree that represents the state of
-the file set at the time. This graph is append-only-- objects are immutable and
-referenced by cryptographic hash, and new objects can only refer to existing
-objects, which makes the graph acyclic. Storing history in this way will
-naturally de-duplicate unchanged files and directories, because the resulting
-blobs and trees will be the same and have the same hash ID. The directed acyclic
-graph is referred to as the \newterm{DAG}. It can be referenced by the hash IDs
-of those commits which do not yet have child commits to refer to them, the
-\newterm{heads} of each current branch of development. A simple example is shown
-in \autoref{dia_git_dag_example_three_commits}.
+commits) that represent the previous state of the file hierarchy. Like with
+blobs and trees, the commit object is also hashed to get its commit ID. The
+resulting data structure is a directed graph, with new commits pointing to
+previous commits, and with each commit pointing to a tree that represents the
+state of the file set at the time. This graph is append-only-- objects are
+immutable and referenced by cryptographic hash of their content, which includes
+the hashes of all objects that they depend on. New objects can only refer to
+existing objects, which makes the graph acyclic. Storing history in this way
+will naturally de-duplicate unchanged files and directories, because the
+resulting blobs and trees will be identical in content and thus have the same
+hash ID. The directed acyclic graph is referred to as the \newterm{DAG}. It can
+be referenced by the hash IDs of those commits which do not yet have child
+commits to refer to them, the \newterm{heads} of each current branch of
+development. A simple example is shown in
+\autoref{dia_git_dag_example_three_commits}.
 
 \begin{figure}[h]
     \centering
@@ -251,17 +254,18 @@ work and for long-term data storage.
         Branches are reconciled with a \newterm{merge} operation, creating a new
         commit that incorporates changes from both branches.
 
-    \item[Atomicity] Commits are atomic, since all objects that they refer to
-        have to be added first, then the commit object\perotto{yes, what about
-        it?}, then finally the ref is updated to point to the new commit. The
+    \item[Atomicity] The DAG's append-only nature makes commits atomic. Objects
+        are added to the object store, and then once all necessary objects are
+        stored, the ref can be updated to point to the new commit object. The
         ref is the size of the hash digest (in Git's case, \num{160} bytes for
-        an SHA-1 hash), and so it easy to update atomically. If the ref is
-        updated, the commit was successful. An interrupted commit operation may
-        leave orphaned objects in the object database, but it cannot corrupt
-        previously-written data, nor can it leave the repository in an
-        inconsistent state. Orphaned objects can be swept up during a
-        garbage-collection phase, walking the DAG and marking all objects that
-        are reachable from the current refs.
+        an SHA-1 hash), so it can be updated atomically. If the ref is updated,
+        the commit was successful. The objects do not have to be added to the
+        object store atomically because their presence does not change the
+        existing DAG. An interrupted object transfer may leave orphaned objects
+        in the object store, but it cannot corrupt previously-written data, nor
+        can it leave the repository in an inconsistent state. Orphaned objects
+        can be swept up during a garbage-collection phase, walking the DAG and
+        marking all objects that are reachable from the current refs.
 
     \item[Verifiability] Perhaps most importantly, since objects are identified
         by a cryptographic hash, data integrity can be verified at any time by
@@ -274,15 +278,17 @@ The main weakness of Git's DAG is that blobs and files are one and the same.
 This makes the file the unit of de-duplication, which can lead to inefficient
 storage of larger files. Git gets around this by "packing" objects during its
 garbage-collection phase, storing similar objects as bases and deltas behind the
-scenes. \perotto{new para}But this is an optimization. There can also be trouble
-when a very large file becomes a large object, breaking
-assumptions\perotto{Explain "trouble", what assumptions are broken, and what
-consequences are} that algorithms might have about fitting objects into memory
-or transferring objects across the network.
+scenes. But this is an optimization.
+
+Calculating deltas for during this packing phase requires loading the objects
+into memory, and so it can cause an out-of-memory error if an object is too
+large to fit into available RAM. Because Git stores files whole in blobs, it
+cannot pack files that are larger than available RAM.
 
 If the DAG operated at a granularity smaller than the file, it could become even
 more powerful. It could naturally de-duplicate chunks of files the way that Git
-already de-duplicates whole files, and it could ensure that all objects are of a
-reasonable RAM-friendly size. That is the core idea behind our new distributed
-media versioning system\perotto{Make this more visible: new paragraph, italics,
-something}.
+already de-duplicates whole files, and it could ensure that all objects fit into
+RAM for packing or other operations.
+
+This sub-file granularity and de-duplication is the core idea behind our new
+distributed media versioning system.
