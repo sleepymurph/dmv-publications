@@ -3,7 +3,7 @@
 
 \section{DMV's DAG}
 
-The heart of DMV is the directed acyclic graph it uses to store data and
+The heart\perotto{"Heart" too oral. Try "a central component" or something} of DMV is the directed acyclic graph it uses to store data and
 history. DMV's DAG is based on Git's, but it adds a new object type, the
 \newterm{chunked blob}, which represents a blob\todo{Consistent capitalization
 of "blob"} that has been broken into several smaller chunks. The objects that
@@ -59,8 +59,9 @@ in \autoref{fig:dia_new_dag}.
 \end{figure}
 
 
-Files are split into chunks by content, using a rolling hash algorithm. This
-keeps the chunks the same even if content is added or removed from the beginning
+Files are split into chunks by content, using a rolling hash
+algorithm\perotto{cite}. This
+keeps the chunks the same\perotto{clarify} even if content is added or removed from the beginning
 or middle of the file.
 
 %

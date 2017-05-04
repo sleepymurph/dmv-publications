@@ -38,7 +38,7 @@ sorcery detected tampering, even though we fixed the mod time?}
 Our DMV prototype was able to store a file up to \SI{64}{\gibi\byte} in size,
 but time became a limiting factor as file size increased. At
 \SI{96}{\gibi\byte}, our experiment script timed out and terminated the commit
-after five and a half hours.
+after five and a half hours.\perotto{Bottleneck was...?}
 
 Our test environment itself limited the largest file stored by any VCS to
 \SI{96}{\gibi\byte}. Any larger and it was simply impossible to store a second
@@ -51,7 +51,7 @@ These findings are summarized in \autoref{file-sizes-table} and
 \autoref{vcs-size-limits-table}.
 
 \begin{table}
-    \caption{Effects as file size increases}
+    \caption{Observations as file size increases}
     \label{file-sizes-table}
     \centering
     \begin{tabular}{r l}
@@ -93,7 +93,8 @@ These findings are summarized in \autoref{file-sizes-table} and
 
 \autoref{fig:plot-file-size--c1-time} shows the time required for the initial
 commit, adding a single file of the given size to a fresh repository. Over all,
-the trend is clear and unsurprising: commit time increases with file size.
+the trend is clear and unsurprising: commit time increases with file
+size.\perotto{Increases how? Linear? Exponential? Power of 2?}
 
 At file sizes below around \SI{2}{\mebi\byte}, commit times are dominated by
 overhead-- around \SI{5}{\ms} for Git, \SI{100}{\ms} for Mercurial,
@@ -110,6 +111,8 @@ sizes continue to increase. At \SI{64}{\gibi\byte}, Git's average time is
 \SI{110}{\minute}, Bup's is \SI{72}{\minute}, DMV's is \SI{298}{\minute}. The
 average \SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
 
+\perottoinline{Multiplot graphs: Label a,b,c,d,e and describe in prose}
+\perottoinline{Explain graph legends}
 
 \begin{figure}[]
     \caption{Time to commit one large file to a fresh repository}
@@ -134,6 +137,8 @@ updated file into its repository as a new object, and so its commit time is
 virtually identical. The same is true of the copy control, though for sizes
 smaller than \SI{8}{\gib} it is still faster than all the other systems.
 
+\perottoinline{Describe results more thoroughly in words}
+
 \begin{figure}[]
     \caption{Time to commit changes to one large file}
     \label{fig:plot-file-size--c2-time}
@@ -152,6 +157,9 @@ smaller than \SI{8}{\gib} it is still faster than all the other systems.
 CPU usage during the initial commit.
 
 \towrite{Prose description of results}
+\perottoinline{Explain peaks in prototype CPU graph}
+\perottoinline{Discuss somewhere "what if" iowait could be reduced
+significantly. What would happen with memory, disk, remote}
 
 \begin{figure}[]
   \caption{CPU utilization while committing one large file to a fresh repository}
@@ -315,9 +323,9 @@ repository size, including the original files, after committing once, editing
 \todo[inline]{Update these points and move them to appropriate prose
 descriptions}
 
-Unlike the test with a single large file, the numerous small files did not
+Unlike the experiment with a single large file, the numerous small files did not
 quickly hit error-causing disk space or RAM limitations. The version control
-systems happily crunched the data as test times grew into hours.
+systems happily crunched\perotto{to informal} the data as trial times grew into hours.
 
 \begin{itemize}
 
@@ -349,7 +357,7 @@ systems happily crunched the data as test times grew into hours.
         two copies of each file, that's 8KiB total for each 1KiB file, 8x the
         disk space.
 
-    \item Mercurial converges towards the 8x limit faster though. We guess this
+    \item Mercurial converges towards the 8x limit faster though. We speculate this
         is because of lower repo overhead, and also because Git is creating tree
         objects for each of the subdirectories in the file set. These files will
         be small, but each will take up another 4KiB block on the disk.

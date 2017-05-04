@@ -7,13 +7,13 @@ During initial runs of the "many files" experiment
 (\autoref{num-files-exp-desc}), we would often notice the disk being reported as
 full even though the total bytes used was less than the capacity of the disk
 partition. This had to do with how each system stores its objects as files on
-the filesystem and who it organizes them into directories. Each file and
+the filesystem and how it organizes them into directories. Each file and
 directory on a Unix filesystem requires one \newterm{inode}, of which the
 filesystem has only a finite number. A storage scheme that allocates too many
 files or directories will exhaust the filesystem's available inodes before it
 uses all the available disk space.
 
-We also noticed that total write speed would slow down as the operation
+We also noticed that average write speed would slow down as the operation
 progressed. The progress meter we added to DMV's commit operation would show a
 rate of \SIrange{30}{40}{\mib\s} at the beginning of an operation but slow to
 less than \SI{300}{\kib} by the end of a long one. We added log output to print
@@ -50,8 +50,8 @@ schemes to see their effects.
 
 \paragraph{Procedure}
 
-To test the effects of different object storage schemes, we created a new
-\SI{100}{\mebi\byte} partition on a test computer, and then generated a series
+To measure the effects of different object storage schemes, we created a new
+\SI{100}{\mebi\byte} partition on one of the dedicated experiment computers, and then generated a series
 of pseudo-random files of \SI{4}{\kibi\byte} each until the disk was reported
 full. For each file, we would give it a pseudo-random name that resembled an
 SHA-1 hash, and store it according to the object storage scheme under test. We
@@ -91,7 +91,7 @@ required more than the \num{40} hex digits of a \num{160}-byte SHA-1 hash.
 \paragraph{Environment}
 
 Like the "many files" experiment, this was automated as a Python script and run
-on one of the dedicated test computers used for that experiment (specs shown in
+on one of the dedicated computers used for that experiment (specs shown in
 \autoref{test-machine-specs}). However, rather than spending hours to fill the
 \SI{197}{\gibi\byte} partition used for the other experiments, this experiment
 used a new \SI{100}{\mebi\byte} LVM partition.
@@ -100,7 +100,7 @@ used a new \SI{100}{\mebi\byte} LVM partition.
 \label{seek-times-results}
 
 \begin{figure}[]
-    \caption{Files vs. directories filling a disk}
+    \caption{Number of Files vs. number of directories filling a disk}
     \label{fig:plot-filesystem-limits--directory-takeover}
     \centering
 
@@ -123,6 +123,9 @@ $n$ be the number of hex digits per subdirectory and the subdirectory depth.
 Then the following equations govern the number of files that can fit on the
 filesystem:
 
+\perottoinline{Error flags? "comment valid for other figs too"}
+\askottoinline{Error flags for figures? I'm not following}
+
 \begin{equation*}
     \begin{aligned}
         f+d = i, \quad
@@ -137,7 +140,7 @@ than \num{2.5} times the total number of inodes available on the \SI{100}{\mib}
 test partition.
 
 From there, we turn our attention to the mysterious, intermittent long write
-times. In our experiment, across all directory schemes, there were \num{315601}
+times. In the experiment, across all directory schemes, there were \num{315601}
 total writes. Of those, \num{312813} (\SI{99.1}{\percent}) completed in less
 than \SI{1}{\ms}. The others are plotted in \autoref{plot-seek-times}, and the
 top ten longest writes are listed in \autoref{longest-writes}. The spikes in the
@@ -148,6 +151,8 @@ directories does seem to lead to more frequent and longer long writes. The
 scheme with the fewest and shortest long writes is the one that has no
 subdirectories at all. So we conclude that there is no penalty for storing many
 thousands of files in one directory.
+
+\perottoinline{Note interesting peak in write times graph, with x and y}
 
 \begin{figure}[]
     \caption{Unusually high write times}
@@ -229,13 +234,13 @@ different I/O schedulers to choose from\cite{ioschedulers}:
 \end{description}
 
 We were curious if the choice of scheduler would have any effect on performance.
-In particular, we hoped it might alleviate the high seek times we were seeing.
-So we ran extra trials of our VCS scaling experiments using the DMV prototype
+In particular, we aimed to document if it might alleviate the high seek times we were seeing.
+So we ran extra trials of the VCS scaling experiments using the DMV prototype
 and different I/O schedulers.
 
 \begin{figure}[]
-    \caption{Time for DMV prototype to commit many 1KiB files to a fresh
-    repository, by I/O scheduler}
+    \caption{Time for DMV prototype to commit an increasing number of 1KiB files
+    to a fresh repository, by I/O scheduler}
     \label{fig:plot-iosched-num-files--c1-time}
     \centering
 
@@ -247,7 +252,7 @@ and different I/O schedulers.
 \end{figure}
 
 The results of running the "many files" experiment with different schedulers are
-shown in \autoref{fig:plot-iosched-num-files--c1-time}. In our case, the I/O
+shown in \autoref{fig:plot-iosched-num-files--c1-time}. The I/O
 scheduler used made little difference. At \num{100000} files, the average
 initial commit times were \SI{19.666}{\s} for CFQ, \SI{19.708}{\s} for deadline,
 and \SI{19.598}{\s} for noop. The difference between each pair is less than any
@@ -256,10 +261,10 @@ of the standard deviations at that number of files: \SI{0.674}{\s},
 
 In retrospect, these results are not surprising. The I/O scheduler deals mainly
 with juggling I/O access between different processes on the system, but the DMV
-prototype is a single process. Perhaps a multi-threaded or multi-process version
+prototype is a single process\perotto{It could have been more than one}. Perhaps a multi-threaded or multi-process version
 of the prototype could give the scheduler something to work with, but a better
 approach would be to combine objects into pack files that can be written
-sequentially, as discussed in \autoref{chunk-then-recombine}.
+sequentially\perotto{ok, but you could do both}, as discussed in \autoref{chunk-then-recombine}.
 
 %
 
@@ -306,6 +311,8 @@ is deterministic.
   \centering
     \includegraphics[]{plot-rolling-hash}
 \end{figure}
+
+\perottoinline{What can be concluded from these results?}
 
 \autoref{fig:plot-rolling-hash} shows the mean chunk sizes generated by the
 experiment. Both mean and deviation increase with divisor and window size,

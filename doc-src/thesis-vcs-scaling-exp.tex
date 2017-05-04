@@ -2,6 +2,8 @@
 \label{num-files-exp-desc}
 \label{file-size-exp-desc}
 
+\perottoinline{Otto does not like the term "test". These are \emph{experiments}.}
+
 We performed experiments to probe the limits of existing version control
 systems, to see how they would cope with file sizes and file numbers in ranges
 beyond what would be expected in a source code tree. We wanted to see how long
@@ -17,10 +19,10 @@ the effect of file numbers, we would commit increasing number of small
 
 
 
-\section{Version Control Systems Tested}
+\section{Version Control Systems Evaluated}
 
 We ran each experiment using four different version control systems: Git,
-Mercurial (also known as \newterm{hg}), Bup, and our DMV prototype (specific
+Mercurial (also known as \newterm{hg}), Bup, and the DMV prototype (specific
 versions listed in \autoref{vcs-versions}). As a control we also ran the
 experiments using a dummy VCS that simple made a copy of the files. We chose Git
 and Mercurial because they are the two most widely used distributed version
@@ -129,14 +131,16 @@ directory, which includes the generated test data itself along with the VCS's
 storage.
 
 
-\section{Test Environment}
+\section{Experiment Platform}
 
-We ran the trials on four identical, dedicated test computers with no other
+We ran the trials on four dedicated computers with no other
 load. Each was a typical office desktop with a \SI{3.16}{\giga\hertz}
 \num{64}-bit dual-core processor and \SI{8}{\gibi\byte} of RAM, running Debian
 version 8.6 ("Jessie"). Each computer had one normal SATA hard disk (spinning
 platter, not solid-state), and trials were conducted on a dedicated
-\SI{197}{\gibi\byte} LVM partition formatted with the ext4 filesystem.
+\SI{197}{\gibi\byte} LVM partition formatted with the ext4 filesystem. All came
+from the same manufacturer with the same specifications and were, for practical purposes,
+identical.
 Additional details can be found in \autoref{test-machine-specs}.
 
 \begin{table}
@@ -159,4 +163,4 @@ Additional details can be found in \autoref{test-machine-specs}.
 
 We ran every trial four times, once on each of the test computers, and took the
 mean and standard deviation of each time and disk space measurement. However,
-because the test machines are identical, there was little real variation.
+because the test machines are practically identical, there was little real variation.

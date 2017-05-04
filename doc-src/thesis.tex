@@ -87,6 +87,12 @@
   \textcolor{blue}{TODO: #1}
 }
 
+% todo from otto
+\newcommand{\perotto}[1]{\todo[color=blue!40]{Otto: #1}}
+\newcommand{\perottoinline}[1]{\todo[color=blue!40,inline]{Otto: #1}}
+\newcommand{\askotto}[1]{\todo[color=violet!40]{Ask Otto: #1}}
+\newcommand{\askottoinline}[1]{\todo[color=violet!40,inline]{Ask Otto: #1}}
+
 % Move units
 \newcommand{\gib}{\gibi\byte}
 \newcommand{\mib}{\mebi\byte}
@@ -128,6 +134,9 @@
 
 \pagestyle{headings}
 \include{thesis-abstract}
+
+\perottoinline{Acknowledgements: "remember persons, better to err on the
+positive side"}
 
 
 % Put table of contents in the PDF index

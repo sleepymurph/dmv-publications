@@ -17,8 +17,9 @@ cloud filesystem. But many of these solutions are specialized applications for
 specific media, which can limit their general usefulness; most require constant
 network connectivity, making them ill-suited for intermittent or high-latency
 connections; and all require entrusting your data to a third-party service,
-which raises concerns about privacy and storage longevity. Why can't we simply
-track the files we have across the devices we have?
+which raises concerns about privacy and storage longevity.
+
+Why can't we simply track the files we have across the devices we have?
 
 Software developers have an excellent system for backup and sync right at their
 fingertips: \newterm{distributed version control systems (DVCSs)}, such as Git
@@ -31,13 +32,14 @@ Torvalds, the creator of Linux and Git, once famously joked that he doesn't keep
 backups, he simply publishes his work on the internet and lets others copy it
 \cite{linus_no_backups}.
 
-The major limitation distributed version control systems is that they are
+The major limitation of distributed version control systems is that they are
 designed to store program source code: plain text files in the range of tens of
-kilobytes. They often have trouble with larger media files, becoming sluggish or
-wasteful of disk space. Many a web-design team has come to regret checking their
-graphical assets into version control. In addition, many will have trouble
-scaling up as the number of files increases or the history grows increasingly
-long.
+kilobytes. With larger media files, they often become sluggish or wasteful of
+disk space \perotto{How sluggish, how wasteful? "Many" is too vague}. Many a
+web-design team has come to regret checking their graphical assets into version
+control\perotto{citation}. In addition, many will have trouble scaling up
+\perotto{with regards to what} as the number of files increases or the history
+grows increasingly long.
 
 What if we could generalize the distributed version control concept to store a
 wide variety of file sizes, from kilobyte text files to multi-gigabyte videos?
@@ -57,9 +59,10 @@ Traditional databases that operated on one powerful server could focus on data
 integrity and the \newterm{ACID} guarantees: Atomicity, Consistency, Isolation,
 and Durability. As demand increased, the server would be scaled up, beefing up
 the server hardware with more disk space, more RAM, and more and faster CPUs.
-But there is a limit to this kind of scaling, and as data kept growing, a new
-wave of systems appeared that scaled \emph{out} to many commodity servers,
-distributed systems.
+But there is a limit to scaling up the hardware of a single machine, and as data
+kept growing, a new wave of systems appeared that scaled \emph{out} to many
+commodity servers, distributed systems.
+\perotto{refs for this para}
 
 Spreading data across different computers creates new problems of
 synchronization. How does one ensure that replicated data is updated correctly
@@ -76,12 +79,12 @@ inconsistency\cite{cap_years_later}.
 Much research is aimed at improving consistency. Vector
 clocks\cite{lamport_ordering} and consensus algorithms such as
 Paxos\cite{paxos_made_simple,paxos_made_moderately_complex} make sure the same
-updates are applied in the same order on all replicas even, if a minority cannot
-respond. There are also data types are cleverly designed to be commutative, so
-that the resulting data will be the same regardless of the order in which
-updates are applied\cite{crdt_orig}. But in general, when systems cannot
-communicate, the CAP theorem cannot be avoided\cite{cap_proof}, and the system
-is still faced with the partition decision.
+updates are applied in the same order on all replicas even, if a minority of
+nodes cannot respond. There are also data types are cleverly designed to be
+commutative, so that the resulting data will be the same regardless of the order
+in which updates are applied\cite{crdt_orig}. But in general, when systems
+cannot communicate, the CAP theorem cannot be avoided\cite{cap_proof}, and the
+system is still faced with the partition decision.
 
 Amazon's Dynamo\cite{dynamo} was a pioneer in relaxing consistency guarantees to
 ensure availability. Dynamo is a key-value store that can accept updates to a
@@ -105,10 +108,10 @@ that takes the availability-first approach to the extreme. Rather than a set of
 connected nodes that may occasionally lose contact in a network partition, a
 distributed version control system's repositories are self-contained, allowing
 writes to local data at any time, and only connecting to other repositories
-intermittently by user command to exchange updates. Concurrent and updates are
-not only allowed but embraced as different \newterm{branches} of development. A
-distributed version control system can track many different branches at a time,
-and conflicting branches can be combined and resolved by the user.
+intermittently by user command to exchange updates. Concurrent updates are not
+only allowed but embraced as different \newterm{branches} of development. A
+distributed version control system can track many different branches at the same
+time, and conflicting branches can be combined and resolved by the user.
 
 The distributed version control concept may have something to teach larger-scale
 systems about availability.
@@ -119,24 +122,27 @@ systems about availability.
 
 \section{Version Control, Git, and the DAG}
 
+\askottoinline{Most of the claims Otto asks me to cite here come from
+\cite{history_of_version_control}. How to indicate that?}
+
 Version control started as a way to efficiently store different versions of a
 source code files by encoding them as a series of deltas
 \cite{history_of_version_control}. CVS introduced a collaborative client-server
-model. Subversion kept the client-server model but began focusing on the
+model\perotto{cite}. Subversion kept the client-server model but began focusing on the
 versions of the whole collection of files together, rather than individual
-files. Doing so made branching easier, and branching quickly became a key
+files\perotto{cite}. Doing so made branching easier, and branching quickly became a key
 feature for collaborative work.
 
 BitKeeper, a commercial source code manager, pioneered the distributed version
 control concept by giving each developer a local copy of the whole repository,
 allowing local writes, and then making it easy to push the local changes to a
-central server. BitKeeper was for a time the main source code manager for the
+central server\perotto{cite}. BitKeeper was for a time the main source code manager for the
 Linux kernel, but licensing issues caused a rift between Linux developers and
-BitMover, the company behind BitKeeper. Unsatisfied with the other source code
+BitMover, the company behind BitKeeper\perotto{cite}. Unsatisfied with the other source code
 managers available at the time, Linus Torvalds, the creator of Linux, wrote his
 own, Git.
 
-The ability to always write locally separates problems like security from the
+The ability to always write locally separates concerns such as handling security from the
 underlying problem of storing the data. Repositories are private by default
 unless they are specifically hosted on a public server, any user can write to
 their own repositories, and any ad-hoc group of users can exchange updates. Each
@@ -164,24 +170,27 @@ While Git and Mercurial both have a similar data model, with commits
 representing states of the whole collection of files, Mercurial's actual storage
 implementation is rooted in the per-file delta encoding of previous systems.
 Git's storage implementation is more directly related to the data model.
+\perotto{Say 1-2 sentences more about this or just say as expanded on below}
+\askotto{I thought this was a nice segue}
 
 %
 
 
 \subsection{How Data is Stored in Git}
 
-One of the key aspects of Git is that data is stored according to its content;
-it is \newterm{content-addressable}. A file is stored by prepending a short Git
-header and then taking the SHA-1 hash of the resulting \newterm{blob} (binary
-large object). That SHA-1 hash becomes the blob's ID. A directory is stored as a
-list of file names to each file's SHA-1 blob ID. This list is called a
-\newterm{tree}, and its binary representation is also hashed by SHA-1 to get a
-tree ID. Trees can refer not only to blobs, but to other trees, representing
-subdirectories. Thus, a file hierarchy in a given state is represented by a hash
-tree, with \newterm{tree} objects as nodes and \newterm{blobs} as leaves, and
-the entire state can be referred to by a single hash ID, that of the top-level
-tree object. A simple example is shown in
-\autoref{dia_git_dag_example_simple_tree}.
+One of the key aspects of Git is that all data-- files, directories, and
+history-- is stored according to its content; it is \newterm{content-addressable
+storage}. A file is stored by\perotto{"no"}\askotto{"No"? Am I wrong?}
+prepending a short Git header and then taking the SHA-1 hash of the resulting
+\newterm{blob} (binary large object). That SHA-1 hash becomes the blob's ID. A
+directory is stored by creating a map of file names in the directory to each
+file's SHA-1 blob ID. This mapping is a called a \newterm{tree} object, and its
+binary representation is also hashed by SHA-1 to get a tree ID. Trees can refer
+not only to blobs, but to other trees, representing subdirectories. Thus, a file
+hierarchy in a given state is represented by a hash tree, with \newterm{tree}
+objects as nodes and \newterm{blobs} as leaves, and the entire state can be
+referred to by a single hash ID, that of the top-level tree object. A simple
+example is shown in \autoref{dia_git_dag_example_simple_tree}.
 
 \begin{figure}[h]
     \centering
@@ -243,15 +252,16 @@ work and for long-term data storage.
         commit that incorporates changes from both branches.
 
     \item[Atomicity] Commits are atomic, since all objects that they refer to
-        have to be added first, then the commit object, then finally the ref is
-        updated to point to the new commit. The ref is the size of the hash
-        digest (in Git's case, \num{160} bytes for an SHA-1 hash), and so it
-        easy to update atomically. If the ref is updated, the commit was
-        successful. An interrupted commit operation may leave orphaned objects
-        in the object database, but it cannot corrupt previously-written data,
-        nor can it leave the repository in an inconsistent state. Orphaned
-        objects can be swept up during a garbage-collection phase, walking the
-        DAG and marking all objects that are reachable from the current refs.
+        have to be added first, then the commit object\perotto{yes, what about
+        it?}, then finally the ref is updated to point to the new commit. The
+        ref is the size of the hash digest (in Git's case, \num{160} bytes for
+        an SHA-1 hash), and so it easy to update atomically. If the ref is
+        updated, the commit was successful. An interrupted commit operation may
+        leave orphaned objects in the object database, but it cannot corrupt
+        previously-written data, nor can it leave the repository in an
+        inconsistent state. Orphaned objects can be swept up during a
+        garbage-collection phase, walking the DAG and marking all objects that
+        are reachable from the current refs.
 
     \item[Verifiability] Perhaps most importantly, since objects are identified
         by a cryptographic hash, data integrity can be verified at any time by
@@ -264,12 +274,15 @@ The main weakness of Git's DAG is that blobs and files are one and the same.
 This makes the file the unit of de-duplication, which can lead to inefficient
 storage of larger files. Git gets around this by "packing" objects during its
 garbage-collection phase, storing similar objects as bases and deltas behind the
-scenes. But this is an optimization. There can also be trouble when a very large
-file becomes a large object, breaking assumptions that algorithms might have
-about fitting objects into memory or transferring objects across the network.
+scenes. \perotto{new para}But this is an optimization. There can also be trouble
+when a very large file becomes a large object, breaking
+assumptions\perotto{Explain "trouble", what assumptions are broken, and what
+consequences are} that algorithms might have about fitting objects into memory
+or transferring objects across the network.
 
 If the DAG operated at a granularity smaller than the file, it could become even
 more powerful. It could naturally de-duplicate chunks of files the way that Git
 already de-duplicates whole files, and it could ensure that all objects are of a
 reasonable RAM-friendly size. That is the core idea behind our new distributed
-media versioning system.
+media versioning system\perotto{Make this more visible: new paragraph, italics,
+something}.
