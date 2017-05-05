@@ -45,8 +45,8 @@ unset grid
 unset border
 set key center center
 unset title
-plot for [vcs in vcslist] \
-    meantable(vcs) using 1:2:3 with errorlines title vcs
+plot for [vcs in vcslabels] \
+    meantable("bup") using 1:2:3 with errorlines title vcs
 
 
 # Reestablish decorations

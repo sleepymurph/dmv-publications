@@ -18,7 +18,7 @@ gigs(n) = n * 2**30
 mins(n) = n * 60
 
 vcslist = "git hg bup prototype2x1mem copy"
-vcslabels = "Git Mercurial Bup DMV Copy"
+vcstitles = "Git Mercurial Bup DMV Copy"
 
 set multiplot layout 3,2 rowsfirst
 
@@ -45,8 +45,9 @@ unset grid
 unset border
 set key center center
 unset title
-plot for [vcs in vcslabels] \
-    -1 title vcs
+
+plot for [vcs in vcstitles] \
+    meantable("bup") using 1:2:3 with errorlines title vcs
 
 
 # Reestablish decorations

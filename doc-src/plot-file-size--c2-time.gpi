@@ -53,7 +53,7 @@ set key center center
 unset title
 
 plot for [vcs in vcstitles] \
-    -1 title vcs
+    meantable("bup") using 1:2:3 with errorlines title vcs
 
 
 # Reestablish decorations
