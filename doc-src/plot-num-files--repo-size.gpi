@@ -16,11 +16,12 @@ set format x "%1.0s%c"
 
 set ylabel "Storage (log scale)"
 set logscale y 2
-set yrange [*:*]
+set yrange [2**10:128*2**30]
 set ytics
-set mytics
+unset mytics
 set format y "%1.0b%BB"
 
+set title "(a) Total Disk Space Used"
 plot \
     meantable."/git-*" using 1:2:3 with lines title "git (two commits)", \
     meantable."/hg-*" using 1:2:3 with lines title "hg (two commits)", \
@@ -40,11 +41,13 @@ unset grid
 unset border
 set key center center
 set yrange [0:6]
+
+unset title
 plot \
-    meantable."/git-*" using 1:2:3 with lines title "git (two commits)", \
-    meantable."/hg-*" using 1:2:3 with lines title "hg (two commits)", \
-    meantable."/bup-*" using 1:2:3 with lines title "bup (two commits)", \
-    meantable."/prototype2x1mem-*" using 1:2:3 with lines title "prototype (two commits)", \
+    meantable."/git-*" using 1:2:3 with lines title "Git (two commits)", \
+    meantable."/hg-*" using 1:2:3 with lines title "Mercurial (two commits)", \
+    meantable."/bup-*" using 1:2:3 with lines title "Bup (two commits)", \
+    meantable."/prototype2x1mem-*" using 1:2:3 with lines title "DMV (two commits)", \
 
 
 # Reestablish decorations
@@ -68,6 +71,7 @@ set mytics
 set format y "%.0fx"
 
 set size 1,0.5
+set title "(b) Ratio of Total Disk Space Used to File Size"
 plot \
     meantable."/git-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with lines title "git (two commits)", \
     meantable."/hg-*" using 1:($2/$1/eachbytes):($3/$1/eachbytes) with lines title "hg (two commits)", \
