@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat $1 | sed '/^#/d' | head -n1
+awk '/^[^#]/{print;exit}' $1
 (
 for FILE in $*
 do
