@@ -88,6 +88,12 @@ plot-num-files--stat1-time.pdf: \
     ../data/meantable.py
 	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-num-files--stat1-time.gpi > plot-num-files--stat1-time.pdf
 
+plot-iosched-num-files--c1-time.pdf: \
+    plot-iosched-num-files--c1-time.gpi \
+    ../data/exp--num-files--v03--less-dirs/*.txt \
+    ../data/meantable.py
+	gnuplot -e 'set terminal pdf size 5in,5in' plot-iosched-num-files--c1-time.gpi > plot-iosched-num-files--c1-time.pdf
+
 
 design-document.pdf: \
     design-document.tex \
