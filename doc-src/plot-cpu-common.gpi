@@ -3,7 +3,8 @@ set yrange [0:100]
 set format y "%1.0f%%"
 
 set xtics out
-set ytics out
+set ytics 50 out
+set mytics 2
 
 set grid front
 unset key
@@ -14,28 +15,34 @@ USERPLOT='using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "u
 SYSTEMPLOT='using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system"'
 IOWAITPLOT='using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowait"'
 
-set label 1 'git' @POS
+#set label 1 'git' @POS
+set title "(a) Git"
 gittable=meantable."/git-*"
 plot gittable @USERPLOT, gittable @SYSTEMPLOT, gittable @IOWAITPLOT
 
-set label 1 'hg' @POS
+#set label 1 'hg' @POS
+set title "(b) Mercurial"
 hgtable=meantable."/hg-*"
 plot hgtable @USERPLOT, hgtable @SYSTEMPLOT, hgtable @IOWAITPLOT
 
-set label 1 'bup' @POS
+#set label 1 'bup' @POS
+set title "(c) Bup"
 buptable=meantable."/bup-*"
 plot buptable @USERPLOT, buptable @SYSTEMPLOT, buptable @IOWAITPLOT
 
-set label 1 'prototype' @POS
+#set label 1 'prototype' @POS
+set title "(d) DMV"
 prototypetable=meantable."/prototype2x1mem-*"
 plot prototypetable @USERPLOT, prototypetable @SYSTEMPLOT, prototypetable @IOWAITPLOT
 
-set label 1 'copy' @POS
+#set label 1 'copy' @POS
+set title "(e) Copy"
 copytable=meantable."/copy-*"
 plot copytable @USERPLOT, copytable @SYSTEMPLOT, copytable @IOWAITPLOT
 
 # Separate key: do another plot with outlandish ranges and all decoration off
 unset label 1
+unset title
 unset xlabel
 unset ylabel
 unset xtics
