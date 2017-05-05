@@ -19,6 +19,7 @@ gigs(n) = n * 2**30
 mins(n) = n * 60
 
 vcslist = "gitallowrepoerr hg bup prototype2x1mem copy"
+vcstitles = "Git Mercurial Bup DMV Copy"
 
 #set xtics rotate by 30 offset character -2.2, -1.3
 #set xtics font ",9"
@@ -50,8 +51,9 @@ unset grid
 unset border
 set key center center
 unset title
-plot for [vcs in vcslist] \
-    meantable(vcs) using 1:2:3 with errorlines title vcs
+
+plot for [vcs in vcstitles] \
+    -1 title vcs
 
 
 # Reestablish decorations
