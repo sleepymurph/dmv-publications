@@ -12,3 +12,6 @@ define(WD_PAIR, `
     WD($1_wd,$2)
     CICO($1_wd,$1)
 ')
+
+define(KEEP, `')
+define(OMIT, `style="dashed"')

@@ -12,6 +12,9 @@ thesis.pdf: \
     research.bib \
     dia_architecture.pdf \
     dia_dmv_dag_example_three_commits.pdf \
+    dia_dmv_dag_slice_history_of_metadata.pdf \
+    dia_dmv_dag_slice_history_of_subset.pdf \
+    dia_dmv_dag_slice_partial_history.pdf \
     dia_git_dag_example_simple_tree.pdf \
     dia_git_dag_example_three_commits.pdf \
     dia_new_dag.pdf \
