@@ -11,6 +11,7 @@ thesis.pdf: \
     lst-*.txt \
     research.bib \
     dia_architecture.pdf \
+    dia_dmv_dag_example_three_commits.pdf \
     dia_git_dag_example_simple_tree.pdf \
     dia_git_dag_example_three_commits.pdf \
     dia_new_dag.pdf \

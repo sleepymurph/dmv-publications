@@ -6,8 +6,17 @@
 DMV's data set and its history are represented as a DAG, and the rest of the
 design flows from that. DMV's DAG is based on Git's, but it adds a new object
 type, the \newterm{chunked blob}, which represents a blob\todo{Consistent
-capitalization of "blob"} that has been broken into several smaller chunks. The
-objects that make up the DMV DAG are as follows:
+capitalization of "blob"} that has been broken into several smaller chunks. An
+example DMV DAG is shown in \autoref{dia_dmv_dag_example_three_commits}.
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=0.9\textwidth]{dia_dmv_dag_example_three_commits}
+    \caption{A simple DMV DAG with three commits}
+    \label{dia_dmv_dag_example_three_commits}
+\end{figure}
+
+The object types that make up the DMV DAG are as follows:
 
 \begin{description}
 
@@ -43,19 +52,11 @@ directory. A chunked blob can refer to other chunked blobs or to blobs. And
 finally, the blobs are the leaves of the graph. This relationship is illustrated
 in \autoref{fig:dia_new_dag}.
 
-
 \begin{figure}[]
     \centering
         \includegraphics[width=0.5\textwidth]{dia_new_dag}
     \caption{DMV DAG Object Types}
     \label{fig:dia_new_dag}
-\end{figure}
-
-\begin{figure}[]
-    \centering
-    \missingfigure{Example DMV DAG (Modify visualizer script?)}
-    \caption{Example DMV DAG}
-    \label{dia_example_dmv_dag}
 \end{figure}
 
 
