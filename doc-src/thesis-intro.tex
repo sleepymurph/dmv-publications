@@ -180,17 +180,21 @@ Git's storage implementation is more directly related to the data model.
 
 One of the key aspects of Git is that all data-- files, directories, and
 history-- is stored according to its content; it is \newterm{content-addressable
-storage}. A file is stored by\perotto{"no"}\askotto{"No"? Am I wrong?}
-prepending a short Git header and then taking the SHA-1 hash of the resulting
-\newterm{blob} (binary large object). That SHA-1 hash becomes the blob's ID. A
-directory is stored by creating a map of file names in the directory to each
-file's SHA-1 blob ID. This mapping is a called a \newterm{tree} object, and its
-binary representation is also hashed by SHA-1 to get a tree ID. Trees can refer
-not only to blobs, but to other trees, representing subdirectories. Thus, a file
-hierarchy in a given state is represented by a hash tree, with \newterm{tree}
-objects as nodes and \newterm{blobs} as leaves, and the entire state can be
-referred to by a single hash ID, that of the top-level tree object. A simple
-example is shown in \autoref{dia_git_dag_example_simple_tree}.
+storage}.
+
+When Git stores a file, it creates a \newterm{blob} (Binary Large OBject) by
+copying the file's content and prepending a short header. Git then calculates
+the SHA-1 hash of the blob, and stores the blob in an \newterm{object store},
+using the SHA-1 hash as the blob's ID. To store a directory, Git creates a
+\newterm{tree} object that maps filenames to SHA-1 blob IDs for each file in the
+directory. This tree object is also stored in the database with it's SHA-1 hash
+as its ID. Tree objects can refer not only to blobs, but to other trees,
+representing subdirectories.
+
+Thus, a file hierarchy in a given state is represented by a hash tree, with
+\newterm{tree} objects as nodes and \newterm{blobs} as leaves, and the entire
+state can be referred to by a single hash ID, that of the top-level tree object.
+A simple example is shown in \autoref{dia_git_dag_example_simple_tree}.
 
 \begin{figure}[h]
     \centering
@@ -200,21 +204,23 @@ example is shown in \autoref{dia_git_dag_example_simple_tree}.
     \label{dia_git_dag_example_simple_tree}
 \end{figure}
 
-Git then links different file hierarchy states with \newterm{commit} objects,
-which include the hash ID of a tree plus the hash IDs of the commit (or multiple
-commits) that represent the previous state of the file hierarchy. Like with
-blobs and trees, the commit object is also hashed to get its commit ID. The
-resulting data structure is a directed graph, with new commits pointing to
+Git then links different file hierarchy states with \newterm{commit} objects. A
+commit object includes a hash ID for a tree, representing the state of the file
+hierarchy, and one or more hash IDs of parent commits, representing the previous
+states that this one was built from. Like with blobs and trees, the commit
+object is also hashed and stored with the hash as its ID.
+
+The resulting data structure is a directed graph, with new commits pointing to
 previous commits, and with each commit pointing to a tree that represents the
-state of the file set at the time. This graph is append-only-- objects are
+state of the file set at the time. This graph is append-only: objects are
 immutable and referenced by cryptographic hash of their content, which includes
 the hashes of all objects that they depend on. New objects can only refer to
 existing objects, which makes the graph acyclic. Storing history in this way
 will naturally de-duplicate unchanged files and directories, because the
 resulting blobs and trees will be identical in content and thus have the same
 hash ID. The directed acyclic graph is referred to as the \newterm{DAG}. It can
-be referenced by the hash IDs of those commits which do not yet have child
-commits to refer to them, the \newterm{heads} of each current branch of
+be uniquely identified by the hash IDs of those commits which do not yet have
+child commits to refer to them, the \newterm{heads} of each current branch of
 development. A simple example is shown in
 \autoref{dia_git_dag_example_three_commits}.
 
@@ -226,8 +232,8 @@ development. A simple example is shown in
 \end{figure}
 
 A Git repository, then, is a collection of the blob, tree, and commit objects
-that make up the file set's history, stored by hash ID in an \newterm{object
-store}, with references (\newterm{refs}) to the hash IDs of the current head
+that make up the file set's history, stored by hash ID in the object store, with
+references (\newterm{refs}) to the hash IDs of the current head
 commits\cite{git_initial_readme}.
 
 %
