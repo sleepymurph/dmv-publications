@@ -82,6 +82,12 @@ plot-num-files--c2-time.pdf: \
     ../data/meantable.py
 	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-num-files--c2-time.gpi > plot-num-files--c2-time.pdf
 
+plot-num-files--stat1-time.pdf: \
+    plot-num-files--stat1-time.gpi \
+    ../data/exp--num-files--v03--less-dirs/*.txt \
+    ../data/meantable.py
+	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-num-files--stat1-time.gpi > plot-num-files--stat1-time.pdf
+
 
 design-document.pdf: \
     design-document.tex \

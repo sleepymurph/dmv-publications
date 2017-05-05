@@ -1,24 +1,107 @@
-set xlabel "Number of files (log scale)"
-set format x "%1.0s%c"
-set xrange [0:8*1000*1000]
+meantable(f)="< ../data/meantable.py \
+    --columns filecount stat1_time \
+    --where-not-bad c1_ver \
+    --files ../data/exp--num-files--v03--less-dirs/".f.'-*'
 
-set ylabel "Time to check status"
-ticstring = "("
-do for [m=0:1200:5] {
-    ticstring = ticstring.'"'.m.'m" '.m.'*60, '
-}
-ticstring = ticstring.')'
-set ytics @ticstring
-set yrange [0:60*60]
+# set xlabel "Number of files (log scale)"
+set format x "%1.0s%c"
+
+#set ylabel "Time to commit"
 
 set grid
-set key top left
+unset key
 
-meantable="< ../data/meantable.py --columns filecount stat1_time --files ../data/exp--num-files--v02--w-cpu"
-meantable2="< ../data/meantable.py --columns filecount stat1_time --files ../data/exp--num-files--v03--less-dirs/"
+kilos(n) = n * 2**10
+megs(n) = n * 2**20
+gigs(n) = n * 2**30
 
-plot \
-    meantable.'/git-*' using 1:2:3 with errorlines title "git", \
-    meantable.'/hg-*' using 1:2:3 with errorlines title "hg", \
-    meantable.'/bup-*' using 1:2:3 with errorlines title "bup", \
-    meantable2.'/prototype2x1mem-*' using 1:2:3 with errorlines title "prototype (2x1,mem)", \
+mins(n) = n * 60
+
+vcslist = "git hg bup prototype2x1mem copy"
+vcslabels = "Git Mercurial Bup DMV Copy"
+
+set multiplot layout 3,2 rowsfirst
+
+set logscale x 10
+set logscale y 60
+set xrange [1:10e6]
+set ytics ("10ms" .01, "100ms" .1, "1s" 1, "1m" 60, "1h" mins(60))
+set yrange [.001:mins(240)]
+
+set title "(a) Logarithmic Scale"
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:2 with lines title vcs
+
+unset logscale xy
+
+
+# Separate key: do another plot with outlandish ranges and all decoration off
+
+set xrange [8*2**30:104*2**30]
+set yrange [mins(400):mins(500)]
+unset xtics
+unset ytics
+unset grid
+unset border
+set key center center
+unset title
+plot for [vcs in vcslabels] \
+    -1 title vcs
+
+
+# Reestablish decorations
+
+set grid
+set border
+unset key
+set yrange [*:*]
+
+
+set mxtics 2
+set mytics 2
+
+
+# Other plots
+
+set xrange [50:1050]
+set xtics 200
+set yrange [*:*]
+set ytics 0.5
+set format y "%1.1fs"
+
+set title "(b) Hundreds of Files"
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:2:3 with errorlines title vcs
+
+
+set xrange [500:10500]
+set xtics 2000
+set yrange [*:*]
+set ytics 1
+set format y "%1.1fs"
+
+set title "(c) Thousands of Files"
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:2:3 with errorlines title vcs
+
+
+set xrange [50000:1050000]
+set xtics 200000
+set yrange [*:*]
+set ytics 1
+set format y "%1.0fm"
+
+set title "(d) Hundreds of Thousands of Files"
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:($2/60):($3/60) with errorlines title vcs
+
+
+set xrange [50000:10500000]
+set xtics 2000000
+set yrange [*:*]
+set ytics 10
+set format y "%1.0fm"
+
+set title "(e) Millions of Files"
+plot for [vcs in vcslist] \
+    meantable(vcs) using 1:($2/60):($3/60) with errorlines title vcs
