@@ -76,26 +76,48 @@ changed portions of files need to be stored as new objects.
 The DAG stores the full history of a data set, and it can be sliced to partition
 the data in space and time.
 
-\newcommand{\slicediagramwidth}{0.7\textwidth}
-
 \begin{description}
 
     \item[Partial history of full data set] Keep a subset of commits, plus all
-        trees, blobs, and chunked blob indexes reachable from them.
-
-        \includegraphics[width=\slicediagramwidth]{dia_dmv_dag_slice_partial_history}
+        trees, blobs, and chunked blob indexes reachable from them
+        (\autoref{dia_dmv_dag_slice_partial_history}).
 
     \item[Full history of part of data set] Keep all commits, but keep only the
-        trees, blobs, and chunked blob indexes for certain paths.
-
-        \includegraphics[width=\slicediagramwidth]{dia_dmv_dag_slice_history_of_subset}
+        trees, blobs, and chunked blob indexes for certain paths
+        (\autoref{dia_dmv_dag_slice_history_of_subset}).
 
     \item[Full history of metadata] Keep all commits and trees, but
-        omit blobs and chunked blob indexes.
-
-        \includegraphics[width=\slicediagramwidth]{dia_dmv_dag_slice_history_of_metadata}
+        omit blobs and chunked blob indexes
+        (\autoref{dia_dmv_dag_slice_history_of_metadata}).
 
 \end{description}
+
+\newcommand{\slicediagramwidth}{0.45\textwidth}
+
+\begin{figure}
+
+    \centering
+
+    \begin{subfigure}[]{\slicediagramwidth}
+        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_partial_history}
+        \caption{Partial history of full data set}
+        \label{dia_dmv_dag_slice_partial_history}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[]{\slicediagramwidth}
+        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_history_of_subset}
+        \caption{Full history of part of data set}
+        \label{dia_dmv_dag_slice_history_of_subset}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[]{\slicediagramwidth}
+        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_history_of_metadata}
+        \caption{Full history of metadata}
+        \label{dia_dmv_dag_slice_history_of_metadata}
+    \end{subfigure}
+
+    \caption{A DMV DAG, sliced in different dimensions}
+\end{figure}
 
 A DMV node can use any combination of these slicing techniques to keep only
 those objects needed at that location. New commits can still be made to a

@@ -13,5 +13,5 @@ define(WD_PAIR, `
     CICO($1_wd,$1)
 ')
 
-define(KEEP, `')
+define(KEEP, `style="filled",bgcolor=grey60')
 define(OMIT, `style="dashed"')
