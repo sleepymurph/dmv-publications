@@ -62,9 +62,9 @@ separate compacting phase, and without bothering to calculate deltas
 files to be written sequentially, minimizing disk seeks. This is why Bup was
 clearly the fastest of the systems tested in both file size and number of files.
 
-\footnotetext{Git has no notion of chunks, but Bup reuses Git's tree objects as
-chunk indices. Git can read a repository written by Bup, but it will see a large
-file as a directory full of small chunk files.}
+\footnotetext{Git has no notion of chunks, but Bup reuses Git's \gls{tree}
+objects as chunk indices. Git can read a repository written by Bup, but it will
+see a large file as a directory full of small chunk files.}
 
 So we see that the key to handling large files is to break them into many
 smaller files, and the key to storing many small files is to combine them into

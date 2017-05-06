@@ -11,8 +11,8 @@ far-flung networks. To focus on usability, daemons could automatically commit
 changes and sync with other nodes, shielding users from the complexity of
 branching where possible and trying to present a coherent current state of the
 data set. An important optimization would be to create a virtual filesystem that
-is a view into a tree in the DMV repository. The virtual filesystem could be
-used as the working directory, eliminating the wasted disk space of having a
+is a view into a \gls{tree} in the DMV repository. The virtual filesystem could
+be used as the working directory, eliminating the wasted disk space of having a
 second writable copy of all files, and it would eliminate the copying of those
 files back into the immutable data store on commit. A virtual filesystem would
 also make it much easier to write an auto-commit daemon, since writes would have

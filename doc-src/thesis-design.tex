@@ -29,13 +29,13 @@ The object types that make up the DMV DAG are as follows:
         \gls{blob} or a \gls{chunkedblob}.
 
     \item[Tree] As with Git, a directory that is stored in the system is
-        represented by a tree object. The tree refers to the \gls{blob},
-        \gls{chunkedblob}, or tree that represents each file or subdirectory,
-        along with metadata such as the filename.
+        represented by a \gls{tree} object. The \gls{tree} refers to the
+        \gls{blob}, \gls{chunkedblob}, or \gls{tree} that represents each file
+        or subdirectory, along with metadata such as the filename.
 
     \item[Commit] As with Git, a commit represents a given state of the data
-        set. It refers to the tree that represents the top-level directory of
-        the data set at that state, along with metadata such as author, date,
+        set. It refers to the \gls{tree} that represents the top-level directory
+        of the data set at that state, along with metadata such as author, date,
         and description. It also refers to the previous commit (or commits) that
         represented the previous state of the data set.
 
@@ -46,12 +46,13 @@ The object types that make up the DMV DAG are as follows:
 \end{description}
 
 The DAG begins with refs. Each repository has a list of refs that lead into the
-DAG. Each ref refers to a commit. Each commit refers to a tree that represents
-the state at the time of committing, plus one or more parent commits. A tree
-refers to the \gls{blob}, \gls{chunkedblob}, or tree that makes up each entry in the
-directory. A \gls{chunkedblob} can refer to other \glspl{chunkedblob} or to
-\glspl{blob}. And finally, the \glspl{blob} are the leaves of the graph. This relationship is
-illustrated in \autoref{fig:dia_new_dag}.
+DAG. Each ref refers to a commit. Each commit refers to a \gls{tree} that
+represents the state at the time of committing, plus one or more parent commits.
+A \gls{tree} refers to the \gls{blob}, \gls{chunkedblob}, or \gls{tree} that
+makes up each entry in the directory. A \gls{chunkedblob} can refer to other
+\glspl{chunkedblob} or to \glspl{blob}. And finally, the \glspl{blob} are the
+leaves of the graph. This relationship is illustrated in
+\autoref{fig:dia_new_dag}.
 
 \begin{figure}[]
     \centering
@@ -80,15 +81,15 @@ the data in space and time.
 \begin{description}
 
     \item[Partial history of full data set] Keep a subset of commits, plus all
-        trees, \glspl{blob}, and \glspl{chunkedblob} reachable from them
+        \glspl{tree}, \glspl{blob}, and \glspl{chunkedblob} reachable from them
         (\autoref{dia_dmv_dag_slice_partial_history}).
 
     \item[Full history of part of data set] Keep all commits, but keep only the
-        trees, \glspl{blob}, and \glspl{chunkedblob} for certain paths
+        \glspl{tree}, \glspl{blob}, and \glspl{chunkedblob} for certain paths
         (\autoref{dia_dmv_dag_slice_history_of_subset}).
 
-    \item[Full history of metadata] Keep all commits and trees, but omit \glspl{blob}
-        and \glspl{chunkedblob}
+    \item[Full history of metadata] Keep all commits and \glspl{tree}, but omit
+        \glspl{blob} and \glspl{chunkedblob}
         (\autoref{dia_dmv_dag_slice_history_of_metadata}).
 
 \end{description}
