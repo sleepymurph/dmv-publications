@@ -14,12 +14,12 @@ files or directories will exhaust the filesystem's available inodes before it
 uses all the available disk space.
 
 We also noticed that average write speed would slow down as the operation
-progressed. The progress meter we added to DMV's commit operation would show a
-rate of \SIrange{30}{40}{\mib\s} at the beginning of an operation but slow to
-less than \SI{300}{\kib} by the end of a long one. We added log output to print
-the write times for individual objects, and we discovered that while most
-objects would be written in milliseconds, occasionally a single object write
-would take multiple seconds or tens of seconds, even though there was no
+progressed. The progress meter we added to DMV's \gls{commit} operation would
+show a rate of \SIrange{30}{40}{\mib\s} at the beginning of an operation but
+slow to less than \SI{300}{\kib} by the end of a long one. We added log output
+to print the write times for individual objects, and we discovered that while
+most objects would be written in milliseconds, occasionally a single object
+write would take multiple seconds or tens of seconds, even though there was no
 appreciable difference in size between the objects
 (\autoref{write-times-log-output}).
 
@@ -252,11 +252,11 @@ and different I/O schedulers.
 \end{figure}
 
 The results of running the "many files" experiment with different schedulers are
-shown in \autoref{fig:plot-iosched-num-files--c1-time}. The I/O
-scheduler used made little difference. At \num{100000} files, the average
-initial commit times were \SI{19.666}{\s} for CFQ, \SI{19.708}{\s} for deadline,
-and \SI{19.598}{\s} for noop. The difference between each pair is less than any
-of the standard deviations at that number of files: \SI{0.674}{\s},
+shown in \autoref{fig:plot-iosched-num-files--c1-time}. The I/O scheduler used
+made little difference. At \num{100000} files, the average initial \gls{commit}
+times were \SI{19.666}{\s} for CFQ, \SI{19.708}{\s} for deadline, and
+\SI{19.598}{\s} for noop. The difference between each pair is less than any of
+the standard deviations at that number of files: \SI{0.674}{\s},
 \SI{0.3153}{\s}, and \SI{0.447}{\s}, respectively.
 
 In retrospect, these results are not surprising. The I/O scheduler deals mainly

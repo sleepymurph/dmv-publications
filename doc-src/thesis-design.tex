@@ -33,21 +33,23 @@ The object types that make up the DMV DAG are as follows:
         \gls{blob}, \gls{chunkedblob}, or \gls{tree} that represents each file
         or subdirectory, along with metadata such as the filename.
 
-    \item[Commit] As with Git, a commit represents a given state of the data
-        set. It refers to the \gls{tree} that represents the top-level directory
-        of the data set at that state, along with metadata such as author, date,
-        and description. It also refers to the previous commit (or commits) that
-        represented the previous state of the data set.
+    \item[Commit] As with Git, a \gls{commit} represents a given state of the
+        data set. It refers to the \gls{tree} that represents the top-level
+        directory of the data set at that state, along with metadata such as
+        author, date, and description. It also refers to the previous
+        \gls{commit} (or \glspl{commit}) that represented the previous state of
+        the data set.
 
-    \item[Ref] As with Git, a ref is a reference to a particular commit. A ref
-        might represent the current state of a branch of development, or a
+    \item[Ref] As with Git, a ref is a reference to a particular \gls{commit}. A
+        ref might represent the current state of a branch of development, or a
         particular state to save for later (a tag).
 
 \end{description}
 
 The DAG begins with refs. Each repository has a list of refs that lead into the
-DAG. Each ref refers to a commit. Each commit refers to a \gls{tree} that
-represents the state at the time of committing, plus one or more parent commits.
+DAG. Each ref refers to a \gls{commit}. Each \gls{commit} refers to a \gls{tree} that
+represents the state at the time of committing, plus one or more parent
+\glspl{commit}.
 A \gls{tree} refers to the \gls{blob}, \gls{chunkedblob}, or \gls{tree} that
 makes up each entry in the directory. A \gls{chunkedblob} can refer to other
 \glspl{chunkedblob} or to \glspl{blob}. And finally, the \glspl{blob} are the
@@ -80,16 +82,16 @@ the data in space and time.
 
 \begin{description}
 
-    \item[Partial history of full data set] Keep a subset of commits, plus all
-        \glspl{tree}, \glspl{blob}, and \glspl{chunkedblob} reachable from them
-        (\autoref{dia_dmv_dag_slice_partial_history}).
+    \item[Partial history of full data set] Keep a subset of \glspl{commit},
+        plus all \glspl{tree}, \glspl{blob}, and \glspl{chunkedblob} reachable
+        from them (\autoref{dia_dmv_dag_slice_partial_history}).
 
-    \item[Full history of part of data set] Keep all commits, but keep only the
-        \glspl{tree}, \glspl{blob}, and \glspl{chunkedblob} for certain paths
-        (\autoref{dia_dmv_dag_slice_history_of_subset}).
+    \item[Full history of part of data set] Keep all \glspl{commit}, but keep
+        only the \glspl{tree}, \glspl{blob}, and \glspl{chunkedblob} for certain
+        paths (\autoref{dia_dmv_dag_slice_history_of_subset}).
 
-    \item[Full history of metadata] Keep all commits and \glspl{tree}, but omit
-        \glspl{blob} and \glspl{chunkedblob}
+    \item[Full history of metadata] Keep all \glspl{commit} and \glspl{tree},
+        but omit \glspl{blob} and \glspl{chunkedblob}
         (\autoref{dia_dmv_dag_slice_history_of_metadata}).
 
 \end{description}
@@ -122,11 +124,12 @@ the data in space and time.
 \end{figure}
 
 A DMV node can use any combination of these slicing techniques to keep only
-those objects needed at that location. New commits can still be made to a
-partial DAG. A node that stores only part of the data set can create new commits
-that represent changes to that portion of the data set by assuming that
-everything else remains unchanged. Even a metadata-only node can create new
-commits that represent renames and reorganization of the same files.
+those objects needed at that location. New \glspl{commit} can still be made to a
+partial DAG. A node that stores only part of the data set can create new
+\glspl{commit} that represent changes to that portion of the data set by
+assuming that everything else remains unchanged. Even a metadata-only node can
+create new \glspl{commit} that represent renames and reorganization of the same
+files.
 
 So the DAG can be spread across many nodes, sliced according to what is needed
 at each location. Nodes can keep a record of what objects exist at their

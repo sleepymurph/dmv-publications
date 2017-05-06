@@ -6,25 +6,26 @@
 Both Git and Mercurial had limits to the size of file they could store
 successfully. With a \SI{2}{\gibi\byte} file, Mercurial would issue a warning,
 saying "up to 6442 MB of RAM may be required to manage this file," but the
-commit would be stored successfully. With a file \SI{4}{\gibi\byte} or larger,
-Mercurial's commit operation would exit with an error message and the commit
-would not be stored. However, the repository would be left in a consistent empty
-state. The atomicity of the commit operation held.
+\gls{commit} would be stored successfully. With a file \SI{4}{\gibi\byte} or
+larger, Mercurial's \gls{commit} operation would exit with an error message and
+the \gls{commit} would not be stored. However, the repository would be left in a
+consistent empty state. The atomicity of the \gls{commit} operation held.
 
 Git's behavior was more erratic. Starting with a file \SI{12}{\gibi\byte} and
-larger, Git's commit operation would exit with an error code, reporting a fatal
-out-of-memory error that \lstinline{malloc} failed to allocate
-\SI{12}{\gibi\byte}. However, the commit would be successfully stored with no
-consistency errors in the repository reported by \lstinline{git fsck}. Starting
-at \SI{24}{\gibi\byte}, the commit operation would report the same error, the
-commit would still be written, but then the \lstinline{git fsck} integrity check
-would also exit with an error code. However, the error it reported in its output
-was a similar "fatal" error as Git's \lstinline{malloc} error as the commit
-operation, and it did not report any actual integrity errors in the repository.
+larger, Git's \gls{commit} operation would exit with an error code, reporting a
+fatal out-of-memory error that \lstinline{malloc} failed to allocate
+\SI{12}{\gibi\byte}. However, the \gls{commit} would be successfully stored with
+no consistency errors in the repository reported by \lstinline{git fsck}.
+Starting at \SI{24}{\gibi\byte}, the \gls{commit} operation would report the
+same error, the \gls{commit} would still be written, but then the 
+\lstinline{git fsck} integrity check would also exit with an error code.
+However, the error it reported in its output was a similar "fatal" error as
+Git's \lstinline{malloc} error as the \gls{commit} operation, and it did not
+report any actual integrity errors in the repository.
 
-So to test the commit, we extracted the \SI{24}{\gibi\byte} file from the
-repository and compared it. It was the same as the original. So the commit was
-intact. We also deliberately corrupted the Git pack file that stored the
+So to test the \gls{commit}, we extracted the \SI{24}{\gibi\byte} file from the
+repository and compared it. It was the same as the original. So the \gls{commit}
+was intact. We also deliberately corrupted the Git pack file that stored the
 \SI{24}{\gibi\byte} by overwriting one \SI{1}{\mebi\byte} block at an offset of
 \SI{22}{\gibi\byte} with new pseudo-random data. When we ran the fsck command
 again with the corrupted repository, it reported the integrity error, but it did
@@ -37,8 +38,8 @@ sorcery detected tampering, even though we fixed the mod time?}
 
 Our DMV prototype was able to store a file up to \SI{64}{\gibi\byte} in size,
 but time became a limiting factor as file size increased. At
-\SI{96}{\gibi\byte}, our experiment script timed out and terminated the commit
-after five and a half hours.\perotto{Bottleneck was...?}
+\SI{96}{\gibi\byte}, our experiment script timed out and terminated the
+\gls{commit} after five and a half hours.\perotto{Bottleneck was...?}
 
 Our test environment itself limited the largest file stored by any VCS to
 \SI{96}{\gibi\byte}. Any larger and it was simply impossible to store a second
@@ -92,24 +93,24 @@ These findings are summarized in \autoref{file-sizes-table} and
 \subsection{Time for File-Size Initial Commit}
 
 \autoref{fig:plot-file-size--c1-time} shows the time required for the initial
-commit, adding a single file of the given size to a fresh repository. Over all,
-the trend is clear and unsurprising: commit time increases with file
+\gls{commit}, adding a single file of the given size to a fresh repository. Over
+all, the trend is clear and unsurprising: \gls{commit} time increases with file
 size.\perotto{Increases how? Linear? Exponential? Power of 2?}
 
-At file sizes below around \SI{2}{\mebi\byte}, commit times are dominated by
-overhead-- around \SI{5}{\ms} for Git, \SI{100}{\ms} for Mercurial,
+At file sizes below around \SI{2}{\mebi\byte}, \gls{commit} times are dominated
+by overhead-- around \SI{5}{\ms} for Git, \SI{100}{\ms} for Mercurial,
 \SI{180}{\ms} for DMV, and \SI{900}{\ms} for Bup, vs only \SI{2}{\ms} for the
 copy.
 
 Bup, after starting with the highest overhead, goes on to have the fastest
-inital commit of all the systems tested for large files. It takes the lead at
-\SI{2}{\gibi\byte}, where Mercurial drops out. To commit the \SI{2}{\gibi\byte}
-file, Git's average time is \SI{91.1}{\s}, Bup's is \SI{89.1}{\s}, and DMV's is
-\SI{90.8}{\s}. All of these are a factor of around ten times slower than the
-direct copy at \SI{9.1}{\s}. The differences get more pronounced as the file
-sizes continue to increase. At \SI{64}{\gibi\byte}, Git's average time is
-\SI{110}{\minute}, Bup's is \SI{72}{\minute}, DMV's is \SI{298}{\minute}. The
-average \SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
+inital \gls{commit} of all the systems tested for large files. It takes the lead
+at \SI{2}{\gibi\byte}, where Mercurial drops out. To \gls{commit} the
+\SI{2}{\gibi\byte} file, Git's average time is \SI{91.1}{\s}, Bup's is
+\SI{89.1}{\s}, and DMV's is \SI{90.8}{\s}. All of these are a factor of around
+ten times slower than the direct copy at \SI{9.1}{\s}. The differences get more
+pronounced as the file sizes continue to increase. At \SI{64}{\gibi\byte}, Git's
+average time is \SI{110}{\minute}, Bup's is \SI{72}{\minute}, DMV's is
+\SI{298}{\minute}. The average \SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
 
 \perottoinline{Multiplot graphs: Label a,b,c,d,e and describe in prose}
 \perottoinline{Explain graph legends}
@@ -129,13 +130,13 @@ average \SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
 \subsection{Time for File-Size Update Commit}
 
 \autoref{fig:plot-file-size--c2-time} shows the time required for the second
-commit, after updating \num{1/1024}th of the file. Ideally this operation should
-be faster than the first commit, because the system should only be storing the
-changed portion of the file. Indeed this is the case for Mercurial, Bup, and
-DMV, which do store only the changed portion. Git, however, copies the entire
-updated file into its repository as a new object, and so its commit time is
-virtually identical. The same is true of the copy control, though for sizes
-smaller than \SI{8}{\gib} it is still faster than all the other systems.
+\gls{commit}, after updating \num{1/1024}th of the file. Ideally this operation
+should be faster than the first \gls{commit}, because the system should only be
+storing the changed portion of the file. Indeed this is the case for Mercurial,
+Bup, and DMV, which do store only the changed portion. Git, however, copies the
+entire updated file into its repository as a new object, and so its \gls{commit}
+time is virtually identical. The same is true of the copy control, though for
+sizes smaller than \SI{8}{\gib} it is still faster than all the other systems.
 
 \perottoinline{Describe results more thoroughly in words}
 
@@ -154,7 +155,7 @@ smaller than \SI{8}{\gib} it is still faster than all the other systems.
 \subsection{CPU Usage During File-Size Initial Commit}
 
 \autoref{fig:plot-file-size--c1-cpu} shows the
-CPU usage during the initial commit.
+CPU usage during the initial \gls{commit}.
 
 \towrite{Prose description of results}
 \perottoinline{Explain peaks in prototype CPU graph}
@@ -182,7 +183,7 @@ significantly. What would happen with memory, disk, remote}
 \subsection{Repository Size after File-Size Update Commit}
 
 \autoref{fig:plot-file-size--repo-size} shows the total repository size after
-the update commit, including the original file. This is after committing,
+the update \gls{commit}, including the original file. This is after committing,
 updating \num{1/1024}th of the file, and committing again.
 
 \begin{figure}[]
@@ -197,16 +198,16 @@ around \SI{1}{\mib}, and the repository size for all systems converges to about
 twice the size of the file. This is to be expected, since each measurement
 includes the original file, the first copy of the file, and the updated
 \num{1/1024}th. The exception is Git, which stores the entire updated file
-during the update commit, leading to a total disk space usage of three times the
-file size. However, Git has a separate garbage collection stage where it cleans
-up the repository and aggregates similar objects together in \newterm{pack
-files}. The post-garbage collection size for Git is shown as a separate line on
-the graph. This post-GC size converges to double the original file size, but
-then jumps to three times at a file size of \SI{1.5}{\gib}. This suggests that
-the pack step is failing silently at \SI{1.5}{\gib} and larger. This is probably
-related to the way Mercurial's commits begin failing at \SI{2}{\gib} and larger.
-Both operations are trying to load multiple versions of the file into memory to
-calculate deltas for packing.
+during the update \gls{commit}, leading to a total disk space usage of three
+times the file size. However, Git has a separate garbage collection stage where
+it cleans up the repository and aggregates similar objects together in
+\newterm{pack files}. The post-garbage collection size for Git is shown as a
+separate line on the graph. This post-GC size converges to double the original
+file size, but then jumps to three times at a file size of \SI{1.5}{\gib}. This
+suggests that the pack step is failing silently at \SI{1.5}{\gib} and larger.
+This is probably related to the way Mercurial's \glspl{commit} begin failing at
+\SI{2}{\gib} and larger. Both operations are trying to load multiple versions of
+the file into memory to calculate deltas for packing.
 
 %
 
@@ -217,9 +218,8 @@ calculate deltas for packing.
 
 \subsection{Time for Number-of-Files Initial Commit}
 
-\autoref{fig:plot-num-files--c1-time} shows the time
-required for the initial commit, copying all files into a fresh empty
-repository.
+\autoref{fig:plot-num-files--c1-time} shows the time required for the initial
+\gls{commit}, copying all files into a fresh empty repository.
 
 \towrite{Prose description of results}
 
@@ -254,8 +254,8 @@ repository.
 
 \subsection{CPU Usage During Number-of-Files Initial Commit}
 
-\autoref{fig:plot-num-files--c1-cpu} shows CPU utilization
-during the commit.
+\autoref{fig:plot-num-files--c1-cpu} shows CPU utilization during the
+\gls{commit}.
 
 \towrite{Prose description of results}
 

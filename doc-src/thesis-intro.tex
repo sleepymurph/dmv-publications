@@ -166,7 +166,7 @@ paradigm for source code control. Git itself is the dominant version control
 system in use today, followed by Mercurial, another distributed version control
 system that has its roots in Subversion\todo{find citation}.
 
-While Git and Mercurial both have a similar data model, with commits
+While Git and Mercurial both have a similar data model, with committed versions
 representing states of the whole collection of files, Mercurial's actual storage
 implementation is rooted in the per-file delta encoding of previous systems.
 Git's storage implementation is more directly related to the data model.
@@ -204,26 +204,26 @@ simple example is shown in \autoref{dia_git_dag_example_simple_tree}.
     \label{dia_git_dag_example_simple_tree}
 \end{figure}
 
-Git then links different file hierarchy states with \newterm{commit} objects. A
-commit object includes a hash ID for a \gls{tree}, representing the state of the
-file hierarchy, and one or more hash IDs of parent commits, representing the
-previous states that this one was built from. Like with \glspl{blob} and
-\glspl{tree}, the commit object is also hashed and stored with the hash as its
-ID.
+Git then links different file hierarchy states with \gls{commit} objects. A
+\gls{commit} object includes a hash ID for a \gls{tree}, representing the state
+of the file hierarchy, and one or more hash IDs of parent \glspl{commit},
+representing the previous states that this one was built from. Like with
+\glspl{blob} and \glspl{tree}, the \gls{commit} object is also hashed and stored
+with the hash as its ID.
 
-The resulting data structure is a directed graph, with new commits pointing to
-previous commits, and with each commit pointing to a \gls{tree} that represents
-the state of the file set at the time. This graph is append-only: objects are
-immutable and referenced by cryptographic hash of their content, which includes
-the hashes of all objects that they depend on. New objects can only refer to
-existing objects, which makes the graph acyclic. Storing history in this way
-will naturally de-duplicate unchanged files and directories, because the
-resulting \glspl{blob} and \glspl{tree} will be identical in content and thus
-have the same hash ID. The directed acyclic graph is referred to as the
-\newterm{DAG}. It can be uniquely identified by the hash IDs of those commits
-which do not yet have child commits to refer to them, the \newterm{heads} of
-each current branch of development. A simple example is shown in
-\autoref{dia_git_dag_example_three_commits}.
+The resulting data structure is a directed graph, with new \glspl{commit}
+pointing to previous \glspl{commit}, and with each \gls{commit} pointing to a
+\gls{tree} that represents the state of the file set at the time. This graph is
+append-only: objects are immutable and referenced by cryptographic hash of their
+content, which includes the hashes of all objects that they depend on. New
+objects can only refer to existing objects, which makes the graph acyclic.
+Storing history in this way will naturally de-duplicate unchanged files and
+directories, because the resulting \glspl{blob} and \glspl{tree} will be
+identical in content and thus have the same hash ID. The directed acyclic graph
+is referred to as the \newterm{DAG}. It can be uniquely identified by the hash
+IDs of those \glspl{commit} which do not yet have child \glspl{commit} to refer
+to them, the \newterm{heads} of each current branch of development. A simple
+example is shown in \autoref{dia_git_dag_example_three_commits}.
 
 \begin{figure}[h]
     \centering
@@ -233,9 +233,9 @@ each current branch of development. A simple example is shown in
 \end{figure}
 
 A Git repository, then, is a collection of the \gls{blob}, \gls{tree}, and
-commit objects that make up the file set's history, stored by hash ID in the
-object store, with references (\newterm{refs}) to the hash IDs of the current
-head commits\cite{git_initial_readme}.
+\gls{commit} objects that make up the file set's history, stored by hash ID in
+the object store, with references (\newterm{refs}) to the hash IDs of the
+current head \glspl{commit}\cite{git_initial_readme}.
 
 %
 
@@ -259,20 +259,21 @@ work and for long-term data storage.
         replica can be synchronized to another simply by comparing sets of
         objects and transferring new objects that that the other does not have.
         Branches are reconciled with a \newterm{merge} operation, creating a new
-        commit that incorporates changes from both branches.
+        \gls{commit} that incorporates changes from both branches.
 
-    \item[Atomicity] The DAG's append-only nature makes commits atomic. Objects
-        are added to the object store, and then once all necessary objects are
-        stored, the ref can be updated to point to the new commit object. The
-        ref is the size of the hash digest (in Git's case, \num{160} bytes for
-        an SHA-1 hash), so it can be updated atomically. If the ref is updated,
-        the commit was successful. The objects do not have to be added to the
-        object store atomically because their presence does not change the
-        existing DAG. An interrupted object transfer may leave orphaned objects
-        in the object store, but it cannot corrupt previously-written data, nor
-        can it leave the repository in an inconsistent state. Orphaned objects
-        can be swept up during a garbage-collection phase, walking the DAG and
-        marking all objects that are reachable from the current refs.
+    \item[Atomicity] The DAG's append-only nature makes \glspl{commit} atomic.
+        Objects are added to the object store, and then once all necessary
+        objects are stored, the ref can be updated to point to the new
+        \gls{commit} object. The ref is the size of the hash digest (in Git's
+        case, \num{160} bytes for an SHA-1 hash), so it can be updated
+        atomically. If the ref is updated, the \gls{commit} was successful. The
+        objects do not have to be added to the object store atomically because
+        their presence does not change the existing DAG. An interrupted object
+        transfer may leave orphaned objects in the object store, but it cannot
+        corrupt previously-written data, nor can it leave the repository in an
+        inconsistent state. Orphaned objects can be swept up during a
+        garbage-collection phase, walking the DAG and marking all objects that
+        are reachable from the current refs.
 
     \item[Verifiability] Perhaps most importantly, since objects are identified
         by a cryptographic hash, data integrity can be verified at any time by
