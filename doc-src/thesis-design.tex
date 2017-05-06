@@ -5,7 +5,7 @@
 
 DMV's data set and its history are represented as a DAG, and the rest of the
 design flows from that. DMV's DAG is based on Git's, but it adds a new object
-type, the \newterm{chunked blob}, which represents a blob\todo{Consistent
+type, the \gls{chunkedblob}, which represents a blob\todo{Consistent
 capitalization of "blob"} that has been broken into several smaller chunks. An
 example DMV DAG is shown in \autoref{dia_dmv_dag_example_three_commits}.
 
@@ -23,14 +23,14 @@ The object types that make up the DMV DAG are as follows:
     \item[Blob] As with Git, a blob simply holds binary data.
 
     \item[Chunked blob] Unlike with Git, larger blobs in DMV are broken into
-        chunks. Each chunked blob is simply an index of blobs (or other chunked
-        blobs) that make up the larger blob. A file that is stored in the system
-        may be represented by a blob or a chunked blob.
+        chunks. Each \gls{chunkedblob} is simply an index of blobs (or other
+        \glspl{chunkedblob}) that make up the larger blob. A file that is stored in the system
+        may be represented by a blob or a \gls{chunkedblob}.
 
     \item[Tree] As with Git, a directory that is stored in the system is
-        represented by a tree object. The tree refers to the blob, chunked blob,
-        or tree that represents each file or subdirectory, along with metadata
-        such as the filename.
+        represented by a tree object. The tree refers to the blob,
+        \gls{chunkedblob}, or tree that represents each file or subdirectory,
+        along with metadata such as the filename.
 
     \item[Commit] As with Git, a commit represents a given state of the data
         set. It refers to the tree that represents the top-level directory of
@@ -47,10 +47,10 @@ The object types that make up the DMV DAG are as follows:
 The DAG begins with refs. Each repository has a list of refs that lead into the
 DAG. Each ref refers to a commit. Each commit refers to a tree that represents
 the state at the time of committing, plus one or more parent commits. A tree
-refers to the blob, chunked blob, or tree that makes up each entry in the
-directory. A chunked blob can refer to other chunked blobs or to blobs. And
-finally, the blobs are the leaves of the graph. This relationship is illustrated
-in \autoref{fig:dia_new_dag}.
+refers to the blob, \gls{chunkedblob}, or tree that makes up each entry in the
+directory. A \gls{chunkedblob} can refer to other \glspl{chunkedblob} or to
+blobs. And finally, the blobs are the leaves of the graph. This relationship is
+illustrated in \autoref{fig:dia_new_dag}.
 
 \begin{figure}[]
     \centering
@@ -79,15 +79,15 @@ the data in space and time.
 \begin{description}
 
     \item[Partial history of full data set] Keep a subset of commits, plus all
-        trees, blobs, and chunked blob indexes reachable from them
+        trees, blobs, and \glspl{chunkedblob} reachable from them
         (\autoref{dia_dmv_dag_slice_partial_history}).
 
     \item[Full history of part of data set] Keep all commits, but keep only the
-        trees, blobs, and chunked blob indexes for certain paths
+        trees, blobs, and \glspl{chunkedblob} for certain paths
         (\autoref{dia_dmv_dag_slice_history_of_subset}).
 
-    \item[Full history of metadata] Keep all commits and trees, but
-        omit blobs and chunked blob indexes
+    \item[Full history of metadata] Keep all commits and trees, but omit blobs
+        and \glspl{chunkedblob}
         (\autoref{dia_dmv_dag_slice_history_of_metadata}).
 
 \end{description}
