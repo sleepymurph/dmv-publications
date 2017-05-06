@@ -40,20 +40,20 @@ The object types that make up the \gls{DMV} \gls{DAG} are as follows:
         \gls{commit} (or \glspl{commit}) that represented the previous state of
         the data set.
 
-    \item[Ref] As with Git, a ref is a reference to a particular \gls{commit}. A
-        ref might represent the current state of a branch of development, or a
-        particular state to save for later (a tag).
+    \item[Ref] As with Git, a \gls{ref} is a reference to a particular
+        \gls{commit}. A \gls{ref} might represent the current state of a branch of
+        development, or a particular state to save for later (a tag).
 
 \end{description}
 
-The \gls{DAG} begins with refs. Each repository has a list of refs that lead
-into the \gls{DAG}. Each ref refers to a \gls{commit}. Each \gls{commit} refers
-to a \gls{tree} that represents the state at the time of committing, plus one or
-more parent \glspl{commit}. A \gls{tree} refers to the \gls{blob},
-\gls{chunkedblob}, or \gls{tree} that makes up each entry in the directory. A
-\gls{chunkedblob} can refer to other \glspl{chunkedblob} or to \glspl{blob}. And
-finally, the \glspl{blob} are the leaves of the graph. This relationship is
-illustrated in \autoref{fig:dia_new_dag}.
+The \gls{DAG} begins with \glspl{ref}. Each repository has a list of \glspl{ref}
+that lead into the \gls{DAG}. Each \gls{ref} refers to a \gls{commit}. Each
+\gls{commit} refers to a \gls{tree} that represents the state at the time of
+committing, plus one or more parent \glspl{commit}. A \gls{tree} refers to the
+\gls{blob}, \gls{chunkedblob}, or \gls{tree} that makes up each entry in the
+directory. A \gls{chunkedblob} can refer to other \glspl{chunkedblob} or to
+\glspl{blob}. And finally, the \glspl{blob} are the leaves of the graph. This
+relationship is illustrated in \autoref{fig:dia_new_dag}.
 
 \begin{figure}[]
     \centering
