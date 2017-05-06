@@ -3,14 +3,14 @@
 \glsreset{DMV}
 
 \gls{DMV} is our new distributed data storage platform. The core idea is
-relatively simple-- store data in a Git-like DAG, but make the following
+relatively simple-- store data in a Git-like \gls{DAG}, but make the following
 changes:
 
 \begin{tight_enumerate}
 
     \item{Store data at a finer granularity than the file}
 
-    \item{Allow notes to store only a portion of the DAG as a whole}
+    \item{Allow notes to store only a portion of the \gls{DAG} as a whole}
 
 \end{tight_enumerate}
 
@@ -46,8 +46,8 @@ user's guidance according to data locality needs.
 \paragraph{Inspired by version control}
 
 \gls{DMV} is inspired by distributed version control. Its core data structure is
-a DAG, based on Git's but modified to store a wider range of file sizes. The key
-difference is that large files are broken into smaller chunks (around
+a \gls{DAG}, based on Git's but modified to store a wider range of file sizes.
+The key difference is that large files are broken into smaller chunks (around
 \SI{52}{\kibi\byte}), which is what ensures that no single object is too large
 for memory or disk. Breaking files into chunks also allows the data structure to
 naturally de-duplicate parts of files that do not change. For example, if a
@@ -57,8 +57,8 @@ updated metadata is new. The other chunks will simply be reused.
 
 \paragraph{Always writable}
 
-Like in version control, the DAG structure records all history of the data set
-and allows many different branches of development to exist in parallel. This
+Like in version control, the \gls{DAG} structure records all history of the data
+set and allows many different branches of development to exist in parallel. This
 allows high availability. Any node can always make updates autonomously, without
 coordinating with other nodes. Reconciliation of conflicting writes happens
 later via explicit, user-driven merging. \gls{DMV} only requires a connection to
@@ -68,7 +68,7 @@ for applications with intermittent or high-latency connectivity.
 
 \paragraph{Configurable sharding}
 
-The DAG structure tracks the data set in three dimensions:
+The \gls{DAG} structure tracks the data set in three dimensions:
 
 \begin{tight_enumerate}
     \item The set of files themselves
@@ -87,31 +87,31 @@ consistent about "node" vs "replica"}
 
 \paragraph{Data integrity}
 
-Because the DAG is append-only, and DAG objects are addressed by a cryptographic
-hash of their contents, this allows \gls{DMV} to verify stored objects and
-detect corrupted data. Corrupted objects can be replaced by retrieving an intact
-copy from another replica.
+Because the \gls{DAG} is append-only, and \gls{DAG} objects are addressed by a
+cryptographic hash of their contents, this allows \gls{DMV} to verify stored
+objects and detect corrupted data. Corrupted objects can be replaced by
+retrieving an intact copy from another replica.
 
 \gls{DMV} should never lose data accidentally. However, because \gls{DMV}
-tolerates an incomplete DAG, objects can be deliberately deleted from all nodes
-to save space or to redact sensitive information.
+tolerates an incomplete \gls{DAG}, objects can be deliberately deleted from all
+nodes to save space or to redact sensitive information.
 
 
 \paragraph{Security Model}
 
-The DAG's append-only nature and cryptographic content addressing provide
-protection from tampering. As long as the complete DAG is available, its
-integrity can be verified. Allowing an incomplete DAG does introduce an opening
-for tampering, because not all objects are available to verify, but we ignore
-such a possibility for now. Because \gls{DMV} is primarily meant to allow
+The \gls{DAG}'s append-only nature and cryptographic content addressing provide
+protection from tampering. As long as the complete \gls{DAG} is available, its
+integrity can be verified. Allowing an incomplete \gls{DAG} does introduce an
+opening for tampering, because not all objects are available to verify, but we
+ignore such a possibility for now. Because \gls{DMV} is primarily meant to allow
 individuals or organizations to manage their own data on their own hardware, we
 assume that all nodes will be under the user's control, and that users will only
-accept additions to their DAG from trusted collaborators. This defers questions
-of security to the systems and networks that are running the \gls{DMV} nodes.
-Data can be kept private by keeping all \gls{DMV} nodes on a private network.
-Unfortunately, though \gls{DMV}'s checksums can be checked to detect tampering,
-\gls{DMV} itself has no way to detect unauthorized reads. We also do not
-consider byzantine failures or guard against malicious nodes at this time.
+accept additions to their \gls{DAG} from trusted collaborators. This defers
+questions of security to the systems and networks that are running the \gls{DMV}
+nodes. Data can be kept private by keeping all \gls{DMV} nodes on a private
+network. Unfortunately, though \gls{DMV}'s checksums can be checked to detect
+tampering, \gls{DMV} itself has no way to detect unauthorized reads. We also do
+not consider byzantine failures or guard against malicious nodes at this time.
 
 %
 

@@ -1,7 +1,7 @@
 \chapter{DMV Architecture}
 
 Each \gls{DMV} node is a \newterm{repository} consisting of a
-content-addressable \newterm{object store} for immutable DAG objects and a
+content-addressable \newterm{object store} for immutable \gls{DAG} objects and a
 \newterm{working directory} for active file editing
 (\autoref{fig:dia_obj_db_and_wd}). Repositories that are used only for storage
 can omit the working directory, similar to a Git bare repository.
@@ -13,12 +13,12 @@ can omit the working directory, similar to a Git bare repository.
   \label{fig:dia_obj_db_and_wd}
 \end{figure}
 
-Each repository is autonomous, storing a portion of the DAG, and able to add to
-it at any time. However, it can transfer DAG objects to and from other
-repositories, and it can cache data about what DAG objects are available at a
-remote repository. Thus, \gls{DMV} forms an ad-hoc, unstructured network of
-repositories, and each repository can inform the user about what data is
-available where. Together, the repositories hold the entire data set
+Each repository is autonomous, storing a portion of the \gls{DAG}, and able to
+add to it at any time. However, it can transfer \gls{DAG} objects to and from
+other repositories, and it can cache data about what \gls{DAG} objects are
+available at a remote repository. Thus, \gls{DMV} forms an ad-hoc, unstructured
+network of repositories, and each repository can inform the user about what data
+is available where. Together, the repositories hold the entire data set
 (\autoref{fig:dia_architecture}).
 
 \begin{figure}[h]

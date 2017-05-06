@@ -3,11 +3,11 @@
 
 \section{DMV's DAG}
 
-\gls{DMV}'s data set and its history are represented as a DAG, and the rest of
-the design flows from that. \gls{DMV}'s DAG is based on Git's, but it adds a new
-object type, the \gls{chunkedblob}, which represents a \gls{blob} that has been
-broken into several smaller chunks. An example \gls{DMV} DAG is shown in
-\autoref{dia_dmv_dag_example_three_commits}.
+\gls{DMV}'s data set and its history are represented as a \gls{DAG}, and the
+rest of the design flows from that. \gls{DMV}'s \gls{DAG} is based on Git's, but
+it adds a new object type, the \gls{chunkedblob}, which represents a \gls{blob}
+that has been broken into several smaller chunks. An example \gls{DMV} \gls{DAG}
+is shown in \autoref{dia_dmv_dag_example_three_commits}.
 
 \begin{figure}[]
     \centering
@@ -16,7 +16,7 @@ broken into several smaller chunks. An example \gls{DMV} DAG is shown in
     \label{dia_dmv_dag_example_three_commits}
 \end{figure}
 
-The object types that make up the \gls{DMV} DAG are as follows:
+The object types that make up the \gls{DMV} \gls{DAG} are as follows:
 
 \begin{description}
 
@@ -46,15 +46,14 @@ The object types that make up the \gls{DMV} DAG are as follows:
 
 \end{description}
 
-The DAG begins with refs. Each repository has a list of refs that lead into the
-DAG. Each ref refers to a \gls{commit}. Each \gls{commit} refers to a \gls{tree} that
-represents the state at the time of committing, plus one or more parent
-\glspl{commit}.
-A \gls{tree} refers to the \gls{blob}, \gls{chunkedblob}, or \gls{tree} that
-makes up each entry in the directory. A \gls{chunkedblob} can refer to other
-\glspl{chunkedblob} or to \glspl{blob}. And finally, the \glspl{blob} are the
-leaves of the graph. This relationship is illustrated in
-\autoref{fig:dia_new_dag}.
+The \gls{DAG} begins with refs. Each repository has a list of refs that lead
+into the \gls{DAG}. Each ref refers to a \gls{commit}. Each \gls{commit} refers
+to a \gls{tree} that represents the state at the time of committing, plus one or
+more parent \glspl{commit}. A \gls{tree} refers to the \gls{blob},
+\gls{chunkedblob}, or \gls{tree} that makes up each entry in the directory. A
+\gls{chunkedblob} can refer to other \glspl{chunkedblob} or to \glspl{blob}. And
+finally, the \glspl{blob} are the leaves of the graph. This relationship is
+illustrated in \autoref{fig:dia_new_dag}.
 
 \begin{figure}[]
     \centering
@@ -69,7 +68,7 @@ fingerprinting\cite{rabin_karp_fingerprinting}. This splits the files into
 chunks by content rather than positition, so that identical chunks within files
 (and especially different versions of the same file) will be found and stored as
 identical objects, regardless of their position within the file. This way,
-identical chunks will be naturally de-duplicated by the DAG, and only the
+identical chunks will be naturally de-duplicated by the \gls{DAG}, and only the
 changed portions of files need to be stored as new objects.
 
 %
@@ -77,8 +76,8 @@ changed portions of files need to be stored as new objects.
 
 \section{Working with an Incomplete DAG}
 
-The DAG stores the full history of a data set, and it can be sliced to partition
-the data in space and time.
+The \gls{DAG} stores the full history of a data set, and it can be sliced to
+partition the data in space and time.
 
 \begin{description}
 
@@ -125,14 +124,14 @@ the data in space and time.
 
 A \gls{DMV} node can use any combination of these slicing techniques to keep
 only those objects needed at that location. New \glspl{commit} can still be made
-to a partial DAG. A node that stores only part of the data set can create new
-\glspl{commit} that represent changes to that portion of the data set by
+to a partial \gls{DAG}. A node that stores only part of the data set can create
+new \glspl{commit} that represent changes to that portion of the data set by
 assuming that everything else remains unchanged. Even a metadata-only node can
 create new \glspl{commit} that represent renames and reorganization of the same
 files.
 
-So the DAG can be spread across many nodes, sliced according to what is needed
-at each location. Nodes can keep a record of what objects exist at their
+So the \gls{DAG} can be spread across many nodes, sliced according to what is
+needed at each location. Nodes can keep a record of what objects exist at their
 neighbor nodes, and statistics about latency to those nodes, which allow them to
 estimate how long it would take to transfer a file that is not currently present
 on the system.

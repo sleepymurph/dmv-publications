@@ -219,10 +219,10 @@ content, which includes the hashes of all objects that they depend on. New
 objects can only refer to existing objects, which makes the graph acyclic.
 Storing history in this way will naturally de-duplicate unchanged files and
 directories, because the resulting \glspl{blob} and \glspl{tree} will be
-identical in content and thus have the same hash ID. The directed acyclic graph
-is referred to as the \newterm{DAG}. It can be uniquely identified by the hash
-IDs of those \glspl{commit} which do not yet have child \glspl{commit} to refer
-to them, the \newterm{heads} of each current branch of development. A simple
+identical in content and thus have the same hash ID. The \acrlong{DAG} is
+referred to as the \acrshort{DAG}. It can be uniquely identified by the hash IDs of
+those \glspl{commit} which do not yet have child \glspl{commit} to refer to
+them, the \newterm{heads} of each current branch of development. A simple
 example is shown in \autoref{dia_git_dag_example_three_commits}.
 
 \begin{figure}[h]
@@ -241,8 +241,8 @@ current head \glspl{commit}\cite{git_initial_readme}.
 
 \subsection{The Power of the DAG}
 
-Such a DAG has many properties that make it useful for distributed collaborative
-work and for long-term data storage.
+Such a \gls{DAG} has many properties that make it useful for distributed
+collaborative work and for long-term data storage.
 
 \begin{description}
 
@@ -250,30 +250,31 @@ work and for long-term data storage.
         naturally de-duplicated by the content addressing, if two files are
         identical, they will have the same hash and thus be the same \gls{blob}.
 
-    \item[Distributability and Availability] Because the DAG is immutable and
-        append-only, it can be replicated simply by copying all of its objects.
-        Any replica can make its own updates by appending to the DAG. Rather
-        than have a centralized notion of "current" version, development in Git
-        naturally diverges into different branches, as different users with
-        their own replica of the DAG make changes. Branches created on one
-        replica can be synchronized to another simply by comparing sets of
-        objects and transferring new objects that that the other does not have.
-        Branches are reconciled with a \newterm{merge} operation, creating a new
-        \gls{commit} that incorporates changes from both branches.
+    \item[Distributability and Availability] Because the \gls{DAG} is immutable
+        and append-only, it can be replicated simply by copying all of its
+        objects. Any replica can make its own updates by appending to the
+        \gls{DAG}. Rather than have a centralized notion of "current" version,
+        development in Git naturally diverges into different branches, as
+        different users with their own replica of the \gls{DAG} make changes.
+        Branches created on one replica can be synchronized to another simply by
+        comparing sets of objects and transferring new objects that that the
+        other does not have. Branches are reconciled with a \newterm{merge}
+        operation, creating a new \gls{commit} that incorporates changes from
+        both branches.
 
-    \item[Atomicity] The DAG's append-only nature makes \glspl{commit} atomic.
-        Objects are added to the object store, and then once all necessary
-        objects are stored, the ref can be updated to point to the new
+    \item[Atomicity] The \gls{DAG}'s append-only nature makes \glspl{commit}
+        atomic. Objects are added to the object store, and then once all
+        necessary objects are stored, the ref can be updated to point to the new
         \gls{commit} object. The ref is the size of the hash digest (in Git's
         case, \num{160} bytes for an SHA-1 hash), so it can be updated
         atomically. If the ref is updated, the \gls{commit} was successful. The
         objects do not have to be added to the object store atomically because
-        their presence does not change the existing DAG. An interrupted object
-        transfer may leave orphaned objects in the object store, but it cannot
-        corrupt previously-written data, nor can it leave the repository in an
-        inconsistent state. Orphaned objects can be swept up during a
-        garbage-collection phase, walking the DAG and marking all objects that
-        are reachable from the current refs.
+        their presence does not change the existing \gls{DAG}. An interrupted
+        object transfer may leave orphaned objects in the object store, but it
+        cannot corrupt previously-written data, nor can it leave the repository
+        in an inconsistent state. Orphaned objects can be swept up during a
+        garbage-collection phase, walking the \gls{DAG} and marking all objects
+        that are reachable from the current refs.
 
     \item[Verifiability] Perhaps most importantly, since objects are identified
         by a cryptographic hash, data integrity can be verified at any time by
@@ -282,21 +283,21 @@ work and for long-term data storage.
 
 \end{description}
 
-The main weakness of Git's DAG is that \glspl{blob} and files are one and the same.
-This makes the file the unit of de-duplication, which can lead to inefficient
-storage of larger files. Git gets around this by "packing" objects during its
-garbage-collection phase, storing similar objects as bases and deltas behind the
-scenes. But this is an optimization.
+The main weakness of Git's \gls{DAG} is that \glspl{blob} and files are one and
+the same. This makes the file the unit of de-duplication, which can lead to
+inefficient storage of larger files. Git gets around this by "packing" objects
+during its garbage-collection phase, storing similar objects as bases and deltas
+behind the scenes. But this is an optimization.
 
 Calculating deltas for during this packing phase requires loading the objects
 into memory, and so it can cause an out-of-memory error if an object is too
 large to fit into available RAM. Because Git stores files whole in \glspl{blob}, it
 cannot pack files that are larger than available RAM.
 
-If the DAG operated at a granularity smaller than the file, it could become even
-more powerful. It could naturally de-duplicate chunks of files the way that Git
-already de-duplicates whole files, and it could ensure that all objects fit into
-RAM for packing or other operations.
+If the \gls{DAG} operated at a granularity smaller than the file, it could
+become even more powerful. It could naturally de-duplicate chunks of files the
+way that Git already de-duplicates whole files, and it could ensure that all
+objects fit into RAM for packing or other operations.
 
 This sub-file granularity and de-duplication is the core idea behind our new
 data storage system, \gls{DMV}.

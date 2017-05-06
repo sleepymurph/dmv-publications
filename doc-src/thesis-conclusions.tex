@@ -10,8 +10,8 @@ The cryptographic directed acyclic graph is an excellent data structure for
 long-term data storage, because of the way it naturally de-duplicates identical
 data and provides checksums to verify data integrity. It also lends itself to
 sharding, because it can be divided by time or by subset of data, or both. The
-key to using a DAG for larger files is to break them into smaller chunks by
-content, so that identical pieces of files can naturally be de-duplicated as
+key to using a \gls{DAG} for larger files is to break them into smaller chunks
+by content, so that identical pieces of files can naturally be de-duplicated as
 well. But when storing a large number of small chunks, they should be
 re-aggregated into packed files to use disk space efficiently.
 
