@@ -10,7 +10,7 @@ difference is the granularity at which they work with data, and how they store
 it.
 
 Both Git and Mercurial take the file as the basic unit of data granularity,
-though they approach storage differently. Git stores files whole as blobs during
+though they approach storage differently. Git stores files whole as \glspl{blob} during
 commit, storing them and other objects as files in object directories (as tested
 in \autoref{dir-experiment}). Later, an optional packing phase will compact
 objects together into \newterm{pack files}, where similar objects are stored as
@@ -35,7 +35,7 @@ it can still manage to commit files larger than available RAM, but it prints
 errors as the other operations fail. The two-phase approach also requires extra
 disk space and processing power. If a large file is changed, the at first both
 revisions will be written in full, taking twice the disk space. Then a separate
-operation will have to reread both blobs in full to calculate deltas and pack
+operation will have to reread both \glspl{blob} in full to calculate deltas and pack
 the objects.
 
 Both DMV and Bup avoid these pitfalls by operating with a finer granularity,
