@@ -219,8 +219,9 @@ content, which includes the hashes of all objects that they depend on. New
 objects can only refer to existing objects, which makes the graph acyclic.
 Storing history in this way will naturally de-duplicate unchanged files and
 directories, because the resulting \glspl{blob} and \glspl{tree} will be
-identical in content and thus have the same hash ID. The \acrlong{DAG} is
-referred to as the \acrshort{DAG}. It can be uniquely identified by the hash IDs of
+identical in content and thus have the same hash ID. This
+\glsdisp{DAG}{directed, acyclic graph} structure is referred to as the
+\glsreset{DAG}\acrshort{DAG}. It can be uniquely identified by the hash IDs of
 those \glspl{commit} which do not yet have child \glspl{commit} to refer to
 them, the \newterm{heads} of each current branch of development. A simple
 example is shown in \autoref{dia_git_dag_example_three_commits}.
@@ -300,4 +301,4 @@ way that Git already de-duplicates whole files, and it could ensure that all
 objects fit into RAM for packing or other operations.
 
 This sub-file granularity and de-duplication is the core idea behind our new
-data storage system, \gls{DMV}.
+data storage system, \acrlong{DMV}.

@@ -70,6 +70,8 @@
 % Glossaries has to be declared AFTER hyperref for its links to work
 \usepackage[toc]{glossaries}
 \makeglossaries
+% Glossary entries
+\input{thesis-glossary}
 % Emphasize first use of glossary term
 \defglsentryfmt[main]{\ifglsused{\glslabel}{\glsgenentryfmt}{\emph{\glsgenentryfmt}}}
 
@@ -123,9 +125,6 @@
 \hypersetup{
   pdftitle=Master's Thesis: Distributed Media Versioning,
 }
-
-% Glossary entries
-\input{thesis-glossary}
 
 
 
