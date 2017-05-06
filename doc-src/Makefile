@@ -39,6 +39,7 @@ thesis.pdf: \
 
 	pdflatex thesis.tex
 	bibtex thesis.aux
+	makeglossaries thesis
 	pdflatex thesis.tex
 	pdflatex thesis.tex
 
