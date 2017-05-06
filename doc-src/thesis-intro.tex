@@ -183,12 +183,12 @@ storage}.
 
 When Git stores a file, it creates a \gls{blob} by copying the file's content
 and prepending a short header. Git then calculates the SHA-1 hash of the
-\gls{blob}, and stores the \gls{blob} in an \newterm{object store}, using the
-SHA-1 hash as the \gls{blob}'s ID. To store a directory, Git creates a
-\gls{tree} object that maps filenames to SHA-1 \gls{blob} IDs for each file
-in the directory. This \gls{tree} object is also stored in the database with it's
-SHA-1 hash as its ID. \Gls{tree} objects can refer not only to \gls{blob}, but to
-other \glspl{tree}, representing subdirectories.
+\gls{blob}, and stores the \gls{blob} in an \gls{objectstore}, using the SHA-1
+hash as the \gls{blob}'s ID. To store a directory, Git creates a \gls{tree}
+object that maps filenames to SHA-1 \gls{blob} IDs for each file in the
+directory. This \gls{tree} object is also stored in the \gls{objectstore} with
+it's SHA-1 hash as its ID. \Gls{tree} objects can refer not only to \gls{blob},
+but to other \glspl{tree}, representing subdirectories.
 
 Thus, a file hierarchy in a given state is represented by a hash tree, with
 \gls{tree} objects as nodes and \glspl{blob} as leaves, and the entire state can
@@ -234,7 +234,7 @@ example is shown in \autoref{dia_git_dag_example_three_commits}.
 
 A Git repository, then, is a collection of the \gls{blob}, \gls{tree}, and
 \gls{commit} objects that make up the file set's history, stored by hash ID in
-the object store, with references (\newterm{refs}) to the hash IDs of the
+the \gls{objectstore}, with references (\newterm{refs}) to the hash IDs of the
 current head \glspl{commit}\cite{git_initial_readme}.
 
 %
@@ -263,18 +263,18 @@ collaborative work and for long-term data storage.
         both branches.
 
     \item[Atomicity] The \gls{DAG}'s append-only nature makes \glspl{commit}
-        atomic. Objects are added to the object store, and then once all
+        atomic. Objects are added to the \gls{objectstore}, and then once all
         necessary objects are stored, the ref can be updated to point to the new
         \gls{commit} object. The ref is the size of the hash digest (in Git's
         case, \num{160} bytes for an SHA-1 hash), so it can be updated
         atomically. If the ref is updated, the \gls{commit} was successful. The
-        objects do not have to be added to the object store atomically because
-        their presence does not change the existing \gls{DAG}. An interrupted
-        object transfer may leave orphaned objects in the object store, but it
-        cannot corrupt previously-written data, nor can it leave the repository
-        in an inconsistent state. Orphaned objects can be swept up during a
-        garbage-collection phase, walking the \gls{DAG} and marking all objects
-        that are reachable from the current refs.
+        objects do not have to be added to the \gls{objectstore} atomically
+        because their presence does not change the existing \gls{DAG}. An
+        interrupted object transfer may leave orphaned objects in the
+        \gls{objectstore}, but it cannot corrupt previously-written data, nor
+        can it leave the repository in an inconsistent state. Orphaned objects
+        can be swept up during a garbage-collection phase, walking the \gls{DAG}
+        and marking all objects that are reachable from the current refs.
 
     \item[Verifiability] Perhaps most importantly, since objects are identified
         by a cryptographic hash, data integrity can be verified at any time by

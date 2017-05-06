@@ -39,7 +39,7 @@ we intend for \gls{DMV} to be more general than the Dat core.
 
 Eyo \cite{Strauss:2011:EDP:2002181.2002216} is system for storing personal media
 and synchronizing it between devices. It utilizes a Git-like content-addressed
-object database behind the scenes, but it works more like a networked filesystem
+\gls{objectstore} behind the scenes, but it works more like a networked filesystem
 than version control. It focuses on organizing media by metadata, which requires
 agreement on metadata formats, and it requires applications to be rewritten to
 access files via Eyo rather than the filesystem, both of which are thorny and
@@ -118,8 +118,8 @@ Git's repository format. A Bup backup is a valid Git repository and it can be
 read by Git, but Bup is a separate program written from scratch to read and
 write files to Git's pack file format directly, skipping Git's separate store
 and pack steps that use double the disk space. It has many features that we want
-for our low-level storage of the object database. It breaks files into chunks by
-rolling checksum, and it has considerations for metadata that is larger than
+for our low-level storage of the \gls{objectstore}. It breaks files into chunks
+by rolling checksum, and it has considerations for metadata that is larger than
 RAM. However, it is locked into a backup-based workflow. History is linear and
 based on clock time of backup. And it assumes that the whole data set and the
 whole repository can fit onto one filesystem.

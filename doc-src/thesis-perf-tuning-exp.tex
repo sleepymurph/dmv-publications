@@ -34,14 +34,14 @@ was no appreciable difference in size between the objects
     \lstinputlisting[nolol,basicstyle=\scriptsize]{lst-storing-long-write-times.txt}
 \end{figure}
 
-\gls{DMV} stores its objects as individual files in an object-store directory,
-in the same manner as Git. The object's SHA-1 hash is used as its file name,
-except that the first two hex digits are removed and used as a subdirectory
-(also described in \autoref{dir-impl}). Our prototype originally took the first
-four hex digits to create two levels of subdirectories, under the assumption
-that we would store more objects than Git and need to spread them out with more
-subdirectories. That original prototype was showing this odd behavior, and it
-stored files much more slowly than Git. We suspected that the number of
+\gls{DMV} stores its objects as individual files in an \gls{objectstore}
+directory, in the same manner as Git. The object's SHA-1 hash is used as its
+file name, except that the first two hex digits are removed and used as a
+subdirectory (also described in \autoref{dir-impl}). Our prototype originally
+took the first four hex digits to create two levels of subdirectories, under the
+assumption that we would store more objects than Git and need to spread them out
+with more subdirectories. That original prototype was showing this odd behavior,
+and it stored files much more slowly than Git. We suspected that the number of
 subdirectories could be at fault, so we experimented with different subdirectory
 schemes to see their effects.
 

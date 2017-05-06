@@ -41,8 +41,8 @@ and it allows us to compile DMV as a library.
 \section{Working Directory and Object Store}\label{dir-impl}
 
 The \gls{DMV} prototype stores its objects as regular files on the file system,
-using the same structure that Git does. The object store is in a hidden
-directory inside the working directory (\lstinline{.dmv/objects}). Objects are
+using the same structure that Git does. The \gls{objectstore} is in a hidden
+directory inside of the \gls{workdir} (\lstinline{.dmv/objects}). Objects are
 stored using their SHA-1 hash as their filename, with the first two hex digits
 removed to create a directory name (\autoref{dir-scheme-example}). This leads to
 \num{256} subdirectories, each holding roughly \num{1/256}th of all the objects
