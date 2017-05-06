@@ -52,8 +52,8 @@ digraph prototype {
 // Chunked Blobs
 {
 
-   "cab3c1f06afd8324758b3e60a42376a31ad672de"[label="Chunked Index\ncab3c1f"]
-   "69a63de7d3b0f618c76b410b773eb9863bd9a3b9"[label="Chunked Index\n69a63de"]
+   "cab3c1f06afd8324758b3e60a42376a31ad672de"[label="Chunked Blob\ncab3c1f"]
+   "69a63de7d3b0f618c76b410b773eb9863bd9a3b9"[label="Chunked Blob\n69a63de"]
 }
 
 

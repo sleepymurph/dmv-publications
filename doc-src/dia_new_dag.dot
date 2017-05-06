@@ -1,22 +1,22 @@
 digraph {
 
     define(OPTIONAL, `style=dashed')
-    define(NEW, `style=filled,fillcolor=grey')
-    define(INGIT, `style=filled,fillcolor=grey50')
+    define(NEW, `')
+    define(INGIT, `')
 
     {
         // In Git
         node[INGIT]
-        blob
-        tree
-        commit
-        ref
+        blob[label="Blob"]
+        tree[label="Tree"]
+        commit[label="Commit"]
+        ref[label="Ref"]
     }
 
     {
         // New
         node[NEW]
-        chunkedblob[label="chunked blob\nindex"]
+        chunkedblob[label="Chunked Blob"]
     }
 
     ref -> commit [label=" current commit"]
