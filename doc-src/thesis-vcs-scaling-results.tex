@@ -41,7 +41,7 @@ size, but time became a limiting factor as file size increased. At
 \SI{96}{\gibi\byte}, our experiment script timed out and terminated the
 \gls{commit} after five and a half hours.\perotto{Bottleneck was...?}
 
-Our test environment itself limited the largest file stored by any VCS to
+Our test environment itself limited the largest file stored by any \gls{VCS} to
 \SI{96}{\gibi\byte}. Any larger and it was simply impossible to store a second
 copy of the file on our \SI{197}{\gibi\byte} test partition. Bup was able to
 store a \SI{96}{\gibi\byte} file with no errors in just under two hours. Git
@@ -326,7 +326,8 @@ descriptions}
 
 Unlike the experiment with a single large file, the numerous small files did not
 quickly hit error-causing disk space or RAM limitations. The version control
-systems happily crunched\perotto{to informal} the data as trial times grew into hours.
+systems happily crunched\perotto{too informal} the data as trial times grew into
+hours.
 
 \begin{itemize}
 

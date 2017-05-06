@@ -4,32 +4,31 @@
 
 \perottoinline{Otto does not like the term "test". These are \emph{experiments}.}
 
-We performed experiments to probe the limits of existing version control
-systems, to see how they would cope with file sizes and file numbers in ranges
-beyond what would be expected in a source code tree. We wanted to see how long
-it would take for each VCS to store that amount of data, how much disk space it
-used, and what CPU utilization was like during storage. And since version
-controls systems track changes, so we also wanted to see what would happen when
-a small subset of that data was modified and then committed again.
+We performed experiments to probe the limits of existing \acrlongpl{VCS}, to see
+how they would cope with file sizes and file numbers in ranges beyond what would
+be expected in a source code tree. We wanted to see how long it would take for
+each \gls{VCS} to store that amount of data, how much disk space it used, and
+what CPU utilization was like during storage. And since \glspl{VCS} track
+changes, so we also wanted to see what would happen when a small subset of that
+data was modified and then committed again.
 
 We conducted two major experiments. To measure the effect of file size, we would
-\gls{commit} a single file of increasing size to each target VCS. And to measure
-the effect of file numbers, we would \gls{commit} increasing number of small
-(\SI{1}{\kibi\byte}) files to each target VCS.
+\gls{commit} a single file of increasing size to each target \gls{VCS}. And to
+measure the effect of file numbers, we would \gls{commit} increasing number of
+small (\SI{1}{\kibi\byte}) files to each target \gls{VCS}.
 
 
 
 \section{Version Control Systems Evaluated}
 
-We ran each experiment using four different version control systems: Git,
-Mercurial (also known as \newterm{hg}), Bup, and the \gls{DMV} prototype
-(specific versions listed in \autoref{vcs-versions}). As a control we also ran
-the experiments using a dummy VCS that simple made a copy of the files. We chose
-Git and Mercurial because they are the two most widely used distributed version
-control systems available. We also included Bup because it uses Git's storage
-format but, like \gls{DMV}, it also breaks files into chunks. For discussion on
-the similarities and differences between \gls{DMV} and Bup, see
-\autoref{related_bup}.
+We ran each experiment using four different \glspl{VCS}: Git, Mercurial (also
+known as \newterm{hg}), Bup, and the \gls{DMV} prototype (specific versions
+listed in \autoref{vcs-versions}). As a control we also ran the experiments
+using a dummy \gls{VCS} that simply made a copy of the files. We chose Git and
+Mercurial because they are the two most widely used \glspl{DVCS} available. We
+also included Bup because it uses Git's storage format but, like \gls{DMV}, it
+also breaks files into chunks. For discussion on the similarities and
+differences between \gls{DMV} and Bup, see \autoref{related_bup}.
 
 \towrite{Include more background about Git, Mercurial, and Bup: Git and Hg
 conceptually use same DAG but implemented differently. Bup uses Git's file
@@ -54,7 +53,8 @@ For each experiment, the procedure for a single trial was as follows:
 
 \begin{tight_enumerate}
 
-    \item Create an empty repository of the target VCS in a temporary directory
+    \item Create an empty repository of the target \gls{VCS} in a temporary
+        directory
 
     \item Generate target data to store, either a single file of the target
         size, or the target number of \SI{1}{\kibi\byte} files
@@ -111,27 +111,28 @@ file's size (or 1 byte if the file was smaller than \SI{1024}{\kibi\byte}). So a
 
 The trials were run via a Python script that would set up, run, and clean up
 each trial in a loop, covering the full range of sizes or numbers for a given
-VCS. The script would measure the wall-clock time duration taken by each
+\gls{VCS}. The script would measure the wall-clock time duration taken by each
 \gls{commit} command and collect CPU utilization metrics. It would also
-terminate any individual VCS operation that ran longer than five hours. After
-\gls{commit} and verification, the script would also measure repository size.
+terminate any individual \gls{VCS} operation that ran longer than five hours.
+After \gls{commit} and verification, the script would also measure repository
+size.
 
 The script measured the wall-clock time duration for each \gls{commit} by
 checking the system time (\lstinline{time.time()}) just before and just after
-using Python's \lstinline{subprocess} module to execute the necessary VCS
+using Python's \lstinline{subprocess} module to execute the necessary \gls{VCS}
 command. CPU utilization was measured by sampling the CPU status lines provided
 in Linux's \lstinline{/proc/stat} information. The status lines show a
 cumulative count of time slices that the CPU has spent in user mode, system
 mode, and waiting for I/O. Like with the time measurements, the script samples
-CPU utilization before and after executing a VCS command, and then subtracts to
-get the number of time slices spent in each state during execution. We then
-compare the relative number of time slices in each state to get an idea of
-whether the operation is CPU-bound or I/O-bound.
+CPU utilization before and after executing a \gls{VCS} command, and then
+subtracts to get the number of time slices spent in each state during execution.
+We then compare the relative number of time slices in each state to get an idea
+of whether the operation is CPU-bound or I/O-bound.
 
 The script measures repository size using the standard Unix disk usage command
 (\lstinline{du}) and measures the size of the trial's entire temporary
-directory, which includes the generated test data itself along with the VCS's
-storage.
+directory, which includes the generated test data itself along with the
+\gls{VCS}'s storage.
 
 
 \section{Experiment Platform}

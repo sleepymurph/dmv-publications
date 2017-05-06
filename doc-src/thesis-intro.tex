@@ -22,32 +22,31 @@ which raises concerns about privacy and storage longevity.
 Why can't we simply track the files we have across the devices we have?
 
 Software developers have an excellent system for backup and sync right at their
-fingertips: \newterm{distributed version control systems (DVCSs)}, such as Git
-and Mercurial. Version control systems track all changes to a collection of
-files, allowing collaborators to work independently and then synchronize and
-share their work. Additionally, in a distributed version control system, every
+fingertips: \glspl{DVCS}, such as Git and Mercurial. \Glspl{VCS} track all
+changes to a collection of files, allowing collaborators to work independently
+and then synchronize and share their work. Additionally, in a \gls{DVCS}, every
 collaborator has a full copy of the project's history. That redundancy not only
 allows collaborators to work offline, but it also functions as a backup. Linus
 Torvalds, the creator of Linux and Git, once famously joked that he doesn't keep
 backups, he simply publishes his work on the internet and lets others copy it
 \cite{linus_no_backups}.
 
-The major limitation of distributed version control systems is that they are
-designed to store program source code: plain text files in the range of tens of
-kilobytes. With larger media files, they often become sluggish or wasteful of
-disk space \perotto{How sluggish, how wasteful? "Many" is too vague}. Many a
-web-design team has come to regret checking their graphical assets into version
-control\perotto{citation}. In addition, many will have trouble scaling up
-\perotto{with regards to what} as the number of files increases or the history
-grows increasingly long.
+The major limitation of \glspl{DVCS} is that they are designed to store program
+source code: plain text files in the range of tens of kilobytes. With larger
+media files, they often become sluggish or wasteful of disk space \perotto{How
+sluggish, how wasteful? "Many" is too vague}. Many a web-design team has come to
+regret checking their graphical assets into version control\perotto{citation}.
+In addition, many will have trouble scaling up \perotto{with regards to what} as
+the number of files increases or the history grows increasingly long.
 
-What if we could generalize the distributed version control concept to store a
-wide variety of file sizes, from kilobyte text files to multi-gigabyte videos?
-In addition, what if we relaxed the assumption that every replica contain the
-complete history, and allowed each replica to choose what subsets of the files
-and the history to store, according to the replica's capacity and need? The
-answer could be a new abstraction for tracking a data set and its history as a
-cohesive whole, even when it is physically spread over many different nodes.
+What if we could generalize the \glsdisp{DVCS}{distributed version control}
+concept to store a wide variety of file sizes, from kilobyte text files to
+multi-gigabyte videos? In addition, what if we relaxed the assumption that every
+replica contain the complete history, and allowed each replica to choose what
+subsets of the files and the history to store, according to the replica's
+capacity and need? The answer could be a new abstraction for tracking a data set
+and its history as a cohesive whole, even when it is physically spread over many
+different nodes.
 
 %
 
@@ -102,19 +101,19 @@ argument\cite{endtoendargument}, that conflicting updates cannot be resolved
 generally by a storage platform or network protocol. Resolution is dependent on
 the structure of the data and on the needs of the application using it.
 
-Though maybe not designed with the CAP theorem explicitly in mind, a distributed
-version control system can be thought of as a small-scale distributed system
-that takes the availability-first approach to the extreme. Rather than a set of
-connected nodes that may occasionally lose contact in a network partition, a
-distributed version control system's repositories are self-contained, allowing
-writes to local data at any time, and only connecting to other repositories
-intermittently by user command to exchange updates. Concurrent updates are not
-only allowed but embraced as different \newterm{branches} of development. A
-distributed version control system can track many different branches at the same
-time, and conflicting branches can be combined and resolved by the user.
+Though maybe not designed with the CAP theorem explicitly in mind, a \gls{DVCS}
+can be thought of as a small-scale distributed system that takes the
+availability-first approach to the extreme. Rather than a set of connected nodes
+that may occasionally lose contact in a network partition, a \gls{DVCS}'s
+repositories are self-contained, allowing writes to local data at any time, and
+only connecting to other repositories intermittently by user command to exchange
+updates. Concurrent updates are not only allowed but embraced as different
+\newterm{branches} of development. A \gls{DVCS} can track many different
+branches at the same time, and conflicting branches can be combined and resolved
+by the user.
 
-The distributed version control concept may have something to teach larger-scale
-systems about availability.
+The \glsdisp{DVCS}{distributed version control} concept may have something to
+teach larger-scale systems about availability.
 
 %
 
@@ -125,46 +124,46 @@ systems about availability.
 \askottoinline{Most of the claims Otto asks me to cite here come from
 \cite{history_of_version_control}. How to indicate that?}
 
-Version control started as a way to efficiently store different versions of a
-source code files by encoding them as a series of deltas
+The first \glspl{VCS} were \glspl{SCM} created as a way to efficiently store
+different versions of a source code files by encoding them as a series of deltas
 \cite{history_of_version_control}. CVS introduced a collaborative client-server
-model\perotto{cite}. Subversion kept the client-server model but began focusing on the
-versions of the whole collection of files together, rather than individual
-files\perotto{cite}. Doing so made branching easier, and branching quickly became a key
-feature for collaborative work.
+model\perotto{cite}. Subversion kept the client-server model but began focusing
+on the versions of the whole collection of files together, rather than
+individual files\perotto{cite}. Doing so made branching easier, and branching
+quickly became a key feature for collaborative work.
 
-BitKeeper, a commercial source code manager, pioneered the distributed version
-control concept by giving each developer a local copy of the whole repository,
-allowing local writes, and then making it easy to push the local changes to a
-central server\perotto{cite}. BitKeeper was for a time the main source code manager for the
-Linux kernel, but licensing issues caused a rift between Linux developers and
-BitMover, the company behind BitKeeper\perotto{cite}. Unsatisfied with the other source code
-managers available at the time, Linus Torvalds, the creator of Linux, wrote his
-own, Git.
+BitKeeper, a commercial \gls{SCM}, pioneered the \glsdisp{DVCS}{distributed
+version control} concept by giving each developer a local copy of the whole
+repository, allowing local writes, and then making it easy to push the local
+changes to a central server\perotto{cite}. BitKeeper was for a time the main
+\acrlong{SCM} for the Linux kernel, but licensing issues caused a rift between
+Linux developers and BitMover, the company behind BitKeeper\perotto{cite}.
+Unsatisfied with the other \glspl{SCM} available at the time, Linus Torvalds,
+the creator of Linux, wrote his own, Git.
 
-The ability to always write locally separates concerns such as handling security from the
-underlying problem of storing the data. Repositories are private by default
-unless they are specifically hosted on a public server, any user can write to
-their own repositories, and any ad-hoc group of users can exchange updates. Each
-developer can decide what updates they want to incorporate into their particular
-repository, and the group of developers can decide which repositories and which
-versions are official and what is to be included into official releases. These
-are human questions that groups of collaborators can solve by arranging their
-networks and policies how they see fit, enabled by the tool rather than
-constrained by it. As Torvalds put it:
+The ability to always write locally separates concerns such as handling security
+from the underlying problem of storing the data. Repositories are private by
+default unless they are specifically hosted on a public server, any user can
+write to their own repositories, and any ad-hoc group of users can exchange
+updates. Each developer can decide what updates they want to incorporate into
+their particular repository, and the group of developers can decide which
+repositories and which versions are official and what is to be included into
+official releases. These are human questions that groups of collaborators can
+solve by arranging their networks and policies how they see fit, enabled by the
+tool rather than constrained by it. As Torvalds put it:
 
 \blockcquote{git_10_years_interview}{The big thing about distributed source
-    control is that it makes one of the main issues with SCM's go away - the
-    politics around \enquote{who can make changes.} BK \textins{BitKeeper}
-    showed that you can avoid that by just giving everybody their own source
-repository. }
+    control is that it makes one of the main issues with \acrshortpl{SCM} go
+    away - the politics around \enquote{who can make changes.} BK
+    \textins{BitKeeper} showed that you can avoid that by just giving everybody
+their own source repository. }
 
 \towrite{key: pull rather than push}
 
-Since the release of Git, distributed version control has become the dominant
-paradigm for source code control. Git itself is the dominant version control
-system in use today, followed by Mercurial, another distributed version control
-system that has its roots in Subversion\todo{find citation}.
+Since the release of Git, \glsdisp{DVCS}{distributed version control} has become
+the dominant paradigm for \glsdisp{SCM}{source code management}. Git itself is
+the dominant \gls{VCS} in use today, followed by Mercurial, another \gls{DVCS}
+that has its roots in Subversion\todo{find citation}.
 
 While Git and Mercurial both have a similar data model, with committed versions
 representing states of the whole collection of files, Mercurial's actual storage

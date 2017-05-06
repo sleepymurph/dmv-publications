@@ -10,7 +10,7 @@ across nodes in a distributed system, according to what data is needed locally
 at each location.
 
 We have performed experiments to probe the scalability limits of existing
-\gls{DAG}-based version control systems and formulated ways of overcoming them,
+\gls{DAG}-based \acrlongpl{DVCS} and formulated ways of overcoming them,
 especially by breaking large files into chunks and ensuring that algorithms do
 not assume that whole files can always fit into RAM. We have also bumped up
 against and experimented with some of the limitations of the ext4 filesystem for
@@ -18,10 +18,10 @@ storing large numbers of small files.
 
 And finally, we have described the idea, architecture, design, and
 implementation of a distributed data storage system we call \gls{DMV} that
-expands on the distributed version control concept to store larger and more
-diverse data sets, with a high degree of control over data locality, and an
-availability to write updates for any data held locally. Though time constraints
-prevented us from implementing the network features we had planned, the
-\gls{DMV} prototype has enough functionality to be tested against existing
-version control systems and to demonstrate the addition of new \glspl{commit} to
-a partial \gls{DAG}.
+expands on the \glsdisp{DVCS}{distributed version control} concept to store
+larger and more diverse data sets, with a high degree of control over data
+locality, and an availability to write updates for any data held locally. Though
+time constraints prevented us from implementing the network features we had
+planned, the \gls{DMV} prototype has enough functionality to be tested against
+existing \acrlongpl{DVCS} and to demonstrate the addition of new \glspl{commit}
+to a partial \gls{DAG}.

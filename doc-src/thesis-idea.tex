@@ -45,7 +45,7 @@ user's guidance according to data locality needs.
 
 \paragraph{Inspired by version control}
 
-\gls{DMV} is inspired by distributed version control. Its core data structure is
+\gls{DMV} is inspired by \acrlongpl{DVCS}. Its core data structure is
 a \gls{DAG}, based on Git's but modified to store a wider range of file sizes.
 The key difference is that large files are broken into smaller chunks (around
 \SI{52}{\kibi\byte}), which is what ensures that no single object is too large
@@ -57,7 +57,7 @@ updated metadata is new. The other chunks will simply be reused.
 
 \paragraph{Always writable}
 
-Like in version control, the \gls{DAG} structure records all history of the data
+Like in a \gls{DVCS}, the \gls{DAG} structure records all history of the data
 set and allows many different branches of development to exist in parallel. This
 allows high availability. Any node can always make updates autonomously, without
 coordinating with other nodes. Reconciliation of conflicting writes happens
@@ -76,13 +76,13 @@ The \gls{DAG} structure tracks the data set in three dimensions:
     \item The parallel branches of development in the history
 \end{tight_enumerate}
 
-Traditional distributed version control systems tend to assume that each replica
-has the full history of all files, though not every branch of development. In
-contrast, each \gls{DMV} node can store a subset of the data, sharded along any
-of those dimensions, configurable by the user. A node could keep the full
-history of only a small subset of files, or only the most recent few versions of
-the full set of files, or only a few branches, or any combination. \todo{Be
-consistent about "node" vs "replica"}
+Traditional \glspl{DVCS} tend to assume that each replica has the full history
+of all files, though not every branch of development. In contrast, each
+\gls{DMV} node can store a subset of the data, sharded along any of those
+dimensions, configurable by the user. A node could keep the full history of only
+a small subset of files, or only the most recent few versions of the full set of
+files, or only a few branches, or any combination. \todo{Be consistent about
+"node" vs "replica"}
 
 
 \paragraph{Data integrity}
@@ -118,16 +118,16 @@ not consider byzantine failures or guard against malicious nodes at this time.
 
 \section{What's in a Name?}
 
-We chose the name \emph{Distributed Media Versioning} because it is a concise
-way to describe the system, emphasizing its distributed nature, its roots in
-version control, and its goal of storing a wide range of media rather than just
-source code. The acronym \gls{DMV} makes for a short and easy-to-type base
-command for command line control, in the grand tradition of \lstinline{cvs},
-\lstinline{svn}, \lstinline{git}, and \lstinline{hg}. And though in many places
-the acronym is associated with a Department of Motor Vehicles, it does not seem
-to have any prior conflicting uses in the computing domain.\footnote{Possibly
-because of negative associations with the Department of Motor Vehicles} It is
-also a nod to Michael's home town of Washington DC, where the Washington
-metropolitan area is sometimes referred to as "The DMV" as it spills out of the
-District of Columbia and into Maryland and Virgina\perotto{bold or other marker
-for initial letters?}.
+We chose the name \emph{\acrlong{DMV}} because it is a concise way to describe
+the system, emphasizing its distributed nature, its roots in version control,
+and its goal of storing a wide range of media rather than just source code. The
+acronym \gls{DMV} makes for a short and easy-to-type base command for command
+line control, in the grand tradition of \lstinline{cvs}, \lstinline{svn},
+\lstinline{git}, and \lstinline{hg}. And though in many places the acronym is
+associated with a Department of Motor Vehicles, it does not seem to have any
+prior conflicting uses in the computing domain.\footnote{Possibly because of
+negative associations with the Department of Motor Vehicles} It is also a nod to
+Michael's home town of Washington DC, where the Washington metropolitan area is
+sometimes referred to as "The DMV" as it spills out of the District of Columbia
+and into Maryland and Virgina\perotto{bold or other marker for initial
+letters?}.
