@@ -3,10 +3,10 @@
 
 \section{DMV's DAG}
 
-DMV's data set and its history are represented as a DAG, and the rest of the
-design flows from that. DMV's DAG is based on Git's, but it adds a new object
-type, the \gls{chunkedblob}, which represents a \gls{blob} that has been broken
-into several smaller chunks. An example DMV DAG is shown in
+\gls{DMV}'s data set and its history are represented as a DAG, and the rest of
+the design flows from that. \gls{DMV}'s DAG is based on Git's, but it adds a new
+object type, the \gls{chunkedblob}, which represents a \gls{blob} that has been
+broken into several smaller chunks. An example \gls{DMV} DAG is shown in
 \autoref{dia_dmv_dag_example_three_commits}.
 
 \begin{figure}[]
@@ -16,13 +16,13 @@ into several smaller chunks. An example DMV DAG is shown in
     \label{dia_dmv_dag_example_three_commits}
 \end{figure}
 
-The object types that make up the DMV DAG are as follows:
+The object types that make up the \gls{DMV} DAG are as follows:
 
 \begin{description}
 
     \item[Blob] As with Git, a \gls{blob} simply holds binary data.
 
-    \item[Chunked blob] Unlike with Git, larger \glspl{blob} in DMV are
+    \item[Chunked blob] Unlike with Git, larger \glspl{blob} in \gls{DMV} are
         broken into chunks. Each \gls{chunkedblob} is simply an index of
         \glspl{blob} (or other \glspl{chunkedblob}) that make up the larger
         \gls{blob}. A file that is stored in the system may be represented by a
@@ -123,9 +123,9 @@ the data in space and time.
     \caption{A DMV DAG, sliced in different dimensions}
 \end{figure}
 
-A DMV node can use any combination of these slicing techniques to keep only
-those objects needed at that location. New \glspl{commit} can still be made to a
-partial DAG. A node that stores only part of the data set can create new
+A \gls{DMV} node can use any combination of these slicing techniques to keep
+only those objects needed at that location. New \glspl{commit} can still be made
+to a partial DAG. A node that stores only part of the data set can create new
 \glspl{commit} that represent changes to that portion of the data set by
 assuming that everything else remains unchanged. Even a metadata-only node can
 create new \glspl{commit} that represent renames and reorganization of the same

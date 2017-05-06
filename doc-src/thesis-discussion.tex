@@ -4,10 +4,10 @@
 \section{Data Granularity and Storage Schemes}
 \label{chunk-then-recombine}
 
-All four of the systems we examined in detail-- Git, Mercurial, Bup, and DMV--
-model data and its history with a similar directed acyclic graph. The major
-difference is the granularity at which they work with data, and how they store
-it.
+All four of the systems we examined in detail-- Git, Mercurial, Bup, and
+\gls{DMV}-- model data and its history with a similar directed acyclic graph.
+The major difference is the granularity at which they work with data, and how
+they store it.
 
 Both Git and Mercurial take the file as the basic unit of data granularity,
 though they approach storage differently. Git stores files whole as \glspl{blob}
@@ -39,19 +39,19 @@ both revisions will be written in full, taking twice the disk space. Then a
 separate operation will have to reread both \glspl{blob} in full to calculate
 deltas and pack the objects.
 
-Both DMV and Bup avoid these pitfalls by operating with a finer granularity,
-using a rolling hash to divide files into chunks by their content. It is the
-chunks and their indexes that must fit into memory, not the entire file. And
-then since chunks are only a few kilobytes and chunk indexes are hierarchical,
-file size becomes theoretically unlimited. Dividing into chunks by rolling hash
-also makes delta compression unnecessary, because identical chunks in different
-files or file revisions will naturally de-duplicate. At this point, it is the
-method of object storage that becomes the bottleneck.
+Both \gls{DMV} and Bup avoid these pitfalls by operating with a finer
+granularity, using a rolling hash to divide files into chunks by their content.
+It is the chunks and their indexes that must fit into memory, not the entire
+file. And then since chunks are only a few kilobytes and chunk indexes are
+hierarchical, file size becomes theoretically unlimited. Dividing into chunks by
+rolling hash also makes delta compression unnecessary, because identical chunks
+in different files or file revisions will naturally de-duplicate. At this point,
+it is the method of object storage that becomes the bottleneck.
 
-The current DMV prototype stores objects loose as files on the filesystem. This
-proves to be wasteful of disk space, taking up whole filesystem blocks with tiny
-objects and with directories. It also causes dramatic slowdown as the disk gets
-full and the filesystem has to work harder to find free blocks (as seen in
+The current \gls{DMV} prototype stores objects loose as files on the filesystem.
+This proves to be wasteful of disk space, taking up whole filesystem blocks with
+tiny objects and with directories. It also causes dramatic slowdown as the disk
+gets full and the filesystem has to work harder to find free blocks (as seen in
 \autoref{seek-times-results}). Dividing into chunks solves the problem of
 storing large files by turning it into the problem of storing many files.
 
@@ -128,13 +128,13 @@ subtree commit}
 
 \section{Potential Applications}
 
-As a general distributed storage platform, DMV could have a wide range of
+As a general distributed storage platform, \gls{DMV} could have a wide range of
 potential applications:
 
 \begin{description}
 
-    \item[Private data storage] Individual users might use DMV to maintain a
-        collection of important documents, photos, and media on their own
+    \item[Private data storage] Individual users might use \gls{DMV} to maintain
+        a collection of important documents, photos, and media on their own
         devices, making it easier to keep up-to-date backups and to synchronize
         between computers, mobile devices, and removable drives without giving
         their data to a third-party cloud service.
@@ -158,10 +158,10 @@ potential applications:
 
 \section{Aggregating Data about a Sharded DAG}
 
-Though not implemented in the DMV prototype, we would like a DMV node to be able
-to aggregate data about what DAG objects are available at its neighbors and
-throughout the network. The data could be analyzed to give metrics about the
-data set in several dimensions:
+Though not implemented in the \gls{DMV} prototype, we would like a \gls{DMV}
+node to be able to aggregate data about what DAG objects are available at its
+neighbors and throughout the network. The data could be analyzed to give metrics
+about the data set in several dimensions:
 
 \begin{description}
 

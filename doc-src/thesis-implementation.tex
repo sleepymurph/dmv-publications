@@ -1,19 +1,20 @@
 \chapter{DMV Implementation}
 
-We have written a DMV prototype as a proof-of-concept. The DMV prototype is
-written in the Rust programming language and it runs from the Unix command line,
-though it can also be compiled as a library to be used by other applications.
+We have written a \gls{DMV} prototype as a proof-of-concept. The \gls{DMV}
+prototype is written in the Rust programming language and it runs from the Unix
+command line, though it can also be compiled as a library to be used by other
+applications.
 
 
 \section{Command Line Control, Explicit operations}
 
-Like with familiar version control systems, file changes in DMV are explicitly
-committed by user command. Synchronization is an explicit command as well.
-Applications built on DMV may add daemons to automatically \gls{commit} and
-sync, but DMV focuses only on providing the commands.
+Like with familiar version control systems, file changes in \gls{DMV} are
+explicitly committed by user command. Synchronization is an explicit command as
+well. Applications built on \gls{DMV} may add daemons to automatically
+\gls{commit} and sync, but \gls{DMV} focuses only on providing the commands.
 
-DMV is used from the command line and includes familiar subcommands such as
-branch, \gls{commit}, and checkout
+\gls{DMV} is used from the command line and includes familiar subcommands such
+as branch, \gls{commit}, and checkout
 (\autoref{prototype-help-output}\todo{Actually rename the prototype and
 recapture output}).
 
@@ -32,18 +33,18 @@ sophisticated type system to guarantee memory safety\todo{Cite Rust background},
 avoiding data races in concurrent code, as well as the segmentation faults and
 buffer overflows that are so easy to write in C. We chose Rust primarily because
 it is a compiled language. Compiling to machine code gives us the best chance of
-porting DMV to low-powered or mobile devices\perotto{"(!)"}\askotto{"?"}, and it allows us to compile DMV as
-a library.
+porting \gls{DMV} to low-powered or mobile devices\perotto{"(!)"}\askotto{"?"},
+and it allows us to compile DMV as a library.
 
 
 
 \section{Working Directory and Object Store}\label{dir-impl}
 
-The DMV prototype stores its objects as regular files on the file system, using
-the same structure that Git does. The object store is in a hidden directory
-inside the working directory (\lstinline{.dmv/objects}). Objects are stored
-using their SHA-1 hash as their filename, with the first two hex digits removed
-to create a directory name (\autoref{dir-scheme-example}). This leads to
+The \gls{DMV} prototype stores its objects as regular files on the file system,
+using the same structure that Git does. The object store is in a hidden
+directory inside the working directory (\lstinline{.dmv/objects}). Objects are
+stored using their SHA-1 hash as their filename, with the first two hex digits
+removed to create a directory name (\autoref{dir-scheme-example}). This leads to
 \num{256} subdirectories, each holding roughly \num{1/256}th of all the objects
 stored. We experimented with other schemes to divide the objects
 (\autoref{dir-experiment}), but we found that other schemes tended to create too

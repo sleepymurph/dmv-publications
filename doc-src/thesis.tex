@@ -70,8 +70,8 @@
 % Glossaries has to be declared AFTER hyperref for its links to work
 \usepackage[acronyms,toc]{glossaries}
 \makeglossaries
-
-\defglsentryfmt[main]{\ifglsused{\glslabel}{\glsgenentryfmt}{\textit{\glsgenentryfmt}}}
+% Emphasize first use of glossary term
+\defglsentryfmt[main]{\ifglsused{\glslabel}{\glsgenentryfmt}{\emph{\glsgenentryfmt}}}
 
 
 
@@ -170,6 +170,7 @@ positive side"}
 
 
 \mainmatter
+\glsresetall
 
 \include{thesis-intro}
 \include{thesis-idea}

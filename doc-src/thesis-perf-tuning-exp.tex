@@ -14,13 +14,13 @@ files or directories will exhaust the filesystem's available inodes before it
 uses all the available disk space.
 
 We also noticed that average write speed would slow down as the operation
-progressed. The progress meter we added to DMV's \gls{commit} operation would
-show a rate of \SIrange{30}{40}{\mib\s} at the beginning of an operation but
-slow to less than \SI{300}{\kib} by the end of a long one. We added log output
-to print the write times for individual objects, and we discovered that while
-most objects would be written in milliseconds, occasionally a single object
-write would take multiple seconds or tens of seconds, even though there was no
-appreciable difference in size between the objects
+progressed. The progress meter we added to \gls{DMV}'s \gls{commit} operation
+would show a rate of \SIrange{30}{40}{\mib\s} at the beginning of an operation
+but slow to less than \SI{300}{\kib} by the end of a long one. We added log
+output to print the write times for individual objects, and we discovered that
+while most objects would be written in milliseconds, occasionally a single
+object write would take multiple seconds or tens of seconds, even though there
+was no appreciable difference in size between the objects
 (\autoref{write-times-log-output}).
 
 \begin{figure}
@@ -34,12 +34,12 @@ appreciable difference in size between the objects
     \lstinputlisting[nolol,basicstyle=\scriptsize]{lst-storing-long-write-times.txt}
 \end{figure}
 
-DMV stores its objects as individual files in an object-store directory, in the
-same manner as Git. The object's SHA-1 hash is used as its file name, except
-that the first two hex digits are removed and used as a subdirectory (also
-described in \autoref{dir-impl}). Our prototype originally took the first four
-hex digits to create two levels of subdirectories, under the assumption that we
-would store more objects than Git and need to spread them out with more
+\gls{DMV} stores its objects as individual files in an object-store directory,
+in the same manner as Git. The object's SHA-1 hash is used as its file name,
+except that the first two hex digits are removed and used as a subdirectory
+(also described in \autoref{dir-impl}). Our prototype originally took the first
+four hex digits to create two levels of subdirectories, under the assumption
+that we would store more objects than Git and need to spread them out with more
 subdirectories. That original prototype was showing this odd behavior, and it
 stored files much more slowly than Git. We suspected that the number of
 subdirectories could be at fault, so we experimented with different subdirectory
@@ -134,10 +134,10 @@ filesystem:
     \end{aligned}
 \end{equation*}
 
-So we can see that DMV's original scheme, with two hex digits per directory and
-a depth of two, would yield \SI{65792} subdirectories, which by itself is more
-than \num{2.5} times the total number of inodes available on the \SI{100}{\mib}
-test partition.
+So we can see that \gls{DMV}'s original scheme, with two hex digits per
+directory and a depth of two, would yield \SI{65792} subdirectories, which by
+itself is more than \num{2.5} times the total number of inodes available on the
+\SI{100}{\mib} test partition.
 
 From there, we turn our attention to the mysterious, intermittent long write
 times. In the experiment, across all directory schemes, there were \num{315601}
@@ -234,9 +234,9 @@ different I/O schedulers to choose from\cite{ioschedulers}:
 \end{description}
 
 We were curious if the choice of scheduler would have any effect on performance.
-In particular, we aimed to document if it might alleviate the high seek times we were seeing.
-So we ran extra trials of the VCS scaling experiments using the DMV prototype
-and different I/O schedulers.
+In particular, we aimed to document if it might alleviate the high seek times we
+were seeing. So we ran extra trials of the VCS scaling experiments using the
+\gls{DMV} prototype and different I/O schedulers.
 
 \begin{figure}[]
     \caption{Time for DMV prototype to commit an increasing number of 1KiB files
@@ -260,11 +260,12 @@ the standard deviations at that number of files: \SI{0.674}{\s},
 \SI{0.3153}{\s}, and \SI{0.447}{\s}, respectively.
 
 In retrospect, these results are not surprising. The I/O scheduler deals mainly
-with juggling I/O access between different processes on the system, but the DMV
-prototype is a single process\perotto{It could have been more than one}. Perhaps a multi-threaded or multi-process version
-of the prototype could give the scheduler something to work with, but a better
-approach would be to combine objects into pack files that can be written
-sequentially\perotto{ok, but you could do both}, as discussed in \autoref{chunk-then-recombine}.
+with juggling I/O access between different processes on the system, but the
+\gls{DMV} prototype is a single process\perotto{It could have been more than
+one}. Perhaps a multi-threaded or multi-process version of the prototype could
+give the scheduler something to work with, but a better approach would be to
+combine objects into pack files that can be written sequentially\perotto{ok, but
+you could do both}, as discussed in \autoref{chunk-then-recombine}.
 
 %
 
@@ -290,8 +291,8 @@ We used window sizes in powers of two from \SI{128}{\byte} ($2^7$) to
 ($2^8$) to \SI{128}{\kibi\relax} ($2^{17}$).
 
 The pseudo-random number generator used was an xorshift RNG\cite{xorshift_rng}.
-The experiment itself was automated as a unit test in the DMV prototype's Rust
-code.
+The experiment itself was automated as a unit test in the \gls{DMV} prototype's
+Rust code.
 
 \paragraph{Environment}
 
@@ -317,7 +318,7 @@ is deterministic.
 \autoref{fig:plot-rolling-hash} shows the mean chunk sizes generated by the
 experiment. Both mean and deviation increase with divisor and window size,
 though divisor has a greater effect. We did not invest time in a mathematical
-analysis, but for the DMV prototype we set a window of \SI{32}{\kib} and a
+analysis, but for the \gls{DMV} prototype we set a window of \SI{32}{\kib} and a
 divisor of \SI{16}{\kib}, which yields a mean chunk size of \SI{18.7}{\kib} with
 a standard deviation of \SI{22.0}{\kib}.
 

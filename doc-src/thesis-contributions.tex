@@ -1,5 +1,7 @@
 \chapter{Contributions, Conclusions, and Future Work}
 
+\glsreset{DMV}
+
 \section{Summary of Contributions}
 
 In this paper, we have examined the cryptographic directed acyclic graph (DAG)
@@ -15,11 +17,11 @@ against and experimented with some of the limitations of the ext4 filesystem for
 storing large numbers of small files.
 
 And finally, we have described the idea, architecture, design, and
-implementation of a distributed data storage system we call \newterm{Distributed
-Media Versioning (DMV)} that expands on the distributed version control concept
-to store larger and more diverse data sets, with a high degree of control over
-data locality, and an availability to write updates for any data held locally.
-Though time constraints prevented us from implementing the network features we
-had planned, the DMV prototype has enough functionality to be tested against
-existing version control systems and to demonstrate the addition of new
-\glspl{commit} to a partial DAG.
+implementation of a distributed data storage system we call \gls{DMV} that
+expands on the distributed version control concept to store larger and more
+diverse data sets, with a high degree of control over data locality, and an
+availability to write updates for any data held locally. Though time constraints
+prevented us from implementing the network features we had planned, the
+\gls{DMV} prototype has enough functionality to be tested against existing
+version control systems and to demonstrate the addition of new \glspl{commit} to
+a partial DAG.

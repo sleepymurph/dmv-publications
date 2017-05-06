@@ -36,8 +36,8 @@ allowed the trail to continue.
 \towrite{After corruption, answer instantaneous rather than 7m before. Some
 sorcery detected tampering, even though we fixed the mod time?}
 
-Our DMV prototype was able to store a file up to \SI{64}{\gibi\byte} in size,
-but time became a limiting factor as file size increased. At
+The \gls{DMV} prototype was able to store a file up to \SI{64}{\gibi\byte} in
+size, but time became a limiting factor as file size increased. At
 \SI{96}{\gibi\byte}, our experiment script timed out and terminated the
 \gls{commit} after five and a half hours.\perotto{Bottleneck was...?}
 
@@ -99,18 +99,19 @@ size.\perotto{Increases how? Linear? Exponential? Power of 2?}
 
 At file sizes below around \SI{2}{\mebi\byte}, \gls{commit} times are dominated
 by overhead-- around \SI{5}{\ms} for Git, \SI{100}{\ms} for Mercurial,
-\SI{180}{\ms} for DMV, and \SI{900}{\ms} for Bup, vs only \SI{2}{\ms} for the
-copy.
+\SI{180}{\ms} for \gls{DMV}, and \SI{900}{\ms} for Bup, vs only \SI{2}{\ms} for
+the copy.
 
 Bup, after starting with the highest overhead, goes on to have the fastest
-inital \gls{commit} of all the systems tested for large files. It takes the lead
-at \SI{2}{\gibi\byte}, where Mercurial drops out. To \gls{commit} the
+initial \gls{commit} of all the systems tested for large files. It takes the
+lead at \SI{2}{\gibi\byte}, where Mercurial drops out. To \gls{commit} the
 \SI{2}{\gibi\byte} file, Git's average time is \SI{91.1}{\s}, Bup's is
-\SI{89.1}{\s}, and DMV's is \SI{90.8}{\s}. All of these are a factor of around
-ten times slower than the direct copy at \SI{9.1}{\s}. The differences get more
-pronounced as the file sizes continue to increase. At \SI{64}{\gibi\byte}, Git's
-average time is \SI{110}{\minute}, Bup's is \SI{72}{\minute}, DMV's is
-\SI{298}{\minute}. The average \SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
+\SI{89.1}{\s}, and \gls{DMV}'s is \SI{90.8}{\s}. All of these are a factor of
+around ten times slower than the direct copy at \SI{9.1}{\s}. The differences
+get more pronounced as the file sizes continue to increase. At
+\SI{64}{\gibi\byte}, Git's average time is \SI{110}{\minute}, Bup's is
+\SI{72}{\minute}, \gls{DMV}'s is \SI{298}{\minute}. The average
+\SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
 
 \perottoinline{Multiplot graphs: Label a,b,c,d,e and describe in prose}
 \perottoinline{Explain graph legends}
@@ -133,10 +134,11 @@ average time is \SI{110}{\minute}, Bup's is \SI{72}{\minute}, DMV's is
 \gls{commit}, after updating \num{1/1024}th of the file. Ideally this operation
 should be faster than the first \gls{commit}, because the system should only be
 storing the changed portion of the file. Indeed this is the case for Mercurial,
-Bup, and DMV, which do store only the changed portion. Git, however, copies the
-entire updated file into its repository as a new object, and so its \gls{commit}
-time is virtually identical. The same is true of the copy control, though for
-sizes smaller than \SI{8}{\gib} it is still faster than all the other systems.
+Bup, and \gls{DMV}, which do store only the changed portion. Git, however,
+copies the entire updated file into its repository as a new object, and so its
+\gls{commit} time is virtually identical. The same is true of the copy control,
+though for sizes smaller than \SI{8}{\gib} it is still faster than all the other
+systems.
 
 \perottoinline{Describe results more thoroughly in words}
 

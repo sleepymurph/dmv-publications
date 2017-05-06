@@ -22,13 +22,14 @@ the effect of file numbers, we would \gls{commit} increasing number of small
 \section{Version Control Systems Evaluated}
 
 We ran each experiment using four different version control systems: Git,
-Mercurial (also known as \newterm{hg}), Bup, and the DMV prototype (specific
-versions listed in \autoref{vcs-versions}). As a control we also ran the
-experiments using a dummy VCS that simple made a copy of the files. We chose Git
-and Mercurial because they are the two most widely used distributed version
+Mercurial (also known as \newterm{hg}), Bup, and the \gls{DMV} prototype
+(specific versions listed in \autoref{vcs-versions}). As a control we also ran
+the experiments using a dummy VCS that simple made a copy of the files. We chose
+Git and Mercurial because they are the two most widely used distributed version
 control systems available. We also included Bup because it uses Git's storage
-format but, like DMV, it also breaks files into chunks. For discussion on the
-similarities and differences between DMV and Bup, see \autoref{related_bup}.
+format but, like \gls{DMV}, it also breaks files into chunks. For discussion on
+the similarities and differences between \gls{DMV} and Bup, see
+\autoref{related_bup}.
 
 \towrite{Include more background about Git, Mercurial, and Bup: Git and Hg
 conceptually use same DAG but implemented differently. Bup uses Git's file
