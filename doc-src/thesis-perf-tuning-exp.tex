@@ -74,7 +74,7 @@ required more than the \num{40} hex digits of a \num{160}-byte SHA-1 hash.
     \caption{Sample object store directory variations}
     \label{sample-directory-scheme-variations}
     \centering
-    \begin{tabular}{l l l}
+    \begin{tabular}{c c l}
         Hex digits & Depth & Example \\
         \midrule
         0 & 0 & \lstinline{03d37679d1fab86e5286decd6cd2a94efcfe083f} \\
@@ -200,8 +200,8 @@ thousands of files in one directory.
     %   | awk -e '{ printf "%05.3f & %d & %d & %5d & %5d & %2d & %04.1f \\\\ \n", \
     %                       $8, $2, $3, $4, $5, $6, $13*100/$12 }' \
     %   | head -n10
-    \begin{tabular}{c c r r c r r}
-        Time (\si{\s}) & Digits & Depth & Files & Dirs & Files in Dir & \% inodes used \\
+    \begin{tabular}{r r r r r r r}
+        Time (\si{\s}) & Digits & Depth & Files & Dirs & Files in dir & \% inodes used \\
         \midrule
 2.306 & 1 & 4 & 10699 & 13997 &  1 & 96.2 \\
 2.180 & 1 & 4 & 11025 & 14289 &  1 & 98.6 \\

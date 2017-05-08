@@ -56,6 +56,8 @@ These findings are summarized in \autoref{file-sizes-table} and
     \label{file-sizes-table}
     \centering
     \begin{tabular}{r l}
+        Size & Observation \\
+        \midrule
         \SI{1.5}{\gibi\byte} & Largest successful commit with Mercurial \\
         \SI{2}{\gibi\byte} & Mercurial commit rejected \\
         \SI{8}{\gibi\byte} & Largest successful commit with Git \\
@@ -67,7 +69,6 @@ These findings are summarized in \autoref{file-sizes-table} and
         \SI{96}{\gibi\byte} & Last successful commit with Bup (and Git, ignoring false-alarm errors) \\
         \SI{128}{\gibi\byte} & All fail due to size of test partition \\
     \end{tabular}
-    \perrolfinline{Header for this table}
 \end{table}
 
 \begin{table}
@@ -75,6 +76,9 @@ These findings are summarized in \autoref{file-sizes-table} and
     \label{vcs-size-limits-table}
     \centering
     \begin{tabular}{l l}
+
+        VCS & Effective limit \\
+        \midrule
 
         Git & Commit intact at all sizes, UI reports errors at \SI{12}{\gibi\byte} and larger \\
 

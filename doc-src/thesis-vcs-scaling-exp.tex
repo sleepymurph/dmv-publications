@@ -40,10 +40,12 @@ format directly but is rewritten.}
     \label{vcs-versions}
     \centering
     \begin{tabular}{ l l }
+        VCS & Version \\
+        \midrule
         Git & 2.1.4 \\
-        Mercurial (hg) & 3.1.2 \\
+        Mercurial & 3.1.2 \\
         Bup & debian/0.25-1 \\
-        DMV prototype & exp\_prototype2x1mem (c9baf3a) \\
+        DMV & c9baf3a \\
     \end{tabular}
     \perrolfinline{This table is the reference point for all other graphs. All
     legends should be consistent with it.}
@@ -153,20 +155,22 @@ Additional details can be found in \autoref{test-machine-specs}.
 \begin{table}
     \caption{Test computer specifications}
     \label{test-machine-specs}
-    \begin{tabular}{ l l }
-        Vendor & Hewlett Packard \\
-        CPU & Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz \\
-        RAM & \SI{8}{\gibi\byte} \\
-        Hard disk & ATA model ST3250318AS \\
-        \midrule
-        Operating system & Debian 8.6 ("Jessie") \\
-        Kernel & Linux 3.16.0 \\
-        \midrule
-        Test partition & \SI{197}{\gibi\byte} LVM partition \\
-        Filesystem & ext4 \\
-        I/O scheduler & cfq (unless otherwise noted) \\
+    \begin{tabular}{ l l l }
+        \multicolumn{3}{l}{Hardware} \\
+        & Vendor & Hewlett Packard \\
+        & CPU & Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz \\
+        & RAM & \SI{8}{\gibi\byte} \\
+        & Hard disk & ATA model ST3250318AS \\
+        \\
+        \multicolumn{3}{l}{Operating system} \\
+        & Operating system & Debian 8.6 ("Jessie") \\
+        & Kernel & Linux 3.16.0 \\
+        \\
+        \multicolumn{3}{l}{Configuration} \\
+        & Test partition & \SI{197}{\gibi\byte} LVM partition \\
+        & Filesystem & ext4 \\
+        & I/O scheduler & cfq (unless otherwise noted) \\
     \end{tabular}
-    \perrolfinline{Subheaders to name groups instead of horizontal rules?}
 \end{table}
 
 We ran every trial four times, once on each of the test computers, and took the
