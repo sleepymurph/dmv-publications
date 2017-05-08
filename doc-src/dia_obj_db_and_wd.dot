@@ -1,18 +1,24 @@
 digraph {
 
-    subgraph cluster_local0 {
-        ODB(local_obj_db0,"Local\nObject Database")
+    subgraph cluster_node0 {
+        label="Repository 0"
+        ODB(local_obj_db0,"Object Store")
         WD(local_working_dir0,"Working\nDirectory")
         CICO_LABEL(local_working_dir0, local_obj_db0)
     }
 
-    subgraph cluster_local1 {
-        ODB(local_obj_db1,"Local\nObject Database")
+    subgraph cluster_node1 {
+        label="Repository 1"
+        ODB(local_obj_db1,"Object Store")
         WD(local_working_dir1,"Working\nDirectory")
         CICO_LABEL(local_working_dir1, local_obj_db1)
     }
 
-    ODB(remote_obj_db, "Remote\nObject Databases")
+    subgraph cluster_node2 {
+        label="Repository 2"
+        labelloc="b"
+        ODB(remote_obj_db, "Object Store")
+    }
 
     PSPL_LABEL(local_obj_db0, remote_obj_db)
     PSPL_LABEL(local_obj_db1, remote_obj_db)
