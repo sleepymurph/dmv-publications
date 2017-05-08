@@ -20,6 +20,7 @@ thesis.pdf: \
     dia_git_dag_types.pdf \
     dia_new_dag.pdf \
     dia_obj_db_and_wd.pdf \
+    plot-dir-schemes-file-size--c1-time.pdf \
     plot-file-size--c1-cpu.pdf \
     plot-file-size--c1-time--detail-high-end--prototype-improvements.pdf \
     plot-file-size--c1-time.pdf \
