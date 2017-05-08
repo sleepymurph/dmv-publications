@@ -48,7 +48,7 @@ schemes to see their effects.
 %
 
 
-\paragraph{Procedure}
+\subsection{Procedure}
 
 To measure the effects of different object storage schemes, we created a new
 \SI{100}{\mebi\byte} partition on one of the dedicated experiment computers, and then generated a series
@@ -88,7 +88,7 @@ required more than the \num{40} hex digits of a \num{160}-byte SHA-1 hash.
     \end{tabular}
 \end{table}
 
-\paragraph{Environment}
+\subsection{Environment}
 
 Like the "many files" experiment, this was automated as a Python script and run
 on one of the dedicated computers used for that experiment (specs shown in
@@ -96,8 +96,10 @@ on one of the dedicated computers used for that experiment (specs shown in
 \SI{197}{\gibi\byte} partition used for the other experiments, this experiment
 used a new \SI{100}{\mebi\byte} LVM partition.
 
-\paragraph{Results}
-\label{seek-times-results}
+
+\subsection{Results}
+
+\subsubsection{Out of Inodes}
 
 \begin{figure}[]
     \caption{Number of Files vs. number of directories filling a disk}
@@ -154,6 +156,10 @@ directory and a depth of two, would yield \SI{65792} subdirectories, which by
 itself is more than \num{2.5} times the total number of inodes available on the
 \SI{100}{\mib} test partition. So of course it ran out of inodes long before
 running out of disk space.
+
+
+\subsubsection{Long Write Times}
+\label{seek-times-results}
 
 From there, we turn our attention to the mysterious, intermittent long write
 times. In the experiment, across all directory schemes, there were \num{315601}
@@ -297,7 +303,7 @@ setting a chunk boundary where the sum of the bytes in that window is evenly
 divisible by a given number. We ran an experiment to determine the effects of
 these two parameters on chunk size.
 
-\paragraph{Procedure}
+\subsection{Procedure}
 
 For each combination of window size and divisor, we would run the rolling hash
 algorithm on a stream of pseudo-random bytes until it had identified \num{100}
@@ -312,7 +318,7 @@ The pseudo-random number generator used was an xorshift RNG\cite{xorshift_rng}.
 The experiment itself was automated as a unit test in the \gls{DMV} prototype's
 Rust code.
 
-\paragraph{Environment}
+\subsection{Environment}
 
 Because this experiment measures only the output of calculations, the
 environment in which it is run should make no difference in the outcome. In
@@ -322,7 +328,7 @@ of chunks, which will lead to an identical average chunk size. This experiment
 is deterministic.
 
 
-\paragraph{Results}
+\subsection{Results}
 
 \begin{figure}[]
   \caption{Mean chunk size}
