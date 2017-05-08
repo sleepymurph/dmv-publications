@@ -13,9 +13,13 @@ set yrange[1:27500]
 
 set xlabel "Total number of files"
 set ylabel "Total number of directories"
+set zlabel "Write time"
 
 set logscale cb
-set cblabel "Write time (s)"
+set cblabel "Write time"
+
+set format z "%1.1f s"
+set format cb "%g s"
 
 set palette defined ( \
     0 "green", \
@@ -46,6 +50,8 @@ set ticslevel 0
 
 set xlabel rotate parallel offset character 0,-2,0
 set ylabel rotate parallel offset character -4,-1,0
+set zlabel rotate parallel
+set cblabel rotate parallel
 
 set grid
 
