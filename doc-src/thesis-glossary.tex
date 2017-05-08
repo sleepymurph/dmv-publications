@@ -1,3 +1,57 @@
+% General Version Control
+
+\newacronym[
+    description={distributed version control system, such as Git, where
+    individual repositories can operate independently without having to connect
+    to a central repository},
+    see={VCS},
+]
+{DVCS}{DVCS}{distributed version control system}
+
+\newacronym[
+    description={version control system, a program that stores many versions of
+    a file or set of files, commonly used to track changes to source code},
+    see={SCM},
+]
+{VCS}{VCS}{version control system}
+
+\newacronym[
+    description={source code manager, a version control system that is designed
+    primarily to store source code},
+    see={VCS},
+]
+{SCM}{SCM}{source code manager}
+
+
+% Specific systems
+
+\newacronym[description={Distributed Media Versioning, the new distributed data
+storage platform described and introduced in this paper}]
+{DMV}{DMV}{Distributed Media Versioning}
+
+
+% VCS architecture
+
+\newglossaryentry{objectstore}{
+    name={object store},
+    description={content-addressable storage for DAG objects},
+    see={DAG},
+}
+
+\newglossaryentry{workdir}{
+    name={working directory},
+    description={a directory where files that are tracked by a version control
+    system are actively worked on and edited},
+}
+
+
+% DAG
+
+\newacronym[description={directed acyclic graph, the type of graph data
+structure used to represent history in many distributed version control systems.
+Directed meaning all the edges have a direction, from one node to another, and
+acyclic meaning that there are no cycles, no paths that revisit any node}]
+{DAG}{DAG}{directed acyclic graph}
 
 \newacronym[
     description={binary large object, a sequence of unstructured binary data},
@@ -28,49 +82,6 @@
 ]
 {ref}{ref}{reference}
 
-\newacronym[description={Distributed Media Versioning, the new distributed data
-storage platform described and introduced in this paper}]
-{DMV}{DMV}{Distributed Media Versioning}
-
-\newacronym[description={directed acyclic graph, the type of graph data
-structure used to represent history in many distributed version control systems.
-Directed meaning all the edges have a direction, from one node to another, and
-acyclic meaning that there are no cycles, no paths that revisit any node}]
-{DAG}{DAG}{directed acyclic graph}
-
-\newacronym[
-    description={distributed version control system, such as Git, where
-    individual repositories can operate independently without having to connect
-    to a central repository},
-    see={VCS},
-]
-{DVCS}{DVCS}{distributed version control system}
-
-\newacronym[
-    description={version control system, a program that stores many versions of
-    a file or set of files, commonly used to track changes to source code},
-    see={SCM},
-]
-{VCS}{VCS}{version control system}
-
-\newacronym[
-    description={source code manager, a version control system that is designed
-    primarily to store source code},
-    see={VCS},
-]
-{SCM}{SCM}{source code manager}
-
-\newglossaryentry{objectstore}{
-    name={object store},
-    description={content-addressable storage for DAG objects},
-    see={DAG},
-}
-
-\newglossaryentry{workdir}{
-    name={working directory},
-    description={a directory where files that are tracked by a version control
-    system are actively worked on and edited},
-}
 
 \iffalse
 newterm{A}
