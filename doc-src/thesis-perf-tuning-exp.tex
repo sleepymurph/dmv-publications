@@ -111,33 +111,49 @@ used a new \SI{100}{\mebi\byte} LVM partition.
     \includegraphics[]{plot-filesystem-limits--directory-takeover}
 \end{figure}
 
+\perottoinline{Error flags? "comment valid for other figs too"}
+\askottoinline{Error flags for figures? I'm not following}
+
 \autoref{fig:plot-filesystem-limits--directory-takeover} shows how quickly
 directories overtake files as subdirectory nesting goes deeper. Presented
 visually, the connection between files and directories becomes obvious. The
 maximum number of files plus directories is constant: the number of inodes on
 the filesystem. However, the number of directories created increases
 exponentially with both the number of hex digits per directory and then again by
-directory depth. This can be expressed mathematically. Let $f$, $d$, and $i$ be
-the number of files, directories, and inodes on the filesystem, and let $h$ and
-$n$ be the number of hex digits per subdirectory and the subdirectory depth.
-Then the following equations govern the number of files that can fit on the
-filesystem:
+directory depth. This can be expressed mathematically.
 
-\perottoinline{Error flags? "comment valid for other figs too"}
-\askottoinline{Error flags for figures? I'm not following}
+Let $h$ denote the number of hex digits per subdirectory and let $n$ denote the
+subdirectory depth. Then the total number of directories created by the scheme,
+$d$ is given by
 
-\begin{equation*}
-    \begin{aligned}
-        f+d = i, \quad
-        d = \sum_{i=1}^n \left( 16^h \right)^i, \quad
-        f = i - \sum_{i=1}^n \left( 16^h \right)^i
-    \end{aligned}
-\end{equation*}
+\begin{equation}
+    d = \sum_{i=1}^n \left( 16^h \right)^i \quad.
+\end{equation}
+
+The directories are not created all at once, only when a file that should be
+placed in that directory is stored. But because files are named according to a
+uniformly distributed hash function, no particular directory will be favored and
+the number of directories will trend towards $d$.
+
+Let $o$ denote the number of inodes available on the filesystem, and let $f$
+denote the number of files that can be stored on the filesystem when the
+directory scheme creates $d$ directories. Then,
+
+\begin{equation}
+    f = o-d \quad,
+\end{equation}
+
+And therefore,
+
+\begin{equation}
+    f = o - \sum_{i=1}^n \left( 16^h \right)^i \quad.
+\end{equation}
 
 So we can see that \gls{DMV}'s original scheme, with two hex digits per
 directory and a depth of two, would yield \SI{65792} subdirectories, which by
 itself is more than \num{2.5} times the total number of inodes available on the
-\SI{100}{\mib} test partition.
+\SI{100}{\mib} test partition. So of course it ran out of inodes long before
+running out of disk space.
 
 From there, we turn our attention to the mysterious, intermittent long write
 times. In the experiment, across all directory schemes, there were \num{315601}
