@@ -15,3 +15,6 @@ define(WD_PAIR, `
 
 define(KEEP, `style="filled",bgcolor=grey60')
 define(OMIT, `style="dashed"')
+
+define(NEW, `')
+define(INGIT, `')

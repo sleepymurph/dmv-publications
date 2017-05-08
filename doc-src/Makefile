@@ -17,6 +17,7 @@ thesis.pdf: \
     dia_dmv_dag_slice_partial_history.pdf \
     dia_git_dag_example_simple_tree.pdf \
     dia_git_dag_example_three_commits.pdf \
+    dia_git_dag_types.pdf \
     dia_new_dag.pdf \
     dia_obj_db_and_wd.pdf \
     plot-file-size--c1-cpu.pdf \
