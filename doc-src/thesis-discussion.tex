@@ -77,6 +77,17 @@ simply zipping up snapshots of the data.
 %
 
 
+\section{Chunk Size}
+
+\towrite{The key to dealing with many small chunks is to re-aggregate them. Then
+    what are other implications of chunk size?
+    - De-duplication granularity vs metadata overhead.
+    - Need investigation on real-world data.
+    - And what is up with high standard deviation?
+    - Big window size probably not what we're looking for.
+    - Other ways to correct deviation?
+    - Deal with runs of zeros?}
+
 
 \section{DMV Prototype development}
 

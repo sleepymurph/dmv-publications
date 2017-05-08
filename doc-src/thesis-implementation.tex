@@ -72,15 +72,26 @@ compressed or encrypted file can be updated by transferring only those chunks
 that have changed.
 
 The algorithm keeps a sum of the previous \num{8196} bytes of input data, and
-creates a chunk boundary when that sum is evenly divisible by \num{4096}. We
-increased the parameters to yield larger chunks, summing the previous
-\num{32768} bytes (\SI{32}{\kibi\byte}) and dividing by \num{16384}
-(\SI{16}{\kibi\relax}).
+creates a chunk boundary when that sum is evenly divisible by \num{4096}. These
+parameters are arbitrary and can be adjusted. Let \glssymbol{windowsize} denote
+the \gls{windowsize}, the number of previous bytes summed, and let
+\glssymbol{divisor} denote the \gls{divisor} of the modulus operation. Also, let
+$P_n$ denote the rolling hash sum for position $n$ of the input stream. Then a
+chunk boundary is where
 
-\begin{equation*}
-    \left( \sum_{i = n - \num{32768} }^{n}{P_i} \right) \mod \num{16384} = 0
-\end{equation*}
+\begin{equation}
+    P_n = \left( \sum_{i = n - w }^{n}{P_i} \right) \bmod d = 0
+\end{equation}
 
-This gives a mean chunk size of \SI{52}{\kibi\byte} with a standard deviation of
-\SI{21}{\kibi\byte}. The experiments used to measure and tune chunk sizes are
-described in \autoref{rolling-hash-exp}.
+In experiments with our implementation of this rolling hash algorithm
+(\autoref{rolling-hash-exp}), Rsyncrypto's parameters with a \gls{windowsize} of
+\SI{8192}{\byte} and a divisor of \num{4096} yielded a mean chunk size of
+\SI{4.1}{\kib} with a standard deviation of \SI{4.6}{\kib}. We adjusted the
+parameters for DMV to a \gls{windowsize} of \SI{32}{\kib} and a divisor of
+\SI{16}{\kibi\relax}, which yielded a mean chunk size of \SI{18.7}{\kib} with a
+standard deviation of \SI{22.0}{\kib}. These larger chunk sizes resulted in
+faster commit times for large files in our experiments
+(\autoref{rolling-hash-exp}).
+
+%     8192   4096     4213.8     4738.0 0.156
+%    32768  16384    19169.9    22486.4 0.697

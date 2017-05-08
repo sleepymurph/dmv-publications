@@ -83,6 +83,26 @@ acyclic meaning that there are no cycles, no paths that revisit any node}]
 {ref}{ref}{reference}
 
 
+% Rolling Hash
+
+\newglossaryentry{windowsize}{
+    name={window size},
+    symbol={\ensuremath{w}},
+    description={In a rolling hash algorithm, the number of previous bytes used
+    in the rolling sum},
+    see={divisor},
+}
+
+\newglossaryentry{divisor}{
+    name={divisor},
+    symbol={\ensuremath{d}},
+    description={In a rolling hash algorithm, the divisor in the modulus
+    operation. A chunk boundary is created when the sum of the bytes in the
+    window, modulo this divisor, is equal to zero},
+    see={windowsize},
+}
+
+
 \iffalse
 newterm{A}
 newterm{ACID}
