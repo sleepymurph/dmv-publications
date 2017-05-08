@@ -1,10 +1,10 @@
 \chapter{DMV Architecture}
 
-Each \gls{DMV} node is a \newterm{repository} consisting of a
+Each \gls{DMV} node is a \gls{repository} consisting of a
 content-addressable \gls{objectstore} for immutable \gls{DAG} objects and a
 \gls{workdir} for active file editing (\autoref{fig:dia_obj_db_and_wd}).
-Repositories that are used only for storage can omit the \gls{workdir}, similar
-to a Git bare repository.
+\Glspl{repository} that are used only for storage can omit the \gls{workdir}, similar
+to a Git bare \gls{repository}.
 
 \begin{figure}[h]
   \centering
@@ -13,13 +13,16 @@ to a Git bare repository.
   \label{fig:dia_obj_db_and_wd}
 \end{figure}
 
-Each repository is autonomous, storing a portion of the \gls{DAG}, and able to
-add to it at any time. However, it can transfer \gls{DAG} objects to and from
-other repositories, and it can cache data about what \gls{DAG} objects are
-available at a remote repository. Thus, \gls{DMV} forms an ad-hoc, unstructured
-network of repositories, and each repository can inform the user about what data
-is available where. Together, the repositories hold the entire data set
-(\autoref{fig:dia_architecture}).
+Each \gls{repository} is autonomous, storing a portion of the \gls{DAG}, and
+able to add to it at any time. However, it can transfer \gls{DAG} objects to and
+from other \glspl{repository}, and it can cache data about what \gls{DAG}
+objects are available at a remote \gls{repository}. Thus, \gls{DMV} forms an
+ad-hoc, unstructured network of \glspl{repository}, and each \gls{repository}
+can inform the user about what data is available where. Together, the
+\glspl{repository} hold the entire data set (\autoref{fig:dia_architecture}).
+\Glspl{repository} may exist on separate computers or coexist on the same
+computer. Some \glspl{repository} may be on removable storage and accessed only
+when that storage is connected.
 
 \begin{figure}[h]
   \centering
@@ -31,7 +34,7 @@ is available where. Together, the repositories hold the entire data set
   color diagram.}
 \end{figure}
 
-\gls{DMV} assumes that each node will connect to a human-scale number of other
-nodes, maybe tens or hundreds. \gls{DMV} does not dictate network structure. The
-user or a higher-level application may determine the network topology and
-workflow according to their needs.
+\gls{DMV} assumes that each \gls{repository} will connect to a human-scale
+number of other \glspl{repository}, maybe tens or hundreds. \gls{DMV} does not
+dictate network structure. The user or a higher-level application may determine
+the network topology and workflow according to their needs.
