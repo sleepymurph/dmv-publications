@@ -46,6 +46,11 @@ The object types that make up the \gls{DMV} \gls{DAG} are as follows:
 
 \end{description}
 
+\perrolfinline{These description lists are great. The look good. They're
+concise. And they let people who already know what you're talking about skip the
+explanations. Perhaps employ this in other places as well. Maybe the description
+of Git objects? Maybe for node/object store/working directory?}
+
 The \gls{DAG} begins with \glspl{ref}. Each repository has a list of \glspl{ref}
 that lead into the \gls{DAG}. Each \gls{ref} refers to a \gls{commit}. Each
 \gls{commit} refers to a \gls{tree} that represents the state at the time of
@@ -60,6 +65,9 @@ relationship is illustrated in \autoref{fig:dia_new_dag}.
         \includegraphics[width=0.5\textwidth]{dia_new_dag}
     \caption{DMV DAG Object Types}
     \label{fig:dia_new_dag}
+    \perrolfinline{Again, need consistency to diagrams. Skip the shading, at
+    least of the old object types.}
+    \todo[inline]{Similar diagram for Git in the intro chapter?}
 \end{figure}
 
 

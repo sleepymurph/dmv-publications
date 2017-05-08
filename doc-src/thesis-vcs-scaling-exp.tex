@@ -33,6 +33,7 @@ differences between \gls{DMV} and Bup, see \autoref{related_bup}.
 \towrite{Include more background about Git, Mercurial, and Bup: Git and Hg
 conceptually use same DAG but implemented differently. Bup uses Git's file
 format directly but is rewritten.}
+\perrolfinline{Yes, definitely include that. Possibly in a description list.}
 
 \begin{table}
     \caption{Version control systems tested and their versions}
@@ -44,6 +45,8 @@ format directly but is rewritten.}
         Bup & debian/0.25-1 \\
         DMV prototype & exp\_prototype2x1mem (c9baf3a) \\
     \end{tabular}
+    \perrolfinline{This table is the reference point for all other graphs. All
+    legends should be consistent with it.}
 \end{table}
 
 
@@ -163,6 +166,7 @@ Additional details can be found in \autoref{test-machine-specs}.
         Filesystem & ext4 \\
         I/O scheduler & cfq (unless otherwise noted) \\
     \end{tabular}
+    \perrolfinline{Subheaders to name groups instead of horizontal rules?}
 \end{table}
 
 We ran every trial four times, once on each of the test computers, and took the

@@ -56,11 +56,11 @@ different nodes.
 
 Traditional databases that operated on one powerful server could focus on data
 integrity and the \newterm{ACID} guarantees: Atomicity, Consistency, Isolation,
-and Durability. As demand increased, the server would be scaled up, beefing up
-the server hardware with more disk space, more RAM, and more and faster CPUs.
-But there is a limit to scaling up the hardware of a single machine, and as data
-kept growing, a new wave of systems appeared that scaled \emph{out} to many
-commodity servers, distributed systems.
+and Durability\perrolf{more explanation of ACID?}. As demand increased, the
+server would be scaled up, beefing up the server hardware with more disk space,
+more RAM, and more and faster CPUs. But there is a limit to scaling up the
+hardware of a single machine, and as data kept growing, a new wave of systems
+appeared that scaled \emph{out} to many commodity servers, distributed systems.
 \perotto{refs for this para}
 
 Spreading data across different computers creates new problems of
@@ -73,7 +73,7 @@ available (\newterm{A}), and tolerant of network partitions (\newterm{P}) all at
 the same time. When communication between replicas breaks down and they cannot
 all acknowledge an operation, the system is faced with \newterm{the partition
 decision}: block the operation and decrease availability, or proceed and risk
-inconsistency\cite{cap_years_later}.
+inconsistency\cite{cap_years_later}\perrolf{quote?}.
 
 Much research is aimed at improving consistency. Vector
 clocks\cite{lamport_ordering} and consensus algorithms such as

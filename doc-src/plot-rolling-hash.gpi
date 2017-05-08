@@ -9,7 +9,7 @@ set yrange [1:256*1024]
 #set ytics 8*1024
 #set mytics 2
 
-set key below title "\ndivisor" # The "\n" creates a space between x axis label and key
+set key below title "\nDivisor" # The "\n" creates a space between x axis label and key
 
 set bars .8
 set style data histograms

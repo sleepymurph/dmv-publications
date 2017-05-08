@@ -97,11 +97,15 @@
   \textcolor{blue}{TODO: #1}
 }
 
-% todo from otto
+% feedback from Otto or Rolf
 \newcommand{\perotto}[1]{\todo[color=blue!40]{Otto: #1}}
 \newcommand{\perottoinline}[1]{\todo[color=blue!40,inline]{Otto: #1}}
 \newcommand{\askotto}[1]{\todo[color=violet!40]{Ask Otto: #1}}
 \newcommand{\askottoinline}[1]{\todo[color=violet!40,inline]{Ask Otto: #1}}
+
+\newcommand{\perrolf}[1]{\todo[color=blue!20]{Rolf: #1}}
+\newcommand{\perrolfinline}[1]{\todo[color=blue!20,inline]{Rolf: #1}}
+
 
 % Move units
 \newcommand{\gib}{\gibi\byte}
@@ -191,6 +195,8 @@ positive side"}
 
 %\nocite{*}  % Print all references even if they're not used
 \printbibliography[heading=bibintoc]
+\perrolfinline{Name consistency? Go either all full names or all initial plus
+last name. In physics they go all initial plus last name.}
 
 
 % Colophon
