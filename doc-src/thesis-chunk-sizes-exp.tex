@@ -118,6 +118,14 @@ window size. Interestingly, the standard deviation is often larger than the
 mean. So the chunk sizes are varying wildly. This also makes sense. Once the
 window is full, any byte could potentially trigger a chunk.
 
+The window size's greater effect is that it sets the limit for the smallest
+pieces of identical content that can be identified. A common \SI{1}{\kib} string
+will be lost inside a \SI{4}{\kib} window. Chunks may be smaller than the
+window, but that indicates that the common data string started inside of the
+previous chunk.
+
+
+
 \paragraph{Reset bug makes every chunk a first chunk}
 
 With the reset bug, standard deviations are similar to those without it, but
