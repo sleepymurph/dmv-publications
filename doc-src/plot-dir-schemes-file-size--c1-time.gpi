@@ -26,7 +26,7 @@ set yrange [.001:mins(600)]
 set title "(a) Logarithmic Scale"
 plot \
     meantable("prototype") using 1:2 with lines linetype 10 title "DMV (h=2,n=2)", \
-    meantable("prototype2x1") using 1:2 with lines linetype 4 title "DMV (h=2,n=1)", \
+    meantable("prototype2x1mem") using 1:2 with lines linetype 4 title "DMV (h=2,n=1)", \
     meantable("bup") using 1:2 with lines linetype 3 title "Bup"
 
 unset logscale xy
@@ -45,7 +45,7 @@ set key center center
 unset title
 plot \
     meantable("prototype") using 1:2:3 with errorlines linetype 10 title "DMV (h=2,n=2)", \
-    meantable("prototype2x1") using 1:2:3 with errorlines linetype 4 title "DMV (h=2,n=1)", \
+    meantable("prototype2x1mem") using 1:2:3 with errorlines linetype 4 title "DMV (h=2,n=1)", \
     meantable("bup") using 1:2:3 with errorlines linetype 3 title "Bup"
 
 
@@ -72,7 +72,7 @@ set format y "%1.0fm"
 set title "(b) Megabytes-scale"
 plot \
     meantable("prototype") using 1:($2/60):($3/60) with errorlines linetype 10 title "DMV (h=2,n=2)", \
-    meantable("prototype2x1") using 1:($2/60):($3/60) with errorlines linetype 4 title "DMV (h=2,n=1)", \
+    meantable("prototype2x1mem") using 1:($2/60):($3/60) with errorlines linetype 4 title "DMV (h=2,n=1)", \
     meantable("bup") using 1:($2/60):($3/60) with errorlines linetype 3 title "Bup"
 
 
@@ -85,5 +85,5 @@ set format y "%1.0fm"
 set title "(c) Largest scales measured"
 plot \
     meantable("prototype") using 1:($2/60):($3/60) with errorlines linetype 10 title "DMV (h=2,n=2)", \
-    meantable("prototype2x1") using 1:($2/60):($3/60) with errorlines linetype 4 title "DMV (h=2,n=1)", \
+    meantable("prototype2x1mem") using 1:($2/60):($3/60) with errorlines linetype 4 title "DMV (h=2,n=1)", \
     meantable("bup") using 1:($2/60):($3/60) with errorlines linetype 3 title "Bup"
