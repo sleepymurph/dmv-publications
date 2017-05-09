@@ -276,12 +276,12 @@ more long write times seems to have a more pronounced effect, and the
 depth-\num{2} version starts to lag behind depth-\num{1}. At \SI{768}{\mib}, the
 depth-\num{1} version of DMV finally starts to lag behind Bup.
 
-At \SI{768}{\mib} and above, both the commit times for both versions of DMV seem
-to increase linearly with file size at the same slope, with the depth-\num{1}
-version shifted down. Bup, though also increasing linearly, does so with a
-flatter slope. This is further evidence to suggest that aggregating objects into
-\glspl{packfile} is not only less wasteful of disk space but also faster as the
-number of objects grows into the millions.
+At \SI{768}{\mib} and above, the commit times for both versions of DMV increase
+linearly with file size. They appear to have the same slope, with the
+depth-\num{1} version shifted down. Bup, though also increasing linearly, does
+so with a flatter slope. This is further evidence to suggest that aggregating
+objects into \glspl{packfile} is not only less wasteful of disk space but also
+faster as the number of objects grows into the millions.
 
 %
 
