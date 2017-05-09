@@ -25,9 +25,9 @@ report any actual integrity errors in the repository.
 
 So to test the \gls{commit}, we extracted the \SI{24}{\gibi\byte} file from the
 repository and compared it. It was the same as the original. So the \gls{commit}
-was intact. We also deliberately corrupted the Git pack file that stored the
-\SI{24}{\gibi\byte} by overwriting one \SI{1}{\mebi\byte} block at an offset of
-\SI{22}{\gibi\byte} with new pseudo-random data. When we ran the fsck command
+was intact. We also deliberately corrupted the Git \gls{packfile} that stored
+the \SI{24}{\gibi\byte} by overwriting one \SI{1}{\mebi\byte} block at an offset
+of \SI{22}{\gibi\byte} with new pseudo-random data. When we ran the fsck command
 again with the corrupted repository, it reported the integrity error, but it did
 not report the \lstinline{malloc} error that it did before. So for the other
 trials with larger files, we assumed that Git's errors were a false alarm and
@@ -208,13 +208,14 @@ includes the original file, the first copy of the file, and the updated
 during the update \gls{commit}, leading to a total disk space usage of three
 times the file size. However, Git has a separate garbage collection stage where
 it cleans up the repository and aggregates similar objects together in
-\newterm{pack files}. The post-garbage collection size for Git is shown as a
+\glspl{packfile}. The post-garbage collection size for Git is shown as a
 separate line on the graph. This post-GC size converges to double the original
 file size, but then jumps to three times at a file size of \SI{1.5}{\gib}. This
-suggests that the pack step is failing silently at \SI{1.5}{\gib} and larger.
-This is probably related to the way Mercurial's \glspl{commit} begin failing at
-\SI{2}{\gib} and larger. Both operations are trying to load multiple versions of
-the file into memory to calculate deltas for packing.
+suggests that the \glsdisp{packfile}{pack} step is failing silently at
+\SI{1.5}{\gib} and larger. This is probably related to the way Mercurial's
+\glspl{commit} begin failing at \SI{2}{\gib} and larger. Both operations are
+trying to load multiple versions of the file into memory to calculate deltas for
+\glsdisp{packfile}{packing}.
 
 %
 

@@ -227,7 +227,7 @@ files or directories, though they tend to get longer as both increase. The long
 writes are spaced apart somewhat regularly. That suggests that they are caused
 by upkeep that the filesystem has to do periodically, and that there is no
 obvious way to avoid them, at least not while storing many small files.
-Aggregating objects into pack files as discussed in
+Aggregating objects into \glspl{packfile} as discussed in
 \autoref{chunk-then-recombine} might be a better strategy.
 
 
@@ -339,8 +339,9 @@ with juggling I/O access between different processes on the system, but the
 \gls{DMV} prototype is a single process\perotto{It could have been more than
 one}. Perhaps a multi-threaded or multi-process version of the prototype could
 give the scheduler something to work with, but a better approach would be to
-combine objects into pack files that can be written sequentially\perotto{ok, but
-you could do both}, as discussed in \autoref{chunk-then-recombine}.
+combine objects into \glspl{packfile} that can be written
+sequentially\perotto{ok, but you could do both}, as discussed in
+\autoref{chunk-then-recombine}.
 
 %
 

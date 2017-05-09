@@ -294,19 +294,21 @@ collaborative work and for long-term data storage.
 
 The main weakness of Git's \gls{DAG} is that \glspl{blob} and files are one and
 the same. This makes the file the unit of de-duplication, which can lead to
-inefficient storage of larger files. Git gets around this by "packing" objects
-during its garbage-collection phase, storing similar objects as bases and deltas
-behind the scenes. But this is an optimization.
+inefficient storage of larger files. Git gets around this by
+\glsdisp{packfile}{packing} objects during its garbage-collection phase, storing
+similar objects as bases and deltas behind the scenes. But this is an
+optimization.
 
-Calculating deltas for during this packing phase requires loading the objects
-into memory, and so it can cause an out-of-memory error if an object is too
-large to fit into available RAM. Because Git stores files whole in \glspl{blob}, it
-cannot pack files that are larger than available RAM.
+Calculating deltas for during this \glsdisp{packfile}{packing} phase requires
+loading the objects into memory, and so it can cause an out-of-memory error if
+an object is too large to fit into available RAM. Because Git stores files whole
+in \glspl{blob}, it cannot \glsdisp{packfile}{pack} objects that are larger than
+available RAM.
 
 If the \gls{DAG} operated at a granularity smaller than the file, it could
 become even more powerful. It could naturally de-duplicate chunks of files the
 way that Git already de-duplicates whole files, and it could ensure that all
-objects fit into RAM for packing or other operations.
+objects fit into RAM for \glsdisp{packfile}{packing} or other operations.
 
 This sub-file granularity and de-duplication is the core idea behind our new
 data storage system, \acrlong{DMV}.
