@@ -38,6 +38,7 @@ thesis.pdf: \
     plot-num-files--repo-size.pdf \
     plot-num-files--stat1-time.pdf \
     plot-rolling-hash.pdf \
+    plot-rolling-hash-with-reset.pdf \
     plot-seek-times.pdf \
 
 	pdflatex thesis.tex

@@ -1,0 +1,217 @@
+\section{Tuning Chunk Size}\label{rolling-hash-exp}
+
+The algorithm used to divide files into chunks (described in
+\autoref{chunking-algoritm}) involves moving a window across the data, and
+setting a chunk boundary where the sum of the bytes in that window is evenly
+divisible by a given number. We ran an experiment to determine the effects of
+these two parameters on chunk size.
+
+\subsection{Procedure}
+
+For each combination of window size and divisor, we would run the rolling hash
+algorithm on a stream of pseudo-random bytes until it had identified \num{100}
+chunks. Then we would compute the mean and standard deviation of the chunk
+sizes.
+
+We used window sizes in powers of two from \SI{128}{\byte} ($2^7$) to
+\SI{256}{\kibi\byte} ($2^{18}$), and divisors in powers of two from \num{256}
+($2^8$) to \SI{128}{\kibi\relax} ($2^{17}$).
+
+The pseudo-random number generator used was an xorshift RNG\cite{xorshift_rng}.
+The experiment itself was automated as a unit test in the \gls{DMV} prototype's
+Rust code.
+
+\subsection{Environment}
+
+Because this experiment measures only the output of calculations, the
+environment in which it is run should make no difference in the outcome. In
+fact, if the xorshift RNG is given the same initial seed value, the resulting
+random byte stream will be identical, which will lead to an identical sequence
+of chunks, which will lead to an identical average chunk size. This experiment
+is deterministic.
+
+\subsection{Window Reset Bug}
+
+During development, we noticed an error in the DMV rolling hash implementation:
+it would reset the window after every chunk. DMV's rolling hash implementation
+waits until the window is full before marking any chunks, so resetting the
+window after each chunk would force it to fill again before marking the next
+chunk. This effectively created a minimum chunk size, the window size. We ran
+the experiment both with and without the bug to see how it would affect chunk
+size.
+
+\subsection{Results}
+
+\begin{figure}[p]
+  \caption{Mean chunk size}
+  \label{plot-rolling-hash}
+  \centering
+    \includegraphics[]{plot-rolling-hash}
+\end{figure}
+
+\begin{figure}[p]
+  \caption{Mean chunk size, with reset bug}
+  \label{plot-rolling-hash-with-reset}
+  \centering
+    \includegraphics[]{plot-rolling-hash-with-reset}
+\end{figure}
+
+% Analyze:
+%
+% paste -d'|' \
+%       ../data/exp--rolling-hash/2017-05-09--rolling-hash--reuse-rand--no-reset.txt \
+%       ../data/exp--rolling-hash/2017-05-09--rolling-hash--reuse-rand--reset.txt \
+%   | tail -n +2 \
+%   | awk -e '{printf "%6d   %6d | %8.1f   %8.1f   %8.1f | %7.1f   %7.1f   %7.1f \\\\\n", $1, $2, $8, $3, ($8+$1-$3), $9, $4, ($9-$4)}' | less
+
+% Print for table:
+%
+% paste -d'|' \
+%       ../data/exp--rolling-hash/2017-05-09--rolling-hash--reuse-rand--no-reset.txt \
+%       ../data/exp--rolling-hash/2017-05-09--rolling-hash--reuse-rand--reset.txt \
+%   | tail -n +2 \
+%   | awk -e '{printf "%6d & %6d & %8.1f & %8.1f & %8.1f & %7.1f & %7.1f & %7.1f \\\\\n", $1, $2, $8, $3, ($8-$3), $9, $4, ($9-$4)}' | less
+
+\begin{table}
+    \caption{Chunk sizes for a window size of 4096}
+    \label{chunk-size-table}
+    \begin{tabular}{r | r r r | r r r}
+        & \multicolumn{2}{c}{Mean} & & \multicolumn{2}{c}{Std.} & \\
+        Divisor & As des. & w/reset & Diff & As des. & w/reset & Diff \\
+        \midrule
+    256 &    300.8 &   4363.7 &  -4062.9 &   476.3 &   218.1 &   258.2 \\
+    512 &    583.9 &   4622.9 &  -4039.0 &   718.9 &   512.6 &   206.3 \\
+   1024 &   1069.1 &   5185.6 &  -4116.5 &  1176.7 &  1003.7 &   173.0 \\
+   2048 &   1932.0 &   6242.9 &  -4310.9 &  2072.1 &  2179.4 &  -107.3 \\
+   4096 &   4255.8 &   8629.8 &  -4374.0 &  5499.7 &  5449.4 &    50.3 \\
+   8192 &   8324.8 &  13735.5 &  -5410.7 &  9506.4 &  9793.4 &  -287.0 \\
+  16384 &  13304.2 &  20639.0 &  -7334.8 & 13263.2 & 16862.1 & -3598.9 \\
+  32768 &  13304.2 &  20639.0 &  -7334.8 & 13263.2 & 16862.1 & -3598.9 \\
+    \end{tabular}
+\end{table}
+
+\autoref{plot-rolling-hash} shows the mean chunk sizes with the algorithm as
+designed, and \autoref{plot-rolling-hash-with-reset} shows them with the window
+reset bug. \autoref{chunk-size-table} shows specific values for a window size of
+4096, both as designed ("as des.") and with the reset bug ("w/reset").
+
+\paragraph{Increasing with divisor}
+
+The overall trend is for chunk size to increase with both window size and
+divisor. As designed, though, the effect of the window size is much smaller, and
+the chunk size varies much more with the divisor. We did not perform a rigorous
+mathematical analysis of the algorithm, but this makes intuitive sense. The
+larger the divisor, the fewer numbers divide by it evenly, and so there is a
+lower probability that a given byte will push the sum to an even multiple. With
+a larger window, each bytes contribution to the sum is smaller, and that does
+have some effect on the probability, but the effect is less obvious.
+
+Also, the first chunk must always be at least the size of the window, because
+the window has to fill before a chunk boundary can be triggered. Each value is
+the mean of 100 chunk sizes, and the first must be larger than the window. After
+the window is filled, the probability of triggering a chunk is the same, so the
+first chunk is \glssymbol{windowsize} bytes larger than it would otherwise be.
+This would in turn increase the mean by $\frac{\glssymbol{windowsize}}{100}$.
+
+The standard deviation similarly tracks the divisor, with less effect from the
+window size. Interestingly, the standard deviation is often larger than the
+mean. So the chunk sizes are varying wildly. This also makes sense. Once the
+window is full, any byte could potentially trigger a chunk.
+
+\paragraph{Reset bug makes every chunk a first chunk}
+
+With the reset bug, standard deviations are similar to those without it, but
+mean chunk size is much larger. Interestingly, if one compares the mean chunk
+size with the reset to the mean chunk size without it for the same window size
+and divisor, it is often larger by an amount close to the window size itself.
+This also makes sense. The reset makes every chunk a first chunk, which is
+\glssymbol{windowsize} bytes larger than it would otherwise be. So the
+window-reset bug's effect was to shift the mean chunk size up by the window
+size.
+
+\paragraph{Flat tops}
+
+There is another interesting effect in cases with small window sizes and large
+divisors. At some point, increasing the divisor has no more effect. A doubled
+divisor will yield exactly the same chunk size. This phenomenon can be seen in
+\autoref{chunk-size-table} where the values are identical for divisors of
+\num{16384} and \num{32768}, and in \autoref{plot-rolling-hash} and
+\autoref{plot-rolling-hash-with-reset}, where the left-most histogram clusters
+flatten out on their right sides. This has to do with the fact that the divisors
+are powers of two, and that the same pseudorandom stream is used for every
+trial. When the divisor doubles, half of the values that would trigger chunk
+boundaries disappear, but half of them are exactly the same. For those trials,
+it just so happens that the first \num{100} chunk boundary trigger values that
+the algorithm encounters in the byte stream are the ones that the divisors have
+in common.
+
+%
+
+
+\subsubsection{Chunk Sizes in Action}
+
+\begin{table}
+    \caption{DMV versions examined with different rolling hash configurations}
+    \label{chunk-size-versions}
+    \centering
+
+    \begin{tabular}{l r c l c c}
+        Version & Window size & Divisor & Window reset & Mean & Std. \\
+        \midrule
+        c9baf3a & \SI{4}{\kib} & \SI{16}{\kibi\relax} & Yes & \SI{20.1}{\kib} & \SI{16.5}{\kib} \\
+        b134cca & \SI{32}{\kib} & \SI{16}{\kibi\relax} & Yes & \SI{52.5}{\kib} & \SI{21.2}{\kib} \\
+        a660730 & \SI{4}{\kib} & \SI{16}{\kibi\relax} & No & \SI{13.0}{\kib} & \SI{13.0}{\kib} \\
+        3e599e3 & \SI{32}{\kib} & \SI{16}{\kibi\relax} & No & \SI{18.7}{\kib} & \SI{22.0}{\kib} \\ \end{tabular}
+
+    \medskip
+
+    The "Mean" and "Std." columns show the mean chunk size and its standard
+    deviation for that configuration, as reported by the rolling-hash experiment
+    (\autoref{plot-rolling-hash}).
+
+\end{table}
+
+\begin{figure}[]
+  \caption{Chunk sizes in action}
+  \label{plot-chunk-size-file-size--c1-time}
+  \centering
+    \includegraphics[]{plot-chunk-size-file-size--c1-time}
+\end{figure}
+
+We also ran the file-size experiments (\autoref{file-size-exp-desc}) with DMV
+versions that used four different rolling hash configurations. The reference DMV
+version used in other experiments (c9baf3a) had a window size of \SI{4}{\kib}
+and a divisor of \SI{16}{\kibi\relax}, chosen arbitrarily. It also has the
+window-reset bug. Later, in order to get a larger chunk size, we increased the
+window size to \SI{32}{\kib} but left the divisor the same (version b134cca). It
+was after that that we discovered the window-reset bug and fixed it. We then
+re-ran the file-size experiments with both window sizes with the bug fixed
+(\SI{4}{\kib} in version a660730, \SI{32}{\kib} in version 3e599e3). These
+versions and their mean chunk sizes are listed in \autoref{chunk-size-versions},
+and the results are shown in \autoref{plot-chunk-size-file-size--c1-time}.
+
+The file-size experiments are sensitive to chunk size because chunk size
+determines the number of chunk objects, and the number of objects on the disk
+affects write speed. Larger chunks means fewer objects which means less
+filesystem overhead, as we found in the object-directory-layout experiment
+(\autoref{dir-experiment}).
+
+The version with a \SI{4}{\kib} window and no reset bug has the smallest mean
+chunk size at \SI{13.0}{\kib} and it is clearly the slowest. Next, the
+\SI{4}{\kib} window with reset and the \SI{32}{\kib} window without reset have
+similar mean chunk sizes at \SI{20.1}{\kib} and \SI{18.7}{\kib} respectively,
+and they have similar times. Finally, the \SI{32}{\kib} window with reset has
+the largest mean chunk size at \SI{52.5}{\kib} and it is clearly the fastest.
+However, we have to assume that as file sizes got even larger that it would also
+succumb to the many-files problem.
+
+This is further evidence of the importance of aggregating objects into
+\glspl{packfile}. If files are packed, the number of objects becomes less of a
+concern, and then so does chunk size. The effects of chunk size then would be
+more subtle, smaller chunk sizes would let data be de-duplicated with a finer
+granularity, better compressing the data. However, they would incur some
+overhead by way of larger \gls{chunkedblob} objects because there would be more
+chunks to index. We would have to perform additional experiments that used
+real-world data to examine that tradeoff.
+
+%

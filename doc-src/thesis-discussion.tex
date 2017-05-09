@@ -89,6 +89,13 @@ simply zipping up snapshots of the data.
     - Other ways to correct deviation?
     - Deal with runs of zeros?}
 
+\towrite{Rolling hash improvements:
+    - more thought to window size. Larger than avg chunk size and you get
+    subsequent chunks affecting each other.
+    - thought to what happens at chunk boundaries. Run of zeros at chunk
+    boundary will create a run of 1-byte chunks. How likely is that?
+    - What about long runs of zeros anyway?
+}
 
 \section{DMV Prototype development}
 
@@ -96,32 +103,6 @@ simply zipping up snapshots of the data.
 
 \towrite{Graph walk abstraction}
 
-
-\subsection{Prototype performance tuning}
-
-\towrite{Talk about different improvements and what difference the made
-    \autoref{fig:plot-file-size--c1-time--prototype-improvements}
-    \autoref{fig:plot-num-files--prototype-improvements--c1-time-detail}
-}
-
-\begin{figure}[]
-  \caption{Increasing file size: prototype improvements}
-  \label{fig:plot-file-size--c1-time--prototype-improvements}
-  \centering
-    \includegraphics[]{plot-file-size--c1-time--detail-high-end--prototype-improvements}
-    \todo[inline]{Break this graph up, compare chunk sizes in chunk size
-    experiments. Compare directory schemes in directory schemes experiments.}
-\end{figure}
-
-\begin{figure}[]
-  \caption{Real time required to commit many 1KiB files to an empty repository
-  (detail)}
-  \label{fig:plot-num-files--prototype-improvements--c1-time-detail}
-  \centering
-    \includegraphics[]{plot-num-files--prototype-improvements--c1-time-detail}
-    \todo[inline]{Break this graph up, compare chunk sizes in chunk size
-    experiments. Compare directory schemes in directory schemes experiments.}
-\end{figure}
 
 %
 

@@ -19,7 +19,7 @@ set boxwidth .4 relative
 set xtics rotate by 20 offset char -1.3,-.8
 
 cmdline(n) = "< awk '$2==".n." {print $0}' \
-                ../data/exp--rolling-hash/2017-04-28--rolling-hash--no-reset.txt"
+                ../data/exp--rolling-hash/2017-03-20--rolling-hash.txt"
 
 modstr(n) = "mod ".gprintf("%1.0b%B",2**n)
 si2(n)=gprintf("%1.0b%B",n)
