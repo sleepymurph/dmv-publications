@@ -1,0 +1,93 @@
+meantable(f) = "< ../data/meantable.py \
+    --columns filebytes c1_time \
+    --where-not-bad c1_ver \
+    --files ../data/exp--file-size--v04--w-cpu/".f.'-*'
+
+set format x "%1.0b%BB"
+
+set grid
+unset key
+
+kilos(n) = n * 2**10
+megs(n) = n * 2**20
+gigs(n) = n * 2**30
+
+mins(n) = n * 60
+
+set multiplot layout 2,2 rowsfirst
+
+set logscale x 2
+set logscale y 60
+set xrange [kilos(1):gigs(128)]
+set ytics ("10ms" .01, "100ms" .1, "1s" 1, "1m" 60, "1h" mins(60))
+set xtics (kilos(1), megs(1), gigs(1), gigs(128))
+set yrange [.001:mins(600)]
+
+set title "(a) Logarithmic Scale"
+plot \
+    meantable("prototype2x1mem") using 1:2 with lines linetype 4, \
+    meantable("prototype2x1chunks32kx16k") using 1:2 with lines linetype 12, \
+    meantable("prototypenochunkreset") using 1:2 with lines linetype 11, \
+    meantable("prototypenochunkreset32kx16k") using 1:2 with lines linetype 11
+
+unset logscale xy
+
+
+# Separate key: do another plot with outlandish ranges and all decoration off
+
+set xrange [8*2**30:104*2**30]
+set yrange [-mins(400):-mins(500)]
+unset xtics
+unset ytics
+unset grid
+unset border
+set key center center
+
+unset title
+plot \
+    meantable("prototype2x1mem") using 1:2:3 with errorlines linetype 4 title "w=4KiB, reset", \
+    meantable("prototype2x1chunks32kx16k") using 1:2:3 with errorlines linetype 12 title "w=32KiB, reset", \
+    meantable("prototypenochunkreset") using 1:2:3 with errorlines linetype 11 pointtype 4 title "w=4KiB, no reset", \
+    meantable("prototypenochunkreset32kx16k") using 1:2:3 with errorlines linetype 11 pointtype 2 title "w=32KiB, no reset"
+
+
+# Reestablish decorations
+
+set grid
+set border
+unset key
+set yrange [*:*]
+
+
+set mxtics 2
+set mytics 2
+
+
+# Other plots
+
+set xrange [megs(512):gigs(3.5)]
+set xtics gigs(1)
+set yrange [*:*]
+set ytics 1
+set format y "%1.0fm"
+
+set title "(b) Megabytes-scale"
+plot \
+    meantable("prototype2x1mem") using 1:($2/60):($3/60) with errorlines linetype 4, \
+    meantable("prototype2x1chunks32kx16k") using 1:($2/60):($3/60) with errorlines linetype 12, \
+    meantable("prototypenochunkreset") using 1:($2/60):($3/60) with errorlines linetype 11 pointtype 4, \
+    meantable("prototypenochunkreset32kx16k") using 1:($2/60):($3/60) with errorlines linetype 11 pointtype 2
+
+
+set xrange [gigs(16):gigs(112)]
+set xtics gigs(32)
+set yrange [0:360]
+set ytics 60
+set format y "%1.0fm"
+
+set title "(c) Largest scales measured"
+plot \
+    meantable("prototype2x1mem") using 1:($2/60):($3/60) with errorlines linetype 4, \
+    meantable("prototype2x1chunks32kx16k") using 1:($2/60):($3/60) with errorlines linetype 12, \
+    meantable("prototypenochunkreset") using 1:($2/60):($3/60) with errorlines linetype 11 pointtype 4, \
+    meantable("prototypenochunkreset32kx16k") using 1:($2/60):($3/60) with errorlines linetype 11 pointtype 2
