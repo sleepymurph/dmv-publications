@@ -3,6 +3,18 @@ meantable(f) = "< ../data/meantable.py \
     --where-not-bad c1_ver \
     --files ../data/exp--file-size--v04--w-cpu/".f.'-*'
 
+prototype2x1mem_lt = "linetype 4"
+prototype2x1mem_pt = "pointtype 4"
+
+prototype2x1chunks32kx16k_lt = "linetype 12"
+prototype2x1chunks32kx16k_pt = ""
+
+prototypenochunkreset_lt = "linetype 11"
+prototypenochunkreset_pt = "pointtype 4"
+
+prototypenochunkreset32kx16k_lt = "linetype 11"
+prototypenochunkreset32kx16k_pt = "pointtype 2"
+
 set format x "%1.0b%BB"
 
 set grid
@@ -25,10 +37,10 @@ set yrange [.001:mins(600)]
 
 set title "(a) Logarithmic Scale"
 plot \
-    meantable("prototype2x1mem") using 1:2 with lines linetype 4, \
-    meantable("prototype2x1chunks32kx16k") using 1:2 with lines linetype 12, \
-    meantable("prototypenochunkreset") using 1:2 with lines linetype 11, \
-    meantable("prototypenochunkreset32kx16k") using 1:2 with lines linetype 11
+    meantable("prototype2x1mem") using 1:2 with lines @prototype2x1mem_lt, \
+    meantable("prototype2x1chunks32kx16k") using 1:2 with lines @prototype2x1chunks32kx16k_lt, \
+    meantable("prototypenochunkreset") using 1:2 with lines @prototypenochunkreset_lt, \
+    meantable("prototypenochunkreset32kx16k") using 1:2 with lines @prototypenochunkreset32kx16k_lt
 
 unset logscale xy
 
@@ -45,10 +57,10 @@ set key center center
 
 unset title
 plot \
-    meantable("prototype2x1mem") using 1:2:3 with errorlines linetype 4 title "w=4KiB, reset", \
-    meantable("prototype2x1chunks32kx16k") using 1:2:3 with errorlines linetype 12 title "w=32KiB, reset", \
-    meantable("prototypenochunkreset") using 1:2:3 with errorlines linetype 11 pointtype 4 title "w=4KiB, no reset", \
-    meantable("prototypenochunkreset32kx16k") using 1:2:3 with errorlines linetype 11 pointtype 2 title "w=32KiB, no reset"
+    meantable("prototype2x1mem") using 1:2:3 with errorlines @prototype2x1mem_lt @prototype2x1mem_pt title "w=4KiB, reset", \
+    meantable("prototype2x1chunks32kx16k") using 1:2:3 with errorlines @prototype2x1chunks32kx16k_lt @prototype2x1chunks32kx16k_pt title "w=32KiB, reset", \
+    meantable("prototypenochunkreset") using 1:2:3 with errorlines @prototypenochunkreset_lt @prototypenochunkreset_pt title "w=4KiB, no reset", \
+    meantable("prototypenochunkreset32kx16k") using 1:2:3 with errorlines @prototypenochunkreset32kx16k_lt @prototypenochunkreset32kx16k_pt title "w=32KiB, no reset"
 
 
 # Reestablish decorations
@@ -73,10 +85,10 @@ set format y "%1.0fm"
 
 set title "(b) Megabytes-scale"
 plot \
-    meantable("prototype2x1mem") using 1:($2/60):($3/60) with errorlines linetype 4, \
-    meantable("prototype2x1chunks32kx16k") using 1:($2/60):($3/60) with errorlines linetype 12, \
-    meantable("prototypenochunkreset") using 1:($2/60):($3/60) with errorlines linetype 11 pointtype 4, \
-    meantable("prototypenochunkreset32kx16k") using 1:($2/60):($3/60) with errorlines linetype 11 pointtype 2
+    meantable("prototype2x1mem") using 1:($2/60):($3/60) with errorlines @prototype2x1mem_lt @prototype2x1mem_pt, \
+    meantable("prototype2x1chunks32kx16k") using 1:($2/60):($3/60) with errorlines @prototype2x1chunks32kx16k_lt @prototype2x1chunks32kx16k_pt, \
+    meantable("prototypenochunkreset") using 1:($2/60):($3/60) with errorlines @prototypenochunkreset_lt @prototypenochunkreset_pt, \
+    meantable("prototypenochunkreset32kx16k") using 1:($2/60):($3/60) with errorlines @prototypenochunkreset32kx16k_lt @prototypenochunkreset32kx16k_pt
 
 
 set xrange [gigs(16):gigs(112)]
@@ -87,7 +99,7 @@ set format y "%1.0fm"
 
 set title "(c) Largest scales measured"
 plot \
-    meantable("prototype2x1mem") using 1:($2/60):($3/60) with errorlines linetype 4, \
-    meantable("prototype2x1chunks32kx16k") using 1:($2/60):($3/60) with errorlines linetype 12, \
-    meantable("prototypenochunkreset") using 1:($2/60):($3/60) with errorlines linetype 11 pointtype 4, \
-    meantable("prototypenochunkreset32kx16k") using 1:($2/60):($3/60) with errorlines linetype 11 pointtype 2
+    meantable("prototype2x1mem") using 1:($2/60):($3/60) with errorlines @prototype2x1mem_lt @prototype2x1mem_pt, \
+    meantable("prototype2x1chunks32kx16k") using 1:($2/60):($3/60) with errorlines @prototype2x1chunks32kx16k_lt @prototype2x1chunks32kx16k_pt, \
+    meantable("prototypenochunkreset") using 1:($2/60):($3/60) with errorlines @prototypenochunkreset_lt @prototypenochunkreset_pt, \
+    meantable("prototypenochunkreset32kx16k") using 1:($2/60):($3/60) with errorlines @prototypenochunkreset32kx16k_lt @prototypenochunkreset32kx16k_pt
