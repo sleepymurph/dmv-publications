@@ -97,31 +97,6 @@ These findings are summarized in \autoref{file-sizes-table} and
 
 \subsection{Time for File-Size Initial Commit}
 
-\autoref{fig:plot-file-size--c1-time} shows the wall-clock time required for the
-initial \gls{commit}, adding a single file of the given size to a fresh
-repository. Over all, the trend is clear and unsurprising: \gls{commit} time
-increases with file size.\perotto{Increases how? Linear? Exponential? Power of
-2?}
-
-At file sizes below around \SI{2}{\mebi\byte}, \gls{commit} times are dominated
-by overhead-- around \SI{5}{\ms} for Git, \SI{100}{\ms} for Mercurial,
-\SI{180}{\ms} for \gls{DMV}, and \SI{900}{\ms} for Bup, vs only \SI{2}{\ms} for
-the copy.
-
-Bup, after starting with the highest overhead, goes on to have the fastest
-initial \gls{commit} of all the systems tested for large files. It takes the
-lead at \SI{2}{\gibi\byte}, where Mercurial drops out. To \gls{commit} the
-\SI{2}{\gibi\byte} file, Git's average time is \SI{91.1}{\s}, Bup's is
-\SI{89.1}{\s}, and \gls{DMV}'s is \SI{90.8}{\s}. All of these are a factor of
-around ten times slower than the direct copy at \SI{9.1}{\s}. The differences
-get more pronounced as the file sizes continue to increase. At
-\SI{64}{\gibi\byte}, Git's average time is \SI{110}{\minute}, Bup's is
-\SI{72}{\minute}, \gls{DMV}'s is \SI{298}{\minute}. The average
-\SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
-
-\perottoinline{Multiplot graphs: Label a,b,c,d,e and describe in prose}
-\perottoinline{Explain graph legends}
-
 \begin{figure}[]
     \caption{Wall-clock time to commit one large file to a fresh repository}
     \label{fig:plot-file-size--c1-time}
@@ -135,22 +110,52 @@ get more pronounced as the file sizes continue to increase. At
     \includegraphics[]{plot-file-size--c1-time}
 \end{figure}
 
+\autoref{fig:plot-file-size--c1-time} shows the wall-clock time required for the
+initial \gls{commit}, adding a single file of the given size to a fresh
+repository. Over all, the trend is clear and unsurprising: \gls{commit} time
+increases with file size. It increases linearly for Git, Mercurial, and Bup.
+DMV's commit times increase in a more parabolic fashion, which is most apparent
+in \autoref{fig:plot-file-size--c1-time}e.
+
+At file sizes below around \SI{2}{\mebi\byte}
+(\autoref{fig:plot-file-size--c1-time}a and b), \gls{commit} times are dominated
+by overhead-- around \SI{5}{\ms} for Git, \SI{100}{\ms} for Mercurial,
+\SI{180}{\ms} for \gls{DMV}, and \SI{900}{\ms} for Bup, vs only \SI{2}{\ms} for
+the copy.
+
+Bup, after starting with the highest overhead, goes on to have the fastest
+initial \gls{commit} of all the systems tested for large files. It takes the
+lead at \SI{2}{\gibi\byte}, where Mercurial drops out
+(\autoref{fig:plot-file-size--c1-time}d). To \gls{commit} the \SI{2}{\gibi\byte}
+file, Git's average time is \SI{91.1}{\s}, Bup's is \SI{89.1}{\s}, and
+\gls{DMV}'s is \SI{90.8}{\s}. All of these are a factor of around ten times
+slower than the direct copy at \SI{9.1}{\s}. The differences get more pronounced
+as the file sizes continue to increase. At \SI{64}{\gibi\byte}, Git's average
+time is \SI{110}{\minute}, Bup's is \SI{72}{\minute}, \gls{DMV}'s is
+\SI{298}{\minute}. The average \SI{64}{\gibi\byte} copy takes \SI{35}{\minute}.
+
+DMV's parabolic increase is due to the way it breaks the large file into chunks
+and stores objects as individual files on the filesystem. While it is reading
+one large file, it is writing many small files, which incurs filesystem
+overhead. So its performance characteristic for storing a large file is closer
+to that of storing many files (\autoref{results-num-files}). Bup also breaks the
+file into many chunks, but it avoids the filesystem overhead by recombining the
+chunks into \glspl{packfile}. We investigate the filesystem overhead further in
+\autoref{perf-tuning-exp-chapter}.
+
+Bup's commit times behave strangely in that there are places where Bup is
+actually faster that it was with a smaller file. This is most apparent in the
+slow downward slope of \autoref{fig:plot-file-size--c1-time}b and the zig-zag of
+\autoref{fig:plot-file-size--c1-time}c. Git also has a point where the time
+decreases, taking \SI{393}{\s} (SD \SI{.76}{\s}) to commit a \SI{4}{\gib} file
+and only \SI{361}{\s} (SD \SI{3.90}{\s}) to commit an \SI{8}{\gib} file. Even
+more interestingly, these decreases are consistent across the four trials on
+separate hardware. We do not know what might be causing this.
+
 %
 
 
 \subsection{Time for File-Size Update Commit}
-
-\autoref{fig:plot-file-size--c2-time} shows the time required for the second
-\gls{commit}, after updating \num{1/1024}th of the file. Ideally this operation
-should be faster than the first \gls{commit}, because the system should only be
-storing the changed portion of the file. Indeed this is the case for Mercurial,
-Bup, and \gls{DMV}, which do store only the changed portion. Git, however,
-copies the entire updated file into its repository as a new object, and so its
-\gls{commit} time is virtually identical. The same is true of the copy control,
-though for sizes smaller than \SI{8}{\gib} it is still faster than all the other
-systems.
-
-\perottoinline{Describe results more thoroughly in words}
 
 \begin{figure}[]
     \caption{Wall-clock time to commit one updated large file}
@@ -163,6 +168,35 @@ systems.
 
     \includegraphics[]{plot-file-size--c2-time}
 \end{figure}
+
+\autoref{fig:plot-file-size--c2-time} shows the wall-clock time required for the
+second \gls{commit}, after updating \num{1/1024}th of the file. Ideally this
+operation should be faster than the first \gls{commit}, because the system
+should only be storing the changed portion of the file. Indeed this is the case
+for Mercurial, Bup, and \gls{DMV}, which do store only the changed portion. Git,
+however, copies the entire updated file into its repository as a new object, and
+so its \gls{commit} time is virtually identical. The same is true of the copy
+control, though for sizes smaller than \SI{8}{\gib} it is still faster than all
+the other systems.
+
+As with the initial commit, Bup gets faster as file size increases at certain
+points, with the same gradual downward slope in the sub-megabyte and low
+megabyte-ranges, leading to a prominent jump up then fall back down. The jump
+appears at a slightly larger size with this update commit, at \num{8}, \num{12},
+\num{16}, and \SI{24}{\mib}, as opposed to \num{4}, \num{6}, \num{8}, and
+\SI{12}{\mib} in the initial commit. This puts it just outside the range of
+\autoref{fig:plot-file-size--c2-time}c, but it can still be seen in miniature in
+\autoref{fig:plot-file-size--c2-time}a. The shift to larger sizes in the update
+commit suggests that the decrease is related to the amount of data written to
+the disk, since Bup breaks the file into chunks and only writes the updated
+chunks.
+
+Git also shows a commit time decrease between \SI{4}{\gib} (\SI{518}{\s} with SD
+\SI{11.1}{\s}) and \SI{8}{\gib} (\SI{429}{\s} with SD \SI{4.0}{\s}) just as it
+did with the initial commit. Unlike Bup, its decrease is not shifted to higher
+file sizes, which is another hint that the decrease has something to do with the
+amount of data written, since Git writes the whole file again, rather than just
+the updated portion.
 
 %
 
@@ -233,6 +267,7 @@ trying to load multiple versions of the file into memory to calculate deltas for
 
 
 \section{Results: Number of Files}
+\label{results-num-files}
 
 
 \subsection{Time for Number-of-Files Initial Commit}
