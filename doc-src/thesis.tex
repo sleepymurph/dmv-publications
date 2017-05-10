@@ -5,6 +5,7 @@
 
 \usepackage{graphicx}
 \usepackage{subcaption} % sub-figures
+\usepackage{dpfloat}
 
 \usepackage[utf8]{inputenc}
 
@@ -111,6 +112,13 @@
 \newcommand{\gib}{\gibi\byte}
 \newcommand{\mib}{\mebi\byte}
 \newcommand{\kib}{\kibi\byte}
+
+
+% Clear specifically to an even page
+\newcommand\cleartoevenpage{%
+   \clearpage%
+   \ifodd\value{page}\mbox{}\clearpage\fi}
+
 
 % Repeated text snippets
 

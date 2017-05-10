@@ -51,7 +51,7 @@ errors being reported by the user interface.
 These findings are summarized in \autoref{file-sizes-table} and
 \autoref{vcs-size-limits-table}.
 
-\begin{table}
+\begin{table}[p]
     \caption{Observations as file size increases}
     \label{file-sizes-table}
     \centering
@@ -71,7 +71,7 @@ These findings are summarized in \autoref{file-sizes-table} and
     \end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[p]
     \caption{Effective size limits for VCSs tested}
     \label{vcs-size-limits-table}
     \centering
@@ -95,20 +95,24 @@ These findings are summarized in \autoref{file-sizes-table} and
 %
 
 
-\subsection{Time for File-Size Initial Commit}
+\begin{figure}[p]
+    \begin{leftfullpage}
+        \caption{Wall-clock time to commit one large file to a fresh repository}
+        \label{fig:plot-file-size--c1-time}
+        \centering
 
-\begin{figure}[]
-    \caption{Wall-clock time to commit one large file to a fresh repository}
-    \label{fig:plot-file-size--c1-time}
-    \centering
+        \vspace{\baselineskip}
+        \explainlogsubfig
+        % even up with other figure on opposite page that has more caption
+        \vspace{\baselineskip}
 
-    \vspace{\baselineskip}
-    \explainlogsubfig
-    % even up with other figure on opposite page that has more caption
-    \vspace{\baselineskip}
-
-    \includegraphics[]{plot-file-size--c1-time}
+        \includegraphics[]{plot-file-size--c1-time}
+    \end{leftfullpage}
 \end{figure}
+
+\cleardoublepage
+
+\subsection{Time for File-Size Initial Commit}
 
 \autoref{fig:plot-file-size--c1-time} shows the wall-clock time required for the
 initial \gls{commit}, adding a single file of the given size to a fresh
@@ -155,19 +159,23 @@ separate hardware. We do not know what might be causing this.
 %
 
 
-\subsection{Time for File-Size Update Commit}
+\begin{figure}[p]
+    \begin{leftfullpage}
+        \caption{Wall-clock time to commit one updated large file}
+        \label{fig:plot-file-size--c2-time}
+        \centering
 
-\begin{figure}[]
-    \caption{Wall-clock time to commit one updated large file}
-    \label{fig:plot-file-size--c2-time}
-    \centering
+        X axis shows the total size of the file. The updated portion was
+        \SI{1/1024}{th} of the total file size.
+        \explainlogsubfig
 
-    X axis shows the total size of the file. The updated portion was
-    \SI{1/1024}{th} of the total file size.
-    \explainlogsubfig
-
-    \includegraphics[]{plot-file-size--c2-time}
+        \includegraphics[]{plot-file-size--c2-time}
+    \end{leftfullpage}
 \end{figure}
+
+\cleardoublepage
+
+\subsection{Time for File-Size Update Commit}
 
 \autoref{fig:plot-file-size--c2-time} shows the wall-clock time required for the
 second \gls{commit}, after updating \num{1/1024}th of the file. Ideally this
@@ -201,21 +209,23 @@ the updated portion.
 %
 
 
-\subsection{CPU Usage During File-Size Commits}
-
-\begin{figure}[]
+\begin{figure}[p]
     \caption{CPU utilization while committing one large file to a fresh repository}
     \label{fig:plot-file-size--c1-cpu}
     \centering
     \includegraphics[]{plot-file-size--c1-cpu}
 \end{figure}
 
-\begin{figure}[]
+\begin{figure}[p]
     \caption{CPU utilization while committing changes to one large file}
     \label{fig:plot-file-size--c2-cpu}
     \centering
     \includegraphics[]{plot-file-size--c2-cpu}
 \end{figure}
+
+\cleardoublepage
+
+\subsection{CPU Usage During File-Size Commits}
 
 \autoref{fig:plot-file-size--c1-cpu} shows CPU usage during the initial
 \gls{commit}, and \autoref{fig:plot-file-size--c2-cpu} shows CPU usage during
@@ -231,21 +241,25 @@ significantly. What would happen with memory, disk, remote}
 %
 
 
+\begin{figure}[p]
+    \begin{leftfullpage}
+        \caption{Total repository size after committing, editing, and committing again}
+        \label{fig:plot-file-size--repo-size}
+        \centering
+
+        \explaindiskspaceplot
+
+        \includegraphics[]{plot-file-size--repo-size}
+    \end{leftfullpage}
+\end{figure}
+
+\cleardoublepage
+
 \subsection{Repository Size after File-Size Update Commit}
 
 \autoref{fig:plot-file-size--repo-size} shows the total repository size after
 the update \gls{commit}, including the original file. This is after committing,
 updating \num{1/1024}th of the file, and committing again.
-
-\begin{figure}[]
-    \caption{Total repository size after committing, editing, and committing again}
-    \label{fig:plot-file-size--repo-size}
-    \centering
-
-    \explaindiskspaceplot
-
-    \includegraphics[]{plot-file-size--repo-size}
-\end{figure}
 
 The stored data overtakes the initial repository overhead after a file size of
 around \SI{1}{\mib}, and the repository size for all systems converges to about
@@ -268,6 +282,20 @@ trying to load multiple versions of the file into memory to calculate deltas for
 
 
 
+\begin{figure}[p]
+    \begin{leftfullpage}
+        \caption{Wall-clock time to commit many 1KiB files to a fresh repository}
+        \label{fig:plot-num-files--c1-time}
+        \centering
+
+        \explainlogsubfig
+
+        \includegraphics[]{plot-num-files--c1-time}
+    \end{leftfullpage}
+\end{figure}
+
+\cleardoublepage
+
 \section{Results: Number of Files}
 \label{results-num-files}
 
@@ -279,43 +307,30 @@ trying to load multiple versions of the file into memory to calculate deltas for
 
 \towrite{Prose description of results}
 
-\begin{figure}[p]
-    \caption{Wall-clock time to commit many 1KiB files to a fresh repository}
-    \label{fig:plot-num-files--c1-time}
-    \centering
-
-    \explainlogsubfig
-
-    \includegraphics[]{plot-num-files--c1-time}
-\end{figure}
-
 %
 
+
+\begin{figure}[p]
+    \begin{leftfullpage}
+        \caption{Wall-clock time to commit many updated files}
+        \label{fig:plot-num-files--c2-time}
+        \centering
+
+        X axis shows the total number of files. 1 out of every 16 files was updated.
+        \explainlogsubfig
+
+        \includegraphics[]{plot-num-files--c2-time}
+    \end{leftfullpage}
+\end{figure}
+
+\cleardoublepage
 
 \subsection{Time for Number-of-Files Update Commit}
 
 \towrite{Prose description of results}
 
-\begin{figure}[p]
-    \caption{Wall-clock time to commit many updated files}
-    \label{fig:plot-num-files--c2-time}
-    \centering
-
-    X axis shows the total number of files. 1 out of every 16 files was updated.
-    \explainlogsubfig
-
-    \includegraphics[]{plot-num-files--c2-time}
-\end{figure}
-
 %
 
-
-\subsection{CPU Usage During Number-of-Files Initial Commit}
-
-\autoref{fig:plot-num-files--c1-cpu} shows CPU utilization during the
-\gls{commit}.
-
-\towrite{Prose description of results}
 
 \begin{figure}[p]
     \caption{CPU utilization while committing many 1KiB files to a fresh
@@ -325,13 +340,6 @@ trying to load multiple versions of the file into memory to calculate deltas for
     \includegraphics[]{plot-num-files--c1-cpu}
 \end{figure}
 
-%
-
-
-\subsection{CPU Usage During Number-of-Files Update Commit}
-
-\towrite{Prose description of results}
-
 \begin{figure}[p]
     \caption{CPU utilization while committing many 1KiB files after one of every
         \num{16} files has been updated}
@@ -340,37 +348,42 @@ trying to load multiple versions of the file into memory to calculate deltas for
     \includegraphics[]{plot-num-files--c2-cpu}
 \end{figure}
 
+\cleardoublepage
+
+\subsection{CPU Usage During Number-of-Files Commits}
+
+\autoref{fig:plot-num-files--c1-cpu} shows CPU utilization during the
+\gls{commit}.
+
+\towrite{Prose description of results}
+
 %
 
 
-\subsection{Time for Number-of-Files Update Status Check}
+\begin{figure}[p]
+    \begin{leftfullpage}
+        \caption{Real time required to check the status of many files after
+        initial commit}
+        \label{fig:plot-num-files--stat1-time}
+        \centering
+
+        \explainlogsubfig
+
+        \includegraphics[]{plot-num-files--stat1-time}
+    \end{leftfullpage}
+\end{figure}
+
+\cleardoublepage
+
+\subsection{Time for Number-of-Files Status Check}
 
 \autoref{fig:plot-num-files--stat1-time} shows the time
 required to check the changed status of all files just after committing.
 
 \towrite{Prose description of results}
 
-\begin{figure}[p]
-    \caption{Real time required to check the status of many files after
-    initial commit}
-    \label{fig:plot-num-files--stat1-time}
-    \centering
-
-    \explainlogsubfig
-
-    \includegraphics[]{plot-num-files--stat1-time}
-\end{figure}
-
 %
 
-
-\subsection{Repository Size after Number-of-Files Update Commit}
-
-\autoref{fig:plot-num-files--repo-size} shows the total
-repository size, including the original files, after committing once, editing
-1/1024th of every sixteenth file, and committing again.
-
-\towrite{Prose description of results}
 
 \begin{figure}[p]
     \caption{Total repository size after committing, editing, and committing again}
@@ -381,6 +394,16 @@ repository size, including the original files, after committing once, editing
 
     \includegraphics[]{plot-num-files--repo-size}
 \end{figure}
+
+\cleardoublepage
+
+\subsection{Repository Size after Number-of-Files Update Commit}
+
+\autoref{fig:plot-num-files--repo-size} shows the total
+repository size, including the original files, after committing once, editing
+1/1024th of every sixteenth file, and committing again.
+
+\towrite{Prose description of results}
 
 
 \todo[inline]{Update these points and move them to appropriate prose
