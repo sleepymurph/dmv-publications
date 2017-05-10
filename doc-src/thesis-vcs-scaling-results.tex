@@ -527,21 +527,23 @@ required to check the changed status of all files just after committing.
 
 \subsection{Repository Size after Number-of-Files Update Commit}
 
+\todo[inline]{This text is from an older document and needs editing and updating}
+
 \autoref{fig:plot-num-files--repo-size} shows the total
 repository size, including the original files, after committing once, editing
 1/1024th of every sixteenth file, and committing again.
 
-Both Git and Mercurial converge to a little over 8x the space required. This
-probably has more to do with the filesystem block size than anything else. The
-underlying file system uses a 4KiB block size, so each 1KiB file will still use
-4KiB of disk space. And since there are two copies of each file, that's 8KiB
-total for each 1KiB file, 8x the disk space.
+Git, Mercurial, and DMV converge to using about \num{8} times the space of the
+original data set. This probably has more to do with the filesystem block size
+than anything else. The underlying file system uses a 4KiB block size, so each
+1KiB file will still use 4KiB of disk space. And since there are two copies of
+each file, that's 8KiB total for each 1KiB file, \num{8} times the disk space.
 
-Mercurial converges towards the 8x limit faster though. We speculate this is
-because of lower repo overhead, and also because Git is creating \gls{tree}
-objects for each of the subdirectories in the file set. These files will be
-small, but each will take up another 4KiB block on the disk.
+\towrite{Bup does better}
 
-\towrite{Prose description of results}
+Mercurial converges towards the \num{8}-times limit faster though. We speculate
+this is because of lower repo overhead, and also because Git is creating
+\gls{tree} objects for each of the subdirectories in the file set. These files
+will be small, but each will take up another 4KiB block on the disk.
 
 %

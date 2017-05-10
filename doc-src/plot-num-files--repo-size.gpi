@@ -65,7 +65,7 @@ set mxtics
 set format x "%1.0s%c"
 
 set ylabel "Storage ratio"
-set yrange [0:20]
+set yrange [2:15]
 set ytics
 set mytics
 set format y "%.0fx"
