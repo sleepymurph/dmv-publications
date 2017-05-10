@@ -17,7 +17,7 @@ IOWAITPLOT='using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowai
 
 #set label 1 'git' @POS
 set title "(a) Git"
-gittable=meantable."/git-*"
+#gittable=meantable."/git-*"
 plot gittable @USERPLOT, gittable @SYSTEMPLOT, gittable @IOWAITPLOT
 
 #set label 1 'hg' @POS

@@ -1,4 +1,9 @@
-meantable="< ../data/meantable.py --columns filecount c1_user c1_system c1_idle c1_iowait --where-not-bad c1_ver --files ../data/exp--num-files--v03--less-dirs/"
+meantable="< ../data/meantable.py \
+    --columns filecount c1_user c1_system c1_idle c1_iowait \
+    --where-not-bad c1_ver \
+    --files ../data/exp--num-files--v03--less-dirs/"
+
+gittable=meantable."/git-*"
 
 kilos(n) = n * 2**10
 megs(n) = n * 2**20
