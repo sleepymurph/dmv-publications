@@ -71,7 +71,7 @@ set mytics 2
 # Other plots
 
 set xrange [kilos(128):megs(1)+kilos(128)]
-set xtics kilos(512)
+set xtics kilos(256)
 set yrange [0:1]
 set ytics 0.2
 set format y "%1.1fs"
