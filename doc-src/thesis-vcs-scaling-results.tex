@@ -201,15 +201,7 @@ the updated portion.
 %
 
 
-\subsection{CPU Usage During File-Size Initial Commit}
-
-\autoref{fig:plot-file-size--c1-cpu} shows the
-CPU usage during the initial \gls{commit}.
-
-\towrite{Prose description of results}
-\perottoinline{Explain peaks in prototype CPU graph}
-\perottoinline{Discuss somewhere "what if" iowait could be reduced
-significantly. What would happen with memory, disk, remote}
+\subsection{CPU Usage During File-Size Commits}
 
 \begin{figure}[]
     \caption{CPU utilization while committing one large file to a fresh repository}
@@ -218,13 +210,23 @@ significantly. What would happen with memory, disk, remote}
     \includegraphics[]{plot-file-size--c1-cpu}
 \end{figure}
 
-
 \begin{figure}[]
     \caption{CPU utilization while committing changes to one large file}
     \label{fig:plot-file-size--c2-cpu}
     \centering
     \includegraphics[]{plot-file-size--c2-cpu}
 \end{figure}
+
+\autoref{fig:plot-file-size--c1-cpu} shows CPU usage during the initial
+\gls{commit}, and \autoref{fig:plot-file-size--c2-cpu} shows CPU usage during
+the update commit. We expected the commit operations to be IO bound, and that
+seems to be the case, especially at file sizes \SI{1}{\gib} and larger, and
+especially with DMV and the copy.
+
+\towrite{Prose description of results}
+\perottoinline{Explain peaks in prototype CPU graph}
+\perottoinline{Discuss somewhere "what if" iowait could be reduced
+significantly. What would happen with memory, disk, remote}
 
 %
 
