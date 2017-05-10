@@ -10,8 +10,8 @@ megs(n) = n * 2**20
 gigs(n) = n * 2**30
 
 set logscale x 2
-set xrange [megs(1):gigs(96)]
+set xrange [kilos(1):gigs(128)]
 set format x "%1.0b%BB"
-set xtics (megs(1), megs(96), gigs(1), gigs(96))
+#set xtics (megs(1), megs(96), gigs(1), gigs(96))
 
 load "plot-cpu-common.gpi"
