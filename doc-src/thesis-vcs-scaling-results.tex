@@ -113,6 +113,7 @@ These findings are summarized in \autoref{file-sizes-table} and
 \cleardoublepage
 
 \subsection{Time for File-Size Initial Commit}
+\label{results-file-size--c1-time}
 
 \autoref{fig:plot-file-size--c1-time} shows the wall-clock time required for the
 initial \gls{commit}, adding a single file of the given size to a fresh
@@ -248,7 +249,10 @@ There is a small peak in the DMV I/O wait percentage for the first commit
 (\autoref{fig:plot-file-size--c1-cpu}d), peaking at \SI{386}{\mib} with
 \SI{337}{ticks} (SD \SI{13.8}{ticks}), then falling at \SI{512}{\mib} to
 \SI{89}{ticks} (SD \SI{49.2}{ticks}), and then rising again at \SI{768}{\mib} to
-\SI{972}{ticks} (SD \SI{54.3}{ticks}). We are not sure what is causing this.
+\SI{972}{ticks} (SD \SI{54.3}{ticks}). We are not sure what is causing this. We
+also do not know why the DMV I/O wait during the update commit actually
+decreases between \SI{1}{\gib} and \SI{32}{\gib}
+(\autoref{fig:plot-file-size--c2-cpu}d).
 
   %402653184         337.25   13.7727085208
   %536870912          89.25   49.1801535175
@@ -344,22 +348,6 @@ trying to load multiple versions of the file into memory to calculate deltas for
     \end{leftfullpage}
 \end{figure}
 
-\cleardoublepage
-
-\section{Results: Number of Files}
-\label{results-num-files}
-
-
-\subsection{Time for Number-of-Files Initial Commit}
-
-\autoref{fig:plot-num-files--c1-time} shows the time required for the initial
-\gls{commit}, copying all files into a fresh empty repository.
-
-\towrite{Prose description of results}
-
-%
-
-
 \begin{figure}[p]
     \begin{leftfullpage}
         \caption{Wall-clock time to commit many updated files}
@@ -372,6 +360,77 @@ trying to load multiple versions of the file into memory to calculate deltas for
         \includegraphics[]{plot-num-files--c2-time}
     \end{leftfullpage}
 \end{figure}
+
+%\cleardoublepage
+
+\section{Results: Number of Files}
+\label{results-num-files}
+
+\subsection{File Quantity Limits}
+
+Git, Mercurial, DMV, and the copy operation all failed when trying to store
+\num{7.5} million files or more, reporting that the disk was full. However, it
+wasn't actually out of space. The disk was out of inodes. An ext partition uses
+a data structure called an inode to store file metadata, and each partition has
+a fixed number of them\todo{cite}. Each of these programs creates one file in
+its object store for each input file, resulting in \num{15} million files on the
+filesystem. However, the \SI{197}{\gib} experiment partition has only
+\num{13107200} total inodes, so storing \num{15} million files is impossible.
+
+Bup is able to store more files because it does not write a separate file for
+each input file. Bup aggregates its DAG objects into \glspl{packfile}, writing
+several large files instead many small files. As such, it does not exhaust the
+disk's inodes, and can continue until the experiment itself exhausts the
+system's inodes when trying to run a trial with \num{25} million files.
+
+%
+
+
+\subsection{Time for Number-of-Files Initial Commit}
+
+\autoref{fig:plot-num-files--c1-time} shows the time required for the initial
+\gls{commit}, storing all files into a fresh empty repository. Here we see the
+commit times for Git and DMV increasing exponentially with the number of files,
+while Mercurial, Bup, and the copy increase linearly.
+
+We saw in the file-size commit times (\autoref{results-file-size--c1-time}) that
+DMV's time increased exponentially, and we suspected that was because it was
+creating many small files and incurring filesystem overhead. This effect would
+explain why both Git and DMV do so poorly here while Bup would fare much better.
+But why then would Mercurial and the copy also have a linear increase instead of
+an exponential one?
+
+The difference is the naming schemes of stored files. Git and DMV name each
+object file according to the SHA-1 hash of the object's contents, while
+Mercurial, like the copy, uses the original input file's name. This means that
+Git and DMV write files in a random order with respect to their names, jumping
+between different \gls{objectstore} subdirectories, while Mercurial and the copy
+can write files in the order they read them, one subdirectory at a time. The
+filesystem is most likely optimized for that kind of sequential write.
+
+At \num{500}, \num{750}, and \num{1000} files
+(\autoref{fig:plot-num-files--c1-time}b), Bup's commit times have an unusually
+high variance compared to the other systems and the other experiments. At those
+file counts, the standard deviations for Bup's commit times are
+\SI{18.3}{\percent}, \SI{29.6}{\percent}, \SI{28.3}{\percent} of the means,
+respectively (see \autoref{bup-commit-times-high-variance}), whereas the mean of
+the other such standard deviation percentages is only \SI{6.1}{\percent}. We are
+not sure what is causing this.
+
+\begin{table}[h]
+    \caption{Bup initial commit times with unusually high variance}
+    \label{bup-commit-times-high-variance}
+    \centering
+    \begin{tabular}{rccc}
+        Num. files & Mean time (s) & SD (s) & SD as \% of mean \\
+           500  &   0.965  &   0.177  &  18.3 \\
+           750  &   1.199  &   0.355  &  29.6 \\
+          1000  &   1.407  &   0.398  &  28.3 \\
+    \end{tabular}
+\end{table}
+
+%
+
 
 \cleardoublepage
 
