@@ -78,7 +78,10 @@ simply zipping up snapshots of the data.
 %
 
 
-\section{Chunk Size}
+\section{Subtleties of the Rolling Hash}
+
+The rolling hash is the key to providing smaller granularity, because it is what
+identifies common byte strings within files.
 
 \towrite{The key to dealing with many small chunks is to re-aggregate them. Then
     what are other implications of chunk size?
