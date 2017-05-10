@@ -177,6 +177,7 @@ separate hardware. We do not know what might be causing this.
 \cleardoublepage
 
 \subsection{Time for File-Size Update Commit}
+\label{results-file-size--c2-time}
 
 \autoref{fig:plot-file-size--c2-time} shows the wall-clock time required for the
 second \gls{commit}, after updating \num{1/1024}th of the file. Ideally this
@@ -390,15 +391,15 @@ system's inodes when trying to run a trial with \num{25} million files.
 
 \autoref{fig:plot-num-files--c1-time} shows the time required for the initial
 \gls{commit}, storing all files into a fresh empty repository. Here we see the
-commit times for Git and DMV increasing exponentially with the number of files,
+commit times for Git and DMV increasing quadratically with the number of files,
 while Mercurial, Bup, and the copy increase linearly.
 
 We saw in the file-size commit times (\autoref{results-file-size--c1-time}) that
-DMV's time increased exponentially, and we suspected that was because it was
+DMV's time increased quadratically, and we suspected that was because it was
 creating many small files and incurring filesystem overhead. This effect would
 explain why both Git and DMV do so poorly here while Bup would fare much better.
 But why then would Mercurial and the copy also have a linear increase instead of
-an exponential one?
+an quadratic one?
 
 The difference is the naming schemes of stored files. Git and DMV name each
 object file according to the SHA-1 hash of the object's contents, while
@@ -436,7 +437,25 @@ not sure what is causing this.
 
 \subsection{Time for Number-of-Files Update Commit}
 
-\towrite{Prose description of results}
+\autoref{fig:plot-num-files--c2-time} shows the wall-clock time required for the
+second \gls{commit}, after updating \num{1} out of every \num{16} files. As with
+the file-size experiment (\autoref{results-file-size--c2-time}), storing only
+the updated files is faster, and in this case the difference is more pronounced.
+This is because every system understands the file as a unit of data, and can
+naturally separate the changed and files from the unchanged files.
+
+The exception is the copy operation, which blindly copies all files again. This
+is why it is actually slower than the other systems at some points. It would be
+interesting to run this experiment with Rsync as well (\autoref{related-rsync}),
+to get a baseline for comparing and copying only the files that have changed.
+
+Here all commit times appear to increase linearly with respect to number of
+files, except for Git, which shows some quadratic growth as the number of files
+gets into the millions.
+
+Bup does not exhibit the interesting variance here that it did in the initial
+commit. All standard deviations are small enough that the error bars are barely
+discernible on the graph.
 
 %
 
@@ -512,58 +531,17 @@ required to check the changed status of all files just after committing.
 repository size, including the original files, after committing once, editing
 1/1024th of every sixteenth file, and committing again.
 
+Both Git and Mercurial converge to a little over 8x the space required. This
+probably has more to do with the filesystem block size than anything else. The
+underlying file system uses a 4KiB block size, so each 1KiB file will still use
+4KiB of disk space. And since there are two copies of each file, that's 8KiB
+total for each 1KiB file, 8x the disk space.
+
+Mercurial converges towards the 8x limit faster though. We speculate this is
+because of lower repo overhead, and also because Git is creating \gls{tree}
+objects for each of the subdirectories in the file set. These files will be
+small, but each will take up another 4KiB block on the disk.
+
 \towrite{Prose description of results}
-
-
-\todo[inline]{Update these points and move them to appropriate prose
-descriptions}
-
-Unlike the experiment with a single large file, the numerous small files did not
-quickly hit error-causing disk space or RAM limitations. The version control
-systems happily crunched\perotto{too informal} the data as trial times grew into
-hours.
-
-\begin{itemize}
-
-    \item Again, after some initial overhead, commit and times increase
-        linearly. However, Git's initial commit times actually decrease at
-        certain points (128Ki, 1.5Mi, and 2Mi files). We are not sure how to
-        explain this.
-
-    \item Git in general is faster then Mercurial up to about half a million
-        files. At 512Ki files is Mercurial and Git are about neck and neck. At
-        768Ki and over, Mercurial is faster.
-
-    \item Status check times are more erratic, though still increasing linearly
-        overall. The variations may have to do with the output of the status
-        commands and whether our terminal multiplexer was focused on the
-        execution at the time. The status commands print one status line per
-        file changed, which can be significant when hundreds of thousands of
-        files involved. This output is significantly slower when the terminal
-        multiplexer we used to monitor the experiments is connected, because it
-        sends every line over the network to the monitoring machine.
-
-    \item Mercurial update status is consistently slower than initial status,
-        often by about 2-3x.
-
-    \item Both Git and Mercurial converge to a little over 8x the space
-        required. This probably has more to do with the filesystem block size
-        than anything else. The underlying file system uses a 4KiB block size,
-        so each 1KiB file will still use 4KiB of disk space. And since there are
-        two copies of each file, that's 8KiB total for each 1KiB file, 8x the
-        disk space.
-
-    \item Mercurial converges towards the 8x limit faster though. We speculate
-        this is because of lower repo overhead, and also because Git is creating
-        \gls{tree} objects for each of the subdirectories in the file set. These
-        files will be small, but each will take up another 4KiB block on the
-        disk.
-
-    \item Mercurial commits began to abort with disk space errors at 8Mi files,
-        8GiB of data. This was surprising. Even at 8x disk usage, that should
-        only be 64GiB of disk usage, well below the 192GiB free on the test
-        disk.
-
-\end{itemize}
 
 %
