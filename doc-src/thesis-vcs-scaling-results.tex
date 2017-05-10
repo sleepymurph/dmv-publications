@@ -229,20 +229,70 @@ the updated portion.
 
 \autoref{fig:plot-file-size--c1-cpu} shows CPU usage during the initial
 \gls{commit}, and \autoref{fig:plot-file-size--c2-cpu} shows CPU usage during
-the update commit. We expected the commit operations to be IO bound, and that
-seems to be the case, especially at file sizes \SI{1}{\gib} and larger, and
-especially with DMV and the copy.
+the update commit. "User" indicates user-space computation, "system" indicates
+kernel-space computation, and "iowait" indicates that the CPU was waiting on an
+I/O operation.
 
-\towrite{Prose description of results}
-\perottoinline{Explain peaks in prototype CPU graph}
-\perottoinline{Discuss somewhere "what if" iowait could be reduced
-significantly. What would happen with memory, disk, remote}
+We expected the commit operations to be I/O bound, and that seems to be the
+case, especially at file sizes \SI{1}{\gib} and larger, and especially with DMV
+and the copy. But there is also a significant amount of user-space work going on
+in all of the version-control systems, such as hashing the data and, in the case
+of Git and Mercurial, calculating deltas.
+
+DMV's high I/O wait is probably primarily due to the filesystem overhead that is
+slowing down its commit times, but the current single-threaded implementation
+might also be contributing, and the prototype might benefit from having separate
+threads to load data, hash it, and write it to dish.
+
+There is a small peak in the DMV I/O wait percentage for the first commit
+(\autoref{fig:plot-file-size--c1-cpu}d), peaking at \SI{386}{\mib} with
+\SI{337}{ticks} (SD \SI{13.8}{ticks}), then falling at \SI{512}{\mib} to
+\SI{89}{ticks} (SD \SI{49.2}{ticks}), and then rising again at \SI{768}{\mib} to
+\SI{972}{ticks} (SD \SI{54.3}{ticks}). We are not sure what is causing this.
+
+  %402653184         337.25   13.7727085208
+  %536870912          89.25   49.1801535175
+  %805306368         972.25   54.2972144774
+
+The copy operation shows an erratic amount of system activity at low sizes,
+which is surprising since the copy operation is almost pure I/O. This is a
+result of how the data was collected rather than any unexpected behavior in the
+copy operation. At sizes below about \SI{10}{\mib}, the copy operation is faster
+than the \lstinline{/proc/stat} ticks used to CPU measure activity. At such
+small sizes, most measurements will yield zero ticks, though one of the states
+will occasionally measure 1 tick (see \autoref{copy-cpu-data}). Then, when the
+graph normalizes the total usage to a percentage, \num{1} system tick out of
+\num{1} total ticks makes \SI{100}{\percent}. It isn't until around
+\SI{48}{\mib} that the measurement includes enough CPU ticks to yield useful
+percentages, which is where we see the graph start to stabilize.
+
+
+\begin{table}[hp]
+    \caption{Selected CPU usage data for copy operation}
+    \label{copy-cpu-data}
+
+    \centering
+    \begin{tabular}{r r r r r}
+        Size & User & System & Idle & Iowait \\
+        \midrule
+  4.0MiB &    0    &      0    &      0    &      0 \\
+  6.0MiB &    0    &      0    &      1    &      0 \\
+  8.0MiB &    0    &      1    &      1    &      0 \\
+ 12.0MiB &    1    &      1    &      2    &      0 \\
+ 16.0MiB &    0    &      2    &      2    &      0 \\
+ 24.0MiB &    1    &      3    &      3    &      0 \\
+ 32.0MiB &    0    &      3    &      4    &      0 \\
+ 48.0MiB &    0    &      5    &      5    &      0 \\
+ 64.0MiB &    0    &      7    &      6    &      0 \\
+ 96.0MiB &    0    &     10    &     10    &      0 \\
+    \end{tabular}
+\end{table}
 
 %
 
 
 \begin{figure}[p]
-    \begin{leftfullpage}
+    %\begin{leftfullpage}
         \caption{Total repository size after committing, editing, and committing again}
         \label{fig:plot-file-size--repo-size}
         \centering
@@ -250,7 +300,7 @@ significantly. What would happen with memory, disk, remote}
         \explaindiskspaceplot
 
         \includegraphics[]{plot-file-size--repo-size}
-    \end{leftfullpage}
+    %\end{leftfullpage}
 \end{figure}
 
 \cleardoublepage
