@@ -41,6 +41,7 @@
   backend=bibtex,
   backref=true, % add back-references from bib to citations
   urldate=long, % use date like "Apr. 7, 2017" instead of American "04/07/2017"
+  % firstinits=true,    % use only initials of given names
 ]{biblatex}
 \addbibresource{research.bib}
 
@@ -215,7 +216,9 @@ positive side"}
 %\nocite{*}  % Print all references even if they're not used
 \printbibliography[heading=bibintoc]
 \perrolfinline{Name consistency? Go either all full names or all initial plus
-last name. In physics they go all initial plus last name.}
+last name. In physics they go all initial plus last name. Can go initials with
+one config option. Should I?}
+\askottoinline{How do we do it in CS?}
 
 
 % Colophon
