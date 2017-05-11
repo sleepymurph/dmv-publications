@@ -65,7 +65,7 @@ the available disk space.
 
 \section{Chunking algorithm}\label{chunking-algoritm}
 
-Files are broken into chunks using the same rolling hash algorithm used by Gzip
+Files are broken into chunks using the same \glsfirst{rollinghash} used by Gzip
 and Rsyncrypto\cite{rsyncrypto_algorithm} to respectively compress and encrypt
 files by chunks so that the result is "rsyncable"-- a remote copy of the
 compressed or encrypted file can be updated by transferring only those chunks
@@ -76,14 +76,14 @@ creates a chunk boundary when that sum is evenly divisible by \num{4096}. These
 parameters are arbitrary and can be adjusted. Let \glssymbol{windowsize} denote
 the \gls{windowsize}, the number of previous bytes summed, and let
 \glssymbol{divisor} denote the \gls{divisor} of the modulus operation. Also, let
-$P_n$ denote the rolling hash sum for position $n$ of the input stream. Then a
-chunk boundary is where
+$P_n$ denote the \gls{rollinghash} sum for position $n$ of the input stream.
+Then a chunk boundary is where
 
 \begin{equation}
     P_n = \left( \sum_{i = n - w }^{n}{P_i} \right) \bmod d = 0
 \end{equation}
 
-In experiments with our implementation of this rolling hash algorithm
+In experiments with our implementation of this \glsfirst{rollinghash}
 (\autoref{rolling-hash-exp}), Rsyncrypto's parameters with a \gls{windowsize} of
 \SI{8192}{\byte} and a divisor of \num{4096} yielded a mean chunk size of
 \SI{4.1}{\kib} with a standard deviation of \SI{4.6}{\kib}. We adjusted the

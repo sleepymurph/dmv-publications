@@ -21,22 +21,41 @@ small (\SI{1}{\kibi\byte}) files to each target \gls{VCS}.
 
 \section{Version Control Systems Evaluated}
 
-We ran each experiment using four different \glspl{VCS}: Git, Mercurial (also
-known as \newterm{hg}), Bup, and the \gls{DMV} prototype (specific versions
-listed in \autoref{vcs-versions}). As a control we also ran the experiments
-using a dummy \gls{VCS} that simply made a copy of the files. We chose Git and
-Mercurial because they are the two most widely used \glspl{DVCS} available. We
-also included Bup because it uses Git's storage format but, like \gls{DMV}, it
-also breaks files into chunks. For discussion on the similarities and
-differences between \gls{DMV} and Bup, see \autoref{related_bup}.
+We ran each experiment using five different \glspl{VCS}:
 
-\towrite{Include more background about Git, Mercurial, and Bup: Git and Hg
-conceptually use same DAG but implemented differently. Bup uses Git's file
-format directly but is rewritten.}
-\perrolfinline{Yes, definitely include that. Possibly in a description list.}
+\begin{description}
 
-\begin{table}
-    \caption{Version control systems tested and their versions}
+    \item[Git] The most popular \glspl{DVCS}, and one of the main inspirations
+        of \gls{DMV}. See \autoref{how-data-stored-in-git} for details about Git
+        and how it stores data.
+
+    \item[Mercurial] A \glspl{DVCS} that models data and history in the same
+        manner as Git, but stores it differently. Rather than storing by hash
+        object ID in an \gls{objectstore}, Mercurial creates a \gls{filelog} for
+        each input file, storing its different versions as a base version
+        followed by a series of deltas\cite[Chapter 4]{hgbook}.
+
+    \item[Bup] A backup system that uses Git's data model and \gls{packfile}
+        format. Like DMV, Bup breaks files into chunks using a
+        \gls{rollinghash}. Unlike Git, it writes to the \gls{packfile} format
+        directly, without Git's separate commit and pack steps, and without
+        bothering to calculate deltas\cite{bup_design}. See
+        \autoref{chunk-then-recombine} and \autoref{related_bup} for more
+        discussion about Bup and its similarities and differences to DMV.
+
+    \item[DMV] Our prototype system.
+
+    \item[Copy] A control for the experiment, a dummy \gls{VCS} that simply
+        copied the input files into another directory using the standard Unix
+        \lstinline{cp} command.
+
+\end{description}
+
+The exact version of each \gls{VCS} used in the experiments is listed in
+\autoref{vcs-versions}.
+
+\begin{table}[bh]
+    \caption{Version control systems evaluated and their versions}
     \label{vcs-versions}
     \centering
     \begin{tabular}{ l l }
@@ -46,9 +65,8 @@ format directly but is rewritten.}
         Mercurial & 3.1.2 \\
         Bup & debian/0.25-1 \\
         DMV & c9baf3a \\
+        Copy (GNU \lstinline{cp}) & 8.23 \\
     \end{tabular}
-    \perrolfinline{This table is the reference point for all other graphs. All
-    legends should be consistent with it.}
 \end{table}
 
 
@@ -75,6 +93,9 @@ For each experiment, the procedure for a single trial was as follows:
 
     \item Overwrite a fraction of each target file
 
+    \item (Number-of-files experiment only) Run the \gls{VCS}'s "status"
+        command, and measure the wall-clock time that it takes to complete
+
     \item \Gls{commit} again, measuring wall clock time to \gls{commit}
 
     \item Verify that the second \gls{commit} exists in the repository, and if
@@ -82,6 +103,10 @@ For each experiment, the procedure for a single trial was as follows:
         operation
 
     \item Measure the total repository size again
+
+    \item (File-size experiment only) Run Git's garbage collector
+        (\lstinline{git fsck}) to pack objects, then measure total repository
+        size again
 
     \item Delete temporary directory and all trial files
 

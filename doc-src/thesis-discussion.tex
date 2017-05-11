@@ -18,7 +18,7 @@ directories (as tested in \autoref{dir-experiment}). Later, an optional packing
 phase will compact objects together into \glspl{packfile}, where similar
 objects are stored as deltas against a base revision \cite[Section
 10.4]{git_book}. Mercurial stores each file's different revisions as deltas
-   against a base revision in a \newterm{filelog} structure \cite[Chapter
+   against a base revision in a \gls{filelog} structure \cite[Chapter
    4]{hgbook}. This is Mercurial's primary storage format, and it is constructed
    during \gls{commit}.
 
@@ -42,13 +42,14 @@ separate operation will have to reread both \glspl{blob} in full to calculate
 deltas and pack the objects.
 
 Both \gls{DMV} and Bup avoid these pitfalls by operating with a finer
-granularity, using a rolling hash to divide files into chunks by their content.
-It is the chunks and their indexes that must fit into memory, not the entire
-file. And then since chunks are only a few kilobytes and chunk indexes are
-hierarchical, file size becomes theoretically unlimited. Dividing into chunks by
-rolling hash also makes delta compression unnecessary, because identical chunks
-in different files or file revisions will naturally de-duplicate. At this point,
-it is the method of object storage that becomes the bottleneck.
+granularity, using a \gls{rollinghash} to divide files into chunks by their
+content. It is the chunks and their indexes that must fit into memory, not the
+entire file. And then since chunks are only a few kilobytes and chunk indexes
+are hierarchical, file size becomes theoretically unlimited. Dividing into
+chunks by \gls{rollinghash} also makes delta compression unnecessary, because
+identical chunks in different files or file revisions will naturally
+de-duplicate. At this point, it is the method of object storage that becomes the
+bottleneck.
 
 The current \gls{DMV} prototype stores objects loose as files on the filesystem.
 This proves to be wasteful of disk space, taking up whole filesystem blocks with
@@ -82,8 +83,8 @@ simply zipping up snapshots of the data.
 
 \section{Subtleties of the Rolling Hash}
 
-The rolling hash is the key to providing smaller granularity, because it is what
-identifies common byte strings within files.
+The \gls{rollinghash} is the key to providing smaller granularity, because it is
+what identifies common byte strings within files.
 
 \towrite{The key to dealing with many small chunks is to re-aggregate them. Then
     what are other implications of chunk size?

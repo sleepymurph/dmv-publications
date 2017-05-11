@@ -98,15 +98,29 @@ acyclic meaning that there are no cycles, no paths that revisit any node}]
     see={objectstore},
 }
 
+\newglossaryentry{filelog}{
+    name={filelog},
+    description={Mercurial's file format that stores different versions of the
+    same file as a base version followed by a series of delta},
+}
+
 
 % Rolling Hash
+
+\newglossaryentry{rollinghash}{
+    name={rolling hash},
+    first={rolling hash algorithm},
+    description={A hash checksum that operates over a moving window of data in a
+    byte stream that can be used to find repeating patterns},
+    see={windowsize,divisor},
+}
 
 \newglossaryentry{windowsize}{
     name={window size},
     symbol={\ensuremath{w}},
     description={In a rolling hash algorithm, the number of previous bytes used
     in the rolling sum},
-    see={divisor},
+    see={rollinghash,divisor},
 }
 
 \newglossaryentry{divisor}{
@@ -115,7 +129,7 @@ acyclic meaning that there are no cycles, no paths that revisit any node}]
     description={In a rolling hash algorithm, the divisor in the modulus
     operation. A chunk boundary is created when the sum of the bytes in the
     window, modulo this divisor, is equal to zero},
-    see={windowsize},
+    see={rollinghash,windowsize},
 }
 
 
@@ -125,7 +139,6 @@ newterm{ACID}
 newterm{branches}
 newterm{C}
 newterm{CAP-theorem}
-newterm{filelog}
 newterm{heads}
 newterm{hg}
 newterm{inode}

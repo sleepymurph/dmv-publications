@@ -68,9 +68,9 @@ relationship is illustrated in \autoref{fig:dia_new_dag}.
 \end{figure}
 
 
-Files are split into chunks using a rolling hash algorithm such as Rabin-Karp
+Files are split into chunks using a \gls{rollinghash} such as Rabin-Karp
 fingerprinting\cite{rabin_karp_fingerprinting}. This splits the files into
-chunks by content rather than positition, so that identical chunks within files
+chunks by content rather than position, so that identical chunks within files
 (and especially different versions of the same file) will be found and stored as
 identical objects, regardless of their position within the file. This way,
 identical chunks will be naturally de-duplicated by the \gls{DAG}, and only the

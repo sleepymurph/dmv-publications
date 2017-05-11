@@ -8,10 +8,10 @@ these two parameters on chunk size.
 
 \subsection{Procedure}
 
-For each combination of window size and divisor, we would run the rolling hash
-algorithm on a stream of pseudo-random bytes until it had identified \num{100}
-chunks. Then we would compute the mean and standard deviation of the chunk
-sizes.
+For each combination of window size and divisor, we would run the
+\glsfirst{rollinghash} on a stream of pseudo-random bytes until it had
+identified \num{100} chunks. Then we would compute the mean and standard
+deviation of the chunk sizes.
 
 We used window sizes in powers of two from \SI{128}{\byte} ($2^7$) to
 \SI{256}{\kibi\byte} ($2^{18}$), and divisors in powers of two from \num{256}
@@ -32,13 +32,13 @@ is deterministic.
 
 \subsection{Window Reset Bug}
 
-During development, we noticed an error in the DMV rolling hash implementation:
-it would reset the window after every chunk. DMV's rolling hash implementation
-waits until the window is full before marking any chunks, so resetting the
-window after each chunk would force it to fill again before marking the next
-chunk. This effectively created a minimum chunk size, the window size. We ran
-the experiment both with and without the bug to see how it would affect chunk
-size.
+During development, we noticed an error in the DMV \gls{rollinghash}
+implementation: it would reset the window after every chunk. DMV's
+\gls{rollinghash} implementation waits until the window is full before marking
+any chunks, so resetting the window after each chunk would force it to fill
+again before marking the next chunk. This effectively created a minimum chunk
+size, the window size. We ran the experiment both with and without the bug to
+see how it would affect chunk size.
 
 \subsection{Results}
 
@@ -190,16 +190,17 @@ in common.
 \end{figure}
 
 We also ran the file-size experiments (\autoref{file-size-exp-desc}) with DMV
-versions that used four different rolling hash configurations. The reference DMV
-version used in other experiments (c9baf3a) had a window size of \SI{4}{\kib}
-and a divisor of \SI{16}{\kibi\relax}, chosen arbitrarily. It also has the
-window-reset bug. Later, in order to get a larger chunk size, we increased the
-window size to \SI{32}{\kib} but left the divisor the same (version b134cca). It
-was after that that we discovered the window-reset bug and fixed it. We then
-re-ran the file-size experiments with both window sizes with the bug fixed
-(\SI{4}{\kib} in version a660730, \SI{32}{\kib} in version 3e599e3). These
-versions and their mean chunk sizes are listed in \autoref{chunk-size-versions},
-and the results are shown in \autoref{plot-chunk-size-file-size--c1-time}.
+versions that used four different \gls{rollinghash} configurations. The
+reference DMV version used in other experiments (c9baf3a) had a window size of
+\SI{4}{\kib} and a divisor of \SI{16}{\kibi\relax}, chosen arbitrarily. It also
+has the window-reset bug. Later, in order to get a larger chunk size, we
+increased the window size to \SI{32}{\kib} but left the divisor the same
+(version b134cca). It was after that that we discovered the window-reset bug and
+fixed it. We then re-ran the file-size experiments with both window sizes with
+the bug fixed (\SI{4}{\kib} in version a660730, \SI{32}{\kib} in version
+3e599e3). These versions and their mean chunk sizes are listed in
+\autoref{chunk-size-versions}, and the results are shown in
+\autoref{plot-chunk-size-file-size--c1-time}.
 
 The file-size experiments are sensitive to chunk size because chunk size
 determines the number of chunk objects, and the number of objects on the disk

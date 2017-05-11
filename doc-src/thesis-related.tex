@@ -122,7 +122,7 @@ read by Git, but Bup is a separate program written from scratch to read and
 write files to Git's \gls{packfile} format directly, skipping Git's separate
 store and \glsdisp{packfile}{pack} steps that use double the disk space. It has
 many features that we want for our low-level storage of the \gls{objectstore}.
-It breaks files into chunks by rolling checksum, and it has considerations for
+It breaks files into chunks by \gls{rollinghash}, and it has considerations for
 metadata that is larger than RAM. However, it is locked into a backup-based
 workflow. History is linear and based on clock time of backup. And it assumes
 that the whole data set and the whole repository can fit onto one filesystem.
