@@ -114,9 +114,6 @@ used a new \SI{100}{\mebi\byte} LVM partition.
     \includegraphics[]{plot-filesystem-limits--directory-takeover}
 \end{figure}
 
-\perottoinline{Error flags? "comment valid for other figs too"}
-\askottoinline{Error flags for figures? I'm not following}
-
 \autoref{fig:plot-filesystem-limits--directory-takeover} shows how quickly
 directories overtake files as subdirectory nesting goes deeper. Presented
 visually, the connection between files and directories becomes obvious. The
@@ -338,11 +335,8 @@ the standard deviations at that number of files: \SI{0.674}{\s},
 
 In retrospect, these results are not surprising. The I/O scheduler deals mainly
 with juggling I/O access between different processes on the system, but the
-\gls{DMV} prototype is a single process\perotto{It could have been more than
-one}. Perhaps a multi-threaded or multi-process version of the prototype could
-give the scheduler something to work with, but a better approach would be to
-combine objects into \glspl{packfile} that can be written
-sequentially\perotto{ok, but you could do both}, as discussed in
-\autoref{chunk-then-recombine}.
+current \gls{DMV} prototype is a single process. A multi-threaded or
+multi-process version of the prototype could give the scheduler something to
+work with.
 
 %
