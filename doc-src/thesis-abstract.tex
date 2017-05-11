@@ -1,24 +1,53 @@
 \chapter{Abstract}
 
-\perottoinline{1-3 sentences for each:
-    1. What's wrong with the world?
-    2. Motivation (why bother?)
-    3. How we did better: idea, architecture, design, implementation.
-    4. Experiments; results
-    5. Lessons learned
-    6. Main conclusions
-}
+\glsunsetall
+\glsreset{DMV}
 
-\glsunset{VCS}
-\glsunset{DVCS}
+%\perottoinline{1. What's wrong with the world?}
 
-As we ponder the challenges of big data, we programmers and computer scientists
-often make use of humble tools that elegantly store small data: \acrlongpl{VCS}.
-The current wave of \acrlongpl{VCS} such as Git and Mercurial are, in a sense,
-small-scale distributed systems. Interestingly, with \acrlongpl{DVCS}, network
-partitions are not a failure mode or an obstacle to be overcome but the default
-mode of operation. This paper argues that the \glsdisp{DVCS}{distributed version
-control} concept has potential applications to large scale distributed systems.
-And to that end, it explores the scalability limits of existing \acrlongpl{DVCS}
-and presents a design and prototype for a new, more-scalable system that we call
-\gls{DMV}.
+It is still strangely difficult to backup and synchronize data. Cloud computing
+solves the problem by centralizing everything and letting someone else handle
+the backups. But what about situations with low connectivity or sensitive data?
+
+%\perottoinline{2. Motivation (why bother?)}
+
+For this, software developers have an interesting distributed, decentralized,
+and partition-tolerant data storage system right at their fingertips:
+\glsdisp{DVCS}{distributed version control}.
+
+%\perottoinline{3. How we did better: idea, architecture, design, implementation.}
+
+Inspired by \glsdisp{DVCS}{distributed version control}, we have designed and
+built a prototype for a scalable high-availability system called \gls{DMV}.
+\gls{DMV} expands Git's data model (the \acrshort{DAG}) to allow files to be
+broken into more digestible chunks via a \gls{rollinghash}. \gls{DMV} will allow
+data to be sharded according to data locality needs, slicing the data set in
+space (subset of data with full history), time (subset of history for full data
+set), or both. \gls{DMV} \glspl{repository} will be able to work with and update
+whatever data they have locally, and synchronize with \glspl{repository} in an
+ad-hoc network.
+
+%\perottoinline{4. Experiments; results}
+
+We have performed experiments to probe the scalability limits of existing
+version control systems, specifically what happens as file sizes grow ever
+larger or as the number of files grow. We found that processing files whole ties
+maximum file size to memory, and that storing millions of objects loose as files
+incurs severe write speed penalties.
+
+%\perottoinline{5. Lessons learned}
+
+
+
+%\perottoinline{6. Main conclusions}
+
+We conclude that the key to storing large files is the break them into many
+small chunks, and that the key to storing many chunks is to aggregate them into
+pack files. And, if one uses a \gls{rollinghash} to split the files by content
+and \gls{contentaddressablestorage} to store them, common file chunks are
+naturally de-duplicated and many versions of a file can be stored efficiently.
+
+%
+
+
+\glsresetall
