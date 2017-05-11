@@ -263,13 +263,16 @@ The copy operation shows an erratic amount of system activity at low sizes,
 which is surprising since the copy operation is almost pure I/O. This is a
 result of how the data was collected rather than any unexpected behavior in the
 copy operation. At sizes below about \SI{10}{\mib}, the copy operation is faster
-than the \lstinline{/proc/stat} ticks used to CPU measure activity. At such
-small sizes, most measurements will yield zero ticks, though one of the states
-will occasionally measure 1 tick (see \autoref{copy-cpu-data}). Then, when the
-graph normalizes the total usage to a percentage, \num{1} system tick out of
-\num{1} total ticks makes \SI{100}{\percent}. It isn't until around
-\SI{48}{\mib} that the measurement includes enough CPU ticks to yield useful
-percentages, which is where we see the graph start to stabilize.
+than the \lstinline{/proc/stat} ticks used to CPU measure activity
+(\num{1/100}{th} of a second\cite{proc_man_page}). At such small intervals, most
+measurements will yield zero ticks, though one of the states will occasionally
+measure one tick (see \autoref{copy-cpu-data}). Then, when the graph normalizes
+the total usage to a percentage, \num{1} system tick out of \num{1} total ticks
+makes \SI{100}{\percent}, so the graph will jump from \SI{0}{\percent}
+\SI{100}{\percent}, or somewhere in between depending on how many of the four
+trials measured one tick. It isn't until around \SI{48}{\mib} that the
+measurement includes enough CPU ticks to yield useful percentages, which is
+where we see the graph start to stabilize.
 
 
 \begin{table}[hp]
