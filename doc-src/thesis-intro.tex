@@ -121,25 +121,25 @@ teach larger-scale systems about availability.
 
 \section{Version Control, Git, and the DAG}
 
-\askottoinline{Most of the claims Otto asks me to cite here come from
-\cite{history_of_version_control}. How to indicate that?}
-
 The first \glspl{VCS} were \glspl{SCM} created as a way to efficiently store
 different versions of a source code files by encoding them as a series of deltas
 \cite{history_of_version_control}. CVS introduced a collaborative client-server
-model\perotto{cite}. Subversion kept the client-server model but began focusing
-on the versions of the whole collection of files together, rather than
-individual files\perotto{cite}. Doing so made branching easier, and branching
-quickly became a key feature for collaborative work.
+model\cite{history_of_version_control}. Subversion kept the client-server model
+but began focusing on the versions of the whole collection of files together,
+rather than individual files\cite{history_of_version_control}. Doing so made
+branching easier, and branching quickly became a key feature for collaborative
+work.
 
 BitKeeper, a commercial \gls{SCM}, pioneered the \glsdisp{DVCS}{distributed
 version control} concept by giving each developer a local copy of the whole
 repository, allowing local writes, and then making it easy to push the local
-changes to a central server\perotto{cite}. BitKeeper was for a time the main
-\acrlong{SCM} for the Linux kernel, but licensing issues caused a rift between
-Linux developers and BitMover, the company behind BitKeeper\perotto{cite}.
-Unsatisfied with the other \glspl{SCM} available at the time, Linus Torvalds,
-the creator of Linux, wrote his own, Git.
+changes to a central
+server\cite{history_of_version_control,git_10_years_interview}. BitKeeper was
+for a time the main \acrlong{SCM} for the Linux kernel, but licensing issues
+caused a rift between Linux developers and BitMover, the company behind
+BitKeeper. Unsatisfied with the other \glspl{SCM} available at the time, Linus
+Torvalds, the creator of Linux, wrote his own,
+Git\cite{history_of_version_control,git_10_years_interview}.
 
 The ability to always write locally separates concerns such as handling security
 from the underlying problem of storing the data. Repositories are private by
@@ -157,8 +157,6 @@ tool rather than constrained by it. As Torvalds put it:
     away - the politics around \enquote{who can make changes.} BK
     \textins{BitKeeper} showed that you can avoid that by just giving everybody
 their own source repository. }
-
-\towrite{key: pull rather than push}
 
 Since Git's release, it has quickly become the dominant \gls{VCS} in
 use\cite{what_are_devs_talking_about}, making \glsdisp{DVCS}{distributed version
