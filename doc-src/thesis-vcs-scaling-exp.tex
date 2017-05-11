@@ -93,8 +93,9 @@ For each experiment, the procedure for a single trial was as follows:
 
     \item Overwrite a fraction of each target file
 
-    \item (Number-of-files experiment only) Run the \gls{VCS}'s "status"
-        command, and measure the wall-clock time that it takes to complete
+    \item (Number-of-files experiment only) Run the \gls{VCS}'s status command
+        that lists what files have changed, and measure the wall-clock time that
+        it takes to complete
 
     \item \Gls{commit} again, measuring wall clock time to \gls{commit}
 
@@ -143,21 +144,22 @@ The trials were run via a Python script that would set up, run, and clean up
 each trial in a loop, covering the full range of sizes or numbers for a given
 \gls{VCS}. The script would measure the wall-clock time duration taken by each
 \gls{commit} command and collect CPU utilization metrics. It would also
-terminate any individual \gls{VCS} operation that ran longer than five hours.
-After \gls{commit} and verification, the script would also measure repository
-size.
+terminate any individual \gls{VCS} operation that ran longer than five and a
+half hours. After \gls{commit} and verification, the script would also measure
+repository size.
 
 The script measured the wall-clock time duration for each \gls{commit} by
-checking the system time (\lstinline{time.time()}) just before and just after
-using Python's \lstinline{subprocess} module to execute the necessary \gls{VCS}
-command. CPU utilization was measured by sampling the CPU status lines provided
-in Linux's \lstinline{/proc/stat} information. The status lines show a
-cumulative count of time slices that the CPU has spent in user mode, system
-mode, and waiting for I/O. Like with the time measurements, the script samples
-CPU utilization before and after executing a \gls{VCS} command, and then
-subtracts to get the number of time slices spent in each state during execution.
-We then compare the relative number of time slices in each state to get an idea
-of whether the operation is CPU-bound or I/O-bound.
+checking the system time (\lstinline{time.time()} in Python) just before and
+just after using Python's \lstinline{subprocess} module to execute the necessary
+\gls{VCS} command. CPU utilization was measured by sampling the CPU status lines
+provided in Linux's \lstinline{/proc/stat} information. The status lines show a
+cumulative count of CPU ticks (\num{1/100}{th} of a second) that the CPU has
+spent in user mode, system mode, idle, and waiting for I/O\cite{proc_man_page}.
+Like with the time measurements, the script samples CPU utilization before and
+after executing a \gls{VCS} command, and then subtracts to get the number of
+time slices spent in each state during execution. We then compare the relative
+number of time slices in each state to get an idea of whether the operation is
+CPU-bound or I/O-bound.
 
 The script measures repository size using the standard Unix disk usage command
 (\lstinline{du}) and measures the size of the trial's entire temporary
