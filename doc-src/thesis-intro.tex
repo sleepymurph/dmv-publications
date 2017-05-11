@@ -71,9 +71,9 @@ Distributed systems are ruled by the \newterm{CAP-theorem} \cite{cap_origin},
 which states that a system cannot be completely consistent (\newterm{C}),
 available (\newterm{A}), and tolerant of network partitions (\newterm{P}) all at
 the same time. When communication between replicas breaks down and they cannot
-all acknowledge an operation, the system is faced with \newterm{the partition
-decision}: block the operation and decrease availability, or proceed and risk
-inconsistency\cite{cap_years_later}\perrolf{quote?}.
+all acknowledge an operation, the system is faced with "the
+\gls{partitiondecision}: block the operation and thus decrease availability, or
+proceed and thus risk inconsistency."\cite{cap_years_later}
 
 Much research is aimed at improving consistency. Vector
 clocks\cite{lamport_ordering} and consensus algorithms such as
@@ -83,14 +83,14 @@ nodes cannot respond. There are also data types are cleverly designed to be
 commutative, so that the resulting data will be the same regardless of the order
 in which updates are applied\cite{crdt_orig}. But in general, when systems
 cannot communicate, the CAP theorem cannot be avoided\cite{cap_proof}, and the
-system is still faced with the partition decision.
+system is still faced with the \gls{partitiondecision}.
 
 Amazon's Dynamo\cite{dynamo} was a pioneer in relaxing consistency guarantees to
 ensure availability. Dynamo is a key-value store that can accept updates to a
 value even if not all replicas respond. This can lead to inconsistencies, but
 for a global shopping website like Amazon, any outage represents lost revenue
-and so availability is more important. Dynamo's answer to the partition decision
-is to always proceed.
+and so availability is more important. Dynamo's answer to the
+\gls{partitiondecision} is to always proceed.
 
 When multiple Dynamo replicas receive updates to the same value and the order of
 those updates cannot be determined, Dynamo keeps the different versions of the
