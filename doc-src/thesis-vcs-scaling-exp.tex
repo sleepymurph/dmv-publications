@@ -2,8 +2,6 @@
 \label{file-size-exp-desc}
 \label{num-files-exp-desc}
 
-\perottoinline{Otto does not like the term "test". These are \emph{experiments}.}
-
 We performed experiments to probe the limits of existing \acrlongpl{VCS}, to see
 how they would cope with file sizes and file numbers in ranges beyond what would
 be expected in a source code tree. We wanted to see how long it would take for
@@ -127,8 +125,9 @@ times the base number at each order of magnitude. For example, starting at
 \num{750}, \num{1000}, \num{2500}, \num{5000}, \num{7500}, \num{10000}, and so
 on.
 
-Test data files consisted simply of pseudo-random bytes taken from the operating
-system's pseudo-random number generator (\lstinline{/dev/urandom} on Linux).
+Input data files consisted simply of pseudo-random bytes taken from the
+operating system's pseudo-random number generator (\lstinline{/dev/urandom} on
+Linux).
 
 When updating data files for the second \gls{commit}, we would overwrite a
 single contiguous section of each file with new pseudo-random bytes. We would
@@ -163,7 +162,7 @@ CPU-bound or I/O-bound.
 
 The script measures repository size using the standard Unix disk usage command
 (\lstinline{du}) and measures the size of the trial's entire temporary
-directory, which includes the generated test data itself along with the
+directory, which includes the generated input data itself along with the
 \gls{VCS}'s storage.
 
 
@@ -180,7 +179,7 @@ identical.
 Additional details can be found in \autoref{test-machine-specs}.
 
 \begin{table}
-    \caption{Test computer specifications}
+    \caption{Experiment computer specifications}
     \label{test-machine-specs}
     \begin{tabular}{ l l l }
         \multicolumn{3}{l}{Hardware} \\
@@ -200,6 +199,7 @@ Additional details can be found in \autoref{test-machine-specs}.
     \end{tabular}
 \end{table}
 
-We ran every trial four times, once on each of the test computers, and took the
-mean and standard deviation of each time and disk space measurement. However,
-because the test machines are practically identical, there was little real variation.
+We ran every trial four times, once on each of the experiment computers, and
+took the mean and standard deviation of each time and disk space measurement.
+However, because the experiment computers are practically identical, there was
+little real variation.

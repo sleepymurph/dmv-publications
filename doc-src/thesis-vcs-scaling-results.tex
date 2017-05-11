@@ -23,7 +23,7 @@ However, the error it reported in its output was a similar "fatal" error as
 Git's \lstinline{malloc} error as the \gls{commit} operation, and it did not
 report any actual integrity errors in the repository.
 
-So to test the \gls{commit}, we extracted the \SI{24}{\gibi\byte} file from the
+So to check the \gls{commit}, we extracted the \SI{24}{\gibi\byte} file from the
 repository and compared it. It was the same as the original. So the \gls{commit}
 was intact. We also deliberately corrupted the Git \gls{packfile} that stored
 the \SI{24}{\gibi\byte} by overwriting one \SI{1}{\mebi\byte} block at an offset
@@ -54,12 +54,12 @@ discovered in the results of the number-of-files experiment
 (\autoref{results-num-files--c1-time}), and later performed more experiments to
 examine in detail (\autoref{perf-tuning-exp-chapter}).
 
-Our test environment itself limited the largest file stored by any \gls{VCS} to
-\SI{96}{\gibi\byte}. Any larger and it was simply impossible to store a second
-copy of the file on our \SI{197}{\gibi\byte} test partition. Bup was able to
-store a \SI{96}{\gibi\byte} file with no errors in just under two hours. Git
-could also store such a large file, but one must ignore the false-alarm "fatal"
-errors being reported by the user interface.
+Our experiment environment itself limited the largest file stored by any
+\gls{VCS} to \SI{96}{\gibi\byte}. Any larger and it was simply impossible to
+store a second copy of the file on our \SI{197}{\gibi\byte} test partition. Bup
+was able to store a \SI{96}{\gibi\byte} file with no errors in just under two
+hours. Git could also store such a large file, but one must ignore the
+false-alarm "fatal" errors being reported by the user interface.
 
 These findings are summarized in \autoref{file-sizes-table} and
 \autoref{vcs-size-limits-table}.
@@ -85,7 +85,7 @@ These findings are summarized in \autoref{file-sizes-table} and
 \end{table}
 
 \begin{table}[hp]
-    \caption{Effective size limits for VCSs tested}
+    \caption{Effective size limits for VCSs evaluated}
     \label{vcs-size-limits-table}
     \centering
     \begin{tabular}{l l}
@@ -97,7 +97,7 @@ These findings are summarized in \autoref{file-sizes-table} and
 
         Mercurial & Commit rejected at \SI{2}{\gibi\byte} and larger \\
 
-        Bup & Successful commits at all sizes tested, up to \SI{96}{\gibi\byte} \\
+        Bup & Successful commits at all sizes tried, up to \SI{96}{\gibi\byte} \\
 
         DMV & Successful commits up to \SI{64}{\gibi\byte}, timeout at
         \SI{5.5}{\hour} during \SI{96}{\gibi\byte} trial
@@ -142,7 +142,7 @@ by overhead-- around \SI{5}{\ms} for Git, \SI{100}{\ms} for Mercurial,
 the copy.
 
 Bup, after starting with the highest overhead, goes on to have the fastest
-initial \gls{commit} of all the systems tested for large files. It takes the
+initial \gls{commit} of all the systems evaluated for large files. It takes the
 lead at \SI{2}{\gibi\byte}, where Mercurial drops out
 (\autoref{fig:plot-file-size--c1-time}d). To \gls{commit} the \SI{2}{\gibi\byte}
 file, Git's average time is \SI{91.1}{\s}, Bup's is \SI{89.1}{\s}, and
