@@ -29,17 +29,30 @@ was intact. We also deliberately corrupted the Git \gls{packfile} that stored
 the \SI{24}{\gibi\byte} by overwriting one \SI{1}{\mebi\byte} block at an offset
 of \SI{22}{\gibi\byte} with new pseudo-random data. When we ran the fsck command
 again with the corrupted repository, it reported the integrity error, but it did
-not report the \lstinline{malloc} error that it did before. So for the other
-trials with larger files, we assumed that Git's errors were a false alarm and
-allowed the trail to continue.
+not report the \lstinline{malloc} error that it did before.
 
-\towrite{After corruption, answer instantaneous rather than 7m before. Some
-sorcery detected tampering, even though we fixed the mod time?}
+Interestingly Git's fsck command found the integrity error surprisingly quickly,
+reporting the error and exiting instantaneously (from the user's perspective),
+whereas it had taken \SI{7}{\minute} to complete before. So it does not seem to
+have hashed the whole file again to find the error. We took care to preserve the
+modification time for the pack file when we corrupted it, so we are not sure how
+Git detected the error so quickly. Perhaps our corruption overwrote some
+internal indexing structure of the pack file along with the file data. More
+investigation would be necessary to know for sure.
+
+We continued the experiment under the assumption that Git's errors were a false
+alarm, and allowed the trials to continue at even larger sizes.
 
 The \gls{DMV} prototype was able to store a file up to \SI{64}{\gibi\byte} in
 size, but time became a limiting factor as file size increased. At
 \SI{96}{\gibi\byte}, our experiment script timed out and terminated the
-\gls{commit} after five and a half hours.\perotto{Bottleneck was...?}
+\gls{commit} after five and a half hours. This sluggishness is due to the way
+DMV stores chunks of the file as individual files on the filesystem, turning the
+problem of storing one large file into the problem of storing many small files.
+Storing many small files in this way incurs filesystem overhead, as we
+discovered in the results of the number-of-files experiment
+(\autoref{results-num-files--c1-time}), and later performed more experiments to
+examine in detail (\autoref{perf-tuning-exp-chapter}).
 
 Our test environment itself limited the largest file stored by any \gls{VCS} to
 \SI{96}{\gibi\byte}. Any larger and it was simply impossible to store a second
@@ -51,7 +64,7 @@ errors being reported by the user interface.
 These findings are summarized in \autoref{file-sizes-table} and
 \autoref{vcs-size-limits-table}.
 
-\begin{table}[p]
+\begin{table}[hp]
     \caption{Observations as file size increases}
     \label{file-sizes-table}
     \centering
@@ -71,7 +84,7 @@ These findings are summarized in \autoref{file-sizes-table} and
     \end{tabular}
 \end{table}
 
-\begin{table}[p]
+\begin{table}[hp]
     \caption{Effective size limits for VCSs tested}
     \label{vcs-size-limits-table}
     \centering
@@ -391,6 +404,7 @@ system's inodes when trying to run a trial with \num{25} million files.
 
 
 \subsection{Time for Number-of-Files Initial Commit}
+\label{results-num-files--c1-time}
 
 \autoref{fig:plot-num-files--c1-time} shows the time required for the initial
 \gls{commit}, storing all files into a fresh empty repository. Here we see the
