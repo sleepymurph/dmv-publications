@@ -31,12 +31,13 @@ Torvalds, the creator of Linux and Git, once famously joked that he doesn't keep
 backups, he simply publishes his work on the internet and lets others copy it
 \cite{linus_no_backups}.
 
-The major limitation of \glspl{DVCS} is that they are designed to store program
-source code: plain text files in the range of tens of kilobytes. Checking in
-larger binary files such as images, sound, or video affect performance. Actions
-that require copying data in and out of the system slow from hundredths of a
-second to full seconds or minutes. And since a \gls{DVCS} keeps every version of
-every file in every repository, forever, the disk space needs compound.
+The major limitation of \glspl{DVCS}\perotto{for what? Give more context} is
+that they are designed to store program source code: plain text files in the
+range of tens of kilobytes. Checking in larger binary files such as images,
+sound, or video affect performance. Actions that require copying data in and out
+of the system slow from hundredths of a second to full seconds or minutes. And
+since a \gls{DVCS} keeps every version of every file in every repository,
+forever, the disk space needs compound.
 
 This has lead to a conventional wisdom that binary files should never be stored
 in version control, inspiring blog posts with titles such as "Don't ever commit
@@ -53,7 +54,6 @@ control."\cite[p.33]{continuousdeliverybook}
     documentation, libraries and configuration files for your application, your
     compiler and collection of tools, and so on---so that a new member of your
     team can start working from scratch.
-    \askotto{Is this quote maybe off topic/overkill?}
 }
 
 What if we could generalize the \glsdisp{DVCS}{distributed version control}

@@ -17,8 +17,8 @@ and partition-tolerant data storage system right at their fingertips:
 
 %\perottoinline{3. How we did better: idea, architecture, design, implementation.}
 
-Inspired by \glsdisp{DVCS}{distributed version control}, we have designed and
-built a prototype for a scalable high-availability system called \gls{DMV}.
+Inspired by \glsdisp{DVCS}{distributed version control}, we have researched and
+developed a prototype for a scalable high-availability system called \gls{DMV}.
 \gls{DMV} expands Git's data model (the \acrshort{DAG}) to allow files to be
 broken into more digestible chunks via a \gls{rollinghash}. \gls{DMV} will allow
 data to be sharded according to data locality needs, slicing the data set in
@@ -31,9 +31,11 @@ ad-hoc network.
 
 We have performed experiments to probe the scalability limits of existing
 version control systems, specifically what happens as file sizes grow ever
-larger or as the number of files grow. We found that processing files whole ties
+larger or as the number of files grow. We found that processing files whole
+ties\perotto{Explain how it ties}
 maximum file size to memory, and that storing millions of objects loose as files
-incurs severe write speed penalties.
+incurs severe\perotto{Explain how severe} write speed penalties.
+\perotto{Give specs: writes per sec or time to write}
 
 %\perottoinline{5. Lessons learned}
 
@@ -46,6 +48,7 @@ small chunks, and that the key to storing many chunks is to aggregate them into
 pack files. And, if one uses a \gls{rollinghash} to split the files by content
 and \gls{contentaddressablestorage} to store them, common file chunks are
 naturally de-duplicated and many versions of a file can be stored efficiently.
+\perotto{Does DMV do this? Do results back it up?}
 
 %
 
