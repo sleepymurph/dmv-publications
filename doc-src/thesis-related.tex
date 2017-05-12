@@ -127,7 +127,7 @@ the checksum is zero. \gls{DMV} uses this same chunking algorithm (see
 \autoref{chunking-algorithm}).
 
 
-\section{Content-Addressed Storage and Backup}
+\section{De-duplicating Storage and Backup}
 
 \paragraph{Boar}
 
@@ -160,4 +160,10 @@ that the whole data set and the whole repository can fit onto one filesystem.
 
 \paragraph{Time Machine}
 
-\towrite{Time Machine}
+Time Machine\cite{timemachine_patent} is a backup utility from Apple, included
+in Mac OS X Leopard, that makes frequent automated file hierarchy backups, using
+filesystem hard links to de-duplicate unchanged files\cite{timemachine_magic}.
+This de-duplication allows it to store many different backup versions. Time
+Machine's functionality can be mimicked by using Rsync with the
+\lstinline{--link-dest} option, which also hard-links unchanged files during a
+recursive sync\cite{timemachine_foreveryunix}.
