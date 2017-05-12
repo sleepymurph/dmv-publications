@@ -1,0 +1,82 @@
+\usepackage{todonotes}
+
+\usepackage{graphicx}
+\usepackage{subcaption} % sub-figures
+\usepackage{dpfloat}
+\usepackage{pdfpages}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}    % Math
+\usepackage[binary-units]{siunitx}    % SI units
+
+% Use a blank space between paragraphs instead of an indent.
+\usepackage[parfill]{parskip}
+
+% Smart quotes
+% Provides \enquote command
+\usepackage [strict=true]{csquotes}
+\MakeOuterQuote{"}  % Automatically treat quoted strings as quotes
+
+% Source code listings
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
+
+% Add bibliography, listings, and other pseudo-chapters to table of contents
+\usepackage[
+  nottoc  % skip the table of contents itself
+]{tocbibind}
+% Add list of listings to toc via tocbibind
+\renewcommand{\lstlistoflistings}{\begingroup
+\tocfile{\lstlistlistingname}{lol}
+\endgroup}
+% Add list of todos to toc via tocbibind
+\renewcommand{\listoftodos}{\begingroup
+\tocfile{Todo List}{tdo}
+\endgroup}
+
+\usepackage[
+  backend=bibtex,
+  backref=true, % add back-references from bib to citations
+  urldate=long, % use date like "Apr. 7, 2017" instead of American "04/07/2017"
+  firstinits=true,    % use only initials of given names
+]{biblatex}
+\addbibresource{research.bib}
+% Bib names last-first
+\DeclareNameAlias{sortname}{last-first}
+\DeclareNameAlias{default}{last-first}
+% Bib names small caps
+\renewcommand{\mkbibnamelast}[1]{\textsc{#1}}
+
+
+% Provide \url command
+\usepackage{url}
+
+% UiT official font: Open Sans
+\usepackage[default]{opensans}
+
+% Adjust caption spacing
+\usepackage{caption}
+\captionsetup[table]{skip=10pt}
+
+% Nicer hlines for tables
+\usepackage{booktabs}
+
+% Link URLs in the PDF, and link references within the PDF itself
+%
+% The hyperref docs recommend declaring it after the other \usepackage
+% declarations, because it has to redefine several commands to work properly,
+% and other later redefinitions might interfere.
+\usepackage[
+  hidelinks,    % Do not style links. I think this is classier.
+  pdfusetitle,  % Use doc title metadata for PDF title metadata
+  bookmarksnumbered,      % use section numbers in PDF index
+]{hyperref}
+
+% Glossaries has to be declared AFTER hyperref for its links to work
+\usepackage[toc]{glossaries}
+\makeglossaries
+% Glossary entries
+\input{thesis-glossary}
+% Emphasize first use of glossary term
+\defglsentryfmt[main]{\ifglsused{\glslabel}{\glsgenentryfmt}{\emph{\glsgenentryfmt}}}

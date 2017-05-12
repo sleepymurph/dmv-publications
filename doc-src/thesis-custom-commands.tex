@@ -1,0 +1,51 @@
+% Custom commands:
+
+% Newly defined terms
+\newcommand{\newterm}{\textit}
+
+% An enumerated list with less spacing between items
+\newenvironment{tight_enumerate}{
+\begin{enumerate}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+}{\end{enumerate}}
+
+% to-write
+\usepackage{xcolor}
+\usepackage[fit]{truncate}
+\newcommand\towrite[1]{
+  \addcontentsline{tdo}{todo}{\truncate{250pt}{Write: #1}}
+  \textcolor{blue}{TODO: #1}
+}
+
+% feedback from Otto or Rolf
+\newcommand{\perotto}[1]{\todo[color=blue!40]{Otto: #1}}
+\newcommand{\perottoinline}[1]{\todo[color=blue!40,inline]{Otto: #1}}
+\newcommand{\askotto}[1]{\todo[color=violet!40]{Ask Otto: #1}}
+\newcommand{\askottoinline}[1]{\todo[color=violet!40,inline]{Ask Otto: #1}}
+
+\newcommand{\perrolf}[1]{\todo[color=blue!20]{Rolf: #1}}
+\newcommand{\perrolfinline}[1]{\todo[color=blue!20,inline]{Rolf: #1}}
+
+
+% Move units
+\newcommand{\gib}{\gibi\byte}
+\newcommand{\mib}{\mebi\byte}
+\newcommand{\kib}{\kibi\byte}
+
+
+% Clear specifically to an even page
+\newcommand\cleartoevenpage{%
+   \clearpage%
+   \ifodd\value{page}\mbox{}\clearpage\fi}
+
+
+% Repeated text snippets
+
+\newcommand{\explainlogsubfig}{Subfigure (a) shows the full range on a
+logarithmic scale, while the others are linear-scale for specific ranges and
+include error bars.}
+
+\newcommand{\explaindiskspaceplot}{Subfigure (a) shows repository size on a
+logarithmic scale, while subfigure (b) shows the ratio of total repository size
+to input data size.}
