@@ -96,8 +96,9 @@ low-bandwidth network link by using a rolling hash to find similar parts of the
 file, and then transfer only those portions of the file that have changed. Its
 \glsfirst{rollinghash} is the inspiration for the chunk-splitting algorithms
 used by Rsyncrypto\cite{rsyncrypto_algorithm}, Bup\cite{bup_design}, and
-\gls{DMV}. As a utility, Rsync focuses exclusively on synchronizing files. It
-does not track history or the relation between files.
+\gls{DMV} (\autoref{chunking-algorithm}). As a utility, Rsync focuses
+exclusively on synchronizing files. It does not track history or the relation
+between files.
 
 One of the coauthors of the rsync algorithm\cite{rsynctechreport}, Andrew
 Tridgell, is also indirectly responsible for the development of Git. His work to
@@ -109,7 +110,21 @@ Linus Torvalds to develop his own \gls{SCM}\cite{git_10_years_interview}.
 \paragraph{Rsyncrypto}
 \label{related-rsyncrypto}
 
-\towrite{Rsyncrypto}
+Rsyncrypto\cite{rsyncrypto_algorithm} is an encryption system that uses a
+rolling hash to encrypt files by chunks, so that the encrypted files are still
+"rsync-able." Normally, a goal of an encryption algorithm is to have small
+changes in the input lead to a completely different ciphertext. This is good for
+security, but it negates the advantages of rsync -- if the entire file is
+different, there are no advantages to be had in transferring only the changed
+parts when synchronizing files. Rsync uses a rolling hash to break the file into
+chunks and encrypt the chunks separately, so that a small change in the input
+will only change the ciphertext for the chunk that contains it, and so rsync can
+transfer only the chunk that changes.
+
+Rsyncrypto's uses the same \glsfirst{rollinghash} as
+Rsync\cite{rsyncrypto_algorithm,rsynctechreport}, setting chunk boundaries where
+the checksum is zero. \gls{DMV} uses this same chunking algorithm (see
+\autoref{chunking-algorithm}).
 
 
 \section{Content-Addressed Storage and Backup}
