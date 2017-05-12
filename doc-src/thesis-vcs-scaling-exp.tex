@@ -50,7 +50,8 @@ We ran each experiment using five different \glspl{VCS}:
 \end{description}
 
 The exact version of each \gls{VCS} used in the experiments is listed in
-\autoref{vcs-versions}.
+\autoref{vcs-versions}. \gls{DMV} versions are referenced by commit ID in the
+\gls{DMV} source's Git repository.
 
 \begin{table}[bh]
     \caption{Version control systems evaluated and their versions}
@@ -196,6 +197,10 @@ Additional details can be found in \autoref{test-machine-specs}.
         & Test partition & \SI{197}{\gibi\byte} LVM partition \\
         & Filesystem & ext4 \\
         & I/O scheduler & cfq (unless otherwise noted) \\
+        \\
+        \multicolumn{3}{l}{DMV compilation} \\
+        & Rust compiler version & 1.15 stable or 1.16 stable \\
+        & Rust compiler flags & -{}-release \\
     \end{tabular}
 \end{table}
 
