@@ -91,7 +91,25 @@ on efficient routing between nodes, while we are focusing first on storage.
 \paragraph{Rsync}
 \label{related-rsync}
 
-\towrite{Rsync}
+Rsync\cite{rsynctechreport} is a utility that synchronizes files across a
+low-bandwidth network link by using a rolling hash to find similar parts of the
+file, and then transfer only those portions of the file that have changed. Its
+\glsfirst{rollinghash} is the inspiration for the chunk-splitting algorithms
+used by Rsyncrypto\cite{rsyncrypto_algorithm}, Bup\cite{bup_design}, and
+\gls{DMV}. As a utility, Rsync focuses exclusively on synchronizing files. It
+does not track history or the relation between files.
+
+One of the coauthors of the rsync algorithm\cite{rsynctechreport}, Andrew
+Tridgell, is also indirectly responsible for the development of Git. His work to
+reverse-engineer the BitKeeper protocol is what caused BitMover to revoke the
+special free BitKeeper license for Linux kernel developers, which is what led
+Linus Torvalds to develop his own \gls{SCM}\cite{git_10_years_interview}.
+
+
+\paragraph{Rsyncrypto}
+\label{related-rsyncrypto}
+
+\towrite{Rsyncrypto}
 
 
 \section{Content-Addressed Storage and Backup}
