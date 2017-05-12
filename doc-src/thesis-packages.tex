@@ -70,7 +70,11 @@
 \usepackage[
   hidelinks,    % Do not style links. I think this is classier.
   pdfusetitle,  % Use doc title metadata for PDF title metadata
-  bookmarksnumbered,      % use section numbers in PDF index
+  pdfdisplaydoctitle,           % Display document title instead of filename in title bar
+  bookmarksnumbered,            % use section numbers in PDF index
+  pdfpagemode={UseOutlines},    % Show bookmarks
+  pdfstartview={FitV},          % Fit height of page to PDF viewer window
+  pdfpagelayout={TwoPageRight}, % Display two pages, odd-numbered pages to the right
 ]{hyperref}
 
 % Glossaries has to be declared AFTER hyperref for its links to work
