@@ -41,9 +41,15 @@
   backend=bibtex,
   backref=true, % add back-references from bib to citations
   urldate=long, % use date like "Apr. 7, 2017" instead of American "04/07/2017"
-  % firstinits=true,    % use only initials of given names
+  firstinits=true,    % use only initials of given names
 ]{biblatex}
 \addbibresource{research.bib}
+% Bib names last-first
+\DeclareNameAlias{sortname}{last-first}
+\DeclareNameAlias{default}{last-first}
+% Bib names small caps
+\renewcommand{\mkbibnamelast}[1]{\textsc{#1}}
+
 
 % Provide \url command
 \usepackage{url}
@@ -214,10 +220,6 @@ to input data size.}
 
 %\nocite{*}  % Print all references even if they're not used
 \printbibliography[heading=bibintoc]
-\perrolfinline{Name consistency? Go either all full names or all initial plus
-last name. In physics they go all initial plus last name. Can go initials with
-one config option. Should I?}
-\askottoinline{How do we do it in CS?}
 
 
 % Colophon
