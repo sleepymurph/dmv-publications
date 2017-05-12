@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{subcaption} % sub-figures
 \usepackage{dpfloat}
+\usepackage{pdfpages}
 
 \usepackage[utf8]{inputenc}
 
@@ -169,7 +170,8 @@ to input data size.}
 \phantomsection
 \currentpdfbookmark{Title Page}{title}
 
-\maketitle
+%\maketitle
+\includepdf[pages={1}]{thesis-uit-title-page-prerenderered.pdf}
 
 
 \pagestyle{headings}
