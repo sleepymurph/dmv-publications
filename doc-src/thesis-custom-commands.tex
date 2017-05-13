@@ -11,11 +11,8 @@
 }{\end{enumerate}}
 
 % to-write
-\usepackage{xcolor}
-\usepackage[fit]{truncate}
 \newcommand\towrite[1]{
-  \addcontentsline{tdo}{todo}{\truncate{250pt}{Write: #1}}
-  \textcolor{blue}{TODO: #1}
+    \todo[inline,color=white,bordercolor=white]{\textcolor{blue}{Write: #1}}
 }
 
 % feedback from Otto or Rolf
