@@ -1,0 +1,7 @@
+On branch master
+P0: a76e9d0f Add new file
+P1: a129ae17 Rename image
+
+a  another_new_file.txt
+a  melon-cat.jpg
+ a new_file.txt

@@ -151,14 +151,36 @@ savings.
 
 \towrite{Graph walk abstraction}
 
+\begin{figure}
+    \caption{Actual output of DMV status command during merge in progress}
+    \label{lst_dmv_merge_in_progress}
+    \centering
+    \lstinputlisting[nolol,basicstyle=\scriptsize]{lst-dmv-merge-in-progress.txt}
+\end{figure}
+
+\begin{figure}
+    \caption{Actual output of DMV log command}
+    \label{lst_dmv_log_output}
+    \centering
+    \lstinputlisting[nolol,basicstyle=\scriptsize]{lst-dmv-log-output.txt}
+\end{figure}
+
+Unfortunately, the current \gls{DMV} prototype does not yet include any of the
+planned networking features. However, basic local version control functionality
+is working, and the system can be used to store data, keep history, and retrieve
+old versions. Branching and rudimentary merging functionality are implemented as
+well (\cref{lst_dmv_merge_in_progress,lst_dmv_log_output}).
+
+Also, as a proof-of-concept for sharding the DAG, the \gls{DMV} prototype is
+able to check out a subdirectory of the dataset to the working directory and
+commit changes to it. This demonstrates the ability to keep a full history of
+part of the dataset, as described in \autoref{working-with-incomplete-dag} and
+illustrated in \autoref{dia_dmv_dag_slice_history_of_subset}.
 
 %
 
 
 \section{Limitations}
-
-\towrite{Did not get to implementing networking features, but did pull off
-subtree commit}
 
 \towrite{non-programmers (and even some programmers) cannot handle Git
     - Key to usability would be to make as linear a history as possible with
