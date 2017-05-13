@@ -11,8 +11,8 @@ unset key
 
 set multiplot layout 3,2 rowsfirst
 POS="left at graph 0.05,0.88 front"
-USERPLOT='using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "user"'
-SYSTEMPLOT='using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "system"'
+USERPLOT='using 1:(($2+$4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 linetype 2 title "user"'
+SYSTEMPLOT='using 1:(($4+$8)/($2+$4+$6+$8)*100) with filledcurves y1=0 linetype 1 title "system"'
 IOWAITPLOT='using 1:(($8)/($2+$4+$6+$8)*100) with filledcurves y1=0 title "iowait"'
 
 #set label 1 'git' @POS
