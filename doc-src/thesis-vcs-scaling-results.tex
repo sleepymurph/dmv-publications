@@ -510,10 +510,35 @@ discernible on the graph.
 
 \subsection{CPU Usage During Number-of-Files Commits}
 
-\autoref{fig:plot-num-files--c1-cpu} shows CPU utilization during the
-\gls{commit}.
+\autoref{fig:plot-num-files--c1-cpu} shows CPU utilization during the initial
+\gls{commit} and \autoref{fig:plot-num-files--c1-cpu} shows CPU utilization
+during the update \gls{commit}.
 
-\towrite{Prose description of results}
+With the initial commit, Git, DMV, and the copy spend more time waiting on I/O
+than Bup or Mercurial, and they also spend more time in system mode. In the case
+of the copy, this is probably because the operation is almost pure I/O. In the
+case of Git and \gls{DMV}, this is more evidence to suggest that writing files
+with effectively random names incurs more filesystem overhead than writing
+sequentially, as Mercurial does, or appending to large files, as Bup does. We
+can see that Bup and Mercurial both spend more time processing in user mode than
+waiting for I/O.
+
+With the update commit, Mercurial loses its sequential write advantage, since it
+has to seek to the \gls{filelog} that corresponds to the current input file and
+append to it. And so we see much more I/O wait with Mercurial. Bup continues to
+simply append objects to its \glspl{packfile} as always, and so it retains a low
+I/O wait profile.
+
+Interestingly, Mercurial's and \gls{DMV}'s I/O wait in the update commit has a
+gradual rise starting around 100 thousand files, while Git's is a sudden rise
+starting just before 100 thousand files. The copy is somewhere in between. We
+are not sure why that is, since \gls{DMV} has much more in common with Git in
+terms of disk usage patterns.
+
+Git, \gls{DMV}, and the copy all decrease in I/O wait from \num{1} million to
+\num{5} million files. And Mercurial also shows a slight decrease from \num{2.5}
+million to \num{5} million files. Again, we are not sure what would be causing
+that.
 
 %
 
