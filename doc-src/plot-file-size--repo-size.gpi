@@ -22,11 +22,12 @@ set format y "%1.0b%BB"
 
 set title "(a) Total Disk Space Used"
 plot \
-    meantable."/gitallowrepoerr-*" using 1:2:3 with lines title "git (two commits)", \
-    meantable."/hg-*" using 1:2:3 with lines title "hg (two commits)", \
-    meantable."/bup-*" using 1:2:3 with lines title "bup (two commits)", \
-    meantable."/prototype2x1mem-*" using 1:2:3 with lines title "prototype (two commits)", \
-    meantable."/gitallowrepoerr-*" using 1:4:5 with lines title "git (garbage collected)" linetype 6, \
+    meantable."/gitallowrepoerr-*" using 1:2:3 with lines, \
+    meantable."/hg-*" using 1:2:3 with lines, \
+    meantable."/bup-*" using 1:2:3 with lines, \
+    meantable."/prototype2x1mem-*" using 1:2:3 with lines, \
+    meantable."/copy-*" using 1:2:3 with lines, \
+    meantable."/gitallowrepoerr-*" using 1:4:5 with lines, \
 
 unset logscale y
 
@@ -48,6 +49,7 @@ plot \
     meantable."/hg-*" using 1:2:3 with lines title "Mercurial (two commits)", \
     meantable."/bup-*" using 1:2:3 with lines title "Bup (two commits)", \
     meantable."/prototype2x1mem-*" using 1:2:3 with lines title "DMV (two commits)", \
+    meantable."/copy-*" using 1:2:3 with lines title "Copy (two commits)", \
     meantable."/gitallowrepoerr-*" using 1:4:5 with lines title "Git (garbage collected)" linetype 6, \
 
 
@@ -74,8 +76,9 @@ set format y "%.0fx"
 set size 1,0.5
 set title "(b) Ratio of Total Disk Space Used to File Size"
 plot \
-    meantable."/gitallowrepoerr-*" using 1:($2/$1):($3/$1) with lines title "git (two commits)", \
-    meantable."/hg-*" using 1:($2/$1):($3/$1) with lines title "hg (two commits)", \
-    meantable."/bup-*" using 1:($2/$1):($3/$1) with lines title "bup (two commits)", \
-    meantable."/prototype2x1mem-*" using 1:($2/$1):($3/$1) with lines title "prototype (two commits)", \
-    meantable."/gitallowrepoerr-*" using 1:($4/$1):($5/$1) with lines title "git (garbage collected)" linetype 6, \
+    meantable."/gitallowrepoerr-*" using 1:($2/$1):($3/$1) with lines, \
+    meantable."/hg-*" using 1:($2/$1):($3/$1) with lines, \
+    meantable."/bup-*" using 1:($2/$1):($3/$1) with lines, \
+    meantable."/prototype2x1mem-*" using 1:($2/$1):($3/$1) with lines, \
+    meantable."/copy-*" using 1:($2/$1):($3/$1) with lines, \
+    meantable."/gitallowrepoerr-*" using 1:($4/$1):($5/$1) with lines, \
