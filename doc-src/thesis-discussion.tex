@@ -147,10 +147,6 @@ savings.
 
 \section{DMV Prototype development}
 
-\towrite{Mistakes along the way: storing whole status tree in memory}
-
-\towrite{Graph walk abstraction}
-
 \begin{figure}
     \caption{Actual output of DMV status command during merge}
     \label{lst_dmv_merge_in_progress}
@@ -177,9 +173,14 @@ commit changes to it. This demonstrates the ability to keep a full history of
 part of the dataset, as described in \autoref{working-with-incomplete-dag} and
 illustrated in \autoref{dia_dmv_dag_slice_history_of_subset}.
 
+\towrite{Mistakes along the way: storing whole status tree in memory}
+
+\towrite{Graph walk abstraction}
+
 %
 
 
+\iffalse
 \section{Limitations}
 
 \towrite{non-programmers (and even some programmers) cannot handle Git
@@ -187,6 +188,7 @@ illustrated in \autoref{dia_dmv_dag_slice_history_of_subset}.
         auto-updates, but that is the job of a separate app
     - Cite redesign of Git\cite{redesign_of_git}
 }
+\fi
 
 %
 
