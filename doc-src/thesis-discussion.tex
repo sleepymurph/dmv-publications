@@ -26,14 +26,14 @@ By using files as the basic unit of storage, and storing files as deltas against
 a base revision, both Git and Mercurial will at some point load an entire file
 into memory in order to compare it to another version. This ties the maximum
 file size that the system can work with to the amount of available RAM. In
-Mercurial's case, the error message that appears when attempting to \gls{commit} a
-\SI{2}{\gib} file warns that \SI{6}{\gib} will be required to manage it. And
+Mercurial's case, the error message that appears when attempting to \gls{commit}
+a \SI{2}{\gib} file warns that \SI{6}{\gib} will be required to manage it. And
 because it has to calculate deltas in order to store a file at all, Mercurial
 simply cannot work with any file that it can't fit into memory three times over.
 This is why Mercurial could not store files larger than \SI{1.5}{\gib} in the
 file-size experiments (\autoref{file-size-limits-results}).
 
-Because Git's delta calculation happens in a secondary behind-the-scenes phase,
+Because Git's delta calculation happens behind-the-scenes in a secondary phase,
 it can still manage to \gls{commit} files larger than available RAM, but it
 prints errors as the other operations fail. The two-phase approach also requires
 extra disk space and processing power. If a large file is changed, the at first
@@ -53,10 +53,13 @@ bottleneck.
 
 The current \gls{DMV} prototype stores objects loose as files on the filesystem.
 This proves to be wasteful of disk space, taking up whole filesystem blocks with
-tiny objects and with directories. It also causes dramatic slowdown as the disk
-gets full and the filesystem has to work harder to find free blocks (as seen in
-\autoref{seek-times-results}). Dividing into chunks solves the problem of
-storing large files by turning it into the problem of storing many files.
+tiny objects and taking up inodes with subdirectories. Also, naming the object
+files by their SHA-1 hash effectively makes the filenames random, which causes
+dramatic write slowdowns compared to writing sequentially, as we saw in the
+number-of-files and object-directory-layout experiments
+(\autoref{results-num-files--c1-time}, \autoref{object-dir-layout-results}).
+Dividing into chunks solves the problem of storing large files by turning it
+into the problem of storing many files.
 
 Bup's storage strategy is the best of both worlds. It first divides files into
 chunks, but then re-packs objects together into \glspl{packfile}. In fact, Bup
@@ -65,7 +68,8 @@ the separate compacting phase, and without bothering to calculate deltas
 \cite{bup_design}. This makes efficient use of disk space, and allows the
 \glspl{packfile} to be written sequentially, minimizing disk seeks. This is why
 Bup was clearly the fastest of the systems evaluated in both the file-size and
-number-of-files experiments (\autoref{num-files-exp-desc}).
+number-of-files experiments (\autoref{results-file-size--c1-time},
+\autoref{results-num-files--c1-time}).
 
 \footnotetext{Git has no notion of chunks, but Bup reuses Git's \gls{tree}
 objects as chunk indices. Git can read a repository written by Bup, but it will
@@ -77,6 +81,8 @@ larger files. The magic is in the combination, where files and revisions of
 files are broken into chunks by content, so that identical chunks are naturally
 de-duplicated in storage. That is what gives significant disk space savings over
 simply zipping up snapshots of the data.
+
+So the next step for \gls{DMV} will be to start aggregating objects.
 
 %
 

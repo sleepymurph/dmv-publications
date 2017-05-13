@@ -117,17 +117,18 @@ used a new \SI{100}{\mebi\byte} LVM partition.
 
 \cleardoublepage
 \subsection{Results}
+\label{object-dir-layout-results}
 
 \subsubsection{Out of Inodes}
 
 \autoref{fig:plot-filesystem-limits--directory-takeover} shows how quickly
 directories overtake files as subdirectory nesting goes deeper. Presented
 visually, the connection between files and directories becomes obvious. The
-maximum number of files plus directories is constant. It is limited by the
-number of inodes on the filesystem. which on the \SI{100}{\mib} test partition
-is \num{25688}. However, the number of directories created increases
-exponentially with both the number of hex digits per directory and then again by
-directory depth. This can be expressed mathematically.
+maximum number of files plus directories is constant and limited by the number
+of inodes on the filesystem, which on the \SI{100}{\mib} test partition is
+\num{25688}. However, the number of directories created increases exponentially
+with both the number of hex digits per directory and then again by directory
+depth. This can be expressed mathematically.
 
 Let $h$ denote the number of hex digits per subdirectory and let $n$ denote the
 subdirectory depth. Then the total number of directories created by the scheme,
@@ -204,7 +205,6 @@ running out of disk space.
 \end{table}
 
 \subsubsection{Long Write Times}
-\label{seek-times-results}
 
 From there, we turn our attention to the mysterious, intermittent long write
 times. In the experiment, across all directory schemes, there were \num{315601}
