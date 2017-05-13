@@ -57,7 +57,7 @@ tiny objects and taking up inodes with subdirectories. Also, naming the object
 files by their SHA-1 hash effectively makes the filenames random, which causes
 dramatic write slowdowns compared to writing sequentially, as we saw in the
 number-of-files and object-directory-layout experiments
-(\autoref{results-num-files--c1-time}, \autoref{object-dir-layout-results}).
+(\cref{results-num-files--c1-time,object-dir-layout-results}).
 Dividing into chunks solves the problem of storing large files by turning it
 into the problem of storing many files.
 
@@ -68,8 +68,8 @@ the separate compacting phase, and without bothering to calculate deltas
 \cite{bup_design}. This makes efficient use of disk space, and allows the
 \glspl{packfile} to be written sequentially, minimizing disk seeks. This is why
 Bup was clearly the fastest of the systems evaluated in both the file-size and
-number-of-files experiments (\autoref{results-file-size--c1-time},
-\autoref{results-num-files--c1-time}).
+number-of-files experiments
+(\cref{results-file-size--c1-time,results-num-files--c1-time}).
 
 \footnotetext{Git has no notion of chunks, but Bup reuses Git's \gls{tree}
 objects as chunk indices. Git can read a repository written by Bup, but it will
