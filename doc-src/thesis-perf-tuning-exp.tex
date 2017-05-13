@@ -4,6 +4,35 @@
 \perottoinline{"Performance" vague. Be more specific or sum up what performance
 you're talking about here at beginning of chapter.}
 
+\begin{figure}[p]
+    \caption{DMV log output showing varying object write times}
+    \label{write-times-log-output}
+    \centering
+
+    Not shown: many objects written in under \SI{10}{\ms}, which are logged at
+    \lstinline{TRACE} level.
+
+    \lstinputlisting[nolol,basicstyle=\scriptsize]{lst-storing-long-write-times.txt}
+\end{figure}
+
+\begin{table}[p]
+    \caption{Sample object store directory variations}
+    \label{sample-directory-scheme-variations}
+    \centering
+    \begin{tabular}{c c l}
+        Hex digits & Depth & Example \\
+        \midrule
+        0 & 0 & \lstinline{03d37679d1fab86e5286decd6cd2a94efcfe083f} \\
+        1 & 1 & \lstinline{7/9332ca7ce9163f78e3c115a2173bd8fd853d286} \\
+        1 & 3 & \lstinline{6/8/c/40e64f3e74e6ebefdcf2f5f30fb8da004792c} \\
+        2 & 1 & \lstinline{9f/4ec22c3e0289b29eefefe4728dece14e67e6ac} \\
+        2 & 2 & \lstinline{dd/52/bcccff156a179cdac0793ef049039372d8a1} \\
+        3 & 1 & \lstinline{cc5/199084d70f7c5ba325a240e1927579ee24bb1} \\
+        3 & 4 & \lstinline{472/e98/e88/0b1/c5905065c70cbe806361d32f6429} \\
+        4 & 3 & \lstinline{1ed2/bd51/01fe/5b23763e8c76852739f59201280f} \\
+    \end{tabular}
+\end{table}
+
 \section{Object Store Directory Layout}
 \label{dir-experiment}
 
@@ -26,17 +55,6 @@ while most objects would be written in milliseconds, occasionally a single
 object write would take multiple seconds or tens of seconds, even though there
 was no appreciable difference in size between the objects
 (\autoref{write-times-log-output}).
-
-\begin{figure}
-    \caption{DMV log output showing varying object write times}
-    \label{write-times-log-output}
-    \centering
-
-    Not shown: many objects written in under \SI{10}{\ms}, which are logged at
-    \lstinline{TRACE} level.
-
-    \lstinputlisting[nolol,basicstyle=\scriptsize]{lst-storing-long-write-times.txt}
-\end{figure}
 
 \gls{DMV} stores its objects as individual files in an \gls{objectstore}
 directory, in the same manner as Git. The object's SHA-1 hash is used as its
@@ -74,24 +92,6 @@ discarding combinations that did not make sense, such as combinations involving
 \num{0} and another number (which would all simply be undivided), or those that
 required more than the \num{40} hex digits of a \num{160}-byte SHA-1 hash.
 
-\begin{table}[]
-    \caption{Sample object store directory variations}
-    \label{sample-directory-scheme-variations}
-    \centering
-    \begin{tabular}{c c l}
-        Hex digits & Depth & Example \\
-        \midrule
-        0 & 0 & \lstinline{03d37679d1fab86e5286decd6cd2a94efcfe083f} \\
-        1 & 1 & \lstinline{7/9332ca7ce9163f78e3c115a2173bd8fd853d286} \\
-        1 & 3 & \lstinline{6/8/c/40e64f3e74e6ebefdcf2f5f30fb8da004792c} \\
-        2 & 1 & \lstinline{9f/4ec22c3e0289b29eefefe4728dece14e67e6ac} \\
-        2 & 2 & \lstinline{dd/52/bcccff156a179cdac0793ef049039372d8a1} \\
-        3 & 1 & \lstinline{cc5/199084d70f7c5ba325a240e1927579ee24bb1} \\
-        3 & 4 & \lstinline{472/e98/e88/0b1/c5905065c70cbe806361d32f6429} \\
-        4 & 3 & \lstinline{1ed2/bd51/01fe/5b23763e8c76852739f59201280f} \\
-    \end{tabular}
-\end{table}
-
 \subsection{Environment}
 
 Like the "many files" experiment, this was automated as a Python script and run
@@ -101,21 +101,24 @@ on one of the dedicated computers used for that experiment (specs shown in
 used a new \SI{100}{\mebi\byte} LVM partition.
 
 
+\begin{figure}[b!]
+    %\begin{leftfullpage}
+        \caption{Number of Files vs. number of directories filling a disk}
+        \label{fig:plot-filesystem-limits--directory-takeover}
+        \centering
+
+        The number of files and directories present when the disk reported that it
+        was full under the given directory scheme, shown by number of hex digits per
+        directory (the different plots) and levels of depth (x axis)
+
+        \includegraphics[]{plot-filesystem-limits--directory-takeover}
+    %\end{leftfullpage}
+\end{figure}
+
+\cleardoublepage
 \subsection{Results}
 
 \subsubsection{Out of Inodes}
-
-\begin{figure}[]
-    \caption{Number of Files vs. number of directories filling a disk}
-    \label{fig:plot-filesystem-limits--directory-takeover}
-    \centering
-
-    The number of files and directories present when the disk reported that it
-    was full under the given directory scheme, shown by number of hex digits per
-    directory (the different plots) and levels of depth (x axis)
-
-    \includegraphics[]{plot-filesystem-limits--directory-takeover}
-\end{figure}
 
 \autoref{fig:plot-filesystem-limits--directory-takeover} shows how quickly
 directories overtake files as subdirectory nesting goes deeper. Presented
@@ -159,25 +162,7 @@ itself is more than \num{2.5} times the total number of inodes available on the
 running out of disk space.
 
 
-\subsubsection{Long Write Times}
-\label{seek-times-results}
-
-From there, we turn our attention to the mysterious, intermittent long write
-times. In the experiment, across all directory schemes, there were \num{315601}
-total writes. Of those, \num{312813} (\SI{99.1}{\percent}) completed in less
-than \SI{1}{\ms}. The others are plotted in \autoref{plot-seek-times}, and the
-top ten longest writes are listed in \autoref{longest-writes}. The spikes in the
-graph are arranged in curves radiating out from zero files and zero directories,
-each curve representing the run of one of the different directory schemes. No
-single directory scheme stands out as worse than the others, though having more
-directories does seem to lead to more frequent and longer long writes. The
-scheme with the fewest and shortest long writes is the one that has no
-subdirectories at all. So we conclude that there is no penalty for storing many
-thousands of files in one directory.
-
-\perottoinline{Note interesting peak in write times graph, with x and y}
-
-\begin{figure}[]
+\begin{figure}[p]
     \caption{Unusually high write times}
     \label{plot-seek-times}
     \centering
@@ -191,7 +176,7 @@ thousands of files in one directory.
     \includegraphics[]{plot-seek-times}
 \end{figure}
 
-\begin{table}
+\begin{table}[p]
     \caption{Top-ten longest writes}
     \label{longest-writes}
     % To generate:
@@ -216,6 +201,24 @@ thousands of files in one directory.
 1.379 & 1 & 6 &  5302 & 18885 &  1 & 94.2 \\
     \end{tabular}
 \end{table}
+
+\subsubsection{Long Write Times}
+\label{seek-times-results}
+
+From there, we turn our attention to the mysterious, intermittent long write
+times. In the experiment, across all directory schemes, there were \num{315601}
+total writes. Of those, \num{312813} (\SI{99.1}{\percent}) completed in less
+than \SI{1}{\ms}. The others are plotted in \autoref{plot-seek-times}, and the
+top ten longest writes are listed in \autoref{longest-writes}. The spikes in the
+graph are arranged in curves radiating out from zero files and zero directories,
+each curve representing the run of one of the different directory schemes. No
+single directory scheme stands out as worse than the others, though having more
+directories does seem to lead to more frequent and longer long writes. The
+scheme with the fewest and shortest long writes is the one that has no
+subdirectories at all. So we conclude that there is no penalty for storing many
+thousands of files in one directory.
+
+\perottoinline{Note interesting peak in write times graph, with x and y}
 
 The single longest write took \SI{2.306}{\s}, but it is only one of two writes
 that took more than \SI{2}{\s}. Both of the two-second writes occurred under the
