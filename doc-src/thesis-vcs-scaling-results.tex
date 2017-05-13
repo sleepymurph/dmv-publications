@@ -1,3 +1,46 @@
+\begin{table}[hp]
+    \caption{Observations as file size increases}
+    \label{file-sizes-table}
+    \centering
+    \begin{tabular}{r l}
+        Size & Observation \\
+        \midrule
+        \SI{1.5}{\gibi\byte} & Largest successful commit with Mercurial \\
+        \SI{2}{\gibi\byte} & Mercurial commit rejected \\
+        \SI{8}{\gibi\byte} & Largest successful commit with Git \\
+        \SI{12}{\gibi\byte} & Git false-alarm errors begin, but commit still intact \\
+        \SI{16}{\gibi\byte} & Largest successful Git fsck command \\
+        \SI{24}{\gibi\byte} & Git false-alarm errors begin during fsck, but commit still intact \\
+        \SI{64}{\gibi\byte} & Largest successful DMV commit \\
+        \SI{96}{\gibi\byte} & DMV timeout after \SI{5.5}{\hour} \\
+        \SI{96}{\gibi\byte} & Last successful commit with Bup (and Git, ignoring false-alarm errors) \\
+        \SI{128}{\gibi\byte} & All fail due to size of test partition \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[hp]
+    \caption{Effective size limits for VCSs evaluated}
+    \label{vcs-size-limits-table}
+    \centering
+    \begin{tabular}{l l}
+
+        VCS & Effective limit \\
+        \midrule
+
+        Git & Commit intact at all sizes, UI reports errors at \SI{12}{\gibi\byte} and larger \\
+
+        Mercurial & Commit rejected at \SI{2}{\gibi\byte} and larger \\
+
+        Bup & Successful commits at all sizes tried, up to \SI{96}{\gibi\byte} \\
+
+        DMV & Successful commits up to \SI{64}{\gibi\byte}, timeout at
+        \SI{5.5}{\hour} during \SI{96}{\gibi\byte} trial
+
+    \end{tabular}
+\end{table}
+
+\cleardoublepage
+
 \section{Results: File Size}
 
 \subsection{File Size Limits}
@@ -64,49 +107,9 @@ false-alarm "fatal" errors being reported by the user interface.
 These findings are summarized in \autoref{file-sizes-table} and
 \autoref{vcs-size-limits-table}.
 
-\begin{table}[hp]
-    \caption{Observations as file size increases}
-    \label{file-sizes-table}
-    \centering
-    \begin{tabular}{r l}
-        Size & Observation \\
-        \midrule
-        \SI{1.5}{\gibi\byte} & Largest successful commit with Mercurial \\
-        \SI{2}{\gibi\byte} & Mercurial commit rejected \\
-        \SI{8}{\gibi\byte} & Largest successful commit with Git \\
-        \SI{12}{\gibi\byte} & Git false-alarm errors begin, but commit still intact \\
-        \SI{16}{\gibi\byte} & Largest successful Git fsck command \\
-        \SI{24}{\gibi\byte} & Git false-alarm errors begin during fsck, but commit still intact \\
-        \SI{64}{\gibi\byte} & Largest successful DMV commit \\
-        \SI{96}{\gibi\byte} & DMV timeout after \SI{5.5}{\hour} \\
-        \SI{96}{\gibi\byte} & Last successful commit with Bup (and Git, ignoring false-alarm errors) \\
-        \SI{128}{\gibi\byte} & All fail due to size of test partition \\
-    \end{tabular}
-\end{table}
-
-\begin{table}[hp]
-    \caption{Effective size limits for VCSs evaluated}
-    \label{vcs-size-limits-table}
-    \centering
-    \begin{tabular}{l l}
-
-        VCS & Effective limit \\
-        \midrule
-
-        Git & Commit intact at all sizes, UI reports errors at \SI{12}{\gibi\byte} and larger \\
-
-        Mercurial & Commit rejected at \SI{2}{\gibi\byte} and larger \\
-
-        Bup & Successful commits at all sizes tried, up to \SI{96}{\gibi\byte} \\
-
-        DMV & Successful commits up to \SI{64}{\gibi\byte}, timeout at
-        \SI{5.5}{\hour} during \SI{96}{\gibi\byte} trial
-
-    \end{tabular}
-\end{table}
-
 %
 
+\clearpage ~~~
 
 \begin{figure}[p]
     \begin{leftfullpage}
@@ -352,33 +355,7 @@ trying to load multiple versions of the file into memory to calculate deltas for
 %
 
 
-
-\begin{figure}[p]
-    \begin{leftfullpage}
-        \caption{Wall-clock time to commit many 1KiB files to a fresh repository}
-        \label{fig:plot-num-files--c1-time}
-        \centering
-
-        \explainlogsubfig
-
-        \includegraphics[]{plot-num-files--c1-time}
-    \end{leftfullpage}
-\end{figure}
-
-\begin{figure}[p]
-    \begin{leftfullpage}
-        \caption{Wall-clock time to commit many updated files}
-        \label{fig:plot-num-files--c2-time}
-        \centering
-
-        X axis shows the total number of files. 1 out of every 16 files was updated.
-        \explainlogsubfig
-
-        \includegraphics[]{plot-num-files--c2-time}
-    \end{leftfullpage}
-\end{figure}
-
-%\cleardoublepage
+\cleardoublepage
 
 \section{Results: Number of Files}
 \label{results-num-files}
@@ -412,6 +389,32 @@ system's inodes when trying to run a trial with \num{25} million files.
 
 %
 
+\begin{figure}[p]
+    \begin{leftfullpage}
+        \caption{Wall-clock time to commit many 1KiB files to a fresh repository}
+        \label{fig:plot-num-files--c1-time}
+        \centering
+
+        \explainlogsubfig
+
+        \includegraphics[]{plot-num-files--c1-time}
+    \end{leftfullpage}
+\end{figure}
+
+\begin{figure}[p]
+    \begin{leftfullpage}
+        \caption{Wall-clock time to commit many updated files}
+        \label{fig:plot-num-files--c2-time}
+        \centering
+
+        X axis shows the total number of files. 1 out of every 16 files was updated.
+        \explainlogsubfig
+
+        \includegraphics[]{plot-num-files--c2-time}
+    \end{leftfullpage}
+\end{figure}
+
+\cleardoublepage
 
 \subsection{Time for Number-of-Files Initial Commit}
 \label{results-num-files--c1-time}
@@ -445,7 +448,7 @@ respectively (see \autoref{bup-commit-times-high-variance}), whereas the mean of
 the other such standard deviation percentages is only \SI{6.1}{\percent}. We are
 not sure what is causing this.
 
-\begin{table}[h]
+\begin{table}[b]
     \caption{Bup initial commit times with unusually high variance}
     \label{bup-commit-times-high-variance}
     \centering
@@ -461,7 +464,6 @@ not sure what is causing this.
 
 
 \cleardoublepage
-
 \subsection{Time for Number-of-Files Update Commit}
 
 \autoref{fig:plot-num-files--c2-time} shows the wall-clock time required for the
