@@ -557,23 +557,53 @@ required to check the changed status of all files just after committing.
 
 \subsection{Repository Size after Number-of-Files Update Commit}
 
-\todo[inline]{This text is from an older document and needs editing and updating}
+% Analyze:
+%
+% ../data/meantable.py --columns filecount c2_size \
+%       --files ../data/exp--num-files--v03--less-dirs/git-* \
+%   | tail -n+2 \
+%   | awk -e '{printf "%7d  %5.3f\n", $1, $2/($1*1024)}'
 
-\autoref{fig:plot-num-files--repo-size} shows the total
-repository size, including the original files, after committing once, editing
-1/1024th of every sixteenth file, and committing again.
+% At 5M files...
+% git: 8.478
+% hg: 8.186
+% bup: 5.374
+% prototype2x1mem: 8.538
+% copy: 8.043
 
-Git, Mercurial, and DMV converge to using about \num{8} times the space of the
-original data set. This probably has more to do with the filesystem block size
-than anything else. The underlying file system uses a 4KiB block size, so each
-1KiB file will still use 4KiB of disk space. And since there are two copies of
-each file, that's 8KiB total for each 1KiB file, \num{8} times the disk space.
+\autoref{fig:plot-num-files--repo-size} shows the total repository size after
+the update commit, including the original files. This is after committing once,
+changing a single byte in every sixteenth file, and committing again.
 
-\towrite{Bup does better}
+Git, Mercurial, DMV, and the copy all converge to using just over \num{8} times
+the theoretical size of the data set, while Bup is closer to \num{5} times. This
+has to do with the block size of the filesystem. The underlying filesystem uses
+a \SI{4}{\kib} block size, so each \SI{1}{\kib} file uses one \SI{4}{\kib}
+block. So the input data itself takes \num{4} times its theoretical size. So
+each will end up with \num{4} times for the input files, and \num{4} times for
+the copied files, plus some overhead. So a storage ratio of just over \num{8} is to be
+expected for those systems that store objects as individual files.
 
-Mercurial converges towards the \num{8}-times limit faster though. We speculate
-this is because of lower repo overhead, and also because Git is creating
-\gls{tree} objects for each of the subdirectories in the file set. These files
-will be small, but each will take up another 4KiB block on the disk.
+Naturally the copy would have the least overhead, with a ratio of \num{8.043} at
+\SI{5} million files. This shows that the directory hierarchy of the input files
+itself probably adds around \num{2.1}{percent}. Mercurial has the second lowest
+overhead, with a storage ratio of \num{8.186}. This makes sense, because while
+Mercurial creates a \gls{filelog} for each input files, it reuses
+\glspl{filelog} to store the updates versions, so it does not create any new
+files during the second commit.
+
+Git and \gls{DMV} have similar, higher ratios because they do create new object
+files for each new version of each input file. At \SI{5} million files Git's
+ratio is \num{8.478} and \gls{DMV}'s is \num{8.538}. It would be interesting to
+see Git's ration after garbage collection and \glsdisp{packfile}{packing}, but
+unfortunately we did not run Git's garbage collection as part of this experiment
+as we did in the file-size experiment. We assume the results would be similar to
+Bup.
+
+Bup uses significantly less disk space, with a ratio of \num{5.374} at \num{5}
+million files. The input files themselves account for \num{4} times the
+theoretical size, so by aggregating them into \glspl{packfile}, Bup is storing
+the data in a form that is closer to its theoretical size, taking \num{1.374}
+times the space.
 
 %
