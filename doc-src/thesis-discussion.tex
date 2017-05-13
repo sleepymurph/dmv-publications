@@ -169,36 +169,6 @@ subtree commit}
 %
 
 
-\section{Potential Applications}
-
-As a general distributed storage platform, \gls{DMV} could have a wide range of
-potential applications:
-
-\begin{description}
-
-    \item[Private data storage] Individual users might use \gls{DMV} to maintain
-        a collection of important documents, photos, and media on their own
-        devices, making it easier to keep up-to-date backups and to synchronize
-        between computers, mobile devices, and removable drives without giving
-        their data to a third-party cloud service.
-
-    \item[Large-file version control] Professional users that work with files
-        too large for traditional version control, such as graphic designers,
-        audio engineers, or video editors, might finally be able to adopt a
-        version-control workflow.
-
-    \item[Long-term data archiving] Corporate or government users might use it
-        to maintain large archives of data with full revision history.
-
-    \item[Low-connectivity networks] Far-flung networks with high-latency or
-        rare connectivity, such as remote wildlife sensors or Mars rovers, could
-        use it to manage and synchronize data.
-
-\end{description}
-
-%
-
-
 \section{Aggregating Data about a Sharded DAG}
 
 Though not implemented in the \gls{DMV} prototype, we would like a \gls{DMV}
@@ -229,9 +199,35 @@ metrics about the data set in several dimensions:
 Such data could be useful for monitoring the health of the data set, alerting
 the user to shards of data that risk being lost without further replication.
 
-\todo[inline]{Move this section to design chapter? It's not in the actual
-prototype, but it's part of the design we wanted to build. -- Otto: Ok to have
-it here.}
+%
+
+
+\section{Potential Applications}
+
+As a general distributed storage platform, \gls{DMV} could have a wide range of
+potential applications:
+
+\begin{description}
+
+    \item[Private data storage] Individual users might use \gls{DMV} to maintain
+        a collection of important documents, photos, and media on their own
+        devices, making it easier to keep up-to-date backups and to synchronize
+        between computers, mobile devices, and removable drives without giving
+        their data to a third-party cloud service.
+
+    \item[Large-file version control] Professional users that work with files
+        too large for traditional version control, such as graphic designers,
+        audio engineers, or video editors, might finally be able to adopt a
+        version-control workflow.
+
+    \item[Long-term data archiving] Corporate or government users might use it
+        to maintain large archives of data with full revision history.
+
+    \item[Low-connectivity networks] Far-flung networks with high-latency or
+        rare connectivity, such as remote wildlife sensors or Mars rovers, could
+        use it to manage and synchronize data.
+
+\end{description}
 
 %
 
