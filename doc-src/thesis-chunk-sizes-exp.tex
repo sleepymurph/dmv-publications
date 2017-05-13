@@ -41,6 +41,7 @@ size, the window size. We ran the experiment both with and without the bug to
 see how it would affect chunk size.
 
 \subsection{Results}
+\label{results-rolling-hash}
 
 \begin{figure}[p]
     \caption{Mean chunk size}
@@ -122,7 +123,9 @@ The window size's greater effect is that it sets the limit for the smallest
 pieces of identical content that can be identified. A common \SI{1}{\kib} string
 will be lost inside a \SI{4}{\kib} window. Chunks may be smaller than the
 window, but that indicates that the common data string started inside of the
-previous chunk.
+previous chunk. So for more effective de-duplication, it is probably better to
+set a smaller window size and then modify the divisor to tune the desired chunk
+size.
 
 
 
@@ -224,6 +227,6 @@ more subtle, smaller chunk sizes would let data be de-duplicated with a finer
 granularity, better compressing the data. However, they would incur some
 overhead by way of larger \gls{chunkedblob} objects because there would be more
 chunks to index. We would have to perform additional experiments that used
-real-world data to examine that tradeoff.
+real-world data to examine that trade-off.
 
 %

@@ -90,24 +90,60 @@ So the next step for \gls{DMV} will be to start aggregating objects.
 \section{Subtleties of the Rolling Hash}
 
 The \gls{rollinghash} is the key to providing smaller granularity, because it is
-what identifies common byte strings within files.
+what identifies common byte strings within files. We saw in our chunk-size
+experiment (\autoref{results-rolling-hash}), that smaller chunks lead to slower
+writes, but the effect was due to the number of files. Aggregating objects into
+\glspl{packfile} will alleviate that concern, so we can examine the subtler
+effects of chunk size.
 
-\towrite{The key to dealing with many small chunks is to re-aggregate them. Then
-    what are other implications of chunk size?
-    - De-duplication granularity vs metadata overhead.
-    - Need investigation on real-world data.
-    - And what is up with high standard deviation?
-    - Big window size probably not what we're looking for.
-    - Other ways to correct deviation?
-    - Deal with runs of zeros?}
+First is the overhead of indexing the chunks. In DMV, we have the
+\gls{chunkedblob} objects, which keep a \num{168}-byte record for every chunk:
+\num{160} bytes for the chunk's SHA-1 object ID, \num{4} for the chunk's offset
+within the file, and \num{4} for the chunk's size\footnotemark. With an average
+chunk size of \SI{4}{\kib}, a \SI{1}{\gib} file would be broken into
+\num{262144} chunks, which would require \SI{42}{\mib} of chunk records. The
+blob header for each chunk would contribute some overhead as well. DMV's object
+header is currently only \num{8} bytes, but that still makes \SI{2}{\mib} of
+additional overhead. Then there is metadata overhead in whatever scheme we use
+to store or \glsdisp{packfile}{pack} the objects. Some overhead is inevitable,
+and \SI{44}{\mib} per \si{\gib} of data is probably perfectly acceptable, but it
+is something to consider.
 
-\towrite{Rolling hash improvements:
-    - more thought to window size. Larger than avg chunk size and you get
-    subsequent chunks affecting each other.
-    - thought to what happens at chunk boundaries. Run of zeros at chunk
-    boundary will create a run of 1-byte chunks. How likely is that?
-    - What about long runs of zeros anyway?
+\footnotetext{
+
+    Chunk size is actually redundant in the chunk index record, since it can be
+    computed by comparing the chunk offset to the offset of the following chunk,
+    or, in the case of the last chunk in the file, the total file size. We could
+    eliminate it and save \SI{1}{\mib} of overhead per \si{\gib} of data.
+
 }
+
+The less direct, but ultimately greater effect of chunk size is that it is the
+granularity of de-duplication. Smaller chunk sizes should lead to more
+de-duplication: small changes will lead to smaller changed chunks and less new
+data to store. However, the utility of this de-duplication depends on how much
+redundancy is in the data, including:
+
+\begin{itemize}
+
+    \item The degree of similarity between files in the data set
+
+    \item How often the files are updated
+
+    \item How much of the file is changed with each update
+
+\end{itemize}
+
+We hypothesize that most common media formats used by individual users (images,
+music, video, etc.) would have very little redundancy, and rarely be edited.
+Though some may update the internal metadata of their music files. The project
+files of popular professional software (Photoshop, ProTools, Avid, etc.) might
+be edited more frequently and benefit more from the de-duplication. We will need
+to perform additional experiments using real-world data to measure actual space
+savings.
+
+%
+
 
 \section{DMV Prototype development}
 
