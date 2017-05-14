@@ -4,7 +4,7 @@
 The algorithm used to divide files into chunks (described in
 \autoref{chunking-algorithm}) involves moving a window across the data, and
 setting a chunk boundary where the sum of the bytes in that window is evenly
-divisible by a given number. We ran an experiment to determine the effects of
+divisible by a given number. We ran a new experiment to determine the effects of
 these two parameters on chunk size.
 
 \subsection{Procedure}
@@ -15,12 +15,12 @@ identified \num{100} chunks. Then we would compute the mean and standard
 deviation of the chunk sizes.
 
 We used window sizes in powers of two from \SI{128}{\byte} ($2^7$) to
-\SI{256}{\kibi\byte} ($2^{18}$), and divisors in powers of two from \num{256}
+\SI{128}{\kibi\byte} ($2^{17}$), and divisors in powers of two from \num{256}
 ($2^8$) to \SI{128}{\kibi\relax} ($2^{17}$).
 
-The pseudo-random number generator used was an xorshift RNG~\cite{xorshift_rng}.
-The experiment itself was automated as a unit test in the \gls{DMV} prototype's
-Rust code.
+The pseudo-random number generator used was an xorshift
+\gls{RNG}~\cite{xorshift_rng}. The experiment itself was automated as a unit
+test in the \gls{DMV} prototype's Rust code.
 
 \subsection{Environment}
 
@@ -120,7 +120,7 @@ window size. Interestingly, the standard deviation is often larger than the
 mean. So the chunk sizes are varying wildly. This also makes sense. Once the
 window is full, any byte could potentially trigger a chunk.
 
-The window size's greater effect is that it sets the limit for the smallest
+The greater effect of window size is that it sets the limit for the smallest
 pieces of identical content that can be identified. A common \SI{1}{\kib} string
 will be lost inside a \SI{4}{\kib} window. Chunks may be smaller than the
 window, but that indicates that the common data string started inside of the
@@ -162,7 +162,17 @@ in common.
 
 \subsubsection{Chunk Sizes in Action}
 
-\begin{table}
+\begin{figure}[p]
+    \caption{Chunk sizes in action}
+    \label{plot-chunk-size-file-size--c1-time}
+    \centering
+
+    \explainlogsubfig
+
+    \includegraphics[]{plot-chunk-size-file-size--c1-time}
+\end{figure}
+
+\begin{table}[p]
     \caption{DMV versions examined with different rolling hash configurations}
     \label{chunk-size-versions}
     \centering
@@ -183,16 +193,6 @@ in common.
 
 \end{table}
 
-\begin{figure}[]
-    \caption{Chunk sizes in action}
-    \label{plot-chunk-size-file-size--c1-time}
-    \centering
-
-    \explainlogsubfig
-
-    \includegraphics[]{plot-chunk-size-file-size--c1-time}
-\end{figure}
-
 We also ran the file-size experiments (\autoref{file-size-exp-desc}) with DMV
 versions that used four different \gls{rollinghash} configurations. The
 reference DMV version used in other experiments (c9baf3a) had a window size of
@@ -208,9 +208,9 @@ the bug fixed (\SI{4}{\kib} in version a660730, \SI{32}{\kib} in version
 
 The file-size experiments are sensitive to chunk size because chunk size
 determines the number of chunk objects, and the number of objects on the disk
-affects write speed. Larger chunks means fewer objects which means less
-filesystem overhead, as we found in the object-directory-layout experiment
-(\autoref{dir-experiment}).
+affects write speed. Larger chunks leads to fewer objects which leads to less
+files and less filesystem overhead, as we found in the object-directory-layout
+experiment (\autoref{dir-experiment}).
 
 The version with a \SI{4}{\kib} window and no reset bug has the smallest mean
 chunk size at \SI{13.0}{\kib} and it is clearly the slowest. Next, the
@@ -218,16 +218,16 @@ chunk size at \SI{13.0}{\kib} and it is clearly the slowest. Next, the
 similar mean chunk sizes at \SI{20.1}{\kib} and \SI{18.7}{\kib} respectively,
 and they have similar times. Finally, the \SI{32}{\kib} window with reset has
 the largest mean chunk size at \SI{52.5}{\kib} and it is clearly the fastest.
-However, we have to assume that as file sizes got even larger that it would also
-succumb to the many-files problem.
+However, we assume that as file sizes got even larger that it would also succumb
+to the many-files problem.
 
 This is further evidence of the importance of aggregating objects into
 \glspl{packfile}. If files are packed, the number of objects becomes less of a
 concern, and then so does chunk size. The effects of chunk size then would be
 more subtle, smaller chunk sizes would let data be de-duplicated with a finer
-granularity, better compressing the data. However, they would incur some
-overhead by way of larger \gls{chunkedblob} objects because there would be more
-chunks to index. We would have to perform additional experiments that used
-real-world data to examine that trade-off.
+granularity, better compressing the data. However, the smaller chunks would
+incur some overhead by way of larger \gls{chunkedblob} objects --- because there
+would be more chunks to index. We would have to perform additional experiments
+that used real-world data to examine that trade-off.
 
 %
