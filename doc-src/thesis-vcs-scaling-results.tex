@@ -363,13 +363,11 @@ trying to load multiple versions of the file into memory to calculate deltas for
 
 \subsection{File Quantity Limits}
 
-\glsunset{inode}
-
 Git, Mercurial, DMV, and the copy operation all failed when trying to store
 \num{7.5} million files or more, reporting that the disk was full. However, it
-wasn't actually out of space. The disk was out of \glspl{inode}.
+wasn't actually out of space. The disk was out of \emph{\glspl{inode}}.
 
-\glsreset{inode}
+\glsreset{inode} % This is the para where we actually define what an inode is
 
 Unix filesystems, ext4 included, store file and directory metadata in a data
 structure called an \gls{inode}, which reside in a fixed-length
@@ -379,9 +377,9 @@ are allocated, the filesystem cannot store any more files or directories.
 Git, Mercurial, DMV, and the copy all create one file in their
 \glspl{objectstore} for each input file. So to store \num{7.5} million files,
 they will create \num{7.5} million more, resulting in \num{15} million files on
-the filesystem. However, the \SI{197}{\gib} experiment partition has only
-\num{13107200} total \glspl{inode}, so storing \num{15} million files is
-impossible.
+the filesystem, plus directories. However, the \SI{197}{\gib} experiment
+partition has \num{13107200} total \glspl{inode}, so storing \num{15} million
+files is impossible.
 
 Bup is able to store more files because it does not write a separate file for
 each input file. Bup aggregates its DAG objects into \glspl{packfile}, writing
