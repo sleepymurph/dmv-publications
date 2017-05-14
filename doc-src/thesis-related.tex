@@ -50,16 +50,16 @@ ambitious problems. We focus purely on storage and synchronization.
 
 \paragraph{Git-Annex and Git-Media}
 
-Git-annex~\cite{git_annex_homepage} and git-media~\cite{git_media_github} are
+Git-annex~\cite{git_annex_homepage} and Git-media~\cite{git_media_github} are
 open-source projects that extend Git with special handling for larger files.
 Both store information about the larger files in the normal Git \gls{repository}
 and then store the files themselves in a separate location. Git-media stores all
 the larger files in a separate data store which may be remote. Git-annex is more
 flexible. Annex files may be spread across several different remote
-\gls{repository} clones or data stores, and git-annex has features for tracking
+\gls{repository} clones or data stores, and Git-annex has features for tracking
 the locations of annex files in different remote \glspl{repository} and moving
 them from one \gls{repository} to another. These tracking and distribution
-features are very similar to our goals. However, git-annex is not quite as
+features are very similar to our goals. However, Git-annex is not quite as
 flexible as we aim for with \gls{DMV}. It considers the large files atomic
 units, and it does not break them into smaller chunks for de-duplication. Also,
 because metadata is processed by Git, it has the same limitations that Git does.
