@@ -260,11 +260,13 @@ the update commit. "User" indicates user-space computation, "system" indicates
 kernel-space computation, and "iowait" indicates that the CPU was waiting on an
 I/O operation.
 
-We expected the commit operations to be I/O bound, and that seems to be the
-case, especially at file sizes \SI{1}{\gib} and larger, and especially with DMV
-and the copy. But there is also a significant amount of user-space work going on
+We expected the commit operations to be I/O bound, and that might not be the
+case. It is with DMV and with the copy, especially at file sizes \SI{1}{\gib}
+and larger. But there is also a significant amount of user-space work going on
 in all of the version-control systems, such as hashing the data and, in
-Mercurial's case, calculating deltas.
+Mercurial's case, calculating deltas. The low I/O wait activity in Git,
+Mercurial, and Bup is surprising. It's possible that the commit is actually CPU
+bound in those systems, but that seems unlikely.
 
 DMV's high I/O wait is probably primarily due to the filesystem overhead that is
 slowing down its commit times, but the current single-threaded implementation
