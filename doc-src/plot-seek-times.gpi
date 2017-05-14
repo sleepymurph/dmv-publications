@@ -45,7 +45,7 @@ set zlabel rotate parallel
 #set cblabel rotate parallel
 
 set grid
-set key outside right
+set key at screen .98,.9
 
 unset colorbox
 
