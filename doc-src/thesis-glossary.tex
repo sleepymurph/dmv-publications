@@ -75,38 +75,48 @@ storage platform described and introduced in this paper}]
     content, which naturally de-duplicates identical objects},
 }
 
-\newacronym[description={directed acyclic graph, the type of graph data
-structure used to represent history in many distributed version control systems.
-Directed meaning all the edges have a direction, from one node to another, and
-acyclic meaning that there are no cycles, no paths that revisit any node}]
+\newacronym[
+    description={directed acyclic graph, the type of graph data structure used
+    to represent history in many distributed version control systems. Directed
+    meaning all the edges have a direction, from one node to another, and
+    acyclic meaning that there are no cycles, no paths that revisit any node},
+    see={blob,chunkedblob,tree,commit,ref},
+]
 {DAG}{DAG}{directed acyclic graph}
 
 \newacronym[
-    description={binary large object, a sequence of unstructured binary data},
-    first={blob (binary large object)}
+    description={Binary large object, a sequence of unstructured binary data. In
+    Git and DMV, a DAG object holding file data},
+    first={blob (binary large object)},
+    see={DAG},
 ]
 {blob}{blob}{binary large object}
 
 \newglossaryentry{chunkedblob}{
     name={chunked blob},
-    description={In DMV, an index of blobs that make up a larger blob},
+    description={In DMV, a DAG object that is an index of blobs that make up a
+    larger blob},
+    see={DAG,blob},
 }
 
 \newglossaryentry{tree}{
     name={tree},
-    description={In Git and DMV, an object representing a particular state of a
-    file hierarchy},
+    description={In Git and DMV, a DAG object representing a particular state of
+    a file hierarchy},
+    see={DAG},
 }
 
 \newglossaryentry{commit}{
     name={commit},
     description={In version control, the operation for storing a particular
-    version of the data. Also, the resulting object that represents that version
-    in the history},
+    version of the data. Also, the resulting DAG object that represents that
+    version in the history},
+    see={DAG},
 }
 
 \newacronym[
-    description={a reference to a commit},
+    description={a reference to a commit object in the DAG},
+    see={DAG},
 ]
 {ref}{ref}{reference}
 
