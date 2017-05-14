@@ -23,9 +23,9 @@ developed a prototype for a scalable high-availability system called \gls{DMV}.
 broken into more digestible chunks via a \gls{rollinghash}. \gls{DMV} will allow
 data to be sharded according to data locality needs, slicing the data set in
 space (subset of data with full history), time (subset of history for full data
-set), or both. \gls{DMV} \glspl{repository} will be able to work with and update
-whatever data they have locally, and synchronize with \glspl{repository} in an
-ad-hoc network.
+set), or both. \gls{DMV} \glspl{repository} will be able to read and to update
+any subset of the data that they have locally, and then synchronize with other
+\glspl{repository} in an ad-hoc network.
 
 %\perottoinline{4. Experiments; results}
 
@@ -33,9 +33,9 @@ We have performed experiments to probe the scalability limits of existing
 version control systems, specifically what happens as file sizes grow ever
 larger or as the number of files grow. We found that processing files whole
 limits maximum file size to what can fit in RAM, and that storing millions of
-objects loose as files with hash-based names incurs severe write speed
-penalties. We have observed a system needing \SI{24}{\second} to store a
-\SI{6.8}{\kib} files.
+objects loose as files with hash-based names incurs disk space overhead and
+write speed penalties. We have observed a system needing \SI{24}{\second} to
+store a \SI{6.8}{\kib} files.
 
 %\perottoinline{5. Lessons learned}
 
