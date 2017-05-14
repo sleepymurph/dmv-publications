@@ -208,13 +208,13 @@ long before running out of disk space.
 
 From there, we turn our attention to the mysterious, intermittent long write
 times. In the experiment, across all directory schemes, there were \num{315601}
-total writes. Of those, \num{312813} (\SI{99.1}{\percent}) completed in less
-than \SI{1}{\ms}. The others are plotted in \autoref{plot-seek-times}, and data
-about the top ten longest writes is listed in \autoref{longest-writes}. The
-spikes in the graph are arranged in curves radiating out from zero files and
-zero directories. Each curve represents a cluster of directory schemes that
-filled up the disk in the same pattern, corresponding more to subdirectory depth
-than to number of hex digits per subdirectory.
+total writes. Of those, \num{312813} (\SI{99.1}{\percent}) completed \SI{1}{\ms}
+or less. The others are plotted in \autoref{plot-seek-times}, and data about the
+top ten longest writes is listed in \autoref{longest-writes}. The spikes in the
+graph are arranged in curves radiating out from zero files and zero directories.
+Each curve represents a cluster of directory schemes that filled up the disk in
+the same pattern, corresponding more to subdirectory depth than to number of hex
+digits per subdirectory.
 
 No single directory scheme stands out as worse than the others, though longer
 writes seem correlated with having more directories and having more inodes
@@ -231,9 +231,18 @@ scheme with \num{1} hex digit and a depth of \num{4}. The longest was
 \num{11025} files and \num{14289} directories (\SI{98.6}{\percent} of inodes
 used).
 
-Those are the only two writes that took longer that \SI{2}{\second}. Five took
-longer than \SI{1.5}{\s}. Sixteen are longer than \SI{1}{\s}, \num{155} are
-longer than \SI{0.5}{\s}, and \num{340} are longer than \SI{0.1}{\s}.
+% Analyze:
+%
+% awk -e '$7=="ok" && $8 > 0.01 {print $0}' \
+%       ../data/exp--filesystem-limits--micro/*murphytest04.txt \
+%   | wc -l
+
+Write times seem to follow a power law distribution. The two peaks are the only
+two writes out of \num{315601} total that took longer than \SI{2}{\second}. Five
+took longer than \SI{1.5}{\s} (including the two over \SI{2}{\s}). Sixteen are
+longer than \SI{1}{\s}, \num{155} are longer than \SI{0.5}{\s}, \num{340} are
+longer than \SI{0.1}{\s}, and \num{1381} are longer than \SI{0.01}{\s}. The vast
+majority (\num{312813}, \SI{99.1}{\percent}) completed \SI{1}{\ms} or less.
 
 The long writes appear to be spaced apart somewhat regularly. This suggests that
 they are caused by upkeep that the filesystem has to do periodically, and that
