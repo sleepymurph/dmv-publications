@@ -9,10 +9,10 @@ at each location.
 
 We have performed experiments to probe the scalability limits of existing
 \gls{DAG}-based \acrlongpl{DVCS}. We have shown that the maximum size of file
-that existing systems like Git and Mercurial can store is limited by the amount
-of available memory in the system, and we conclude that it is because those
-systems calculate deltas of files to de-duplicate data, and they load the entire
-file into memory in order to do so.
+that Git and Mercurial can store is limited by the amount of available memory in
+the system. We conclude that this is because those systems calculate deltas of
+files to de-duplicate data, and they load the entire file into memory in order
+to do so.
 
 We have also rediscovered the limits of the Unix filesystem for storing many
 small files. We saw that writing files smaller than the filesystem block size
@@ -28,11 +28,11 @@ again encountering these limitations. However, the limitations can be avoided by
 aggregating objects into \glspl{packfile} as Bup does.
 
 We have performed experiments on the rolling hash algorithm used for chunking,
-determining that adjusting the \gls{divisor} has the most direct effect on chunk
-size, with larger \glspl{divisor} resulting in smaller chunks. And we have shown
-that adjusting \gls{windowsize} has a lesser effect on chunk size, but we reason
-that smaller \glspl{windowsize} will be able to find smaller common chunks in
-the code.
+and we have determined that adjusting the \gls{divisor} has the most direct
+effect on chunk size. Larger \glspl{divisor} result in smaller chunks. And we
+have shown that adjusting \gls{windowsize} has a lesser effect on chunk size,
+but we reason that smaller \glspl{windowsize} will be able to find smaller
+common chunks in the code.
 
 And finally, we have described the idea, architecture, design, and
 implementation of a distributed data storage system we call \gls{DMV} that
