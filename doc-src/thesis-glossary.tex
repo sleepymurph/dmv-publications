@@ -1,21 +1,26 @@
+% Style: Capitalize first letter of all descriptions,
+%   but don't capitalize all initialze in acronym unless it's a proper name
+%   or if it's not obvious where the acronym is from.
+
+
 % Dist sys
 
 \newacronym[
-    description={Atomicity, Consistency, Durability, and Isolation, the
+    description={Atomicity, consistency, durability, and isolation, the
     guarantees of a traditional database commit},
-]{ACID}{ACID}{Atomicity, Consistency, Durability, and Isolation}
+]{ACID}{ACID}{atomicity, consistency, durability, and isolation}
 
 \newglossaryentry{CAP-theorem}{
     name={CAP-theorem},
-    description={fundamental theorem of distributed systems, that no system can
-    simultaneously be Consistent, Available, and Tolerant of network
-    Partitions},
+    description={The fundamental theorem of distributed systems, that no system
+    can simultaneously be consistent (C), available (A), and tolerant of network
+    partitions (P)},
     see={partitiondecision},
 }
 
 \newglossaryentry{partitiondecision}{
     name={partition decision},
-    description={the dilemma faced by a distributed system during a network
+    description={The dilemma faced by a distributed system during a network
     partition: to decrease availability or risk inconsistency},
     see={CAP-theorem},
 }
@@ -23,7 +28,7 @@
 % General Version Control
 
 \newacronym[
-    description={distributed version control system, such as Git, where
+    description={Distributed version control system, such as Git, where
     individual repositories can operate independently without having to connect
     to a central repository},
     see={VCS},
@@ -31,14 +36,14 @@
 {DVCS}{DVCS}{distributed version control system}
 
 \newacronym[
-    description={version control system, a program that stores many versions of
+    description={Version control system, a program that stores many versions of
     a file or set of files, commonly used to track changes to source code},
     see={SCM},
 ]
 {VCS}{VCS}{version control system}
 
 \newacronym[
-    description={source code manager, a version control system that is designed
+    description={Source code manager, a version control system that is designed
     primarily to store source code},
     see={VCS},
 ]
@@ -47,8 +52,10 @@
 
 % Specific systems
 
-\newacronym[description={Distributed Media Versioning, the new distributed data
-storage platform described and introduced in this paper}]
+\newacronym[
+    description={Distributed Media Versioning, the new distributed data storage
+    platform described and introduced in this paper}
+]
 {DMV}{DMV}{Distributed Media Versioning}
 
 
@@ -57,7 +64,7 @@ storage platform described and introduced in this paper}]
 \newglossaryentry{repository}{
     name={repository},
     plural={repositories},
-    description={a location where data is stored in a version control system.
+    description={A location where data is stored in a version control system.
     Early systems would have a central repository that clients would check out
     from. In distributed version control, every client is a separate
     repository},
@@ -65,13 +72,13 @@ storage platform described and introduced in this paper}]
 
 \newglossaryentry{objectstore}{
     name={object store},
-    description={content-addressable storage for DAG objects},
+    description={Content-addressable storage for DAG objects},
     see={DAG},
 }
 
 \newglossaryentry{workdir}{
     name={working directory},
-    description={a directory where files that are tracked by a version control
+    description={A directory where files that are tracked by a version control
     system are actively worked on and edited},
 }
 
@@ -107,7 +114,7 @@ storage platform described and introduced in this paper}]
 }
 
 \newacronym[
-    description={directed acyclic graph, the type of graph data structure used
+    description={Directed acyclic graph, the type of graph data structure used
     to represent history in many distributed version control systems. Directed
     meaning all the edges have a direction, from one node to another, and
     acyclic meaning that there are no cycles, no paths that revisit any node},
@@ -146,14 +153,14 @@ storage platform described and introduced in this paper}]
 }
 
 \newacronym[
-    description={a reference to a commit object in the DAG},
+    description={A reference to a commit object in the DAG},
     see={DAG},
 ]
 {ref}{ref}{reference}
 
 \newglossaryentry{packfile}{
     name={pack file},
-    description={an object store file format that aggregates many objects in one
+    description={An object store file format that aggregates many objects in one
     file},
     see={objectstore},
 }
