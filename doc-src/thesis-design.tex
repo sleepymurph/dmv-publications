@@ -9,11 +9,18 @@ it adds a new object type, the \gls{chunkedblob}, which represents a \gls{blob}
 that has been broken into several smaller chunks. An example \gls{DMV} \gls{DAG}
 is shown in \autoref{dia_dmv_dag_example_three_commits}.
 
-\begin{figure}[]
+\begin{figure}[p]
     \centering
     \includegraphics[width=0.9\textwidth]{dia_dmv_dag_example_three_commits}
     \caption{A simple DMV DAG with three commits}
     \label{dia_dmv_dag_example_three_commits}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+        \includegraphics[width=0.4\textwidth]{dia_new_dag}
+    \caption{DMV DAG Object Types}
+    \label{fig:dia_new_dag}
 \end{figure}
 
 The object types that make up the \gls{DMV} \gls{DAG} are as follows:
@@ -23,10 +30,10 @@ The object types that make up the \gls{DMV} \gls{DAG} are as follows:
     \item[Blob] As with Git, a \gls{blob} simply holds binary data.
 
     \item[Chunked blob] Unlike with Git, larger \glspl{blob} in \gls{DMV} are
-        broken into chunks. Each \gls{chunkedblob} is simply an index of
+        broken into chunks. Each \gls{chunkedblob} is an index of the
         \glspl{blob} (or other \glspl{chunkedblob}) that make up the larger
         \gls{blob}. A file that is stored in the system may be represented by a
-        \gls{blob} or a \gls{chunkedblob}.
+        \gls{blob} (if it is only one chunk) or a \gls{chunkedblob}.
 
     \item[Tree] As with Git, a directory that is stored in the system is
         represented by a \gls{tree} object. The \gls{tree} refers to the
@@ -46,11 +53,6 @@ The object types that make up the \gls{DMV} \gls{DAG} are as follows:
 
 \end{description}
 
-\perrolfinline{These description lists are great. The look good. They're
-concise. And they let people who already know what you're talking about skip the
-explanations. Perhaps employ this in other places as well. Maybe the description
-of Git objects? Maybe for node/object store/working directory?}
-
 The \gls{DAG} begins with \glspl{ref}. Each repository has a list of \glspl{ref}
 that lead into the \gls{DAG}. Each \gls{ref} refers to a \gls{commit}. Each
 \gls{commit} refers to a \gls{tree} that represents the state at the time of
@@ -60,12 +62,6 @@ directory. A \gls{chunkedblob} can refer to other \glspl{chunkedblob} or to
 \glspl{blob}. And finally, the \glspl{blob} are the leaves of the graph. This
 relationship is illustrated in \autoref{fig:dia_new_dag}.
 
-\begin{figure}[]
-    \centering
-        \includegraphics[width=0.5\textwidth]{dia_new_dag}
-    \caption{DMV DAG Object Types}
-    \label{fig:dia_new_dag}
-\end{figure}
 
 
 Files are split into chunks using a \gls{rollinghash} such as Rabin-Karp
@@ -103,7 +99,7 @@ partition the data in space and time.
 
 \newcommand{\slicediagramwidth}{0.45\textwidth}
 
-\begin{figure}
+\begin{figure}[p]
 
     \centering
 
@@ -128,29 +124,29 @@ partition the data in space and time.
     \caption{A DMV DAG, sliced in different dimensions}
 \end{figure}
 
-A \gls{DMV} node can use any combination of these slicing techniques to keep
-only those objects needed at that location. New \glspl{commit} can still be made
-to a partial \gls{DAG}. A node that stores only part of the data set can create
-new \glspl{commit} that represent changes to that portion of the data set by
-assuming that everything else remains unchanged. Even a metadata-only node can
-create new \glspl{commit} that represent renames and reorganization of the same
-files.
-
-So the \gls{DAG} can be spread across many nodes, sliced according to what is
-needed at each location. Nodes can keep a record of what objects exist at their
-neighbor nodes, and statistics about latency to those nodes, which allow them to
-estimate how long it would take to transfer a file that is not currently present
-on the system.
-
-Though we did not have time to implement this feature, we are envisioning an
-enhanced \lstinline{ls} command output that shows these estimates, as
-illustrated in \autoref{example-ls-output}.
-
-\begin{figure}[]
+\begin{figure}[p]
     \caption{Speculative DMV ls output showing remote files}
     \label{example-ls-output}
     \programoutput{lst-example-ls-output.txt}
 \end{figure}
 
+A \gls{DMV} \gls{repository} may use any combination of these slicing techniques
+to keep only those objects needed at that location, and new \glspl{commit} can
+still be added to a partial \gls{DAG}. A \gls{repository} that stores only part
+of the data set can create new \glspl{commit} that represent changes to that
+portion of the data set by assuming that everything else remains unchanged. Even
+a metadata-only \gls{repository} could create new \glspl{commit} that represent
+renames and reorganization of the same files.
+
+So the \gls{DAG} can be spread across many \glspl{repository}, sliced according
+to what is needed at each location. \Glspl{repository} will keep a record of
+what objects exist at their neighbors, along with statistics about latency when
+connecting to those \glspl{repository}. This will allow them to estimate how
+long it would take to transfer a file that is not currently present on the
+system.
+
+Though we did not have time to implement this feature, we are envisioning an
+enhanced \lstinline{ls} command output that shows these estimates, as
+illustrated in \autoref{example-ls-output}.
 
 %
