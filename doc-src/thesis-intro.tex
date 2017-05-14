@@ -107,12 +107,12 @@ in which updates are applied~\cite{crdt_orig}. But in general, when systems
 cannot communicate, the CAP theorem cannot be avoided~\cite{cap_proof}, and the
 system is still faced with the \gls{partitiondecision}.
 
-Amazon's Dynamo~\cite{dynamo} was a pioneer in relaxing consistency guarantees to
-ensure availability. Dynamo is a key-value store that can accept updates to a
+Amazon's Dynamo~\cite{dynamo} was a pioneer in relaxing consistency guarantees
+to ensure availability. Dynamo is a key-value store that can accept updates to a
 value even if not all replicas respond. This can lead to inconsistencies, but
-for a global shopping website like Amazon, any outage represents lost revenue
-and so availability is more important. Dynamo's answer to the
-\gls{partitiondecision} is to always proceed.
+for a global e-commerce website like Amazon, any outage represents lost revenue
+and so availability is paramount. Dynamo's answer to the \gls{partitiondecision}
+is to always proceed.
 
 When multiple Dynamo replicas receive updates to the same value and the order of
 those updates cannot be determined, Dynamo keeps the different versions of the
