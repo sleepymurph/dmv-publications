@@ -125,15 +125,16 @@ dependent on the structure of the data and on the needs of the application using
 it.
 
 Though maybe not designed with the CAP theorem explicitly in mind, a \gls{DVCS}
-can be thought of as a small-scale distributed system that takes the
-availability-first approach to the extreme. Rather than a set of connected nodes
-that may occasionally lose contact in a network partition, a \gls{DVCS}'s
-\glspl{repository} are self-contained, allowing writes to local data at any
-time, and only connecting to other \glspl{repository} intermittently by user
-command to exchange updates. Concurrent updates are not only allowed but
-embraced as different \glspl{branch} of development. A \gls{DVCS} can track many
-different \glspl{branch} at the same time, and conflicting \glspl{branch} can be
-combined and resolved by the user.
+is in fact a small-scale distributed system that takes the availability-first
+approach to the extreme. Rather than a set of connected nodes that may
+occasionally lose contact in a network partition, a \gls{DVCS}'s
+\glspl{repository} are self-contained and offline by default. They allow writes
+to local data at any time, and only connect to other \glspl{repository}
+intermittently by user command to exchange updates. Concurrent updates are not
+only allowed but embraced as different \glspl{branch} of development. A
+\gls{DVCS} can track many different \glspl{branch} at the same time, and
+conflicting \glspl{branch} can be combined and resolved by the user in a
+\gls{merge} operation.
 
 The \glsdisp{DVCS}{distributed version control} concept may have something to
 teach larger-scale systems about availability.
