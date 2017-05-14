@@ -1,8 +1,15 @@
 \chapter{Performance Tuning Experiments}
 \label{perf-tuning-exp-chapter}
 
-\perottoinline{"Performance" vague. Be more specific or sum up what performance
-you're talking about here at beginning of chapter.}
+After noticing \gls{DMV}'s long commit times, we tried tuning certain \gls{DMV}
+parameters to investigate their effects. We re-ran the many-files experiment
+on \gls{DMV} several times, varying first the object store directory layout,
+then Linux I/O scheduler, and finally chunk size. We also ran new, more targeted
+experiments to investigate the effects of directory layout and chunk size.
+
+%
+
+
 
 \begin{figure}[p]
     \caption{DMV output showing varying object write times}
@@ -310,7 +317,7 @@ faster as the number of objects grows into the millions.
 
 
 
-\section{Effect of Different Linux I/O Schedulers}
+\section{Linux I/O Scheduler}
 
 Since the anticipatory I/O scheduler was removed in version 2.6.33
 \cite{as_removed_linux_release_notes}, the Linux kernel has included three
