@@ -136,13 +136,14 @@ Boar \cite{boar_homepage} is an open-source project to create a version control
 system for large binary files. It is one of the main inspirations for our
 project. It stores file versions in a content-addressed way, and provides
 de-duplication for large files that only change in small pieces, and it can
-truncate history to reclaim disk space. However, Boar retreats to a centralized
-version control paradigm, with a central \gls{repository} that working
-directories must connect to to check files in or out. We want to provide the
-advantages of Boar in a flexible distributed version control model. Boar also
-has practical limitations on \gls{repository} size and number of files.
-\glspl{repository} are assumed to fit on one disk volume, and file metadata is
-assumed to fit into Ram. \gls{DMV} tries to avoid both of those limitations.
+truncate history to reclaim disk space. However, Boar retreats to the
+centralized version control paradigm, with a central \gls{repository} that
+working directories must connect to in order to check files in or out. We want
+to provide the advantages of Boar in a flexible distributed version control
+model. Boar also has practical limitations on \gls{repository} size and number
+of files. \glspl{repository} are assumed to fit on one disk volume, and file
+metadata is assumed to fit into Ram. \gls{DMV} tries to avoid both of those
+limitations.
 
 
 \paragraph{Bup}\label{related_bup}
