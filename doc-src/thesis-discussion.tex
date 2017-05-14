@@ -24,10 +24,10 @@ where similar objects are stored as deltas against a base revision~\cite[Section
 
 By using files as the basic unit of storage, and storing files as deltas against
 a base revision, both Git and Mercurial will at some point load an entire file
-into memory in order to compare it to another version. This ties the maximum
-file size that the system can work with to the amount of available RAM. In
-Mercurial's case, the error message that appears when attempting to \gls{commit}
-a \SI{2}{\gib} file warns that \SI{6}{\gib} will be required to manage it. And
+into memory in order to compare it to another version. This limits the maximum
+file size that the system can work with to what can fit into RAM. In Mercurial's
+case, the error message that appears when attempting to \gls{commit} a
+\SI{2}{\gib} file warns that \SI{6}{\gib} will be required to manage it. And
 because it has to calculate deltas in order to store a file at all, Mercurial
 simply cannot work with any file that it can't fit into memory three times over.
 This is why Mercurial could not store files larger than \SI{1.5}{\gib} in the
@@ -36,10 +36,10 @@ file-size experiments (\autoref{file-size-limits-results}).
 Because Git's delta calculation happens behind-the-scenes in a secondary phase,
 it can still manage to \gls{commit} files larger than available RAM, but it
 prints errors as the other operations fail. The two-phase approach also requires
-extra disk space and processing power. If a large file is changed, the at first
-both revisions will be written in full, taking twice the disk space. Then a
-separate operation will have to reread both \glspl{blob} in full to calculate
-deltas and pack the objects.
+extra disk space and processing power. If a large file is changed, then both
+revisions will be written in full, taking twice the disk space. Then a separate
+operation will have to reread both \glspl{blob} in full to calculate deltas and
+pack the objects.
 
 Both \gls{DMV} and Bup avoid these pitfalls by operating with a finer
 granularity, using a \gls{rollinghash} to divide files into chunks by their
@@ -150,35 +150,42 @@ savings.
 
 \section{DMV Prototype development}
 
-\begin{figure}
-    \caption{Actual output of DMV status command during merge}
-    \label{lst_dmv_merge_in_progress}
-    \centering
-    \programoutput{lst-dmv-merge-in-progress.txt}
-\end{figure}
-
-\begin{figure}
-    \caption{Actual output of DMV log command after merge}
-    \label{lst_dmv_log_output}
-    \centering
-    \programoutput{lst-dmv-log-output.txt}
-\end{figure}
-
 Unfortunately, the current \gls{DMV} prototype does not yet include any of the
 planned networking features. However, basic local version control functionality
 is working, and the system can be used to store data, keep history, and retrieve
 old versions. Branching and rudimentary merging functionality are implemented as
-well (\cref{lst_dmv_merge_in_progress,lst_dmv_log_output}).
+well (\autoref{dmv_branch_and_merge}).
 
 Also, as a proof-of-concept for sharding the DAG, the \gls{DMV} prototype is
 able to check out a subdirectory of the dataset to the working directory and
-commit changes to it. This demonstrates the ability to keep a full history of
-part of the dataset, as described in \autoref{working-with-incomplete-dag} and
-illustrated in \autoref{dia_dmv_dag_slice_history_of_subset}.
+commit changes to it. This demonstrates the ability to keep, and add to, a full
+history of part of the dataset, as described in
+\autoref{working-with-incomplete-dag} and illustrated in
+\autoref{dia_dmv_dag_slice_history_of_subset}.
 
-\towrite{Mistakes along the way: storing whole status tree in memory}
+\begin{figure}[ht]
+    \caption{DMV branching and merging functionality}
+    \label{dmv_branch_and_merge}
+    \centering
 
-\towrite{Graph walk abstraction}
+    \begin{subfigure}[]{\textwidth}
+        \caption{Actual output of DMV status command during merge}
+        \label{lst_dmv_merge_in_progress}
+        \centering
+        \programoutput{lst-dmv-merge-in-progress.txt}
+    \end{subfigure}
+
+    \begin{subfigure}[]{\textwidth}
+        \caption{Actual output of DMV log command after merge}
+        \label{lst_dmv_log_output}
+        \centering
+        \programoutput{lst-dmv-log-output.txt}
+    \end{subfigure}
+\end{figure}
+
+%\towrite{Mistakes along the way: storing whole status tree in memory}
+
+%\towrite{Graph walk abstraction}
 
 %
 
@@ -270,9 +277,9 @@ In particular:
 \begin{description}
 
     \item[We do not want to reinvent the filesystem] DMV should place and update
-        files on the filesystem (or offer a filesystem view, such as with FUSE)
-        for applications to use normally. Applications such as editors should
-        not have to be rewritten to use our system.
+        files on the filesystem for applications to use normally, or offer a
+        virtual filesystem as a view into a specific revision. Applications such
+        as editors should not have to be rewritten to use our system.
 
   \item[We do not want to create new exotic file formats] We believe that the
       classic file hierarchy is our best chance for long-term storage.
