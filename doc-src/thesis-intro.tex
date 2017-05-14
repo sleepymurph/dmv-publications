@@ -235,7 +235,7 @@ identical in content and thus have the same hash ID. This
 \glsdisp{DAG}{directed, acyclic graph} structure is referred to as the
 \glsreset{DAG}\acrshort{DAG}. It can be uniquely identified by the hash IDs of
 those \glspl{commit} which do not yet have child \glspl{commit} to refer to
-them, the \newterm{heads} of each current \gls{branch} of development. A simple
+them, the \glspl{head} of each current \gls{branch} of development. A simple
 example is shown in \autoref{dia_git_dag_example_three_commits}.
 
 \begin{figure}[h]
@@ -247,8 +247,8 @@ example is shown in \autoref{dia_git_dag_example_three_commits}.
 
 A Git \gls{repository}, then, is a collection of the \gls{blob}, \gls{tree}, and
 \gls{commit} objects that make up the file set's history, stored by hash ID in
-the \gls{objectstore}, with \glspl{ref} to the hash IDs of the current head
-\glspl{commit}\cite{git_initial_readme}.
+the \gls{objectstore}, with \glspl{ref} to the hash IDs of the current
+\gls{branch} gls{head} \glspl{commit}\cite{git_initial_readme}.
 
 \begin{figure}[]
     \centering
