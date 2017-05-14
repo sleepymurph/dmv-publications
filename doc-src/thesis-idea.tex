@@ -33,16 +33,6 @@ anticipate all the needs of end users and applications. So it aims to be as
 general and neutral as possible, focusing on the core task of storage and
 tracking, and providing a platform for other applications to build on.
 
-\gls{DMV} stores files as binary large objects (\glspl{blob}), and it can store
-a wide variety of file sizes, avoiding assumptions that inadvertently tie
-maximum file size to hardware. A stored file can be larger than memory, or
-larger even the available disk space of any one node. Where the data set is too
-large to fit on one node, it can be spread over many nodes, divided with the
-user's guidance according to data locality needs.
-
-\perottoinline{Cost? Performance? Failures? Ease of use? And, when talking about
-performance, define your metrics.}
-
 
 \paragraph{Inspired by version control}
 
@@ -56,15 +46,25 @@ large media file has its metadata block updated, only the chunk containing the
 updated metadata is new. The other chunks will simply be reused.
 
 
-\paragraph{Always writable}
+\paragraph{Scalability}
 
-Like in a \gls{DVCS}, the \gls{DAG} structure records all history of the data
-set and allows many different branches of development to exist in parallel. This
-allows high availability. Any node can always make updates autonomously, without
-coordinating with other nodes. Reconciliation of conflicting writes happens
-later via explicit, user-driven merging. \gls{DMV} only requires a connection to
-another node during explicit synchronize operations, and so it is well-suited
-for applications with intermittent or high-latency connectivity.
+\gls{DMV} can store a wide variety of file sizes and file quantities. Current
+\glspl{VCS} load entire files into memory to calculate deltas, which limits the
+maximum size of files they can store to what can fit into RAM. Additionally,
+they create separate files for each input file, leading to disk-space overhead
+and write-speed slowdowns as the number of files on one filesystem increases.
+\gls{DMV} successfully avoids the file-size limitation, but as currently
+described and implemented, it does succumb to the number-of-files limitations.
+However, we know of an effective method to avoid the number-of-files limitations
+in the future. These limitations are explored experimentally in
+\autoref{file-size-exp-desc}.
+
+Additionally the stored data set can also be sharded, so that the data set as a
+whole can scale to sizes too large to fit on any one computer in the network.
+
+\gls{DMV} will be able to run on a wide range of hardware. The current prototype
+runs on Linux PCs, and the goal is to eventually port it to low-powered and
+mobile devices like mobile phones or sensor networks.
 
 
 \paragraph{Configurable sharding}
@@ -77,13 +77,24 @@ The \gls{DAG} structure tracks the data set in three dimensions:
     \item The parallel branches of development in the history
 \end{tight_enumerate}
 
-Traditional \glspl{DVCS} tend to assume that each replica has the full history
-of all files, though not every branch of development. In contrast, each
-\gls{DMV} node can store a subset of the data, sharded along any of those
+Traditional \glspl{DVCS} tend to assume that each repository has the full
+history of all files, though not every branch of development. In contrast, each
+\gls{DMV} node will store a subset of the data, sharded along any of those
 dimensions, configurable by the user. A node could keep the full history of only
 a small subset of files, or only the most recent few versions of the full set of
-files, or only a few branches, or any combination. \todo{Be consistent about
-"node" vs "replica"}
+files, or only a few branches, or any combination.
+
+
+\paragraph{Availability}
+
+Like in a \gls{DVCS}, the \gls{DAG} structure records all history of the data
+set and allows many different branches of development to exist in parallel. This
+allows high availability. Any node can always make updates autonomously, without
+coordinating with other nodes. Reconciliation of conflicting writes happens
+later --- via explicit, user-driven merging. \gls{DMV} will only require a
+connection to another node during explicit synchronize operations, and so it
+should be well-suited for applications with intermittent or high-latency
+connectivity.
 
 
 \paragraph{Data integrity}
