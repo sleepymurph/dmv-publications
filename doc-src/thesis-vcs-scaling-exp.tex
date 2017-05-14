@@ -6,14 +6,14 @@ We performed experiments to probe the limits of existing \acrlongpl{VCS}, to see
 how they would cope with file sizes and file numbers in ranges beyond what would
 be expected in a source code tree. We wanted to see how long it would take for
 each \gls{VCS} to store that amount of data, how much disk space it used, and
-what CPU utilization was like during storage. And since \glspl{VCS} track
-changes, so we also wanted to see what would happen when a small subset of that
-data was modified and then committed again.
+what CPU utilization was like during storage. And since the purpose of a
+\gls{VCS} is to track changes, we also wanted to measure those same metrics when
+a small subset of that data was modified and then committed again.
 
-We conducted two major experiments. To measure the effect of file size, we would
-\gls{commit} a single file of increasing size to each target \gls{VCS}. And to
-measure the effect of file numbers, we would \gls{commit} increasing number of
-small (\SI{1}{\kibi\byte}) files to each target \gls{VCS}.
+We conducted two major experiments. In order to measure the effect of file size,
+we would \gls{commit} a single file of increasing size to each target \gls{VCS}.
+And to measure the effect of file numbers, we would \gls{commit} increasing
+number of small (\SI{1}{\kibi\byte}) files to each target \gls{VCS}.
 
 
 
@@ -35,11 +35,15 @@ We ran each experiment using five different \glspl{VCS}:
 
     \item[Bup] A backup system that uses Git's data model and \gls{packfile}
         format. Like DMV, Bup breaks files into chunks using a
-        \gls{rollinghash}. Unlike Git, it writes to the \gls{packfile} format
-        directly, without Git's separate commit and pack steps, and without
-        bothering to calculate deltas~\cite{bup_design}. See
+        \gls{rollinghash}, reusing Git's \gls{tree} object as a
+        \gls{chunkedblob} index\footnotemark. Unlike Git, it writes to the
+        \gls{packfile} format directly, without Git's separate commit and pack
+        steps, and without bothering to calculate deltas~\cite{bup_design}. See
         \autoref{chunk-then-recombine} and \autoref{related_bup} for more
         discussion about Bup and its similarities and differences to DMV.
+
+        \footnotetext{Git can read a repository written by Bup, but it will see
+        the large file as a directory full of smaller chunk files.}
 
     \item[DMV] Our prototype system.
 
@@ -53,27 +57,15 @@ The exact version of each \gls{VCS} used in the experiments is listed in
 \autoref{vcs-versions}. \gls{DMV} versions are referenced by commit ID in the
 \gls{DMV} source's Git \gls{repository}.
 
-\begin{table}[bh]
-    \caption{Version control systems evaluated and their versions}
-    \label{vcs-versions}
-    \centering
-    \begin{tabular}{ l l }
-        VCS & Version \\
-        \midrule
-        Git & 2.1.4 \\
-        Mercurial & 3.1.2 \\
-        Bup & debian/0.25-1 \\
-        DMV & c9baf3a \\
-        Copy (GNU \lstinline{cp}) & 8.23 \\
-    \end{tabular}
-\end{table}
+%
+
 
 
 \section{Procedure}
 
 For each experiment, the procedure for a single trial was as follows:
 
-\begin{tight_enumerate}
+\begin{enumerate}
 
     \item Create an empty \gls{repository} of the target \gls{VCS} in a
         temporary directory
@@ -110,7 +102,7 @@ For each experiment, the procedure for a single trial was as follows:
 
     \item Delete temporary directory and all trial files
 
-\end{tight_enumerate}
+\end{enumerate}
 
 We increased file sizes exponentially by powers of two from \SI{1}{\byte} up to
 \SI{128}{\gibi\byte}, adding an additional step at \num{1.5} times the base size
@@ -126,9 +118,8 @@ times the base number at each order of magnitude. For example, starting at
 \num{750}, \num{1000}, \num{2500}, \num{5000}, \num{7500}, \num{10000}, and so
 on.
 
-Input data files consisted simply of pseudo-random bytes taken from the
-operating system's pseudo-random number generator (\lstinline{/dev/urandom} on
-Linux).
+Input data files consisted of pseudo-random bytes taken from the operating
+system's pseudo-random number generator (\lstinline{/dev/urandom} on Linux).
 
 When updating data files for the second \gls{commit}, we would overwrite a
 single contiguous section of each file with new pseudo-random bytes. We would
@@ -136,6 +127,52 @@ start one-quarter of the way into the file, and overwrite \num{1/1024}th of the
 file's size (or 1 byte if the file was smaller than \SI{1024}{\kibi\byte}). So a
 \SI{1}{\mebi\byte} file would have \SI{1}{\kibi\byte} overwritten, a
 \SI{1}{\gibi\byte} file would have \SI{1}{\mebi\byte} overwritten, and so on.
+
+%
+
+
+\begin{table}[p]
+    \caption{Version control systems evaluated and their versions}
+    \label{vcs-versions}
+    \centering
+    \begin{tabular}{ l l }
+        VCS & Version \\
+        \midrule
+        Git & 2.1.4 \\
+        Mercurial & 3.1.2 \\
+        Bup & debian/0.25-1 \\
+        DMV & c9baf3a \\
+        Copy (GNU \lstinline{cp}) & 8.23 \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[p]
+    \caption{Experiment computer specifications}
+    \label{test-machine-specs}
+    \begin{tabular}{ l l l }
+        \multicolumn{3}{l}{Hardware} \\
+        & Vendor & Hewlett Packard \\
+        & CPU & Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz \\
+        & RAM & \SI{8}{\gibi\byte} \\
+        & Hard disk & ATA model ST3250318AS \\
+        \\
+        \multicolumn{3}{l}{Operating system} \\
+        & Operating system & Debian 8.6 ("Jessie") \\
+        & Kernel & Linux 3.16.0 \\
+        \\
+        \multicolumn{3}{l}{Filesystem} \\
+        & Test partition & \SI{197}{\gibi\byte} LVM partition \\
+        & Filesystem & ext4 \\
+        & Block size & \SI{4}{\kib} \\
+        & I/O scheduler & cfq (unless otherwise noted) \\
+        \\
+        \multicolumn{3}{l}{DMV compilation} \\
+        & Rust compiler version & 1.15 stable or 1.16 stable \\
+        & Rust compiler flags & -{}-release \\
+    \end{tabular}
+\end{table}
+
+%
 
 
 \section{Automation and Measurement}
@@ -181,32 +218,6 @@ platter, not solid-state), and trials were conducted on a dedicated
 from the same manufacturer with the same specifications and were, for practical purposes,
 identical.
 Additional details can be found in \autoref{test-machine-specs}.
-
-\begin{table}
-    \caption{Experiment computer specifications}
-    \label{test-machine-specs}
-    \begin{tabular}{ l l l }
-        \multicolumn{3}{l}{Hardware} \\
-        & Vendor & Hewlett Packard \\
-        & CPU & Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz \\
-        & RAM & \SI{8}{\gibi\byte} \\
-        & Hard disk & ATA model ST3250318AS \\
-        \\
-        \multicolumn{3}{l}{Operating system} \\
-        & Operating system & Debian 8.6 ("Jessie") \\
-        & Kernel & Linux 3.16.0 \\
-        \\
-        \multicolumn{3}{l}{Filesystem} \\
-        & Test partition & \SI{197}{\gibi\byte} LVM partition \\
-        & Filesystem & ext4 \\
-        & Block size & \SI{4}{\kib} \\
-        & I/O scheduler & cfq (unless otherwise noted) \\
-        \\
-        \multicolumn{3}{l}{DMV compilation} \\
-        & Rust compiler version & 1.15 stable or 1.16 stable \\
-        & Rust compiler flags & -{}-release \\
-    \end{tabular}
-\end{table}
 
 We ran every trial four times, once on each of the experiment computers, and
 took the mean and standard deviation of each time and disk space measurement.
