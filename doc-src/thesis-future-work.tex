@@ -1,22 +1,25 @@
 \chapter{Future Work}
 
 The primary goal of \gls{DMV} is to be a general low-level storage platform for
-storing and tracking a data set across many nodes. The next step would be to
-complete the networking features of the prototype so that it can actually be
-used in real-life applications. Applications could layer additional technologies
-on top of \gls{DMV} to create interesting systems. For example, a gossip
-protocol could spread information about object availability on remote data
-stores that are not directly connected, allowing data to be spread and
-transfered across far-flung networks. To focus on usability, daemons could
-automatically \gls{commit} changes and sync with other nodes, shielding users
-from the complexity of branching where possible and trying to present a coherent
-current state of the data set. An important optimization would be to create a
-virtual filesystem that is a view into a \gls{tree} in the \gls{DMV} repository.
-The virtual filesystem could be used as the working directory, eliminating the
-wasted disk space of having a second writable copy of all files, and it would
-eliminate the copying of those files back into the immutable data store on
-\gls{commit}. A virtual filesystem would also make it much easier to write an
-auto-\gls{commit} daemon, since writes would have to go through the filesystem.
+storing and tracking a data set across many nodes. The next step (after
+\glsdisp{packfile}{packing} objects) would be to complete the networking
+features of the prototype so that it can actually be used in real-life
+applications.
+
+Applications could potentially layer additional technologies on top of \gls{DMV}
+to create interesting systems. For example, a gossip protocol could spread
+information about object availability on remote data stores that are not
+directly connected, allowing data to be spread and transfered across far-flung
+networks. To focus on usability, daemons could automatically \gls{commit}
+changes and sync with other nodes, shielding users from the complexity of
+branching where possible and trying to present a coherent current state of the
+data set. An important optimization would be to create a virtual filesystem that
+is a view into a \gls{tree} in the \gls{DMV} repository. A virtual filesystem
+could be used as the working directory, eliminating the wasted disk space of
+having a second writable copy of all files, and it would eliminate the copying
+of those files back into the immutable data store on \gls{commit}. Such a
+virtual filesystem would also make it much easier to write an auto-\gls{commit}
+daemon, since writes would have to go through the filesystem.
 
 We look forward to continuing to work on and expand the system. The \gls{DMV}
 project is open source, and development continues online at \dmvurl~.
