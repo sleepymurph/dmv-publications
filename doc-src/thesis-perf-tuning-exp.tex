@@ -2,10 +2,11 @@
 \label{perf-tuning-exp-chapter}
 
 After noticing \gls{DMV}'s long commit times, we tried tuning certain \gls{DMV}
-parameters in an attempt to speed it up. We re-ran the many-files experiment on
-\gls{DMV} several times, varying first the object store directory layout, then
-Linux I/O scheduler, and finally chunk size. We also ran new, more targeted
-experiments to investigate the effects of directory layout and chunk size.
+parameters in an attempt to speed it up. We re-ran the file-size and many-files
+experiments on \gls{DMV} several times, varying first the object store directory
+layout, then Linux I/O scheduler, and finally chunk size. We also ran new, more
+targeted experiments to investigate the effects of directory layout and chunk
+size.
 
 %
 
@@ -266,17 +267,7 @@ number-of-files experiments.
 
 %
 
-\subsubsection{Directory Schemes in Action}
-
-We built the DMV prototype and re-ran the full "file-size" experiments
-(\autoref{file-size-exp-desc}) with two different directory schemes. First an
-early DMV version (fb2f43d) that used \num{2} hex digits per directory and a
-depth of \num{2}, and also with the reference DMV prototype (c9baf3a, as noted
-in \autoref{vcs-versions}) that used \num{2} hex digits per directory and a
-depth of \num{1}. \autoref{plot-dir-schemes-file-size--c1-time} shows the
-initial commit times for both prototype versions, plus Bup for comparison.
-
-\begin{figure}
+\begin{figure}[b!]
     \caption{Time to commit one large file, with different object directory
     schemes}
     \label{plot-dir-schemes-file-size--c1-time}
@@ -287,24 +278,32 @@ initial commit times for both prototype versions, plus Bup for comparison.
     \includegraphics{plot-dir-schemes-file-size--c1-time}
 \end{figure}
 
-As with the other runs of this experiment, the commit time for files under about
-\SI{6}{\mib} is dominated by overhead. Here the depth-\num{2} version of DMV
-outperforms the depth-\num{1} version, and especially so at sizes up to
-\SI{8}{\kib}, where the depth-\num{2} version completes its commit in under
-\SI{5}{\ms}. There is no obvious explanation for such a fast commit, but perhaps
-the amount of data being processed is so small that operating system
-optimizations are allowing the process to finish before the write is completely
-flushed to disk.
+\subsubsection{Directory Schemes in Action}
 
-Up to \SI{6}{\mib} the depth-\num{2} version has a consistent commit time of
+We tuned the DMV prototype and re-ran the full file-size experiments
+(\autoref{file-size-exp-desc}) with two different directory schemes. First, with
+an early DMV version (fb2f43d) that used \num{2} hex digits per directory and a
+depth of \num{2}, and then also with the reference DMV prototype (c9baf3a, as
+noted in \autoref{vcs-versions}) that used \num{2} hex digits per directory and
+a depth of \num{1}. \autoref{plot-dir-schemes-file-size--c1-time} shows the
+initial commit times for both prototype versions, plus Bup for comparison.
+
+As with the other runs of this experiment, the commit time for files under about
+\SI{6}{\mib} is dominated by overhead. The depth-\num{2} version of DMV has less
+overhead than the depth-\num{1} version, and especially so at sizes up to
+\SI{8}{\kib}, where the depth-\num{2} version completes its commit in under
+\SI{5}{\ms}, rivaling the sub-millisecond write times for the \SI{4}{\kib} files
+in the targeted experiment.
+
+At up to \SI{6}{\mib}, the depth-\num{2} version has a consistent commit time of
 \SIrange{103}{104}{\ms} while the depth-\num{1} version has a consistent commit
 time of \SIrange{201}{202}{\ms}. This difference might be caused by additional
-work on DMV that occurred made between running the experiments on the
-depth-\num{2} version and switching to depth-\num{1}, including refactoring and
-adding some statistics collecting code to the verify (\lstinline{fsck})
-procedure. None of this should have impacted commit times directly, but it may
-have caused changes to the DMV executable's size or layout that made it take
-longer to load from disk and start up.
+work that we did on DMV between running the experiments on the depth-\num{2}
+version and switching to depth-\num{1}, including refactoring and adding some
+statistics collecting code to the verify (\lstinline{fsck}) procedure. None of
+this should have impacted commit times directly, but it may have caused changes
+to the DMV executable's size or layout that made it take longer to load from
+disk and start up.
 
 From \SIrange{8}{384}{\mib} there is no noticeable difference between the two
 versions of DMV, but at \SI{512}{\mib} and above, the commit results in enough
