@@ -28,7 +28,7 @@ item} in varying states of synchronization.
 \label{dmv-characteristics}
 
 
-\paragraph{General storage}
+\subsubsection{General storage}
 
 \gls{DMV} is a generalized storage platform that places no restriction on file
 types. Its data model is a classic hierarchical filesystem, but with history.
@@ -40,7 +40,7 @@ general and neutral as possible, focusing on the core task of storage and
 tracking, and providing a platform for other applications to build on.
 
 
-\paragraph{Inspired by version control}
+\subsubsection{Inspired by version control}
 
 \gls{DMV} is inspired by \acrlongpl{DVCS}. Its core data structure is
 a \gls{DAG}, based on Git's but modified to store a wider range of file sizes.
@@ -52,7 +52,7 @@ large media file has its metadata block updated, only the chunk containing the
 updated metadata is new. The other chunks will simply be reused.
 
 
-\paragraph{Scalability}
+\subsubsection{Scalability}
 
 \gls{DMV} can store a wide variety of file sizes and file quantities. Current
 \glspl{VCS} load entire files into memory to calculate deltas, which limits the
@@ -73,7 +73,7 @@ runs on Linux PCs, but it is designed with an eye towards porting it to
 low-powered and mobile devices such as mobile phones or sensor networks.
 
 
-\paragraph{Configurable sharding}
+\subsubsection{Configurable sharding}
 
 The \gls{DAG} structure tracks the data set in three dimensions:
 
@@ -91,7 +91,7 @@ a small subset of files, or only the most recent few versions of the full set of
 files, or only a few branches, or any combination.
 
 
-\paragraph{Availability}
+\subsubsection{Availability}
 
 Like in a \gls{DVCS}, the \gls{DAG} structure records all history of the data
 set and allows many different branches of development to exist in parallel. This
@@ -103,7 +103,7 @@ should be well-suited for applications with intermittent or high-latency
 connectivity.
 
 
-\paragraph{Data integrity}
+\subsubsection{Data integrity}
 
 Because the \gls{DAG} is append-only, and \gls{DAG} objects are addressed by a
 cryptographic hash of their contents, this allows \gls{DMV} to verify stored
