@@ -347,9 +347,9 @@ three different I/O schedulers to choose from~\cite{ioschedulers}:
 \end{description}
 
 We were curious if the choice of scheduler would have any effect on performance.
-In particular, we aimed to document if it might alleviate the high seek times we
+In particular, we aimed to document if it might reduce the long write times we
 were seeing. So we ran extra trials of the VCS scaling experiments using the
-\gls{DMV} prototype and different I/O schedulers.
+\gls{DMV} prototype (reference version c9baf3a) and different I/O schedulers.
 
 \begin{figure}[]
     \caption{Time for DMV prototype to commit an increasing number of 1KiB files
@@ -362,11 +362,11 @@ were seeing. So we ran extra trials of the VCS scaling experiments using the
     \includegraphics[]{plot-iosched-num-files--c1-time}
 \end{figure}
 
-The results of running the "many files" experiment with different schedulers are
+The results of running the many-files experiment with different schedulers are
 shown in \autoref{fig:plot-iosched-num-files--c1-time}. The I/O scheduler used
 made little difference. At \num{100000} files, the average initial \gls{commit}
 times were \SI{19.666}{\s} for CFQ, \SI{19.708}{\s} for deadline, and
-\SI{19.598}{\s} for noop. The difference between each pair is less than any of
+\SI{19.598}{\s} for no-op. The difference between each pair is less than any of
 the standard deviations at that number of files: \SI{0.674}{\s},
 \SI{0.3153}{\s}, and \SI{0.447}{\s}, respectively.
 
