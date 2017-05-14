@@ -88,6 +88,7 @@ So the next step for \gls{DMV} will be to start aggregating objects.
 
 
 \section{Subtleties of the Rolling Hash}
+\label{rolling-hash-subtleties}
 
 The \gls{rollinghash} is the key to providing smaller granularity, because it is
 what identifies common byte strings within files. We saw in our chunk-size
@@ -95,6 +96,8 @@ experiment (\autoref{results-rolling-hash}), that smaller chunks lead to slower
 writes, but the effect was due to the number of files. Aggregating objects into
 \glspl{packfile} will alleviate that concern, so we can examine the subtler
 effects of chunk size.
+
+\label{chunk-size-overhead-discussion}
 
 First is the overhead of indexing the chunks. In DMV, we have the
 \gls{chunkedblob} objects, which keep a \num{168}-byte record for every chunk:

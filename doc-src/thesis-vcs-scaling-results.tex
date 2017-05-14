@@ -541,8 +541,8 @@ I/O wait profile.
 Interestingly, Mercurial's and \gls{DMV}'s I/O wait in the update commit has a
 gradual rise starting around 100 thousand files, while Git's is a sudden rise
 starting just before 100 thousand files. The copy is somewhere in between. We
-are not sure why that is, since \gls{DMV} has much more in common with Git in
-terms of disk usage patterns.
+are not sure why that is, since \gls{DMV} has much more in common with Git than
+with Mercurial in terms of disk usage patterns.
 
 Git, \gls{DMV}, and the copy all decrease in I/O wait from \num{1} million to
 \num{5} million files. And Mercurial also shows a slight decrease from \num{2.5}
@@ -639,30 +639,30 @@ the theoretical size of the data set, while Bup is closer to \num{5} times. This
 has to do with the block size of the filesystem. The underlying filesystem uses
 a \SI{4}{\kib} block size, so each \SI{1}{\kib} file uses one \SI{4}{\kib}
 block. So the input data itself takes \num{4} times its theoretical size. So
-each will end up with \num{4} times for the input files, and \num{4} times for
-the copied files, plus some overhead. So a storage ratio of just over \num{8} is to be
-expected for those systems that store objects as individual files.
+each will end up with \num{4} times for the input files, plus \num{4} times for
+the copied files, plus some overhead. So a storage ratio of just over \num{8} is
+to be expected for those systems that store objects as individual files.
 
 Naturally the copy would have the least overhead, with a ratio of \num{8.043} at
 \SI{5} million files. This shows that the directory hierarchy of the input files
-itself probably adds around \num{2.1}{percent}. Mercurial has the second lowest
-overhead, with a storage ratio of \num{8.186}. This makes sense, because while
-Mercurial creates a \gls{filelog} for each input files, it reuses
-\glspl{filelog} to store the updates versions, so it does not create any new
-files during the second commit.
+itself probably adds around \num{0.021} times, or \SI{2.1}{\percent}. Mercurial
+has the second lowest overhead, with a storage ratio of \num{8.186}. This makes
+sense because, while Mercurial creates a \gls{filelog} for each input files, it
+reuses \glspl{filelog} to store the updates versions, so it does not create any
+new files during the second commit.
 
 Git and \gls{DMV} have similar, higher ratios because they do create new object
 files for each new version of each input file. At \SI{5} million files Git's
 ratio is \num{8.478} and \gls{DMV}'s is \num{8.538}. It would be interesting to
-see Git's ration after garbage collection and \glsdisp{packfile}{packing}, but
+see Git's ratio after garbage collection and \glsdisp{packfile}{packing}, but
 unfortunately we did not run Git's garbage collection as part of this experiment
 as we did in the file-size experiment. We assume the results would be similar to
-Bup.
+Bup's.
 
 Bup uses significantly less disk space, with a ratio of \num{5.374} at \num{5}
-million files. The input files themselves account for \num{4} times the
-theoretical size, so by aggregating them into \glspl{packfile}, Bup is storing
-the data in a form that is closer to its theoretical size, taking \num{1.374}
+million files. And since the input files themselves account for just over
+\num{4} times the theoretical size, we can see that Bup is storing the data in a
+form that is much closer to its theoretical size, taking just under \num{1.374}
 times the space.
 
 %
