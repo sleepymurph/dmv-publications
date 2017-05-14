@@ -2,8 +2,8 @@
 
 We have written a \gls{DMV} prototype as a proof-of-concept. The \gls{DMV}
 prototype is written in the Rust programming language and it runs from the Unix
-command line, though it can also be compiled as a library to be used by other
-applications.
+command line, with the executable built as a thin wrapper around a library, so
+that it can be used by other applications.
 
 The \gls{DMV} prototype was developed with Rust stable versions 1.15 and 1.16 on
 Debian Linux 8.6 ("Jessie"). Source code is available alongside this
@@ -39,13 +39,20 @@ as branch, \gls{commit}, and checkout
 \section{Rust}
 
 The implementation language, Rust, is a new C-like systems language that uses a
-sophisticated type system to guarantee memory safety~\cite{rust_acm_sigada},
-avoiding data races in concurrent code, as well as the segmentation faults and
-buffer overflows that are so easy to write in C.
+sophisticated type system to guarantee memory safety~\cite{rust_acm_sigada}.
+Rust's memory safety checking prevents many common bugs, including data races in
+concurrent code, buffer overflows, access to uninitialized or freed memory.
 
-We chose Rust because it is a compiled language. Compiling to machine code will
-make it easier to port DMV to low-powered or mobile devices, and it will let us
-compile DMV as a library that other applications can use and build on top of.
+\glsunset{ABI}  % The reader will probably know it
+
+Rust is also a compiled language with an ability to create libraries with
+C-compatible \glspl{ABI}. Compiling to machine code should make it easier to
+port \gls{DMV} to low-powered devices, and a C-compatible \gls{ABI} will allow
+client applications that use the \gls{DMV} library to be written in nearly any
+language.
+
+%
+
 
 
 \section{Working Directory and Object Store}\label{dir-impl}
@@ -79,7 +86,9 @@ Files are broken into chunks using the same \glsfirst{rollinghash} used by Gzip
 and Rsyncrypto~\cite{rsyncrypto_algorithm} to respectively compress and encrypt
 files by chunks so that the result is "rsyncable"-- a remote copy of the
 compressed or encrypted file can be updated by transferring only those chunks
-that have changed.
+that have changed. The algorithm uses Rsync's rolling
+checksum~\cite{rsynctechreport}, creating a chunk boundary when the Rsync
+rolling hash is equal to \num{0}.
 
 The algorithm keeps a sum of the previous \num{8196} bytes of input data, and
 creates a chunk boundary when that sum is evenly divisible by \num{4096}. These
@@ -103,5 +112,10 @@ standard deviation of \SI{22.0}{\kib}. These larger chunk sizes resulted in
 faster commit times for large files in our experiments
 (\autoref{rolling-hash-exp}).
 
+% Without reset
 %     8192   4096     4213.8     4738.0 0.156
 %    32768  16384    19169.9    22486.4 0.697
+
+% With reset
+%    32768  16384    53861.3    24833.0 2.271
+%                    52.6kib    24.3kib
