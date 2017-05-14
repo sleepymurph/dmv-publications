@@ -51,7 +51,7 @@ We ran each experiment using five different \glspl{VCS}:
 
 The exact version of each \gls{VCS} used in the experiments is listed in
 \autoref{vcs-versions}. \gls{DMV} versions are referenced by commit ID in the
-\gls{DMV} source's Git repository.
+\gls{DMV} source's Git \gls{repository}.
 
 \begin{table}[bh]
     \caption{Version control systems evaluated and their versions}
@@ -75,20 +75,20 @@ For each experiment, the procedure for a single trial was as follows:
 
 \begin{tight_enumerate}
 
-    \item Create an empty repository of the target \gls{VCS} in a temporary
-        directory
+    \item Create an empty \gls{repository} of the target \gls{VCS} in a
+        temporary directory
 
     \item Generate target data to store, either a single file of the target
         size, or the target number of \SI{1}{\kibi\byte} files
 
-    \item \Gls{commit} the target data to the repository, measuring wall clock
-        time to \gls{commit}
+    \item \Gls{commit} the target data to the \gls{repository}, measuring wall
+        clock time to \gls{commit}
 
-    \item Verify that the first \gls{commit} exists in the repository, and if
-        there was any kind of error, run the repository's integrity check
-        operation
+    \item Verify that the first \gls{commit} exists in the \gls{repository}, and
+        if there was any kind of error, run the \gls{repository}'s integrity
+        check operation
 
-    \item Measure the total repository size
+    \item Measure the total \gls{repository} size
 
     \item Overwrite a fraction of each target file
 
@@ -98,15 +98,15 @@ For each experiment, the procedure for a single trial was as follows:
 
     \item \Gls{commit} again, measuring wall clock time to \gls{commit}
 
-    \item Verify that the second \gls{commit} exists in the repository, and if
-        there was any kind of error, run the repository's integrity check
-        operation
+    \item Verify that the second \gls{commit} exists in the \gls{repository},
+        and if there was any kind of error, run the \gls{repository}'s integrity
+        check operation
 
-    \item Measure the total repository size again
+    \item Measure the total \gls{repository} size again
 
     \item (File-size experiment only) Run Git's garbage collector
-        (\lstinline{git fsck}) to pack objects, then measure total repository
-        size again
+        (\lstinline{git fsck}) to pack objects, then measure total
+        \gls{repository} size again
 
     \item Delete temporary directory and all trial files
 
@@ -146,7 +146,7 @@ each trial in a loop, covering the full range of sizes or numbers for a given
 \gls{commit} command and collect CPU utilization metrics. It would also
 terminate any individual \gls{VCS} operation that ran longer than five and a
 half hours. After \gls{commit} and verification, the script would also measure
-repository size.
+\gls{repository} size.
 
 The script measured the wall-clock time duration for each \gls{commit} by
 checking the system time (\lstinline{time.time()} in Python) just before and
@@ -161,8 +161,8 @@ time slices spent in each state during execution. We then compare the relative
 number of time slices in each state to get an idea of whether the operation is
 CPU-bound or I/O-bound.
 
-The script measures repository size using the standard Unix disk usage command
-(\lstinline{du}) and measures the size of the trial's entire temporary
+The script measures \gls{repository} size using the standard Unix disk usage
+command (\lstinline{du}) and measures the size of the trial's entire temporary
 directory, which includes the generated input data itself along with the
 \gls{VCS}'s storage.
 

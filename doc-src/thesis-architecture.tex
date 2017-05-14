@@ -1,10 +1,12 @@
 \chapter{DMV Architecture}
 
-Each \gls{DMV} node is a \gls{repository} consisting of a
-content-addressable \gls{objectstore} for immutable \gls{DAG} objects and a
-\gls{workdir} for active file editing (\autoref{fig:dia_obj_db_and_wd}).
-\Glspl{repository} that are used only for storage can omit the \gls{workdir}, similar
-to a Git bare \gls{repository}.
+\glsreset{repository}
+
+Each \gls{DMV} node is a \gls{repository} consisting of a content-addressable
+\gls{objectstore} for immutable \gls{DAG} objects and a \gls{workdir} for active
+file editing (\autoref{fig:dia_obj_db_and_wd}). \Glspl{repository} that are used
+only for storage can omit the \gls{workdir}, similar to a Git bare
+\gls{repository}.
 
 \begin{figure}[h]
   \centering

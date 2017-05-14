@@ -52,18 +52,19 @@ ambitious problems. We focus purely on storage and synchronization.
 
 Git-annex \cite{git_annex_homepage} and git-media \cite{git_media_github} are
 open-source projects that extend Git with special handling for larger files.
-Both store information about the larger files in the normal Git repository and
-then store the files themselves in a separate location. Git-media stores all the
-larger files in a separate data store which may be remote. Git-annex is more
-flexible. Annex files may be spread across several different remote repository
-clones or data stores, and git-annex has features for tracking the locations of
-annex files in different remote repositories and moving them from one repository
-to another. These tracking and distribution features are very similar to our
-goals. However, git-annex is not quite as flexible as we aim for with \gls{DMV}.
-It considers the large files atomic units, and it does not break them into
-smaller chunks for de-duplication. Also, because metadata is processed by Git,
-it has the same limitations that Git does. All repositories must have all
-metadata, and performance suffers when metadata is too large to fit into RAM.
+Both store information about the larger files in the normal Git \gls{repository}
+and then store the files themselves in a separate location. Git-media stores all
+the larger files in a separate data store which may be remote. Git-annex is more
+flexible. Annex files may be spread across several different remote
+\gls{repository} clones or data stores, and git-annex has features for tracking
+the locations of annex files in different remote \glspl{repository} and moving
+them from one \gls{repository} to another. These tracking and distribution
+features are very similar to our goals. However, git-annex is not quite as
+flexible as we aim for with \gls{DMV}. It considers the large files atomic
+units, and it does not break them into smaller chunks for de-duplication. Also,
+because metadata is processed by Git, it has the same limitations that Git does.
+All \glspl{repository} must have all metadata, and performance suffers when
+metadata is too large to fit into RAM.
 
 
 \paragraph{IPFS: The Interplanetary Filesystem}
@@ -136,26 +137,27 @@ system for large binary files. It is one of the main inspirations for our
 project. It stores file versions in a content-addressed way, and provides
 de-duplication for large files that only change in small pieces, and it can
 truncate history to reclaim disk space. However, Boar retreats to a centralized
-version control paradigm, with a central repository that working directories
-must connect to to check files in or out. We want to provide the advantages of
-Boar in a flexible distributed version control model. Boar also has practical
-limitations on repository size and number of files. Repositories are assumed to
-fit on one disk volume, and file metadata is assumed to fit into Ram. \gls{DMV}
-tries to avoid both of those limitations.
+version control paradigm, with a central \gls{repository} that working
+directories must connect to to check files in or out. We want to provide the
+advantages of Boar in a flexible distributed version control model. Boar also
+has practical limitations on \gls{repository} size and number of files.
+\glspl{repository} are assumed to fit on one disk volume, and file metadata is
+assumed to fit into Ram. \gls{DMV} tries to avoid both of those limitations.
 
 
 \paragraph{Bup}\label{related_bup}
 
 Bup \cite{bup_homepage} is an open-source file backup system that is based on
-Git's repository format. A Bup backup is a valid Git repository and it can be
-read by Git, but Bup is a separate program written from scratch to read and
-write files to Git's \gls{packfile} format directly, skipping Git's separate
-store and \glsdisp{packfile}{pack} steps that use double the disk space. It has
-many features that we want for our low-level storage of the \gls{objectstore}.
-It breaks files into chunks by \gls{rollinghash}, and it has considerations for
-metadata that is larger than RAM. However, it is locked into a backup-based
-workflow. History is linear and based on clock time of backup. And it assumes
-that the whole data set and the whole repository can fit onto one filesystem.
+Git's \gls{repository} format. A Bup backup is a valid Git \gls{repository} and
+it can be read by Git, but Bup is a separate program written from scratch to
+read and write files to Git's \gls{packfile} format directly, skipping Git's
+separate store and \glsdisp{packfile}{pack} steps that use double the disk
+space. It has many features that we want for our low-level storage of the
+\gls{objectstore}. It breaks files into chunks by \gls{rollinghash}, and it has
+considerations for metadata that is larger than RAM. However, it is locked into
+a backup-based workflow. History is linear and based on clock time of backup.
+And it assumes that the whole data set and the whole \gls{repository} can fit
+onto one filesystem.
 
 
 \paragraph{Time Machine}

@@ -52,28 +52,30 @@ successfully. With a \SI{2}{\gibi\byte} file, Mercurial would issue a warning,
 saying "up to 6442 MB of RAM may be required to manage this file," but the
 \gls{commit} would be stored successfully. With a file \SI{4}{\gibi\byte} or
 larger, Mercurial's \gls{commit} operation would exit with an error message and
-the \gls{commit} would not be stored. However, the repository would be left in a
-consistent empty state. The atomicity of the \gls{commit} operation held.
+the \gls{commit} would not be stored. However, the \gls{repository} would be
+left in a consistent empty state. The atomicity of the \gls{commit} operation
+held.
 
 Git's behavior was more erratic. Starting with a file \SI{12}{\gibi\byte} and
 larger, Git's \gls{commit} operation would exit with an error code, reporting a
 fatal out-of-memory error that \lstinline{malloc} failed to allocate
 \SI{12}{\gibi\byte}. However, the \gls{commit} would be successfully stored with
-no consistency errors in the repository reported by \lstinline{git fsck}.
+no consistency errors in the \gls{repository} reported by \lstinline{git fsck}.
 Starting at \SI{24}{\gibi\byte}, the \gls{commit} operation would report the
 same error, the \gls{commit} would still be written, but then the 
 \lstinline{git fsck} integrity check would also exit with an error code.
 However, the error it reported in its output was a similar "fatal" error as
 Git's \lstinline{malloc} error as the \gls{commit} operation, and it did not
-report any actual integrity errors in the repository.
+report any actual integrity errors in the \gls{repository}.
 
 So to check the \gls{commit}, we extracted the \SI{24}{\gibi\byte} file from the
-repository and compared it. It was the same as the original. So the \gls{commit}
-was intact. We also deliberately corrupted the Git \gls{packfile} that stored
-the \SI{24}{\gibi\byte} by overwriting one \SI{1}{\mebi\byte} block at an offset
-of \SI{22}{\gibi\byte} with new pseudo-random data. When we ran the fsck command
-again with the corrupted repository, it reported the integrity error, but it did
-not report the \lstinline{malloc} error that it did before.
+\gls{repository} and compared it. It was the same as the original. So the
+\gls{commit} was intact. We also deliberately corrupted the Git \gls{packfile}
+that stored the \SI{24}{\gibi\byte} by overwriting one \SI{1}{\mebi\byte} block
+at an offset of \SI{22}{\gibi\byte} with new pseudo-random data. When we ran the
+fsck command again with the corrupted \gls{repository}, it reported the
+integrity error, but it did not report the \lstinline{malloc} error that it did
+before.
 
 Interestingly Git's fsck command found the integrity error surprisingly quickly,
 reporting the error and exiting instantaneously (from the user's perspective),
@@ -134,10 +136,10 @@ These findings are summarized in \autoref{file-sizes-table} and
 
 \autoref{fig:plot-file-size--c1-time} shows the wall-clock time required for the
 initial \gls{commit}, adding a single file of the given size to a fresh
-repository. Over all, the trend is clear and unsurprising: \gls{commit} time
-increases with file size. It increases linearly for Git, Mercurial, and Bup.
-DMV's commit times increase in a more parabolic fashion, which is most apparent
-in \autoref{fig:plot-file-size--c1-time}e.
+\gls{repository}. Over all, the trend is clear and unsurprising: \gls{commit}
+time increases with file size. It increases linearly for Git, Mercurial, and
+Bup. DMV's commit times increase in a more parabolic fashion, which is most
+apparent in \autoref{fig:plot-file-size--c1-time}e.
 
 At file sizes below around \SI{2}{\mebi\byte}
 (\autoref{fig:plot-file-size--c1-time}a and b), \gls{commit} times are dominated
@@ -201,10 +203,10 @@ second \gls{commit}, after updating \num{1/1024}th of the file. Ideally this
 operation should be faster than the first \gls{commit}, because the system
 should only be storing the changed portion of the file. Indeed this is the case
 for Mercurial, Bup, and \gls{DMV}, which do store only the changed portion. Git,
-however, copies the entire updated file into its repository as a new object, and
-so its \gls{commit} time is virtually identical. The same is true of the copy
-control, though for sizes smaller than \SI{8}{\gib} it is still faster than all
-the other systems.
+however, copies the entire updated file into its \gls{repository} as a new
+object, and so its \gls{commit} time is virtually identical. The same is true of
+the copy control, though for sizes smaller than \SI{8}{\gib} it is still faster
+than all the other systems.
 
 As with the initial commit, Bup gets faster as file size increases at certain
 points, with the same gradual downward slope in the sub-megabyte and low
@@ -332,19 +334,19 @@ where we see the graph start to stabilize.
 
 \subsection{Repository Size after File-Size Update Commit}
 
-\autoref{fig:plot-file-size--repo-size} shows the total repository size after
-the update \gls{commit}, including the original file. This is after committing,
-updating \num{1/1024}th of the file, and committing again.
+\autoref{fig:plot-file-size--repo-size} shows the total \gls{repository} size
+after the update \gls{commit}, including the original file. This is after
+committing, updating \num{1/1024}th of the file, and committing again.
 
-The stored data overtakes the initial repository overhead after a file size of
-around \SI{1}{\mib}, and the repository size for all systems converges to about
-twice the size of the file. This is to be expected, since each measurement
-includes the original file, the first copy of the file, and the updated
-\num{1/1024}th. The exception is Git, which stores the entire updated file
-during the update \gls{commit}, leading to a total disk space usage of three
-times the file size. However, Git has a separate garbage collection stage where
-it cleans up the repository and aggregates similar objects together in
-\glspl{packfile}. The post-garbage collection size for Git is shown as a
+The stored data overtakes the initial \gls{repository} overhead after a file
+size of around \SI{1}{\mib}, and the \gls{repository} size for all systems
+converges to about twice the size of the file. This is to be expected, since
+each measurement includes the original file, the first copy of the file, and the
+updated \num{1/1024}th. The exception is Git, which stores the entire updated
+file during the update \gls{commit}, leading to a total disk space usage of
+three times the file size. However, Git has a separate garbage collection stage
+where it cleans up the \gls{repository} and aggregates similar objects together
+in \glspl{packfile}. The post-garbage collection size for Git is shown as a
 separate line on the graph. This post-GC size converges to double the original
 file size, but then jumps to three times at a file size of \SI{1.5}{\gib}. This
 suggests that the \glsdisp{packfile}{pack} step is failing silently at
@@ -420,9 +422,9 @@ system's \glspl{inode} when trying to run a trial with \num{25} million files.
 \label{results-num-files--c1-time}
 
 \autoref{fig:plot-num-files--c1-time} shows the time required for the initial
-\gls{commit}, storing all files into a fresh empty repository. Here we see the
-commit times for Git and DMV increasing quadratically with the number of files,
-while Mercurial, Bup, and the copy increase linearly.
+\gls{commit}, storing all files into a fresh empty \gls{repository}. Here we see
+the commit times for Git and DMV increasing quadratically with the number of
+files, while Mercurial, Bup, and the copy increase linearly.
 
 We saw in the file-size commit times (\autoref{results-file-size--c1-time}) that
 DMV's time increased quadratically, and we suspected that was because it was
@@ -620,9 +622,9 @@ not know why those measurements are especially high.
 % prototype2x1mem: 8.538
 % copy: 8.043
 
-\autoref{fig:plot-num-files--repo-size} shows the total repository size after
-the update commit, including the original files. This is after committing once,
-changing a single byte in every sixteenth file, and committing again.
+\autoref{fig:plot-num-files--repo-size} shows the total \gls{repository} size
+after the update commit, including the original files. This is after committing
+once, changing a single byte in every sixteenth file, and committing again.
 
 Git, Mercurial, DMV, and the copy all converge to using just over \num{8} times
 the theoretical size of the data set, while Bup is closer to \num{5} times. This
