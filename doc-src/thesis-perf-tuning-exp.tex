@@ -41,10 +41,10 @@ During initial runs of the "many files" experiment
 full even though the total bytes used was less than the capacity of the disk
 partition. This had to do with how each system stores its objects as files on
 the filesystem and how it organizes them into directories. Each file and
-directory on a Unix filesystem requires one \newterm{inode}, of which the
-filesystem has only a finite number. A storage scheme that allocates too many
-files or directories will exhaust the filesystem's available inodes before it
-uses all the available disk space.
+directory on a Unix filesystem requires one \gls{inode}, of which the filesystem
+has only a finite number. A storage scheme that allocates too many files or
+directories will exhaust the filesystem's available \glspl{inode} before it uses
+all the available disk space.
 
 We also noticed that average write speed would slow down as the operation
 progressed. The progress meter we added to \gls{DMV}'s \gls{commit} operation
@@ -73,15 +73,15 @@ schemes to see their effects.
 \subsection{Procedure}
 
 To measure the effects of different object storage schemes, we created a new
-\SI{100}{\mebi\byte} partition on one of the dedicated experiment computers, and then generated a series
-of pseudo-random files of \SI{4}{\kibi\byte} each until the disk was reported
-full. For each file, we would give it a pseudo-random name that resembled an
-SHA-1 hash, and store it according to the object storage scheme under test. We
-increased a counter each time we created a file, and another each time we
-created a new directory. We also checked the number of files already in the
-target directory before writing, timed the write, and used the Unix
-\lstinline{df} utility to measure free disk space in bytes and the number of
-free inodes.
+\SI{100}{\mebi\byte} partition on one of the dedicated experiment computers, and
+then generated a series of pseudo-random files of \SI{4}{\kibi\byte} each until
+the disk was reported full. For each file, we would give it a pseudo-random name
+that resembled an SHA-1 hash, and store it according to the object storage
+scheme under test. We increased a counter each time we created a file, and
+another each time we created a new directory. We also checked the number of
+files already in the target directory before writing, timed the write, and used
+the Unix \lstinline{df} utility to measure free disk space in bytes and the
+number of free \glspl{inode}.
 
 The directory schemes we evaluated were all variations of the basic scheme of
 taking leading hex digits of the SHA-1 hash to form directories. We varied the
@@ -125,10 +125,10 @@ used a new \SI{100}{\mebi\byte} LVM partition.
 directories overtake files as subdirectory nesting goes deeper. Presented
 visually, the connection between files and directories becomes obvious. The
 maximum number of files plus directories is constant and limited by the number
-of inodes on the filesystem, which on the \SI{100}{\mib} test partition is
-\num{25688}. However, the number of directories created increases exponentially
-with both the number of hex digits per directory and then again by directory
-depth. This can be expressed mathematically.
+of \glspl{inode} on the filesystem, which on the \SI{100}{\mib} test partition
+is \num{25688}. However, the number of directories created increases
+exponentially with both the number of hex digits per directory and then again by
+directory depth. This can be expressed mathematically.
 
 Let $h$ denote the number of hex digits per subdirectory and let $n$ denote the
 subdirectory depth. Then the total number of directories created by the scheme,
@@ -143,8 +143,8 @@ placed in that directory is stored. But because files are named according to a
 uniformly distributed hash function, no particular directory will be favored and
 the number of directories will trend towards $d$.
 
-Let $o$ denote the number of inodes available on the filesystem, and let $f$
-denote the number of files that can be stored on the filesystem when the
+Let $o$ denote the number of \glspl{inode} available on the filesystem, and let
+$f$ denote the number of files that can be stored on the filesystem when the
 directory scheme creates $d$ directories. Then,
 
 \begin{equation}
@@ -159,9 +159,9 @@ And therefore,
 
 So we can see that \gls{DMV}'s original scheme, with two hex digits per
 directory and a depth of two, would yield \SI{65792} subdirectories, which by
-itself is more than \num{2.5} times the total number of inodes available on the
-\SI{100}{\mib} test partition. So of course it ran out of inodes long before
-running out of disk space.
+itself is more than \num{2.5} times the total number of \glspl{inode} available
+on the \SI{100}{\mib} test partition. So of course it ran out of \glspl{inode}
+long before running out of disk space.
 
 
 \begin{figure}[p]

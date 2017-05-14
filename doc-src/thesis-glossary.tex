@@ -151,7 +151,9 @@ acyclic meaning that there are no cycles, no paths that revisit any node}]
 
 \newglossaryentry{inode}{
     name={inode},
-    description={A data structure in a Unix filesystem that stores file metadata},
+    description={A data structure in a Unix filesystem that stores file
+    metadata. Each filesystem has a fixed number of inodes, which limits the
+    total number of files and directories the filesystem can hold},
 }
 
 
@@ -163,7 +165,6 @@ newterm{C}
 newterm{CAP-theorem}
 newterm{heads}
 newterm{hg}
-newterm{inode}
 newterm{merge}
 newterm{P}
 newterm{refs}

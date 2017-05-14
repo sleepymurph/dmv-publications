@@ -53,13 +53,13 @@ bottleneck.
 
 The current \gls{DMV} prototype stores objects loose as files on the filesystem.
 This proves to be wasteful of disk space, taking up whole filesystem blocks with
-tiny objects and taking up inodes with subdirectories. Also, naming the object
-files by their SHA-1 hash effectively makes the filenames random, which causes
-dramatic write slowdowns compared to writing sequentially, as we saw in the
-number-of-files and object-directory-layout experiments
-(\cref{results-num-files--c1-time,object-dir-layout-results}).
-Dividing into chunks solves the problem of storing large files by turning it
-into the problem of storing many files.
+tiny objects and taking up \glspl{inode} with subdirectories. Also, naming the
+object files by their SHA-1 hash effectively makes the filenames random, which
+causes dramatic write slowdowns compared to writing sequentially, as we saw in
+the number-of-files and object-directory-layout experiments
+(\cref{results-num-files--c1-time,object-dir-layout-results}). Dividing into
+chunks solves the problem of storing large files by turning it into the problem
+of storing many files.
 
 Bup's storage strategy is the best of both worlds. It first divides files into
 chunks, but then re-packs objects together into \glspl{packfile}. In fact, Bup

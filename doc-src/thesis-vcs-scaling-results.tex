@@ -380,13 +380,14 @@ Git, Mercurial, DMV, and the copy all create one file in their
 \glspl{objectstore} for each input file. So to store \num{7.5} million files,
 they will create \num{7.5} million more, resulting in \num{15} million files on
 the filesystem. However, the \SI{197}{\gib} experiment partition has only
-\num{13107200} total inodes, so storing \num{15} million files is impossible.
+\num{13107200} total \glspl{inode}, so storing \num{15} million files is
+impossible.
 
 Bup is able to store more files because it does not write a separate file for
 each input file. Bup aggregates its DAG objects into \glspl{packfile}, writing
 several large files instead many small files. As such, it does not exhaust the
-disk's inodes, and can continue until the experiment itself exhausts the
-system's inodes when trying to run a trial with \num{25} million files.
+disk's \glspl{inode}, and can continue until the experiment itself exhausts the
+system's \glspl{inode} when trying to run a trial with \num{25} million files.
 
 %
 
