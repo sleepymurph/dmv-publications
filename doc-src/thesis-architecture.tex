@@ -42,4 +42,8 @@ number of other \glspl{repository}, maybe tens or hundreds. \gls{DMV} does not
 dictate network structure. The user or a higher-level application may determine
 the network topology and workflow according to their needs.
 
-\perottoinline{Can the functionality (course-grained) be defined here?}
+\gls{DMV} operates as a command-line utility, performing disk operations and
+acting as a client to remote repositories according to explicit user commands.
+The command-line utility is built as a thin shell around a library, so that
+applications can use it as well. An optional server component will listen for
+incoming connections from the command-line utility.
