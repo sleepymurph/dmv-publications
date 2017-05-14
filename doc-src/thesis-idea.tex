@@ -21,6 +21,12 @@ user, and making it easy to transfer data to other nodes as desired. The
 ultimate goal is to create a new abstraction, of \emph{many devices, one data
 item} in varying states of synchronization.
 
+%
+
+
+\section{Characteristics}
+\label{dmv-characteristics}
+
 
 \paragraph{General storage}
 
@@ -109,7 +115,8 @@ tolerates an incomplete \gls{DAG}, objects can be deliberately deleted from all
 nodes to save space or to redact sensitive information.
 
 
-\paragraph{Security Model}
+\section{Security Model}
+\label{security-model}
 
 The \gls{DAG}'s append-only nature and cryptographic content addressing provide
 protection from tampering. As long as the complete \gls{DAG} is available, its
