@@ -2,9 +2,9 @@
 \label{perf-tuning-exp-chapter}
 
 After noticing \gls{DMV}'s long commit times, we tried tuning certain \gls{DMV}
-parameters to investigate their effects. We re-ran the many-files experiment
-on \gls{DMV} several times, varying first the object store directory layout,
-then Linux I/O scheduler, and finally chunk size. We also ran new, more targeted
+parameters in an attempt to speed it up. We re-ran the many-files experiment on
+\gls{DMV} several times, varying first the object store directory layout, then
+Linux I/O scheduler, and finally chunk size. We also ran new, more targeted
 experiments to investigate the effects of directory layout and chunk size.
 
 %
@@ -79,16 +79,19 @@ schemes to see their effects.
 
 \subsection{Procedure}
 
-To measure the effects of different object storage schemes, we created a new
-\SI{100}{\mebi\byte} partition on one of the dedicated experiment computers, and
-then generated a series of pseudo-random files of \SI{4}{\kibi\byte} each until
-the disk was reported full. For each file, we would give it a pseudo-random name
-that resembled an SHA-1 hash, and store it according to the object storage
-scheme under test. We increased a counter each time we created a file, and
-another each time we created a new directory. We also checked the number of
-files already in the target directory before writing, timed the write, and used
-the Unix \lstinline{df} utility to measure free disk space in bytes and the
-number of free \glspl{inode}.
+To measure the effects of different object storage schemes, we performed a new
+experiment wherein we created a new \SI{100}{\mebi\byte} partition on one of the
+dedicated experiment computers, and then generated a series of pseudo-random
+files of \SI{4}{\kibi\byte} each until the disk was reported full.
+
+For each file, we would give it a pseudo-random name that resembled an SHA-1
+hash, and store it according to the object storage scheme under test. We
+increased a counter each time we created a file, and another each time we
+created a new directory. If storing the file required creating several
+subdirectories to get to the proper depth, we would count each subdirectory. We
+also checked the number of files already in the target directory before writing,
+timed the write, and used the Unix \lstinline{df} utility to measure free disk
+space in bytes and the number of free \glspl{inode}.
 
 The directory schemes we evaluated were all variations of the basic scheme of
 taking leading hex digits of the SHA-1 hash to form directories. We varied the
@@ -165,10 +168,10 @@ And therefore,
 \end{equation}
 
 So we can see that \gls{DMV}'s original scheme, with two hex digits per
-directory and a depth of two, would yield \SI{65792} subdirectories, which by
+directory and a depth of two, would yield \num{65792} subdirectories, which by
 itself is more than \num{2.5} times the total number of \glspl{inode} available
 on the \SI{100}{\mib} test partition. So of course it ran out of \glspl{inode}
-long before running out of disk space.
+long before running out of disk space (in terms of blocks).
 
 
 \begin{figure}[p]
@@ -211,6 +214,9 @@ long before running out of disk space.
     \end{tabular}
 \end{table}
 
+%
+
+
 \subsubsection{Long Write Times}
 
 From there, we turn our attention to the mysterious, intermittent long write
@@ -218,17 +224,17 @@ times. In the experiment, across all directory schemes, there were \num{315601}
 total writes. Of those, \num{312813} (\SI{99.1}{\percent}) completed \SI{1}{\ms}
 or less. The others are plotted in \autoref{plot-seek-times}, and data about the
 top ten longest writes is listed in \autoref{longest-writes}. The spikes in the
-graph are arranged in curves radiating out from zero files and zero directories.
-Each curve represents a cluster of directory schemes that filled up the disk in
-the same pattern, corresponding more to subdirectory depth than to number of hex
+graph appear as curves radiating out from zero files and zero directories. Each
+curve represents a cluster of directory schemes that filled up the disk in the
+same pattern, corresponding more to subdirectory depth than to number of hex
 digits per subdirectory.
 
 No single directory scheme stands out as worse than the others, though longer
-writes seem correlated with having more directories and having more inodes
-already used (shown by distance from origin). The scheme with the fewest and
-shortest long writes is the one that has no subdirectories at all (shown by the
-short green spikes along the files axis). So we conclude that there is no
-penalty for storing many thousands of files in one directory.
+writes seem correlated with having more directories and having more
+\glspl{inode} already used (shown by distance from origin). The scheme with the
+fewest and shortest long writes is the one that has no subdirectories at all
+(shown by the short green spikes along the files axis). So we conclude that
+there is no penalty for storing many thousands of files in one directory.
 
 The two longest writes are clustered together near the center of the plot, near
 \num{11000} files and \num{14000} directories. Both occur in the directory
@@ -254,9 +260,11 @@ majority (\num{312813}, \SI{99.1}{\percent}) completed \SI{1}{\ms} or less.
 The long writes appear to be spaced apart somewhat regularly. This suggests that
 they are caused by upkeep that the filesystem has to do periodically, and that
 there is no obvious way to avoid them, at least not while storing many small
-files. Aggregating objects into \glspl{packfile} as discussed in
-\autoref{chunk-then-recombine} might be a better strategy.
+files. Aggregating objects into \glspl{packfile} would be a better strategy, as
+we saw when Bup was consistently the fastest \gls{VCS} in the file-size and
+number-of-files experiments.
 
+%
 
 \subsubsection{Directory Schemes in Action}
 
