@@ -242,25 +242,25 @@ those \glspl{commit} which do not yet have child \glspl{commit} to refer to
 them, the \glspl{head} of each current \gls{branch} of development. A simple
 example is shown in \autoref{dia_git_dag_example_three_commits}.
 
-\begin{figure}[h]
+\begin{figure}[p]
     \centering
     \includegraphics[width=0.9\textwidth]{dia_git_dag_example_three_commits}
     \caption{A simple Git DAG with three commits}
     \label{dia_git_dag_example_three_commits}
 \end{figure}
 
-A Git \gls{repository}, then, is a collection of the \gls{blob}, \gls{tree}, and
-\gls{commit} objects that make up the file set's history, stored by hash ID in
-the \gls{objectstore}, with \glspl{ref} to the \glspl{commit} at the \gls{head}
-of each \gls{branch}~\cite{git_initial_readme}.
-
-\begin{figure}[]
+\begin{figure}[p]
     \centering
-        \includegraphics[width=0.5\textwidth]{dia_git_dag_types}
+        \includegraphics[width=0.4\textwidth]{dia_git_dag_types}
     \caption{Git DAG Object Types}
     \label{dia_git_dag_types}
 \end{figure}
 
+A Git \gls{repository}, then, is a collection of the \gls{blob}, \gls{tree}, and
+\gls{commit} objects that make up the file set's history, stored by hash ID in
+the \gls{objectstore}, with \glspl{ref} to the \glspl{commit} at the \gls{head}
+of each \gls{branch}~\cite{git_initial_readme}. These object types and their
+relationships are shown in \autoref{dia_git_dag_types}.
 
 %
 
