@@ -118,10 +118,11 @@ When multiple Dynamo replicas receive updates to the same value and the order of
 those updates cannot be determined, Dynamo keeps the different versions of the
 value and presents them together during a read. That way, the higher-level
 application that is using Dynamo as a data store can resolve the conflict and
-write a new, reconciled value. Dynamo recognizes the end-to-end
-argument~\cite{endtoendargument}, that conflicting updates cannot be resolved
-generally by a storage platform or network protocol. Resolution is dependent on
-the structure of the data and on the needs of the application using it.
+write a new, reconciled value. Dynamo recognizes the
+\gls{endtoendargument}~\cite{endtoendargument} that conflicting updates cannot
+be resolved generally by a storage platform or network protocol. Resolution is
+dependent on the structure of the data and on the needs of the application using
+it.
 
 Though maybe not designed with the CAP theorem explicitly in mind, a \gls{DVCS}
 can be thought of as a small-scale distributed system that takes the

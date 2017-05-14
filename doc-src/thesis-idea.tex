@@ -27,11 +27,11 @@ item} in varying states of synchronization.
 \gls{DMV} is a generalized storage platform that places no restriction on file
 types. Its data model is a classic hierarchical filesystem, but with history.
 Applications on each node can read and write to the files via the filesystem as
-normal. \gls{DMV} is dogmatic about the end-to-end
-argument~\cite{endtoendargument}, that it cannot anticipate all the needs of end
-users and applications. So it aims to be as general and neutral as possible,
-focusing on the core task of storage and tracking, and providing a platform for
-other applications to build on.
+normal. \gls{DMV} is dogmatic about the
+\gls{endtoendargument}~\cite{endtoendargument}, realizing that it cannot
+anticipate all the needs of end users and applications. So it aims to be as
+general and neutral as possible, focusing on the core task of storage and
+tracking, and providing a platform for other applications to build on.
 
 \gls{DMV} stores files as binary large objects (\glspl{blob}), and it can store
 a wide variety of file sizes, avoiding assumptions that inadvertently tie
