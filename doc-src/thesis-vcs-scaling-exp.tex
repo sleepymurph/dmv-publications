@@ -31,13 +31,13 @@ We ran each experiment using five different \glspl{VCS}:
         manner as Git, but stores it differently. Rather than storing by hash
         object ID in an \gls{objectstore}, Mercurial creates a \gls{filelog} for
         each input file, storing its different versions as a base version
-        followed by a series of deltas\cite[Chapter 4]{hgbook}.
+        followed by a series of deltas~\cite[Chapter 4]{hgbook}.
 
     \item[Bup] A backup system that uses Git's data model and \gls{packfile}
         format. Like DMV, Bup breaks files into chunks using a
         \gls{rollinghash}. Unlike Git, it writes to the \gls{packfile} format
         directly, without Git's separate commit and pack steps, and without
-        bothering to calculate deltas\cite{bup_design}. See
+        bothering to calculate deltas~\cite{bup_design}. See
         \autoref{chunk-then-recombine} and \autoref{related_bup} for more
         discussion about Bup and its similarities and differences to DMV.
 
@@ -154,7 +154,7 @@ just after using Python's \lstinline{subprocess} module to execute the necessary
 \gls{VCS} command. CPU utilization was measured by sampling the CPU status lines
 provided in Linux's \lstinline{/proc/stat} information. The status lines show a
 cumulative count of CPU ticks (\num{1/100}{th} of a second) that the CPU has
-spent in user mode, system mode, idle, and waiting for I/O\cite{proc_man_page}.
+spent in user mode, system mode, idle, and waiting for I/O~\cite{proc_man_page}.
 Like with the time measurements, the script samples CPU utilization before and
 after executing a \gls{VCS} command, and then subtracts to get the number of
 time slices spent in each state during execution. We then compare the relative

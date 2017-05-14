@@ -16,9 +16,9 @@ though they approach storage differently. Git stores files whole as \glspl{blob}
 during \gls{commit}, storing them and other objects as files in object
 directories (as we experimented with in \autoref{dir-experiment}). Later, an
 optional packing phase will compact objects together into \glspl{packfile},
-where similar objects are stored as deltas against a base revision \cite[Section
+where similar objects are stored as deltas against a base revision~\cite[Section
 10.4]{git_book}. Mercurial stores each file's different revisions as deltas
-   against a base revision in a \gls{filelog} structure \cite[Chapter
+   against a base revision in a \gls{filelog} structure~\cite[Chapter
    4]{hgbook}. This is Mercurial's primary storage format, and it is constructed
      during \gls{commit}.
 
@@ -64,8 +64,8 @@ of storing many files.
 Bup's storage strategy is the best of both worlds. It first divides files into
 chunks, but then re-packs objects together into \glspl{packfile}. In fact, Bup
 uses Git's \gls{packfile} format\footnotemark, but it writes it directly without
-the separate compacting phase, and without bothering to calculate deltas
-\cite{bup_design}. This makes efficient use of disk space, and allows the
+the separate compacting phase, and without bothering to calculate
+deltas~\cite{bup_design}. This makes efficient use of disk space, and allows the
 \glspl{packfile} to be written sequentially, minimizing disk seeks. This is why
 Bup was clearly the fastest of the systems evaluated in both the file-size and
 number-of-files experiments
@@ -186,7 +186,7 @@ illustrated in \autoref{dia_dmv_dag_slice_history_of_subset}.
 \towrite{non-programmers (and even some programmers) cannot handle Git
     - Key to usability would be to make as linear a history as possible with
         auto-updates, but that is the job of a separate app
-    - Cite redesign of Git\cite{redesign_of_git}
+    - Cite redesign of Git~\cite{redesign_of_git}
 }
 \fi
 

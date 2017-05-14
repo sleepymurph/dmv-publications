@@ -6,7 +6,7 @@
 
 \paragraph{Camlistore}
 
-Camlistore \cite{camlistore_homepage} is an open-source project to create a
+Camlistore~\cite{camlistore_homepage} is an open-source project to create a
 private long-term data storage system for personal users. It allows storage of
 diverse types of data and it synchronizes between multiple replicas of the data
 store. However, it eschews normal filesystems and creates its own schemas to
@@ -15,7 +15,7 @@ store various media.
 
 \paragraph{Dat Data}
 
-Dat \cite{dat_homepage} is an open-source project for publishing and sharing
+Dat~\cite{dat_homepage} is an open-source project for publishing and sharing
 scientific data sets for research. This project has a lot of overlap with ours,
 and several of the core ideas are similar, including breaking files into smaller
 chunks, and tracking changes via a Git-like \gls{DAG}. However, their focus is
@@ -39,7 +39,7 @@ we intend for \gls{DMV} to be more general than the Dat core.
 
 \paragraph{Eyo}
 
-Eyo \cite{Strauss:2011:EDP:2002181.2002216} is system for storing personal media
+Eyo~\cite{Strauss:2011:EDP:2002181.2002216} is system for storing personal media
 and synchronizing it between devices. It utilizes a Git-like content-addressed
 \gls{objectstore} behind the scenes, but it works more like a networked filesystem
 than version control. It focuses on organizing media by metadata, which requires
@@ -50,7 +50,7 @@ ambitious problems. We focus purely on storage and synchronization.
 
 \paragraph{Git-Annex and Git-Media}
 
-Git-annex \cite{git_annex_homepage} and git-media \cite{git_media_github} are
+Git-annex~\cite{git_annex_homepage} and git-media~\cite{git_media_github} are
 open-source projects that extend Git with special handling for larger files.
 Both store information about the larger files in the normal Git \gls{repository}
 and then store the files themselves in a separate location. Git-media stores all
@@ -69,7 +69,7 @@ metadata is too large to fit into RAM.
 
 \paragraph{IPFS: The Interplanetary Filesystem}
 
-IPFS \cite{ipfs_github_main} is an open-source project to create a global
+IPFS~\cite{ipfs_github_main} is an open-source project to create a global
 content-addressed filesystem. By its global nature, all files are stored
 publicly, in a global network of nodes with global addressing. IPFS should be an
 excellent resource for storing published information, but we want \gls{DMV} to
@@ -84,7 +84,7 @@ ciphertext, leaving no way to compress the redundancy.
 
 \paragraph{Kademlia}
 
-Kademlia \cite{Maymounkov2002} is an advanced distributed hash table system that
+Kademlia~\cite{Maymounkov2002} is an advanced distributed hash table system that
 updates its network topology information as part of normal lookups. Its focus is
 on efficient routing between nodes, while we are focusing first on storage.
 
@@ -92,11 +92,11 @@ on efficient routing between nodes, while we are focusing first on storage.
 \paragraph{Rsync}
 \label{related-rsync}
 
-Rsync\cite{rsynctechreport} is a utility that synchronizes files across a
+Rsync~\cite{rsynctechreport} is a utility that synchronizes files across a
 low-bandwidth network link by using a rolling hash to find similar parts of the
 file, and then transfer only those portions of the file that have changed. Its
 \glsfirst{rollinghash} is the inspiration for the chunk-splitting algorithms
-used by Rsyncrypto\cite{rsyncrypto_algorithm}, Bup\cite{bup_design}, and
+used by Rsyncrypto~\cite{rsyncrypto_algorithm}, Bup~\cite{bup_design}, and
 \gls{DMV} (\autoref{chunking-algorithm}). As a utility, Rsync focuses
 exclusively on synchronizing files. It does not track history or the relation
 between files.
@@ -105,13 +105,13 @@ Rsync coauthor Andrew Tridgell is also indirectly responsible for the
 development of Git. His work to reverse-engineer the BitKeeper protocol is what
 caused BitMover to revoke the special free BitKeeper license for Linux kernel
 developers, which is what led Linus Torvalds to develop his own
-\gls{SCM}\cite{git_10_years_interview}.
+\gls{SCM}~\cite{git_10_years_interview}.
 
 
 \paragraph{Rsyncrypto}
 \label{related-rsyncrypto}
 
-Rsyncrypto\cite{rsyncrypto_algorithm} is an encryption system that uses a
+Rsyncrypto~\cite{rsyncrypto_algorithm} is an encryption system that uses a
 rolling hash to encrypt files by chunks, so that the encrypted files are still
 "rsync-able." Normally, a goal of an encryption algorithm is to have small
 changes in the input lead to a completely different ciphertext. This is good for
@@ -123,7 +123,7 @@ will only change the ciphertext for the chunk that contains it, and so rsync can
 transfer only the chunk that changes.
 
 Rsyncrypto's uses the same \glsfirst{rollinghash} as
-Rsync\cite{rsyncrypto_algorithm,rsynctechreport}, setting chunk boundaries where
+Rsync~\cite{rsyncrypto_algorithm,rsynctechreport}, setting chunk boundaries where
 the checksum is zero. \gls{DMV} uses this same chunking algorithm (see
 \autoref{chunking-algorithm}).
 
@@ -132,7 +132,7 @@ the checksum is zero. \gls{DMV} uses this same chunking algorithm (see
 
 \paragraph{Boar}
 
-Boar \cite{boar_homepage} is an open-source project to create a version control
+Boar~\cite{boar_homepage} is an open-source project to create a version control
 system for large binary files. It is one of the main inspirations for our
 project. It stores file versions in a content-addressed way, and provides
 de-duplication for large files that only change in small pieces, and it can
@@ -148,7 +148,7 @@ limitations.
 
 \paragraph{Bup}\label{related_bup}
 
-Bup \cite{bup_homepage} is an open-source file backup system that is based on
+Bup~\cite{bup_homepage} is an open-source file backup system that is based on
 Git's \gls{repository} format. A Bup backup is a valid Git \gls{repository} and
 it can be read by Git, but Bup is a separate program written from scratch to
 read and write files to Git's \gls{packfile} format directly, skipping Git's
@@ -163,10 +163,10 @@ onto one filesystem.
 
 \paragraph{Time Machine}
 
-Time Machine\cite{timemachine_patent} is a backup utility from Apple, included
+Time Machine~\cite{timemachine_patent} is a backup utility from Apple, included
 in Mac OS X Leopard, that makes frequent automated file hierarchy backups, using
-filesystem hard links to de-duplicate unchanged files\cite{timemachine_magic}.
+filesystem hard links to de-duplicate unchanged files~\cite{timemachine_magic}.
 This de-duplication allows it to store many different backup versions. Time
 Machine's functionality can be mimicked by using Rsync with the
 \lstinline{--link-dest} option, which also hard-links unchanged files during a
-recursive sync\cite{timemachine_foreveryunix}.
+recursive sync~\cite{timemachine_foreveryunix}.

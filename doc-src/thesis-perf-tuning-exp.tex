@@ -319,14 +319,14 @@ faster as the number of objects grows into the millions.
 
 \section{Linux I/O Scheduler}
 
-Since the anticipatory I/O scheduler was removed in version 2.6.33
-\cite{as_removed_linux_release_notes}, the Linux kernel has included three
-different I/O schedulers to choose from\cite{ioschedulers}:
+Since the anticipatory I/O scheduler was removed in version
+2.6.33~\cite{as_removed_linux_release_notes}, the Linux kernel has included
+three different I/O schedulers to choose from~\cite{ioschedulers}:
 
 \begin{description}
 
     \item[Completely Fair Queueing] The \lstinline{cfq} scheduler is the default
-        I/O scheduler as of Linux 2.6.18 \cite{cfq_default_linux_release_notes}.
+        I/O scheduler as of Linux 2.6.18~\cite{cfq_default_linux_release_notes}.
         It creates a separate queue for each process and handles requests in a
         round, preventing any one process from dominating I/O.
 
