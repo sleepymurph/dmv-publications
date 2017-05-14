@@ -1,21 +1,48 @@
-\section{Conclusions}
+\chapter{Conclusion and Summary of Contributions}
 
-We conclude that the version control concept has great potential\perotto{Can
-this be said in a more specific way?} for distributed private data storage, and
-for tracking a large collection of files across time and space. This is
-especially true in situations where data locality is important, such as where
-nodes have intermittent connectivity or differing security requirements.
+\glsreset{DMV}
 
-The cryptographic directed acyclic graph is an excellent\perotto{"excellent" too
-vague, define and give specific metrics} data structure for long-term data
-storage, because of the way it naturally de-duplicates identical data and
-provides checksums to verify data integrity. It also lends itself to sharding,
-because it can be divided by time or by subset of data, or both. The key to
-using a \gls{DAG} for larger files is to break them into smaller chunks by
-content, so that identical pieces of files can naturally be de-duplicated as
-well. But when storing a large number of small chunks, they should be
-re-aggregated into packed files to use disk space efficiently.
+In this dissertation, we have examined the cryptographic \acrfull{DAG} as a data
+structure for data storage, and the ways that it can be sliced to shard data
+across nodes in a distributed system, according to what data is needed locally
+at each location.
 
-The \gls{DMV} prototype is not ready for production use yet, but we believe that
-it has potential to be a useful and versatile data storage platform with uses in
-long term-bulk data storage and collaborative work.
+We have performed experiments to probe the scalability limits of existing
+\gls{DAG}-based \acrlongpl{DVCS}. We have shown that the maximum size of file
+that existing systems like Git and Mercurial can store is limited by the amount
+of available memory in the system, and we conclude that it is because those
+systems calculate deltas of files to de-duplicate data, and they load the entire
+file into memory in order to do so.
+
+We have also rediscovered the limits of the Unix filesystem for storing many
+small files.
+
+\begin{itemize}
+
+    \item Writing files smaller than the filesystem block size incurs storage
+        overhead.
+
+    \item Splitting files among too many subdirectories takes \gls{inode} that
+        are needed to store files.
+
+    \item Jumping between directories when writing files incurs write-speed
+        penalties.
+
+\end{itemize}
+
+We have shown that any \gls{VCS} that stores objects as individual files on the
+filesystem will encounter these filesystem limitations as they try to scale in
+terms of number of files. \glspl{VCS} that also break files into chunks will
+turn the problem of storing large files into the problem of storing many files,
+and will also encounter these limitations. However, the limitations can be
+avoided by aggregating objects into \glspl{packfile} as Bup does.
+
+And finally, we have described the idea, architecture, design, and
+implementation of a distributed data storage system we call \gls{DMV} that
+expands on the \glsdisp{DVCS}{distributed version control} concept to store
+larger and more diverse data sets, with a high degree of control over data
+locality, and an availability to write updates for any data held locally. Though
+time constraints prevented us from implementing the network features we had
+planned, the \gls{DMV} prototype has enough functionality to be experimented on
+against existing \acrlongpl{DVCS} and to demonstrate the addition of new
+\glspl{commit} to a partial \gls{DAG}.
