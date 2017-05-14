@@ -80,13 +80,20 @@ storage platform described and introduced in this paper}]
     plural={branches},
     description={In a version control system, separate concurrent lines of
     update history},
-    see={head},
+    see={head,merge},
 }
 
 \newglossaryentry{head}{
     name={head},
     description={In a version control system, the most recent revision in a
     branch},
+    see={branch},
+}
+
+\newglossaryentry{merge}{
+    name={merge},
+    description={In a version control system, an operation that combines two
+    branches and reconciles conflicting changes},
     see={branch},
 }
 
@@ -198,5 +205,4 @@ storage platform described and introduced in this paper}]
 
 \iffalse
 newterm{hg}
-newterm{merge}
 \fi
