@@ -48,36 +48,43 @@
 \label{file-size-limits-results}
 
 Both Git and Mercurial had limits to the size of file they could store
-successfully. With a \SI{2}{\gibi\byte} file, Mercurial would issue a warning,
-saying "up to 6442 MB of RAM may be required to manage this file," but the
-\gls{commit} would be stored successfully. With a file \SI{4}{\gibi\byte} or
-larger, Mercurial's \gls{commit} operation would exit with an error message and
-the \gls{commit} would not be stored. However, the \gls{repository} would be
-left in a consistent empty state. The atomicity of the \gls{commit} operation
-held.
+successfully.
+
+With a \SI{2}{\gibi\byte} file, Mercurial's \gls{commit} operation would exit
+with an error code and message, saying "up to 6442 MB of RAM may be required to
+manage this file," and the \gls{commit} would not be stored. However, the
+\gls{repository} would be left in a consistent empty state. The atomicity of the
+\gls{commit} operation held. All commits of files \SI{2}{\gib} and larger would
+be rejected in a similar manner.
 
 Git's behavior was more erratic. Starting with a file \SI{12}{\gibi\byte} and
 larger, Git's \gls{commit} operation would exit with an error code, reporting a
-fatal out-of-memory error that \lstinline{malloc} failed to allocate
-\SI{12}{\gibi\byte}. However, the \gls{commit} would be successfully stored with
-no consistency errors in the \gls{repository} reported by \lstinline{git fsck}.
+fatal out-of-memory error saying that
+\lstinline{malloc}
+failed to allocate \SI{12}{\gibi\byte}.
+However, the \gls{commit} would be successfully stored with no consistency
+errors in the \gls{repository} reported by
+\lstinline{git fsck}.
 Starting at \SI{24}{\gibi\byte}, the \gls{commit} operation would report the
-same error, the \gls{commit} would still be written, but then the 
-\lstinline{git fsck} integrity check would also exit with an error code.
+same error, the \gls{commit} would still be written, but then the
+\lstinline{git fsck}
+integrity check itself would also exit with an error code.
 However, the error it reported in its output was a similar "fatal" error as
-Git's \lstinline{malloc} error as the \gls{commit} operation, and it did not
-report any actual integrity errors in the \gls{repository}.
+Git's
+\lstinline{malloc}
+error as the \gls{commit} operation, and it did not report any actual integrity
+errors in the \gls{repository}.
 
 So to check the \gls{commit}, we extracted the \SI{24}{\gibi\byte} file from the
 \gls{repository} and compared it. It was the same as the original. So the
 \gls{commit} was intact. We also deliberately corrupted the Git \gls{packfile}
 that stored the \SI{24}{\gibi\byte} by overwriting one \SI{1}{\mebi\byte} block
 at an offset of \SI{22}{\gibi\byte} with new pseudo-random data. When we ran the
-fsck command again with the corrupted \gls{repository}, it reported the
+\lstinline{fsck} command again with the corrupted \gls{repository}, it reported the
 integrity error, but it did not report the \lstinline{malloc} error that it did
 before.
 
-Interestingly Git's fsck command found the integrity error surprisingly quickly,
+The \lstinline{git fsck} command found the integrity error surprisingly quickly,
 reporting the error and exiting instantaneously (from the user's perspective),
 whereas it had taken \SI{7}{\minute} to complete before. So it does not seem to
 have hashed the whole file again to find the error. We took care to preserve the
@@ -120,10 +127,7 @@ These findings are summarized in \autoref{file-sizes-table} and
         \label{fig:plot-file-size--c1-time}
         \centering
 
-        \vspace{\baselineskip}
         \explainlogsubfig
-        % even up with other figure on opposite page that has more caption
-        \vspace{\baselineskip}
 
         \includegraphics[]{plot-file-size--c1-time}
     \end{leftfullpage}
@@ -210,12 +214,14 @@ than all the other systems.
 
 As with the initial commit, Bup gets faster as file size increases at certain
 points, with the same gradual downward slope in the sub-megabyte and low
-megabyte-ranges, leading to a prominent jump up then fall back down. The jump
-appears at a slightly larger size with this update commit, at \num{8}, \num{12},
+megabyte-ranges, leading to a prominent jump up then fall back down that occurs
+just outside the range of \autoref{fig:plot-file-size--c2-time}c. The jump comes
+at a slightly larger size with this update commit, at \num{8}, \num{12},
 \num{16}, and \SI{24}{\mib}, as opposed to \num{4}, \num{6}, \num{8}, and
-\SI{12}{\mib} in the initial commit. This puts it just outside the range of
-\autoref{fig:plot-file-size--c2-time}c, but it can still be seen in miniature in
-\autoref{fig:plot-file-size--c2-time}a. The shift to larger sizes in the update
+\SI{12}{\mib} in the initial commit. It can still be seen in miniature in
+\autoref{fig:plot-file-size--c2-time}a.
+
+The shift to larger sizes in the update
 commit suggests that the decrease is related to the amount of data written to
 the disk, since Bup breaks the file into chunks and only writes the updated
 chunks.
