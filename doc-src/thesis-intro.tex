@@ -278,7 +278,7 @@ collaborative work and for long-term data storage.
     \item[Distributability and Availability] Because the \gls{DAG} is immutable
         and append-only, it can be replicated simply by copying all of its
         objects. Any replica can make its own updates by appending to the
-        \gls{DAG}. Rather than have a centralized notion of "current" version,
+        \gls{DAG}. Rather than have a centralized notion of a "current" version,
         development in Git naturally diverges into different \glspl{branch}, as
         different users with their own replica of the \gls{DAG} make changes.
         \Glspl{branch} created on one replica can be synchronized to another
@@ -288,19 +288,19 @@ collaborative work and for long-term data storage.
         changes from both \glspl{branch}.
 
     \item[Atomicity] The \gls{DAG}'s append-only nature makes \glspl{commit}
-        atomic. Objects are added to the \gls{objectstore}, and then once all
-        necessary objects are stored, the \gls{ref} can be updated to point to
-        the new \gls{commit} object. The \gls{ref} is the size of the hash
+        atomic. Objects are added to the \gls{objectstore} frst, and then once
+        all necessary objects are stored, the \gls{ref} can be updated to point
+        to the new \gls{commit} object. The \gls{ref} is the size of the hash
         digest (in Git's case, \num{160} bytes for an SHA-1 hash), so it can be
         updated atomically. If the \gls{ref} is updated, the \gls{commit} was
-        successful. The objects do not have to be added to the \gls{objectstore}
-        atomically because their presence does not change the existing
-        \gls{DAG}. An interrupted object transfer may leave orphaned objects in
-        the \gls{objectstore}, but it cannot corrupt previously-written data,
-        nor can it leave the \gls{repository} in an inconsistent state. Orphaned
-        objects can be swept up during a garbage-collection phase, walking the
-        \gls{DAG} and marking all objects that are reachable from the current
-        \glspl{ref}.
+        successful. The objects themselves do not have to be added to the
+        \gls{objectstore} atomically because their presence does not change the
+        existing \gls{DAG}. An interrupted object transfer may leave orphaned
+        objects in the \gls{objectstore}, but it cannot corrupt
+        previously-written data, nor can it leave the \gls{repository} in an
+        inconsistent state. Orphaned objects can be swept up during a
+        garbage-collection phase, walking the \gls{DAG} and marking all objects
+        that are reachable from the current \glspl{ref}.
 
     \item[Verifiability] Perhaps most importantly, since objects are identified
         by a cryptographic hash, data integrity can be verified at any time by
