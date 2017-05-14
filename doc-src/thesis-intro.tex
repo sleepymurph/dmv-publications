@@ -204,8 +204,8 @@ and prepending a short header. Git then calculates the SHA-1 hash of the
 hash as the \gls{blob}'s ID. To store a directory, Git creates a \gls{tree}
 object that maps filenames to SHA-1 \gls{blob} IDs for each file in the
 directory. This \gls{tree} object is also stored in the \gls{objectstore} with
-it's SHA-1 hash as its ID. \Gls{tree} objects can refer not only to \gls{blob},
-but to other \glspl{tree}, representing subdirectories.
+it's SHA-1 hash as its ID. \Gls{tree} objects can refer not only to
+\glspl{blob}, but to other \glspl{tree}, representing subdirectories.
 
 Thus, a file hierarchy in a given state is represented by a hash tree, with
 \gls{tree} objects as nodes and \glspl{blob} as leaves, and the entire state can
