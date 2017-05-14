@@ -2,11 +2,11 @@
 
 \glsreset{repository}
 
-Each \gls{DMV} node is a \gls{repository} consisting of a content-addressable
-\gls{objectstore} for immutable \gls{DAG} objects and a \gls{workdir} for active
-file editing (\autoref{fig:dia_obj_db_and_wd}). \Glspl{repository} that are used
-only for storage can omit the \gls{workdir}, similar to a Git bare
-\gls{repository}.
+Each \gls{DMV} node may have one or more \glspl{repository}, each consisting of
+a \glsdisp{contentaddressablestorage}{content-addressable} \gls{objectstore} for
+immutable \gls{DAG} objects and a \gls{workdir} for active file editing
+(\autoref{fig:dia_obj_db_and_wd}). \Glspl{repository} that are used only for
+storage may omit the \gls{workdir}, similar to a Git bare \gls{repository}.
 
 \begin{figure}[h]
     \centering
@@ -20,11 +20,15 @@ able to add to it at any time. However, it can transfer \gls{DAG} objects to and
 from other \glspl{repository}, and it can cache data about what \gls{DAG}
 objects are available at a remote \gls{repository}. Thus, \gls{DMV} forms an
 ad-hoc, unstructured network of \glspl{repository}, and each \gls{repository}
-can inform the user about what data is available where. Together, the
-\glspl{repository} hold the entire data set (\autoref{fig:dia_architecture}).
-\Glspl{repository} may exist on separate computers or coexist on the same
-computer. Some \glspl{repository} may be on removable storage and accessed only
-when that storage is connected.
+can inform the user about what data is available where. \Glspl{repository} may
+exist on separate computers or coexist on the same computer. Some
+\glspl{repository} may be on removable storage and accessed only when that
+storage is connected.
+
+Together, the \glspl{repository} hold the entire data set --- or the portion of
+the data set that has not been intentionally deleted --- in varying states of
+sharding and replication. An example ad-hoc network of repositories is shown in
+\autoref{fig:dia_architecture}.
 
 \begin{figure}[h]
     \centering
