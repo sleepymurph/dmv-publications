@@ -5,10 +5,19 @@
     guarantees of a traditional database commit},
 ]{ACID}{ACID}{Atomicity, Consistency, Durability, and Isolation}
 
+\newglossaryentry{CAP-theorem}{
+    name={CAP-theorem},
+    description={fundamental theorem of distributed systems, that no system can
+    simultaneously be Consistent, Available, and Tolerant of network
+    Partitions},
+    see={partitiondecision},
+}
+
 \newglossaryentry{partitiondecision}{
     name={partition decision},
     description={the dilemma faced by a distributed system during a network
     partition: to decrease availability or risk inconsistency},
+    see={CAP-theorem},
 }
 
 % General Version Control
@@ -173,12 +182,8 @@ storage platform described and introduced in this paper}]
 
 
 \iffalse
-newterm{A}
 newterm{branches}
-newterm{C}
-newterm{CAP-theorem}
 newterm{heads}
 newterm{hg}
 newterm{merge}
-newterm{P}
 \fi

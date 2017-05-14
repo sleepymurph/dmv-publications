@@ -88,13 +88,13 @@ Spreading data across different computers creates new problems of
 synchronization. How does one ensure that replicated data is updated correctly
 on all replicas? How can separate machines agree on the order of updates?
 
-Distributed systems are ruled by the \newterm{CAP-theorem} \cite{cap_origin},
-which states that a system cannot be completely consistent (\newterm{C}),
-available (\newterm{A}), and tolerant of network partitions (\newterm{P}) all at
-the same time. When communication between replicas breaks down and they cannot
-all acknowledge an operation, the system is faced with "the
-\gls{partitiondecision}: block the operation and thus decrease availability, or
-proceed and thus risk inconsistency."\cite{cap_years_later}
+Distributed systems are ruled by the \gls{CAP-theorem} \cite{cap_origin}, which
+states that a system cannot be completely consistent (C), available (A), and
+tolerant of network partitions (P) all at the same time. When communication
+between replicas breaks down and they cannot all acknowledge an operation, the
+system is faced with "the \gls{partitiondecision}: block the operation and thus
+decrease availability, or proceed and thus risk
+inconsistency."\cite{cap_years_later}
 
 Much research is aimed at improving consistency. Vector
 clocks\cite{lamport_ordering} and consensus algorithms such as
