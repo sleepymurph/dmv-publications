@@ -1,4 +1,4 @@
-\section{Summary of Contributions}
+\chapter{Conclusion and Summary of Contributions}
 
 \glsreset{DMV}
 
@@ -8,12 +8,34 @@ across nodes in a distributed system, according to what data is needed locally
 at each location.
 
 We have performed experiments to probe the scalability limits of existing
-\gls{DAG}-based \acrlongpl{DVCS} and formulated ways of overcoming them,
-especially by breaking large files into chunks and ensuring that algorithms do
-not assume that whole files can always fit into RAM. We have also bumped up
-against\perotto{"bumped up against" a bit too informal} and experimented with
-some of\perotto{"some of" vague} the limitations of the ext4 filesystem for
-storing large numbers of small files.
+\gls{DAG}-based \acrlongpl{DVCS}. We have shown that the maximum size of file
+that existing systems like Git and Mercurial can store is limited by the amount
+of available memory in the system, and we conclude that it is because those
+systems calculate deltas of files to de-duplicate data, and they load the entire
+file into memory in order to do so.
+
+We have also rediscovered the limits of the Unix filesystem for storing many
+small files.
+
+\begin{itemize}
+
+    \item Writing files smaller than the filesystem block size incurs storage
+        overhead.
+
+    \item Splitting files among too many subdirectories takes \gls{inode} that
+        are needed to store files.
+
+    \item Jumping between directories when writing files incurs write-speed
+        penalties.
+
+\end{itemize}
+
+We have shown that any \gls{VCS} that stores objects as individual files on the
+filesystem will encounter these filesystem limitations as they try to scale in
+terms of number of files. \glspl{VCS} that also break files into chunks will
+turn the problem of storing large files into the problem of storing many files,
+and will also encounter these limitations. However, the limitations can be
+avoided by aggregating objects into \glspl{packfile} as Bup does.
 
 And finally, we have described the idea, architecture, design, and
 implementation of a distributed data storage system we call \gls{DMV} that
