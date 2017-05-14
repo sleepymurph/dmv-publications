@@ -129,8 +129,8 @@ that may occasionally lose contact in a network partition, a \gls{DVCS}'s
 \glspl{repository} are self-contained, allowing writes to local data at any
 time, and only connecting to other \glspl{repository} intermittently by user
 command to exchange updates. Concurrent updates are not only allowed but
-embraced as different \newterm{branches} of development. A \gls{DVCS} can track
-many different branches at the same time, and conflicting branches can be
+embraced as different \glspl{branch} of development. A \gls{DVCS} can track many
+different \glspl{branch} at the same time, and conflicting \glspl{branch} can be
 combined and resolved by the user.
 
 The \glsdisp{DVCS}{distributed version control} concept may have something to
@@ -148,8 +148,9 @@ different versions of a source code files by encoding them as a series of deltas
 model\cite{history_of_version_control,cvs_book}. Subversion kept the
 client-server model but began focusing on the versions of the whole collection
 of files together, rather than individual
-files\cite{history_of_version_control,svnbook}. Doing so made branching easier,
-and branching quickly became a key feature for collaborative work.
+files\cite{history_of_version_control,svnbook}. Doing so made
+\glsdisp{branch}{branching} easier, and \glsdisp{branch}{branching} quickly
+became a key feature for collaborative work.
 
 BitKeeper, a commercial \gls{SCM}, pioneered the \glsdisp{DVCS}{distributed
 version control} concept by giving each developer a local copy of the whole
@@ -234,7 +235,7 @@ identical in content and thus have the same hash ID. This
 \glsdisp{DAG}{directed, acyclic graph} structure is referred to as the
 \glsreset{DAG}\acrshort{DAG}. It can be uniquely identified by the hash IDs of
 those \glspl{commit} which do not yet have child \glspl{commit} to refer to
-them, the \newterm{heads} of each current branch of development. A simple
+them, the \newterm{heads} of each current \gls{branch} of development. A simple
 example is shown in \autoref{dia_git_dag_example_three_commits}.
 
 \begin{figure}[h]
@@ -274,13 +275,13 @@ collaborative work and for long-term data storage.
         and append-only, it can be replicated simply by copying all of its
         objects. Any replica can make its own updates by appending to the
         \gls{DAG}. Rather than have a centralized notion of "current" version,
-        development in Git naturally diverges into different branches, as
+        development in Git naturally diverges into different \glspl{branch}, as
         different users with their own replica of the \gls{DAG} make changes.
-        Branches created on one replica can be synchronized to another simply by
-        comparing sets of objects and transferring new objects that that the
-        other does not have. Branches are reconciled with a \newterm{merge}
-        operation, creating a new \gls{commit} that incorporates changes from
-        both branches.
+        \Glspl{branch} created on one replica can be synchronized to another
+        simply by comparing sets of objects and transferring new objects that
+        that the other does not have. \Glspl{branch} are reconciled with a
+        \newterm{merge} operation, creating a new \gls{commit} that incorporates
+        changes from both \glspl{branch}.
 
     \item[Atomicity] The \gls{DAG}'s append-only nature makes \glspl{commit}
         atomic. Objects are added to the \gls{objectstore}, and then once all
