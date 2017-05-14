@@ -71,14 +71,18 @@ different nodes.
 
 \section{CAP Theorem and the Importance of Availability}
 
+\glsreset{ACID} % ACID spelled out here
+
 Traditional databases that operated on one powerful server could focus on data
-integrity and the \newterm{ACID} guarantees: Atomicity, Consistency, Isolation,
-and Durability\cite[Chapter 1]{nosqldistilled}. As demand increased, the server
-would be scaled up, beefing up the server hardware with more disk space, more
-RAM, and more and faster CPUs\cite[Chapter 4]{nosqldistilled}. But there is a
-limit to scaling up the hardware of a single machine, and as data kept growing,
-a new wave of systems appeared that scaled \emph{out} to many commodity servers,
-distributed systems\cite[Chapter 4]{nosqldistilled}.
+integrity and the \acrshort{ACID} guarantees: \acrlong{ACID}\cite[Chapter
+1]{nosqldistilled}. As demand increased, the server would be scaled up, beefing
+up the server hardware with more disk space, more RAM, and more and faster
+CPUs\cite[Chapter 4]{nosqldistilled}. But there is a limit to scaling up the
+hardware of a single machine, and as data kept growing, a new wave of systems
+appeared that scaled \emph{out} to many commodity servers, distributed
+systems\cite[Chapter 4]{nosqldistilled}.
+
+\glsunset{ACID} % Used acrshort and acrlong, which don't unset the 'first' bit
 
 Spreading data across different computers creates new problems of
 synchronization. How does one ensure that replicated data is updated correctly
