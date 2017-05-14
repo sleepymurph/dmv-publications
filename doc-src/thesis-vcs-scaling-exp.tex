@@ -203,6 +203,15 @@ command (\lstinline{du}) and measures the size of the trial's entire temporary
 directory, which includes the generated input data itself along with the
 \gls{VCS}'s storage.
 
+Finally, the script would delete the test directories by reformatting the
+partition. It ensured that the filesystem would be completely reset for each
+trial. Also, at the larger file quantities, deleting recursively could take
+hours, much longer than it took to create the files and longer than it took to
+run the trial. Reformatting was much faster.
+
+% "I say we take off and nuke the site from orbit. It's the only way to be
+% sure." ---Lt. Ellen Ripley
+
 Experiment scripts used and raw result data collected are available alongside
 this dissertation in Munin (\muninurl).
 
