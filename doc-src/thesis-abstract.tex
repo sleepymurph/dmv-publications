@@ -19,12 +19,12 @@ and partition-tolerant data storage system right at their fingertips:
 
 Inspired by \glsdisp{DVCS}{distributed version control}, we have researched and
 developed a prototype for a scalable high-availability system called \gls{DMV}.
-\gls{DMV} expands Git's data model (the \acrshort{DAG}) to allow files to be
-broken into more digestible chunks via a \gls{rollinghash}. \gls{DMV} will allow
-data to be sharded according to data locality needs, slicing the data set in
-space (subset of data with full history), time (subset of history for full data
-set), or both. \gls{DMV} \glspl{repository} will be able to read and to update
-any subset of the data that they have locally, and then synchronize with other
+\gls{DMV} expands Git's data model  to allow files to be broken into more
+digestible chunks via a \gls{rollinghash}. \gls{DMV} will also allow data to be
+sharded according to data locality needs, slicing the data set in space (subset
+of data with full history), time (subset of history for full data set), or both.
+\gls{DMV} \glspl{repository} will be able to read and to update any subset of
+the data that they have locally, and then synchronize with other
 \glspl{repository} in an ad-hoc network.
 
 %\perottoinline{4. Experiments; results}
@@ -45,10 +45,8 @@ store a \SI{6.8}{\kib} files.
 
 We conclude that the key to storing large files is the break them into many
 small chunks, and that the key to storing many chunks is to aggregate them into
-pack files. And, if one uses a \gls{rollinghash} to split the files by content
-and \gls{contentaddressablestorage} to store them, common file chunks are
-naturally de-duplicated and many versions of a file can be stored efficiently.
-\perotto{Does DMV do this? Do results back it up?}
+pack files. And though the current \gls{DMV} prototype does only the former, we
+have a clear path forward as we continue our work.
 
 %
 
