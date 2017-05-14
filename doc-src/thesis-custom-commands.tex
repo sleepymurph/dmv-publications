@@ -1,5 +1,17 @@
 % Custom commands:
 
+% Commands that are being misused to tweak layout
+\newif{\iftweaks}
+\tweakstrue
+%\tweaksfalse
+
+\newcommand{\tweak}[1]{
+    \iftweaks
+        #1
+    \fi
+}
+
+
 % An enumerated list with less spacing between items
 \newenvironment{tight_enumerate}{
 \begin{enumerate}
