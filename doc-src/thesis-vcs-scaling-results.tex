@@ -193,9 +193,10 @@ separate hardware. We do not know what might be causing this.
         \label{fig:plot-file-size--c2-time}
         \centering
 
+        \explainlogsubfig
+
         X axis shows the total size of the file. The updated portion was
         \SI{1/1024}{th} of the total file size.
-        \explainlogsubfig
 
         \includegraphics[]{plot-file-size--c2-time}
     \end{leftfullpage}
@@ -424,7 +425,9 @@ files to the next step and run a trial with \num{25} million files.
         \label{fig:plot-num-files--c2-time}
         \centering
 
-        X axis shows the total number of files. 1 out of every 16 files was updated.
+        X axis shows the total number of files. 1 out of every 16 files was
+        updated.
+
         \explainlogsubfig
 
         \includegraphics[]{plot-num-files--c2-time}
@@ -567,6 +570,8 @@ that.
         \centering
 
         \explainlogsubfig
+
+        Copy not shown because it has no status-check operation.
 
         \includegraphics[]{plot-num-files--stat2-time}
     \end{leftfullpage}
