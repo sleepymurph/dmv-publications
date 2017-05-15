@@ -561,7 +561,7 @@ that.
 \begin{figure}[p]
     \begin{leftfullpage}
         \caption{Real time required to check the status of many files after
-        initial commit}
+        update}
         \label{fig:plot-num-files--stat2-time}
         \centering
 
@@ -596,11 +596,11 @@ at \num{7500} files, but after that increasing linearly.
 %   git-2017-04-04-murphytest01.txt:   23.638
 %   git-2017-04-13-murphytest03.txt:   38.251
 
-Git has an interesting drop where it actually gets faster from \num{500}
-thousand to \num{750} thousand files, dropping from a mean of \SI{32.145}{\s} to
-\SI{30.210}{\s}. However, the measurement at \num{500} thousand files has a high
+Git has an interesting drop where it actually gets faster from \num{500000}
+to \num{750000} files, dropping from a mean of \SI{32.145}{\s} to
+\SI{30.210}{\s}. However, the measurement at \num{500000} files has a high
 standard deviation, \SI{10.623}{\s}, compared to only \SI{4.705}{\s} at
-\num{750} thousand files. The four measurements at \num{500} thousand files are
+\num{750000} files. The four measurements at \num{500000} files are
 \SI{20.330}{\s}, \SI{23.638}{\s}, \SI{38.251}{\s} and \SI{46.362}{\s}. So it is
 the two unusually high measurements that are pulling the average up, but we do
 not know why those measurements are especially high.
