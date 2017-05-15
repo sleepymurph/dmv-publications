@@ -228,20 +228,23 @@ representing the previous states that this one was built from. Like with
 \glspl{blob} and \glspl{tree}, the \gls{commit} object is also hashed and stored
 with the hash as its ID.
 
-The resulting data structure is a directed graph, with new \glspl{commit}
-pointing to previous \glspl{commit}, and with each \gls{commit} pointing to a
-\gls{tree} that represents the state of the file set at the time. This graph is
-append-only: objects are immutable and referenced by cryptographic hash of their
-content, which includes the hashes of all objects that they depend on. New
-objects can only refer to existing objects, which makes the graph acyclic.
+The resulting data structure is a directed graph: new \glspl{commit} point to
+previous \glspl{commit}, and each \gls{commit} points to a \gls{tree} that
+represents the state of the file set at the time. This graph is also
+append-only: objects are immutable and are referenced by cryptographic hash of
+their content, which includes the hashes of all objects that they depend on. So
+new objects can only refer to existing objects, which makes the graph acyclic.
 Storing history in this way will naturally de-duplicate unchanged files and
 directories, because the resulting \glspl{blob} and \glspl{tree} will be
 identical in content and thus have the same hash ID. This
-\glsdisp{DAG}{directed, acyclic graph} structure is referred to as the
-\glsreset{DAG}\acrshort{DAG}. It can be uniquely identified by the hash IDs of
-those \glspl{commit} which do not yet have child \glspl{commit} to refer to
-them, the \glspl{head} of each current \gls{branch} of development. A simple
-example is shown in \autoref{dia_git_dag_example_three_commits}.
+\glsdisp{DAG}{directed, acyclic graph} structure is referred to as a
+\tweak{\glsreset{DAG}}\acrshort{DAG}\tweak{\glsunset{DAG}}.
+
+A \gls{DAG} can be uniquely identified by the hash IDs of those \glspl{commit}
+which do not yet have child \glspl{commit} to refer to them. Such commits are
+the \glspl{head} of each current \gls{branch} of development. A simple example
+with one \gls{head} and three \glspl{commit} is shown in
+\autoref{dia_git_dag_example_three_commits}.
 
 \begin{figure}[p]
     \centering

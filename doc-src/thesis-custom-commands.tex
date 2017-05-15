@@ -5,11 +5,7 @@
 \tweakstrue
 %\tweaksfalse
 
-\newcommand{\tweak}[1]{
-    \iftweaks
-        #1
-    \fi
-}
+\newcommand{\tweak}[1]{\iftweaks{#1}\fi}
 
 
 % An enumerated list with less spacing between items
