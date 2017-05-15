@@ -69,7 +69,7 @@ metadata is too large to fit into RAM.
 
 \paragraph{IPFS: The Interplanetary Filesystem}
 
-IPFS~\cite{ipfs_github_main} is an open-source project to create a global
+IPFS~\cite{ipfs_github_main} is an open-source pro\-ject to create a global
 content-addressed filesystem. By its global nature, all files are stored
 publicly, in a global network of nodes with global addressing. IPFS should be an
 excellent resource for storing published information, but we want \gls{DMV} to
@@ -93,7 +93,7 @@ on efficient routing between nodes, while we are focusing first on storage.
 \label{related-rsync}
 
 Rsync~\cite{rsynctechreport} is a utility that synchronizes files across a
-low-bandwidth network link by using a rolling hash to find similar parts of the
+low-band\-width network link by using a rolling hash to find similar parts of the
 file, and then transfer only those portions of the file that have changed. Its
 \glsfirst{rollinghash} is the inspiration for the chunk-splitting algorithms
 used by Rsyncrypto~\cite{rsyncrypto_algorithm}, Bup~\cite{bup_design}, and
@@ -112,10 +112,10 @@ developers, which is what led Linus Torvalds to develop his own
 \label{related-rsyncrypto}
 
 Rsyncrypto~\cite{rsyncrypto_algorithm} is an encryption system that uses a
-rolling hash to encrypt files by chunks, so that the encrypted files are still
+roll\-ing hash to encrypt files by chunks, so that the encrypted files are still
 "rsync-able." Normally, a goal of an encryption algorithm is to have small
 changes in the input lead to a completely different ciphertext. This is good for
-security, but it negates the advantages of rsync -- if the entire file is
+security, but it negates the advantages of rsync --- if the entire file is
 different, there are no advantages to be had in transferring only the changed
 parts when synchronizing files. Rsync uses a rolling hash to break the file into
 chunks and encrypt the chunks separately, so that a small change in the input
