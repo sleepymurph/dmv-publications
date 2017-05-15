@@ -10,7 +10,7 @@ these two parameters on chunk size.
 \subsection{Procedure}
 
 For each combination of window size and divisor, we would run the
-\glsfirst{rollinghash} on a stream of pseudo-random bytes until it had
+\glsfirst{rollinghash} on a stream of pseudorandom bytes until it had
 identified \num{100} chunks. Then we would compute the mean and standard
 deviation of the chunk sizes.
 
@@ -18,7 +18,7 @@ We used window sizes in powers of two from \SI{128}{\byte} ($2^7$) to
 \SI{128}{\kibi\byte} ($2^{17}$), and divisors in powers of two from \num{256}
 ($2^8$) to \SI{128}{\kibi\relax} ($2^{17}$).
 
-The pseudo-random number generator used was an xorshift
+The pseudorandom number generator used was an xorshift
 \gls{RNG}~\cite{xorshift_rng}. The experiment itself was automated as a unit
 test in the \gls{DMV} prototype's Rust code.
 

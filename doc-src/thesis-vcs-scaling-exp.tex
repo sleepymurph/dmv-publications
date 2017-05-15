@@ -118,11 +118,11 @@ times the base number at each order of magnitude. For example, starting at
 \num{750}, \num{1000}, \num{2500}, \num{5000}, \num{7500}, \num{10000}, and so
 on.
 
-Input data files consisted of pseudo-random bytes taken from the operating
-system's pseudo-random number generator (\lstinline{/dev/urandom} on Linux).
+Input data files consisted of pseudorandom bytes taken from the operating
+system's pseudorandom number generator (\lstinline{/dev/urandom} on Linux).
 
 When updating data files for the second \gls{commit}, we would overwrite a
-single contiguous section of each file with new pseudo-random bytes. We would
+single contiguous section of each file with new pseudorandom bytes. We would
 start one-quarter of the way into the file, and overwrite \num{1/1024}th of the
 file's size (or 1 byte if the file was smaller than \SI{1024}{\kibi\byte}). So a
 \SI{1}{\mebi\byte} file would have \SI{1}{\kibi\byte} overwritten, a
