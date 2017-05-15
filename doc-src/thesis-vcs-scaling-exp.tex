@@ -3,16 +3,16 @@
 \label{num-files-exp-desc}
 
 We performed experiments to probe the limits of existing \acrlongpl{VCS}, to see
-how they would cope with file sizes and file numbers in ranges beyond what would
-be expected in a source code tree. We wanted to see how long it would take for
-each \gls{VCS} to store that amount of data, how much disk space it used, and
-what CPU utilization was like during storage. And since the purpose of a
+how they would cope with file sizes and numbers of files in ranges beyond what
+would be expected in a source code tree. We wanted to see how long it would take
+for each \gls{VCS} to store that amount of data, how much disk space it used,
+and what CPU utilization was like during storage. And since the purpose of a
 \gls{VCS} is to track changes, we also wanted to measure those same metrics when
 a small subset of that data was modified and then committed again.
 
 We conducted two major experiments. In order to measure the effect of file size,
 we would \gls{commit} a single file of increasing size to each target \gls{VCS}.
-And to measure the effect of file numbers, we would \gls{commit} increasing
+And to measure the effect of numbers of files, we would \gls{commit} increasing
 number of small (\SI{1}{\kibi\byte}) files to each target \gls{VCS}.
 
 
