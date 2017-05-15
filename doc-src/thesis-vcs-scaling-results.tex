@@ -41,11 +41,11 @@ did not report any actual integrity errors in the \gls{repository}.
 So to check the \gls{commit}, we extracted the \SI{24}{\gibi\byte} file from the
 \gls{repository} and compared it. It was the same as the original. So the
 \gls{commit} was intact. We also deliberately corrupted the Git \gls{packfile}
-that stored the \SI{24}{\gibi\byte} by overwriting one \SI{1}{\mebi\byte} block
-at an offset of \SI{22}{\gibi\byte} with new pseudo-random data. When we ran the
-\lstinline{fsck} command again with the corrupted \gls{repository}, it reported the
-integrity error, but it did not report the \lstinline{malloc} error that it did
-before.
+that stored the \SI{24}{\gibi\byte} file by overwriting one \SI{1}{\mebi\byte}
+block at an offset of \SI{22}{\gibi\byte} with new pseudo-random data. When we
+ran the \lstinline{fsck} command again with the corrupted \gls{repository}, it
+reported the integrity error, but it did not report the \lstinline{malloc} error
+that it did before.
 
 The \lstinline{git fsck} command found the integrity error surprisingly quickly,
 reporting the error and exiting instantaneously (from the user's perspective),
