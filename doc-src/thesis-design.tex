@@ -3,11 +3,12 @@
 
 \section{DMV's DAG}
 
-\gls{DMV}'s data set and its history are represented as a \gls{DAG}, and the
-rest of the design flows from that. \gls{DMV}'s \gls{DAG} is based on Git's, but
-it adds a new object type, the \gls{chunkedblob}, which represents a \gls{blob}
-that has been broken into several smaller chunks. An example \gls{DMV} \gls{DAG}
-is shown in \autoref{dia_dmv_dag_example_three_commits}.
+\gls{DMV}'s data set and its history are represented as a \acrshort{DAG}
+(\acrlong{DAG}, see \autoref{how-data-stored-in-git}), and the rest of the
+design flows from that. \gls{DMV}'s \gls{DAG} is based on Git's, but it adds a
+new object type, the \gls{chunkedblob}, which represents a \gls{blob} that has
+been broken into several smaller chunks. An example \gls{DMV} \gls{DAG} is shown
+in \autoref{dia_dmv_dag_example_three_commits}.
 
 \begin{figure}[p]
     \centering
@@ -59,8 +60,8 @@ that lead into the \gls{DAG}. Each \gls{ref} refers to a \gls{commit}. Each
 committing, plus one or more parent \glspl{commit}. A \gls{tree} refers to the
 \gls{blob}, \gls{chunkedblob}, or \gls{tree} that makes up each entry in the
 directory. A \gls{chunkedblob} can refer to other \glspl{chunkedblob} or to
-\glspl{blob}. And finally, the \glspl{blob} are the leaves of the graph. This
-relationship is illustrated in \autoref{fig:dia_new_dag}.
+\glspl{blob}. And finally, the \glspl{blob} are the leaves of the graph. These
+relationships are illustrated in \autoref{fig:dia_new_dag}.
 
 
 

@@ -82,13 +82,13 @@ using the available disk space.
 
 Files are broken into chunks using the same \glsfirst{rollinghash} used by Gzip
 and Rsyncrypto~\cite{rsyncrypto_algorithm} to respectively compress and encrypt
-files by chunks so that the result is "rsyncable"-- a remote copy of the
+files by chunks so that the result is "rsyncable" --- a remote copy of the
 compressed or encrypted file can be updated by transferring only those chunks
-that have changed. The algorithm uses Rsync's rolling
+that have changed. This algorithm uses Rsync's rolling
 checksum~\cite{rsynctechreport}, creating a chunk boundary when the Rsync
 rolling hash is equal to \num{0}.
 
-The algorithm keeps a sum of the previous \num{8196} bytes of input data, and
+The algorithm keeps a sum of the previous \num{8192} bytes of input data, and
 creates a chunk boundary when that sum is evenly divisible by \num{4096}. These
 parameters are arbitrary and can be adjusted. Let \glssymbol{windowsize} denote
 the \gls{windowsize}, the number of previous bytes summed, and let
