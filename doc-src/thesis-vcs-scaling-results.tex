@@ -176,7 +176,7 @@ chunks into \glspl{packfile}. We investigate the filesystem overhead further in
 \autoref{perf-tuning-exp-chapter}.
 
 Bup's commit times behave strangely in that there are places where Bup is
-actually faster that it was with a smaller file. This is most apparent in the
+actually faster than it was with a smaller file. This is most apparent in the
 slow downward slope of \autoref{fig:plot-file-size--c1-time}b and the zig-zag of
 \autoref{fig:plot-file-size--c1-time}c. Git also has a point where the time
 decreases, taking \SI{393}{\s} (SD \SI{.76}{\s}) to commit a \SI{4}{\gib} file
@@ -225,10 +225,9 @@ at a slightly larger size with this update commit, at \num{8}, \num{12},
 \SI{12}{\mib} in the initial commit. It can still be seen in miniature in
 \autoref{fig:plot-file-size--c2-time}a.
 
-The shift to larger sizes in the update
-commit suggests that the decrease is related to the amount of data written to
-the disk, since Bup breaks the file into chunks and only writes the updated
-chunks.
+The fact that there is still a drop --- but at a larger size --- suggests that
+the decrease is related to the amount of data written to the disk, since Bup
+breaks the file into chunks and only writes the updated chunks.
 
 Git also shows a commit time decrease between \SI{4}{\gib} (\SI{518}{\s} with SD
 \SI{11.1}{\s}) and \SI{8}{\gib} (\SI{429}{\s} with SD \SI{4.0}{\s}) just as it
