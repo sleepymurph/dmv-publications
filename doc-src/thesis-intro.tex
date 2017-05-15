@@ -276,8 +276,10 @@ collaborative work and for long-term data storage.
 \begin{description}
 
     \item[De-duplication] As noted above, unchanged and duplicate files are
-        naturally de-duplicated by the content addressing, if two files are
-        identical, they will have the same hash and thus be the same \gls{blob}.
+        naturally de-duplicated by the \gls{DAG}'s
+        \glsdisp{contentaddressablestorage}{content-addressing}: if two files
+        are identical, they will have the same hash and thus be the same
+        \gls{blob}.
 
     \item[Distributability and Availability] Because the \gls{DAG} is immutable
         and append-only, it can be replicated simply by copying all of its
