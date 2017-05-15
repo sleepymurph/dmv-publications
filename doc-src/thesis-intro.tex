@@ -322,7 +322,7 @@ inefficient storage of larger files. Git gets around this by
 similar objects as bases and deltas behind the scenes. But this is an
 optimization.
 
-Calculating deltas for during this \glsdisp{packfile}{packing} phase requires
+Calculating deltas during this \glsdisp{packfile}{packing} phase requires
 loading the objects into memory, and so it can cause an out-of-memory error if
 an object is too large to fit into available RAM. Because Git stores files whole
 in \glspl{blob}, it cannot \glsdisp{packfile}{pack} objects that are larger than
