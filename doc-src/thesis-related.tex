@@ -149,16 +149,16 @@ limitations.
 \paragraph{Bup}\label{related_bup}
 
 Bup~\cite{bup_homepage} is an open-source file backup system that is based on
-Git's \gls{repository} format. A Bup backup is a valid Git \gls{repository} and
-it can be read by Git, but Bup is a separate program written from scratch to
-read and write files to Git's \gls{packfile} format directly, skipping Git's
-separate store and \glsdisp{packfile}{pack} steps that use double the disk
-space. It has many features that we want for our low-level storage of the
-\gls{objectstore}. It breaks files into chunks by \gls{rollinghash}, and it has
-considerations for metadata that is larger than RAM. However, it is locked into
-a backup-based workflow. History is linear and based on clock time of backup.
-And it assumes that the whole data set and the whole \gls{repository} can fit
-onto one filesystem.
+Git's \gls{repository} format. It does many of the things that \gls{DMV} does:
+it breaks files into chunks by \gls{rollinghash}, and it has considerations for
+metadata that is larger than RAM. Bup is one of the systems we evaluated along
+with Git and Mercurial (\autoref{file-size-exp-desc}), and we determined that
+Bup's manner of storing chunks is ideal for the next step for \gls{DMV}
+(\autoref{chunk-then-recombine}). However, though Bup is built on
+\glsdisp{VCS}{version control}, it is locked into a backup-based workflow.
+History is linear and based on clock time of backup. And it assumes that the
+whole data set and the whole \gls{repository} can fit onto one filesystem.
+\gls{DMV} is built to be more general and versatile.
 
 
 \paragraph{Time Machine}
