@@ -1,5 +1,6 @@
-dmv 0.1.0 (8498895) (debug)
-Distributed Media Versioning: distributed version-control for media files
+dmv 0.1.0 (df7b9bd) (debug)
+Mike Murphy <dmv@sleepymurph.com>
+A distributed version-control system for media files
 
 USAGE:
     dmv [SUBCOMMAND]
@@ -24,4 +25,5 @@ SUBCOMMANDS:
     merge-base        find common ancestor
     parents           show current parent commits
     show-object       print information about an object
+    show-ref          show refs
     status            show status of files
