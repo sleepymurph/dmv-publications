@@ -23,18 +23,20 @@ larger, Git's \gls{commit} operation would exit with an error code, reporting a
 fatal out-of-memory error saying that
 \lstinline{malloc}
 failed to allocate \SI{12}{\gibi\byte}.
-However, the \gls{commit} would be successfully stored with no consistency
-errors in the \gls{repository} reported by
+However, the \gls{commit} would be successfully stored --- no consistency
+errors in the \gls{repository} were reported by
 \lstinline{git fsck}.
 Starting at \SI{24}{\gibi\byte}, the \gls{commit} operation would report the
-same error, the \gls{commit} would still be written, but then the
+same error and the \gls{commit} would still be written, but then the
 \lstinline{git fsck}
 integrity check itself would also exit with an error code.
-However, the error it reported in its output was a similar "fatal" error as
-Git's
+
+However, the error that
+\lstinline{git fsck}
+reported in its output was a 
 \lstinline{malloc}
-error as the \gls{commit} operation, and it did not report any actual integrity
-errors in the \gls{repository}.
+error very similar to the "fatal" error from the \gls{commit} operation, and it
+did not report any actual integrity errors in the \gls{repository}.
 
 So to check the \gls{commit}, we extracted the \SI{24}{\gibi\byte} file from the
 \gls{repository} and compared it. It was the same as the original. So the
