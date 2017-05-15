@@ -379,8 +379,8 @@ trying to load multiple versions of the file into memory to calculate deltas for
 \subsection{File Quantity Limits}
 
 Git, Mercurial, DMV, and the copy operation all failed when trying to store
-\num{7.5} million files or more, reporting that the disk was full. However, it
-wasn't actually out of space. The disk was out of \emph{\glspl{inode}}.
+\num{7.5} million files or more, reporting that the disk was full. However, the
+disk was not actually out of space --- it was out of \emph{\glspl{inode}}.
 
 \glsreset{inode} % This is the para where we actually define what an inode is
 
@@ -396,11 +396,12 @@ the filesystem, plus directories. However, the \SI{197}{\gib} experiment
 partition has \num{13107200} total \glspl{inode}, so storing \num{15} million
 files is impossible.
 
-Bup is able to store more files because it does not write a separate file for
-each input file. Bup aggregates its DAG objects into \glspl{packfile}, writing
-several large files instead many small files. As such, it does not exhaust the
-disk's \glspl{inode}, and can continue until the experiment itself exhausts the
-system's \glspl{inode} when trying to run a trial with \num{25} million files.
+Bup is able to store more files because it does not write a separate object file
+for each input file. Bup aggregates its DAG objects into \glspl{packfile},
+writing several large files instead many small files. As such, it does not
+exhaust the disk's \glspl{inode}, and can continue until the experiment itself
+exhausts the system's \glspl{inode} when it tries to go up from \num{10} million
+files to the next step and run a trial with \num{25} million files.
 
 %
 
