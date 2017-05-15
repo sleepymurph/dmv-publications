@@ -7,7 +7,7 @@ significantly. What would happen with memory, disk, remote}
 \label{chunk-then-recombine}
 
 All four of the systems we examined in detail --- Git, Mercurial, Bup, and
-\gls{DMV}-- model data and its history with a similar directed acyclic graph.
+\gls{DMV} --- model data and its history with a similar directed acyclic graph.
 The major difference is the granularity at which they work with data, and how
 they store it.
 
@@ -280,9 +280,6 @@ In particular:
         files on the filesystem for applications to use normally, or offer a
         virtual filesystem as a view into a specific revision. Applications such
         as editors should not have to be rewritten to use our system.
-
-  \item[We do not want to create new exotic file formats] We believe that the
-      classic file hierarchy is our best chance for long-term storage.
 
   \item[We want to keep it simple] We hope that DMV could eventually be used as
       a piece of infrastructure on which to build useful applications. It should
