@@ -159,12 +159,13 @@ BitKeeper, a commercial \gls{SCM}, pioneered the \glsdisp{DVCS}{distributed
 version control} concept by giving each developer a local copy of the whole
 \gls{repository}, allowing local writes, and then making it easy to push the
 local changes to a central
-server~\cite{history_of_version_control,git_10_years_interview}. BitKeeper was
-for a time the main \acrlong{SCM} for the Linux kernel, but licensing issues
-caused a rift between Linux developers and BitMover, the company behind
-BitKeeper. Unsatisfied with the other \glspl{SCM} available at the time, Linus
-Torvalds, the creator of Linux, wrote his own,
-Git~\cite{history_of_version_control,git_10_years_interview}.
+server~\cite{history_of_version_control,git_10_years_interview}. This feature
+was so important that Linus Torvalds, the creator of Linux, adopted BitKeeper as
+the main \acrlong{SCM} for the Linux kernel, despite the licensing concerns of
+using a proprietary tool to develop an open-source project. When the
+licensing trouble came to a head and BitKeeper was no longer an option,
+Torvalds, unsatisfied with all other \glspl{SCM} available at the time, wrote
+his own: Git.~\cite{history_of_version_control,git_10_years_interview}
 
 The ability to always write locally separates concerns such as handling security
 from the underlying problem of storing the data. \glspl{repository} are private
