@@ -44,7 +44,7 @@ size.
 \section{Object Store Directory Layout}
 \label{dir-experiment}
 
-During initial runs of the "many files" experiment
+During initial runs of the many-files experiment
 (\autoref{num-files-exp-desc}), we would often notice the disk being reported as
 full even though the total bytes used was less than the capacity of the disk
 partition. This had to do with how each system stores its objects as files on
@@ -105,7 +105,7 @@ required more than the \num{40} hex digits of a \num{160}-byte SHA-1 hash.
 
 \subsection{Environment}
 
-Like the "many files" experiment, this was automated as a Python script and run
+Like the many-files experiment, this was automated as a Python script and run
 on one of the dedicated computers used for that experiment (specs shown in
 \autoref{test-machine-specs}). However, rather than spending hours to fill the
 \SI{197}{\gibi\byte} partition used for the other experiments, this experiment
