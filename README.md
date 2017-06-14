@@ -43,23 +43,23 @@ preprocessing. Development took place on a Debian 8 (Jessie) system with vanilla
 versions of the those programs installed. So it should build easily on any
 reasonably up-to-date Unix system with those programs.
 
-Tool                    Provided by Debian package
------                   ---------------------------
-LaTeX                   `texlive`
-Make                    `make` or `build-essential`
-GNUPlot                 `gnuplot5`
-Graphviz                `graphviz`
-M4 macro language       `m4`
+Tool                    |   Provided by Debian package
+-----                   |   ---------------------------
+LaTeX                   |   `texlive`
+Make                    |   `make` or `build-essential`
+GNUPlot                 |   `gnuplot5`
+Graphviz                |   `graphviz`
+M4 macro language       |   `m4`
 
 
 The thesis document also requires the following TeX packages that were not part
 of Debian's default TeX Live package:
 
-TeX package             Provided by Debian package
-------------            ---------------------------
-`biblatex`              `texlive-bibtex-extra`
-`opensans`              `texlive-fonts-extra`
-`siunitx`               `texlive-science`
+TeX package             |   Provided by Debian package
+------------            |   ---------------------------
+`biblatex`              |   `texlive-bibtex-extra`
+`opensans`              |   `texlive-fonts-extra`
+`siunitx`               |   `texlive-science`
 
 
 To recreate the build environment exactly, start with Debian Jessie and
