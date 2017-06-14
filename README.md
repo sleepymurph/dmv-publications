@@ -37,17 +37,43 @@ Compiling the Documents
 There is a Makefile in the `doc-src/` directory that should generate everything
 with a simple `make`.
 
-The documents are built with LaTeX for overall typesetting, GNUPlot for data
-plots, and Graphviz for diagrams. Development took place on a Debian 8 (Jessie)
-system with vanilla versions of the TeX Live, GNUPlot, and Graphviz packages
-installed. So it should build easily on any Unix system with reasonably
-up-to-date versions of those programs.
+The documents are built with LaTeX for overall typesetting, GNUPlot (version 5)
+for data plots, Graphviz for diagrams, and the M4 macro language for some
+preprocessing. Development took place on a Debian 8 (Jessie) system with vanilla
+versions of the those programs installed. So it should build easily on any
+reasonably up-to-date Unix system with those programs.
 
-The only non-standard LaTeX package used is the Open Sans font, which is used by
-the thesis. Open Sans is part of TeX Live, in the [`opensans` CTAN package](
-https://www.ctan.org/pkg/opensans?lang=en), which is provided on Debian by the
-[`texlive-fonts-extra` APT package](
-https://packages.debian.org/search?keywords=texlive-fonts-extra).
+Tool                    Provided by Debian package
+-----                   ---------------------------
+LaTeX                   `texlive`
+Make                    `make` or `build-essential`
+GNUPlot                 `gnuplot5`
+Graphviz                `graphviz`
+M4 macro language       `m4`
+
+
+The thesis document also requires the following TeX packages that were not part
+of Debian's default TeX Live package:
+
+TeX package             Provided by Debian package
+------------            ---------------------------
+`biblatex`              `texlive-bibtex-extra`
+`opensans`              `texlive-fonts-extra`
+`siunitx`               `texlive-science`
+
+
+To recreate the build environment exactly, start with Debian Jessie and
+`apt-get` the following packages:
+
+    apt-get install \
+        build-essential \
+        gnuplot5 \
+        graphviz \
+        m4 \
+        texlive \
+        texlive-bibtex-extra \
+        texlive-fonts-extra \
+        texlive-science
 
 
 Data Files

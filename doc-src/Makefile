@@ -59,6 +59,9 @@ vc_version.tex: ../.git/logs/HEAD Makefile
 		\\gdef\\GITAuthorName{%an}"\
 		>> vc_version.tex
 	echo "	\\gdef\\GITTags{$$(git tag --points-at HEAD | sed 's/_/\\_/g')}" >> vc_version.tex
+	echo "	\\gdef\\engineversion{$$(pdflatex --version | head -n1)}" >> vc_version.tex
+	echo "	\\gdef\\graphvizversion{$$(dot -V 2>&1)}" >> vc_version.tex
+	echo "	\\gdef\\gnuplotversion{$$(gnuplot --version)}" >> vc_version.tex
 
 
 TALL_GRAPH_SIZE=5in,6in
