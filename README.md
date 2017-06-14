@@ -14,7 +14,7 @@ master's thesis and other DMV publications. It also includes experiment results
 data.
 
 The master's thesis is available as a finished PDF in the University of Tromsø's
-open research archive (TODO: LINK), so you don't have to clone and compile this
+open research archive (TODO: LINK), so you do not have to clone and compile this
 source.
 
 Generated documents:
@@ -31,11 +31,11 @@ Other files reside in subdirectories:
 - `doc-src/` -- LaTeX, Graphviz, GNUPlot, and other document source materials
 
 
-Compiling the Documents
+Building the Documents
 --------------------------------------------------
 
 There is a Makefile in the `doc-src/` directory that should generate everything
-with a simple `make`.
+with a simple `make`, assuming all dependencies are installed.
 
 The documents are built with LaTeX for overall typesetting, GNUPlot (version 5)
 for data plots, Graphviz for diagrams, and the M4 macro language for some
@@ -74,6 +74,35 @@ To recreate the build environment exactly, start with Debian Jessie and
         texlive-bibtex-extra \
         texlive-fonts-extra \
         texlive-science
+
+
+### Docker image of build environment
+
+There is also a docker image that recreates the build environment, in the
+`docker-compile-env/` subdirectory ([Dockerfile](
+docker-compile-env/Dockerfile)).
+
+Build the image in the normal way:
+
+    docker build -t dmv-publications-compile docker-compile-env
+
+Then run a shell inside the container, with this directory mapped into it as a
+volume:
+
+    docker run -ti --rm \
+        -v $(readlink -f .):/home/compile/dmv-publications/ \
+        dmv-publications-compile
+
+Then, inside the Docker container, build the documents:
+
+    cd dmv-publications/doc-src
+    make
+
+After the build, `thesis.pdf` and the other documents should be available in
+this directory, both inside and outside of the Docker container.
+
+Finally, log out of the container with `exit`. Then because the container was
+run with the `--rm` option, it will be shut down and removed automatically.
 
 
 Data Files
