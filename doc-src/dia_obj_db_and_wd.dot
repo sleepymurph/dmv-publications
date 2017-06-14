@@ -1,5 +1,7 @@
 digraph {
 
+bgcolor=transparent
+
     subgraph cluster_node0 {
         label="Repository 0"
         ODB(local_obj_db0,"Object Store")

@@ -24,6 +24,8 @@ examining {05c84174d8dcf115f600e0ce0e2244d60f80d7d2} (blob) - BLOB
 
 digraph prototype {
 
+bgcolor=transparent
+
 
 // Refs
 {

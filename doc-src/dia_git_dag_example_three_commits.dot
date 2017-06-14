@@ -23,6 +23,7 @@ examining {8ab686eafeb1f44702738c8b0f24f2567c36da6d} (blob, 14) - BLOB
 
 digraph git {
 
+bgcolor=transparent
 
 // Refs
 {

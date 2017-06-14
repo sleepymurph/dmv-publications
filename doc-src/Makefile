@@ -160,5 +160,11 @@ DOT_INCLUDE=dia_common.m4.dot
 %.pdf: %.preprocessed.dot
 	dot -Tpdf -o $*.pdf $*.preprocessed.dot
 
+%.eps: %.preprocessed.dot
+	dot -Teps -o $*.eps $*.preprocessed.dot
+
 %.png: %.preprocessed.dot
 	dot -Tpng -o $*.png $*.preprocessed.dot
+
+%.svg: %.preprocessed.dot
+	dot -Tsvg -o $*.svg $*.preprocessed.dot
