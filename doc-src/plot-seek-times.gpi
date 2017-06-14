@@ -1,6 +1,6 @@
 # Use only one set of results, to get a less cluttered graph
 high_times_table(p) = "< \
-    awk -e '$7==\"ok\" && $8 >= 0.001 {print $0}' \
+    awk '$7==\"ok\" && $8 >= 0.001 {print $0}' \
     ../data/exp--filesystem-limits--micro/".p."--2017-03-22-murphytest04.txt"
 
 inodes=25688
