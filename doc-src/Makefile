@@ -133,6 +133,14 @@ design-document-2-short.pdf: \
     *.sh
 	gnuplot -e 'set terminal pdf' $*.gpi > $*.pdf
 
+%.svg: %.gpi \
+    *-common.gpi \
+    ../data/** \
+    ../data/meantable.py \
+    *.sh
+	gnuplot -e 'set terminal svg' $*.gpi > $*.svg
+
+
 
 # Diagrams with Graphviz
 #
