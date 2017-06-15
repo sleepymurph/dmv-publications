@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:presentation="urn:oasis:names:tc:opendocument:xmlns:presentation:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:smil="urn:oasis:names:tc:opendocument:xmlns:smil-compatible:1.0" xmlns:anim="urn:oasis:names:tc:opendocument:xmlns:animation:1.0" xmlns:rpt="http://openoffice.org/2005/report" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:grddl="http://www.w3.org/2003/g/data-view#" xmlns:officeooo="http://openoffice.org/2009/office" xmlns:tableooo="http://openoffice.org/2009/table" xmlns:drawooo="http://openoffice.org/2010/draw" xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0" xmlns:css3t="http://www.w3.org/TR/css3-text/" office:version="1.2" office:mimetype="application/vnd.oasis.opendocument.presentation">
- <office:meta><dc:title>Distributed Media Versioning (DMV)</dc:title><meta:initial-creator>Mike Murphy</meta:initial-creator><dc:creator>Mike Murphy</dc:creator><meta:editing-cycles>29</meta:editing-cycles><meta:creation-date>2017-06-14T19:09:15.077757345</meta:creation-date><dc:date>2017-06-15T17:31:17.630747683</dc:date><meta:editing-duration>PT3H59M25S</meta:editing-duration><meta:generator>LibreOffice/4.3.3.2$Linux_X86_64 LibreOffice_project/430m0$Build-2</meta:generator><dc:subject>30min Presentation for Thesis Defense</dc:subject><meta:document-statistic meta:object-count="174"/><meta:user-defined meta:name="AppVersion">14.0000</meta:user-defined><meta:user-defined meta:name="Company">Agendum AS</meta:user-defined><meta:user-defined meta:name="HiddenSlides" meta:value-type="float">0</meta:user-defined><meta:user-defined meta:name="HyperlinksChanged" meta:value-type="boolean">false</meta:user-defined><meta:user-defined meta:name="LinksUpToDate" meta:value-type="boolean">false</meta:user-defined><meta:user-defined meta:name="MMClips" meta:value-type="float">0</meta:user-defined><meta:user-defined meta:name="Notes" meta:value-type="float">0</meta:user-defined><meta:user-defined meta:name="PresentationFormat" meta:value-type="string">On-screen Show (4:3)</meta:user-defined><meta:user-defined meta:name="ScaleCrop" meta:value-type="boolean">false</meta:user-defined><meta:user-defined meta:name="ShareDoc" meta:value-type="boolean">false</meta:user-defined><meta:user-defined meta:name="Slides" meta:value-type="float">2</meta:user-defined></office:meta>
+ <office:meta><dc:title>Distributed Media Versioning (DMV)</dc:title><meta:initial-creator>Mike Murphy</meta:initial-creator><dc:creator>Mike Murphy</dc:creator><meta:editing-cycles>33</meta:editing-cycles><meta:creation-date>2017-06-14T19:09:15.077757345</meta:creation-date><dc:date>2017-06-15T17:40:37.015685644</dc:date><meta:editing-duration>PT4H8M42S</meta:editing-duration><meta:generator>LibreOffice/4.3.3.2$Linux_X86_64 LibreOffice_project/430m0$Build-2</meta:generator><dc:subject>30min Presentation for Thesis Defense</dc:subject><meta:document-statistic meta:object-count="174"/><meta:user-defined meta:name="AppVersion">14.0000</meta:user-defined><meta:user-defined meta:name="Company">Agendum AS</meta:user-defined><meta:user-defined meta:name="HiddenSlides" meta:value-type="float">0</meta:user-defined><meta:user-defined meta:name="HyperlinksChanged" meta:value-type="boolean">false</meta:user-defined><meta:user-defined meta:name="LinksUpToDate" meta:value-type="boolean">false</meta:user-defined><meta:user-defined meta:name="MMClips" meta:value-type="float">0</meta:user-defined><meta:user-defined meta:name="Notes" meta:value-type="float">0</meta:user-defined><meta:user-defined meta:name="PresentationFormat" meta:value-type="string">On-screen Show (4:3)</meta:user-defined><meta:user-defined meta:name="ScaleCrop" meta:value-type="boolean">false</meta:user-defined><meta:user-defined meta:name="ShareDoc" meta:value-type="boolean">false</meta:user-defined><meta:user-defined meta:name="Slides" meta:value-type="float">2</meta:user-defined></office:meta>
  <office:settings>
   <config:config-item-set config:name="ooo:view-settings">
    <config:config-item config:name="VisibleAreaTop" config:type="int">-384</config:config-item>
@@ -29,7 +29,7 @@
      <config:config-item config:name="NoColors" config:type="boolean">true</config:config-item>
      <config:config-item config:name="RulerIsVisible" config:type="boolean">false</config:config-item>
      <config:config-item config:name="PageKind" config:type="short">0</config:config-item>
-     <config:config-item config:name="SelectedPage" config:type="short">20</config:config-item>
+     <config:config-item config:name="SelectedPage" config:type="short">0</config:config-item>
      <config:config-item config:name="IsLayerMode" config:type="boolean">false</config:config-item>
      <config:config-item config:name="IsDoubleClickTextEdit" config:type="boolean">true</config:config-item>
      <config:config-item config:name="IsClickChangeRotation" config:type="boolean">true</config:config-item>
@@ -1929,17 +1929,6 @@
        <text:list-item>
         <text:p text:style-name="P17"><text:span text:style-name="T13">Everything: backup on multiple drives</text:span></text:p>
        </text:list-item>
-       <text:list-item>
-        <text:p text:style-name="P17"><text:span text:style-name="T13">General:</text:span></text:p>
-        <text:list>
-         <text:list-item>
-          <text:p><text:span text:style-name="T13">Data collection spread over multiple devices</text:span></text:p>
-         </text:list-item>
-         <text:list-item>
-          <text:p><text:span text:style-name="T13">Want to keep track and sync</text:span></text:p>
-         </text:list-item>
-        </text:list>
-       </text:list-item>
       </text:list>
      </draw:text-box>
     </draw:frame>
@@ -2505,16 +2494,16 @@
      <draw:text-box>
       <text:list text:style-name="L3">
        <text:list-item>
-        <text:p>Distributed system</text:p>
+        <text:p>Partition-tolerant distributed system: off-line by default</text:p>
        </text:list-item>
        <text:list-item>
-        <text:p>Partition-tolerant, Available: always allows local write</text:p>
+        <text:p>Highly available: always allows local write</text:p>
        </text:list-item>
        <text:list-item>
         <text:p>Tracks separate write histories (version control style)</text:p>
        </text:list-item>
        <text:list-item>
-        <text:p>Wide range of file sizes: text – video, kilobytes – gigabytes</text:p>
+        <text:p>Wide range of file sizes: text (KBs) to video (GBs)</text:p>
        </text:list-item>
        <text:list-item>
         <text:p>Diverse devices: server, PC, laptop, mobile</text:p>
@@ -4965,32 +4954,33 @@
       <text:list text:style-name="L3">
        <text:list-item>
         <text:p>Private data storage on own devices</text:p>
+        <text:list>
+         <text:list-item>
+          <text:p>Individuals, organizations</text:p>
+         </text:list-item>
+        </text:list>
        </text:list-item>
        <text:list-item>
         <text:p>Large-file version control for media authors</text:p>
         <text:list>
          <text:list-item>
-          <text:p>Graphic designers</text:p>
-         </text:list-item>
-         <text:list-item>
-          <text:p>Audio engineers</text:p>
-         </text:list-item>
-         <text:list-item>
-          <text:p>Video editors</text:p>
+          <text:p>Graphic designers / audio engineers / video editors</text:p>
          </text:list-item>
         </text:list>
        </text:list-item>
        <text:list-item>
         <text:p>Long-term archiving and backup</text:p>
+        <text:list>
+         <text:list-item>
+          <text:p>Immutability and hash will detect tampering or bit rot</text:p>
+         </text:list-item>
+        </text:list>
        </text:list-item>
        <text:list-item>
         <text:p>Low-connectivity networks</text:p>
         <text:list>
          <text:list-item>
-          <text:p>Remote sensor networks</text:p>
-         </text:list-item>
-         <text:list-item>
-          <text:p>Interplanetary communication</text:p>
+          <text:p>Remote sensor networks, interplanetary communication</text:p>
          </text:list-item>
         </text:list>
        </text:list-item>
@@ -5411,12 +5401,6 @@
          </text:list-item>
          <text:list-item>
           <text:p>Commit with VCS, record command run time (wall-clock)</text:p>
-         </text:list-item>
-         <text:list-item>
-          <text:p>Overwrite portion of input, commit again</text:p>
-         </text:list-item>
-         <text:list-item>
-          <text:p>Record total repo size (including original data, standard <text:span text:style-name="T15">du</text:span> cmd)</text:p>
          </text:list-item>
         </text:list>
        </text:list-item>
@@ -6726,6 +6710,7 @@
     </presentation:notes>
    </draw:page>
    <draw:page draw:name="page23" draw:style-name="dp5" draw:master-page-name="Tittel_20_og_20_innhold" presentation:presentation-page-layout-name="AL2T1">
+    <office:forms form:automatic-focus="false" form:apply-design-mode="false"/>
     <draw:frame presentation:style-name="pr13" draw:layer="layout" svg:width="21.888cm" svg:height="3.379cm" svg:x="1.862cm" svg:y="0.834cm" presentation:class="title" presentation:user-transformed="true">
      <draw:text-box>
       <text:p>Results: increasing file size — repo size</text:p>
@@ -9089,6 +9074,7 @@
     </presentation:notes>
    </draw:page>
    <draw:page draw:name="page27" draw:style-name="dp5" draw:master-page-name="Tittel_20_og_20_innhold" presentation:presentation-page-layout-name="AL2T1">
+    <office:forms form:automatic-focus="false" form:apply-design-mode="false"/>
     <draw:frame presentation:style-name="pr13" draw:layer="layout" svg:width="21.888cm" svg:height="3.379cm" svg:x="1.862cm" svg:y="0.834cm" presentation:class="title" presentation:user-transformed="true">
      <draw:text-box>
       <text:p>Results: increasing number of files — repo size</text:p>
