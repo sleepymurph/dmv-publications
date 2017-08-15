@@ -9,7 +9,7 @@ Abstract --- Distributed Media Versioning
 
 A typical computer user has multiple devices holding an increasing amount of
 data. Most users will have at least a computer and a mobile phone. Many will
-also have a work computer or tablet or other device. These devices vary in
+also have a work computer, tablet, or other device. These devices vary in
 processing power and storage capacity. They may also be in different locations,
 on different networks, or turned off at any time. A user's data will be of
 varying file sizes and media types, from kilobyte text documents to
@@ -30,19 +30,20 @@ on the user's own devices, but traditional DFSs are designed for the data center
 rather than the wide variation of consumer devices.
 
 This paper explores distributed version control systems as an alternative
-approach to managing data across a user's devices. DVCSs keep writable copies of
+approach to managing data across various devices. DVCSs keep writable copies of
 a data set an multiple locations, track update history, and allow merging at a
 later date. However, version control systems are designed for the small text
-files of source code and are less well-suited to varying media types. We perform
+files of source code and are not suited to larger binary files. We perform
 experiments to explore the scalability limits of existing version control
-systems. We find that maximum file size is limited by available RAM and that
+systems. We find that maximum file size is limited by available RAM, and that
 commit times increase dramatically as the number of file sizes increases into
 the millions. We describe the architecture, design, and prototype of a new tool
-that tries to avoid these limitations. The new tool will be similar to version
-control but more flexible. It will allow the user to shard and replicate data
-across many devices with fine-grained control, copying or moving subsets of the
-data to the devices where they are needed. Data may be updated on any device,
-and the tool will keep a history, track diverging versions, and allow them to be
-merged later. We find that our early prototype repeats certain design mistakes
-that lead to performance degradation when managing many files, and we propose
-changes for further work.
+that tries to avoid these limitations. The new tool will resemble version
+control but it will be more flexible. It will allow the user to shard and
+replicate a data set across many devices with fine-grained control. It will keep
+a unified view of the data set as subsets of the data are copied or moved
+between devices by user request. Data may be updated on any device, and the tool
+will keep a history. It will track diverging versions and allow them to be
+merged later. We compare our early prototype to existing systems, and we find
+that it repeats certain design mistakes that lead to performance degradation
+when managing many files. We propose corrective changes for further work.
