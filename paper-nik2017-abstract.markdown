@@ -1,10 +1,11 @@
 ---
 fontsize: 10pt
 papersize: a4paper
-linestretch: 1.0
+linestretch: 1.1
+geometry: margin=4cm
 ...
 
-Distributed Media Versioning: Cross-Device Data Sets
+DMV: Distributed Media Versioning across devices
 =====================================================
 
 Abstract
@@ -40,20 +41,21 @@ systems are designed for the small text files of source code and are not suited
 to larger binary files.
 
 We describe the architecture, design, and implementation of a new system we call
-Distributed Media Versioning (DMV) that will resemble version control but be
-more flexible. DMV will allow the user to shard and replicate a data set across
-many devices with fine-grained control. It will keep a unified view of the data
-set as subsets of the data are copied or moved between devices by user request.
-It will allow data to be updated on any device, and it will track history so
-that diverging versions can be merged later.
+Distributed Media Versioning (DMV) that resembles version control but is more
+flexible. DMV will allow the user to shard and replicate data across many
+devices with fine-grained control. It will keep a unified view of the data set
+as subsets of the data are copied or moved between devices by user request. It
+will allow data to be updated on any device, and it will track history so that
+diverging versions can be merged later.
 
 We perform experiments to explore the scalability limits of selected version
 control systems. We find that the maximum file size is limited by available RAM,
 and that commit times increase sharply as the number of files increases into the
-millions. DMV avoids the file-size limitations by using a rolling hash algorithm
-to break larger files into smaller chunks. Unfortunately our early DMV prototype
-suffers the same problems with numerous files because it uses the underlying
-filesystem in a similar way. We conclude that the key to processing large files
-is to break them into many smaller chunks, and the key to storing many small
-files is to aggregate them into larger packs. We propose corrective changes for
-future work on DMV.
+millions. We also perform the same experiments against a DMV prototype for
+comparison. DMV avoids the file-size limitations by using a rolling hash
+algorithm to break larger files into smaller chunks. Unfortunately, our early
+DMV prototype suffers the same problems with numerous files because it uses the
+underlying filesystem in a similar way. We conclude that the key to processing
+large files is to break them into many smaller chunks, and the key to storing
+many small files is to aggregate them into larger packs. We propose corrective
+changes for future work on DMV.
