@@ -24,11 +24,13 @@ particular file, they must either remember where it is or perform a frustrating,
 manual, multi-device search. Also, copies of data on different devices will
 diverge if updates are made separately and not reconciled.
 
-Cloud computing avoids this trouble by centralizing data in a third-party
-service. Centralized data will not diverge and is easy to search. However,
-availability is determined by the bandwidth and latency of the connection to the
-service. Handing the data to a third-party also raises concerns about privacy,
-service longevity, and cost.
+Cloud computing eases these problems by centralizing storage, searching, and
+update reconciliation. However, the user's access to their data depends on the
+reliability of their network connection and the reliability and longevity of the
+cloud service. Handing data over to a third party also raises concerns about
+privacy. The cloud service may also charge a recurring subscription fee. The
+user might prefer to use the devices they already own, provided there is an
+easier way to manage the data.
 
 This paper explores distributed version control systems as an alternative
 approach to managing data across a spectrum of devices. A DVCS keeps writable
