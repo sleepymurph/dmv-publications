@@ -1,0 +1,91 @@
+/* ------------------------ 
+
+prototype log --hash-only 
+af5b5fa8128913b22e2cf59675b9b49e385188c5
+178bf7644623fd3c50c87e9b27c51c9a87e4e2ad
+a7162b2c1131b6be97fcf91f95e8dd792a6d7f41
+
+examining {af5b5fa8128913b22e2cf59675b9b49e385188c5} (commit) - msg: Initial commit, links: 9cfa574ed7dedfceadcc7c077b267b6415dbf6e7
+examining {9cfa574ed7dedfceadcc7c077b267b6415dbf6e7} (tree) - TREE
+examining {69a63de7d3b0f618c76b410b773eb9863bd9a3b9} (chunked blob index) - CHUNKED
+examining {b83f849b5a781f859f58c03d8605db6362071f39} (blob) - BLOB
+examining {59f918cde140fd96dac3ff9b5744493e0f05ec75} (blob) - BLOB
+examining {16e1eef1458fbc96b5e0b25031319b7a2a39c6b0} (blob) - BLOB
+examining {178bf7644623fd3c50c87e9b27c51c9a87e4e2ad} (commit) - msg: Overwrite part of data.bin, links: 8a2e031a571a6f282a90b8d2e39877324ac02b78,af5b5fa8128913b22e2cf59675b9b49e385188c5
+examining {8a2e031a571a6f282a90b8d2e39877324ac02b78} (tree) - TREE
+examining {cab3c1f06afd8324758b3e60a42376a31ad672de} (chunked blob index) - CHUNKED
+examining {d9451f7013379d4790623a64d24d97054625eb2b} (blob) - BLOB
+examining {a7162b2c1131b6be97fcf91f95e8dd792a6d7f41} (commit) - msg: Change greeting, links: 5da23fd0f2b0864ed50db86b2e260cca2a95df24,178bf7644623fd3c50c87e9b27c51c9a87e4e2ad
+examining {5da23fd0f2b0864ed50db86b2e260cca2a95df24} (tree) - TREE
+examining {05c84174d8dcf115f600e0ce0e2244d60f80d7d2} (blob) - BLOB
+
+
+ * ------------------------ */ 
+
+digraph prototype {
+
+bgcolor=transparent
+
+
+// Refs
+{
+   "master"[KEEP];
+}
+
+
+// Commits
+{
+  rank=same
+   "af5b5fa8128913b22e2cf59675b9b49e385188c5"[label="Commit af5b5fa\nInitial commit",KEEP]
+   "178bf7644623fd3c50c87e9b27c51c9a87e4e2ad"[label="Commit 178bf76\nOverwrite part of data.bin",KEEP]
+   "a7162b2c1131b6be97fcf91f95e8dd792a6d7f41"[label="Commit a7162b2\nChange greeting",KEEP]
+}
+
+
+// Trees
+{
+
+   "9cfa574ed7dedfceadcc7c077b267b6415dbf6e7"[label="Tree\n9cfa574",KEEP]
+   "8a2e031a571a6f282a90b8d2e39877324ac02b78"[label="Tree\n8a2e031",KEEP]
+   "5da23fd0f2b0864ed50db86b2e260cca2a95df24"[label="Tree\n5da23fd",KEEP]
+}
+
+
+// Chunked Blobs
+{
+
+   "cab3c1f06afd8324758b3e60a42376a31ad672de"[label="Chunked Blob\ncab3c1f",OMIT]
+   "69a63de7d3b0f618c76b410b773eb9863bd9a3b9"[label="Chunked Blob\n69a63de",OMIT]
+}
+
+
+// Blobs
+{
+
+   "d9451f7013379d4790623a64d24d97054625eb2b"[label="Blob\nd9451f7",OMIT]
+   "05c84174d8dcf115f600e0ce0e2244d60f80d7d2"[label="Blob\n05c8417",KEEP]
+   "16e1eef1458fbc96b5e0b25031319b7a2a39c6b0"[label="Blob\n16e1eef",KEEP]
+   "b83f849b5a781f859f58c03d8605db6362071f39"[label="Blob\nb83f849",OMIT]
+   "59f918cde140fd96dac3ff9b5744493e0f05ec75"[label="Blob\n59f918c",OMIT]
+}
+
+
+// Links
+"af5b5fa8128913b22e2cf59675b9b49e385188c5" -> "9cfa574ed7dedfceadcc7c077b267b6415dbf6e7"
+"9cfa574ed7dedfceadcc7c077b267b6415dbf6e7" -> "69a63de7d3b0f618c76b410b773eb9863bd9a3b9" [label="data.bin"]
+"69a63de7d3b0f618c76b410b773eb9863bd9a3b9" -> "b83f849b5a781f859f58c03d8605db6362071f39" [label="0000000000"]
+"69a63de7d3b0f618c76b410b773eb9863bd9a3b9" -> "59f918cde140fd96dac3ff9b5744493e0f05ec75" [label="000001088a"]
+"9cfa574ed7dedfceadcc7c077b267b6415dbf6e7" -> "16e1eef1458fbc96b5e0b25031319b7a2a39c6b0" [label="hello.txt"]
+"178bf7644623fd3c50c87e9b27c51c9a87e4e2ad" -> "8a2e031a571a6f282a90b8d2e39877324ac02b78"
+"8a2e031a571a6f282a90b8d2e39877324ac02b78" -> "cab3c1f06afd8324758b3e60a42376a31ad672de" [label="data.bin"]
+"cab3c1f06afd8324758b3e60a42376a31ad672de" -> "d9451f7013379d4790623a64d24d97054625eb2b" [label="0000000000"]
+"cab3c1f06afd8324758b3e60a42376a31ad672de" -> "59f918cde140fd96dac3ff9b5744493e0f05ec75" [label="000001088a"]
+"8a2e031a571a6f282a90b8d2e39877324ac02b78" -> "16e1eef1458fbc96b5e0b25031319b7a2a39c6b0" [label="hello.txt"]
+"178bf7644623fd3c50c87e9b27c51c9a87e4e2ad" -> "af5b5fa8128913b22e2cf59675b9b49e385188c5"
+"master" -> "a7162b2c1131b6be97fcf91f95e8dd792a6d7f41"
+"a7162b2c1131b6be97fcf91f95e8dd792a6d7f41" -> "5da23fd0f2b0864ed50db86b2e260cca2a95df24"
+"5da23fd0f2b0864ed50db86b2e260cca2a95df24" -> "cab3c1f06afd8324758b3e60a42376a31ad672de" [label="data.bin"]
+"5da23fd0f2b0864ed50db86b2e260cca2a95df24" -> "05c84174d8dcf115f600e0ce0e2244d60f80d7d2" [label="hello.txt"]
+"a7162b2c1131b6be97fcf91f95e8dd792a6d7f41" -> "178bf7644623fd3c50c87e9b27c51c9a87e4e2ad"
+
+}

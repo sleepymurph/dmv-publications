@@ -9,3 +9,6 @@
 # BibLaTeX output
 *-blx.bib
 *.run.xml
+
+# Graphics
+*.preprocessed.dot

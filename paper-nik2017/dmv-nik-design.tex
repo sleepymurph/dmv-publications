@@ -6,3 +6,32 @@
     \caption{A simple DMV DAG with three commits}
     \label{dia_dmv_dag_example_three_commits}
 \end{figure}
+
+
+
+\newcommand{\slicediagramwidth}{0.45\textwidth}
+
+\begin{figure}[]
+
+    \centering
+
+    \begin{subfigure}[]{\slicediagramwidth}
+        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_partial_history}
+        \caption{Partial history of full data set}
+        \label{dia_dmv_dag_slice_partial_history}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[]{\slicediagramwidth}
+        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_history_of_subset}
+        \caption{Full history of part of data set}
+        \label{dia_dmv_dag_slice_history_of_subset}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[]{\slicediagramwidth}
+        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_history_of_metadata}
+        \caption{Full history of metadata}
+        \label{dia_dmv_dag_slice_history_of_metadata}
+    \end{subfigure}
+
+    \caption{A DMV DAG, sliced in different dimensions}
+\end{figure}
