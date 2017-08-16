@@ -1,55 +1,22 @@
 FROM debian:jessie
 
-# Get lists of apt packages
-RUN apt-get update
-
-# Install essentials for building
-RUN apt-get install -y \
+RUN apt-get update \
+    && apt-get install -y \
             build-essential \
-    && echo "ok"
-
-# Create a user
-RUN useradd --create-home --shell /bin/bash compile
-
-# Give the user sudo access
-RUN \
-    apt-get install -y sudo && \
-    echo "compile ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/compile-user && \
-    chmod 0440 /etc/sudoers.d/compile-user
-
-# Switch to user
-
-USER compile
-WORKDIR /home/compile
-
-# Install TeX
-# Running as its own step because it's such a huge download.
-# This is a good point to cache before fiddling with the other packages.
-RUN sudo apt-get install -y texlive
-
-# Install additional TeX packages needed for thesis
-RUN sudo apt-get install -y \
+            texlive \
             texlive-bibtex-extra \
             texlive-fonts-extra \
             texlive-science \
-    && echo "ok"
-
-# Install additional tools needed for thesis
-RUN sudo apt-get install -y \
             gnuplot5 \
             graphviz \
             m4 \
-    && echo "ok"
-
-# Install handy user tools (what Mike considers essential)
-RUN sudo apt-get install -y \
             git \
-            psmisc \
-            tmux \
-            vim \
-    && echo "ok"
+    && rm -r /var/lib/apt/lists/* /var/cache/apt/*
 
+ENV UID 1000
+RUN useradd --uid $UID --create-home --shell /bin/bash compile
+USER compile
+RUN mkdir /home/compile/dmv-publications
+WORKDIR /home/compile/dmv-publications/doc-src
 
-# Default command: a login shell
-# Should be a login shell to source ~/.profile
-CMD ["/bin/bash", "-l"]
+CMD ["make"]
