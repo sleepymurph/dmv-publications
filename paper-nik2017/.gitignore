@@ -10,5 +10,8 @@
 *-blx.bib
 *.run.xml
 
+# Todos
+*.tdo
+
 # Graphics
 *.preprocessed.dot
