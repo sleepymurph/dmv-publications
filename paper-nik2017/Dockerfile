@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:jessie
 
 RUN apt-get update \
     && apt-get install -y \
@@ -10,12 +10,13 @@ RUN apt-get update \
             gnuplot5 \
             graphviz \
             m4 \
+            git \
     && rm -r /var/lib/apt/lists/* /var/cache/apt/*
 
 ENV UID 1000
 RUN useradd --uid $UID --create-home --shell /bin/bash compile
 USER compile
-RUN mkdir /home/compile/src
-WORKDIR /home/compile/src
+RUN mkdir /home/compile/dmv-publications
+WORKDIR /home/compile/dmv-publications/paper-nik2017/
 
 CMD ["make"]

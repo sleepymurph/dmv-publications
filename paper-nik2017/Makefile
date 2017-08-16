@@ -1,6 +1,6 @@
 # TODO: CHANGE TO NAME OF OTHER FILES
-default: dmv-nik.pdf
-# default: ../dmv-nik.pdf
+# default: dmv-nik.pdf
+default: ../dmv-nik.pdf
 
 dmv-nik.pdf: \
     dmv-nik*.tex

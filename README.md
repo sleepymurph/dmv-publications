@@ -7,7 +7,7 @@ might not fit on one disk. It hopes to be a cross between a version control
 system and a generalized distributed data store.
 
 Publications
-==================================================
+--------------------------------------------------
 
 This repository contains the LaTeX source and other source materials for the
 master's thesis and other DMV publications. It also includes experiment results
@@ -19,7 +19,8 @@ source.
 
 Generated documents:
 
-- `thesis.pdf` -- The DMV master's thesis itself
+- `dmv-nik.pdf` -- DMV paper for NIK 2017 (<http://nikt2017.no/>)
+- `thesis.pdf` -- The DMV master's thesis
 - `design-document.pdf` -- An old design document from the beginning of the
   project
 - `design-document-2-short.pdf` -- Another old design document, this one shorter
@@ -28,73 +29,42 @@ Generated documents:
 Other files reside in subdirectories:
 
 - `data/` -- Experiment results data
-- `thesis-src/` -- LaTeX, Graphviz, GNUPlot, and other thesis source materials
+- `paper-nik2017/` -- LaTeX source materials for NIK paper
+- `thesis-src/` -- LaTeX source materials for Master's Thesis and both design
+  documents
 
 
-Building the Master's Thesis
+Building Documents (Docker)
 --------------------------------------------------
 
-There is a Makefile in the `thesis-src/` directory that should generate
-everything with a simple `make`, assuming all dependencies are installed.
+Inside each separate document source directory (`paper-nik2017/`, `thesis-src/`)
+is a `Makefile` and a `Dockerfile`. Docker sets up a build environment inside a
+container and Make builds the document.
 
-The documents are built with LaTeX for overall typesetting, GNUPlot (version 5)
-for data plots, Graphviz for diagrams, and the M4 macro language for some
-preprocessing. Development took place on a Debian 8 (Jessie) system with vanilla
-versions of the those programs installed. So it should build easily on any
-reasonably up-to-date Unix system with those programs.
+To build, run the following commands from this directory at the top of the
+repository.
 
-Tool                    |   Provided by Debian package
------                   |   ---------------------------
-LaTeX                   |   `texlive`
-Make                    |   `make` or `build-essential`
-GNUPlot                 |   `gnuplot5`
-Graphviz                |   `graphviz`
-M4 macro language       |   `m4`
+To build the NIK paper:
 
-
-The thesis document also requires the following TeX packages that were not part
-of Debian's default TeX Live package:
-
-TeX package             |   Provided by Debian package
-------------            |   ---------------------------
-`biblatex`              |   `texlive-bibtex-extra`
-`opensans`              |   `texlive-fonts-extra`
-`siunitx`               |   `texlive-science`
-
-
-To recreate the build environment exactly, start with Debian Jessie and
-`apt-get` the following packages:
-
-    apt-get install \
-        build-essential \
-        gnuplot5 \
-        graphviz \
-        m4 \
-        texlive \
-        texlive-bibtex-extra \
-        texlive-fonts-extra \
-        texlive-science
-
-
-### Docker image of build environment
-
-There is also a docker image that recreates the build environment, in the
-`docker-compile-env/` subdirectory ([Dockerfile](
-docker-compile-env/Dockerfile)).
-
-Build and run the image, with this directory mapped into the container's
-`/home/compile/dmv-publications/` directory:
-
-    docker build -t dmv-thesis-compile thesis-src/ && \
+    docker build -t dmv-nik ./paper-nik2017/ && \
     docker run --rm \
-        -v $(readlink -f .):/home/compile/dmv-publications/ \
-        dmv-thesis-compile
+        -v $(readlink -f .):/home/compile/dmv-publications \
+        -e UID=$(id -u) \
+        dmv-nik
 
-After the build, `thesis.pdf` and the other documents should be available in
-this directory, both inside and outside of the Docker container.
+To build the Master's Thesis:
 
-Finally, log out of the container with `exit`. Then because the container was
-run with the `--rm` option, it will be shut down and removed automatically.
+    docker build -t dmv-thesis ./thesis-src/ && \
+    docker run --rm \
+        -v $(readlink -f .):/home/compile/dmv-publications \
+        -e UID=$(id -u) \
+        dmv-thesis
+
+Note: A fresh installation of TeX Live is a very big install. It will take a
+while to initially build the container, and the container will take up over 3 GB
+of space in `/var`. But once the container is created, running the LaTeX build
+inside of it is quick and painless. Also, the two Dockerfiles are very similar
+so they should be able to share layers and not take up 2x 3GB of space.
 
 
 Data Files
