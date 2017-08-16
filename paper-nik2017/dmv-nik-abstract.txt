@@ -1,16 +1,3 @@
----
-fontsize: 10pt
-papersize: a4paper
-linestretch: 1.1
-geometry: margin=4cm
-...
-
-DMV: Distributed Media Versioning across devices
-=====================================================
-
-Abstract
---------------------------------------------------
-
 A typical computer user has multiple devices holding an increasing amount of
 data. Most users will have at least a computer and a mobile phone. Many will
 also have a work computer, tablet, or other devices. These devices have varying
