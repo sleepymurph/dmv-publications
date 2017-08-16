@@ -17,6 +17,6 @@ ENV UID 1000
 RUN useradd --uid $UID --create-home --shell /bin/bash compile
 USER compile
 RUN mkdir /home/compile/dmv-publications
-WORKDIR /home/compile/dmv-publications/doc-src
+WORKDIR /home/compile/dmv-publications/thesis-src
 
 CMD ["make"]

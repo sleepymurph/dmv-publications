@@ -28,14 +28,14 @@ Generated documents:
 Other files reside in subdirectories:
 
 - `data/` -- Experiment results data
-- `doc-src/` -- LaTeX, Graphviz, GNUPlot, and other document source materials
+- `thesis-src/` -- LaTeX, Graphviz, GNUPlot, and other thesis source materials
 
 
-Building the Documents
+Building the Master's Thesis
 --------------------------------------------------
 
-There is a Makefile in the `doc-src/` directory that should generate everything
-with a simple `make`, assuming all dependencies are installed.
+There is a Makefile in the `thesis-src/` directory that should generate
+everything with a simple `make`, assuming all dependencies are installed.
 
 The documents are built with LaTeX for overall typesetting, GNUPlot (version 5)
 for data plots, Graphviz for diagrams, and the M4 macro language for some
@@ -82,21 +82,13 @@ There is also a docker image that recreates the build environment, in the
 `docker-compile-env/` subdirectory ([Dockerfile](
 docker-compile-env/Dockerfile)).
 
-Build the image in the normal way:
+Build and run the image, with this directory mapped into the container's
+`/home/compile/dmv-publications/` directory:
 
-    docker build -t dmv-publications-compile docker-compile-env
-
-Then run a shell inside the container, with this directory mapped into it as a
-volume:
-
-    docker run -ti --rm \
+    docker build -t dmv-thesis-compile thesis-src/ && \
+    docker run --rm \
         -v $(readlink -f .):/home/compile/dmv-publications/ \
-        dmv-publications-compile
-
-Then, inside the Docker container, build the documents:
-
-    cd dmv-publications/doc-src
-    make
+        dmv-thesis-compile
 
 After the build, `thesis.pdf` and the other documents should be available in
 this directory, both inside and outside of the Docker container.
