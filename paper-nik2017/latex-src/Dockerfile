@@ -12,7 +12,10 @@ RUN apt-get update \
             m4 \
     && rm -r /var/lib/apt/lists/* /var/cache/apt/*
 
-RUN mkdir /root/latex
-WORKDIR /root/latex
+ENV UID 1000
+RUN useradd --uid $UID --create-home --shell /bin/bash compile
+USER compile
+RUN mkdir /home/compile/src
+WORKDIR /home/compile/src
 
 CMD ["make"]
