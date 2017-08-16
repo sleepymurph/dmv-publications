@@ -1,0 +1,597 @@
+# Concepts
+# ==================================================
+
+# CAP Theorem
+
+@INPROCEEDINGS{cap_origin, 
+author={A. Fox and E. A. Brewer}, 
+booktitle={Proceedings of the Seventh Workshop on Hot Topics in Operating Systems}, 
+title={Harvest, yield, and scalable tolerant systems}, 
+year={1999}, 
+pages={174-178}, 
+keywords={Internet;fault tolerant computing;parallel programming;Internet applications;engineering mechanisms;fault isolation;graceful degradation;high availability;output behavior;research program;robustness requirements;scalable tolerant systems;state management;Application software;Availability;Costs;Degradation;Internet;Read only memory;Routing;Search engines;Transaction databases;Web server}, 
+doi={10.1109/HOTOS.1999.798396}, 
+month={},}
+
+@article{cap_proof,
+ author = {Gilbert, Seth and Lynch, Nancy},
+ title = {Brewer's Conjecture and the Feasibility of Consistent, Available, Partition-tolerant Web Services},
+ journal = {SIGACT News},
+ issue_date = {June 2002},
+ volume = {33},
+ number = {2},
+ month = jun,
+ year = {2002},
+ issn = {0163-5700},
+ pages = {51--59},
+ numpages = {9},
+ url = {http://doi.acm.org/10.1145/564585.564601},
+ doi = {10.1145/564585.564601},
+ acmid = {564601},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
+
+@ARTICLE{cap_years_later, 
+author={E. Brewer}, 
+journal={Computer}, 
+title={CAP twelve years later: How the \enquote{rules} have changed}, 
+year={2012}, 
+volume={45}, 
+number={2}, 
+pages={23-29}, 
+keywords={theorem proving;CAP theorem;Software Engineering Radio;Web extra;consistency-availability-partition tolerance theorem;networked shared-data system;partition handling;Cloud computing;Data processing;Distributed databases;Relational databases;ACID;BASE;CAP theorem;cloud computing}, 
+doi={10.1109/MC.2012.37}, 
+ISSN={0018-9162}, 
+month={02},
+}
+
+
+# NoSQL
+
+@book{nosqldistilled,
+  title={NoSQL distilled: a brief guide to the emerging world of polyglot persistence},
+  author={Sadalage, Pramod J and Fowler, Martin},
+  year={2012},
+  publisher={Pearson Education}
+}
+
+
+# Consensus
+
+@article{paxos_made_simple,
+  title={Paxos made simple},
+  author={Lamport, Leslie and others},
+  journal={ACM Sigact News},
+  volume={32},
+  number={4},
+  pages={18--25},
+  year={2001},
+  url={http://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/past/03F/notes/paxos-simple.pdf},
+  urldate={2017-05-01},
+}
+
+@article{paxos_made_moderately_complex,
+ author = {Van Renesse, Robbert and Altinbuken, Deniz},
+ title = {Paxos Made Moderately Complex},
+ journal = {ACM Comput. Surv.},
+ issue_date = {April 2015},
+ volume = {47},
+ number = {3},
+ month = feb,
+ year = {2015},
+ issn = {0360-0300},
+ pages = {42:1--42:36},
+ articleno = {42},
+ numpages = {36},
+ url = {http://doi.acm.org/10.1145/2673577},
+ doi = {10.1145/2673577},
+ acmid = {2673577},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Replicated state machines, consensus, voting},
+}
+
+@article{lamport_ordering,
+ author = {Lamport, Leslie},
+ title = {Time, Clocks, and the Ordering of Events in a Distributed System},
+ journal = {Commun. ACM},
+ issue_date = {July 1978},
+ volume = {21},
+ number = {7},
+ month = jul,
+ year = {1978},
+ issn = {0001-0782},
+ pages = {558--565},
+ numpages = {8},
+ url = {http://doi.acm.org/10.1145/359545.359563},
+ doi = {10.1145/359545.359563},
+ acmid = {359563},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {clock synchronization, computer networks, distributed systems, multiprocess systems},
+}
+
+
+# CRDTs
+
+@techreport{crdt_orig,
+  TITLE = {{Designing a commutative replicated data type}},
+  AUTHOR = {Shapiro, Marc and Pregui{\c c}a, Nuno},
+  URL = {https://hal.inria.fr/inria-00177693},
+  TYPE = {Research Report},
+  NUMBER = {RR-6320},
+  INSTITUTION = {{INRIA}},
+  YEAR = {2007},
+  KEYWORDS = {Data replication ; optimistic replication ; commutative operations},
+  PDF = {https://hal.inria.fr/inria-00177693/file/RR-6320.pdf},
+  HAL_ID = {inria-00177693},
+  HAL_VERSION = {v2},
+}
+
+
+# End-to-end argument
+
+@article{endtoendargument,
+ author = {Saltzer, J. H. and Reed, D. P. and Clark, D. D.},
+ title = {End-to-end Arguments in System Design},
+ journal = {ACM Trans. Comput. Syst.},
+ issue_date = {Nov. 1984},
+ volume = {2},
+ number = {4},
+ month = nov,
+ year = {1984},
+ issn = {0734-2071},
+ pages = {277--288},
+ numpages = {12},
+ url = {http://doi.acm.org/10.1145/357401.357402},
+ doi = {10.1145/357401.357402},
+ acmid = {357402},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {data communication, design principles, protocol design},
+} 
+
+# IO Schedulers
+
+@inproceedings{ioschedulers,
+  title={Workload dependent performance evaluation of the Linux 2.6 I/O schedulers},
+  author={Pratt, Stephen and Heger, Dominique A},
+  booktitle={2004 Linux Symposium},
+  year={2004},
+  url={https://www.kernel.org/doc/ols/2004/ols2004v2-pages-139-162.pdf},
+  urldate={2017-04-26},
+}
+
+@misc{cfq_default_linux_release_notes,
+    title = {Linux 2.6.18 Release Notes},
+    author = {Diego Calleja and others},
+    howpublished = {Kernel Newbies Wiki},
+    url = {https://kernelnewbies.org/Linux_2_6_18},
+    urldate = {2017-04-26},
+}
+
+@misc{as_removed_linux_release_notes,
+    title = {Linux 2.6.33 Release Notes},
+    author = {Diego Calleja and others},
+    howpublished = {Kernel Newbies Wiki},
+    url = {https://kernelnewbies.org/Linux_2_6_33},
+    urldate = {2017-04-26},
+}
+
+
+# /proc
+
+@misc{proc_man_page,
+    title = {Manual page for proc},
+    howpublished = {Linux man-pages project},
+    note = {\lstinline{man proc}},
+    url = {http://man7.org/linux/man-pages/man5/proc.5.html},
+    urldate = {2017-05-11},
+}
+
+
+# Rolling hash
+
+@ARTICLE{rabin_karp_fingerprinting, 
+author={R. M. Karp and M. O. Rabin}, 
+journal={IBM Journal of Research and Development}, 
+title={Efficient randomized pattern-matching algorithms}, 
+year={1987}, 
+volume={31}, 
+number={2}, 
+pages={249-260}, 
+doi={10.1147/rd.312.0249}, 
+ISSN={0018-8646}, 
+month={March},}
+
+@misc{rsyncrypto_algorithm,
+    title = "Rsyncrypto algorithm",
+    howpublished = "Rsyncrypto home page",
+    author = "Shachar Shemesh",
+    url = {https://rsyncrypto.lingnu.com/index.php/Algorithm},
+    urldate = {2017-04-17},
+}
+
+@article{xorshift_rng,
+  title={Xorshift RNGs},
+  author={Marsaglia, George and others},
+  journal={Journal of Statistical Software},
+  volume={8},
+  number={14},
+  pages={1--6},
+  year={2003}
+}
+
+
+# Rust
+
+@inproceedings{rust_acm_sigada,
+ author = {Matsakis, Nicholas D. and Klock,II, Felix S.},
+ title = {The Rust Language},
+ booktitle = {Proceedings of the 2014 ACM SIGAda Annual Conference on High Integrity Language Technology},
+ series = {HILT '14},
+ year = {2014},
+ isbn = {978-1-4503-3217-0},
+ location = {Portland, Oregon, USA},
+ pages = {103--104},
+ numpages = {2},
+ url = {http://doi.acm.org/10.1145/2663171.2663188},
+ doi = {10.1145/2663171.2663188},
+ acmid = {2663188},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {affine type systems, memory management, rust, systems programming},
+}
+
+
+# Version control in general
+
+@article{history_of_version_control,
+ author = {Ruparelia, Nayan B.},
+ title = {The History of Version Control},
+ journal = {SIGSOFT Softw. Eng. Notes},
+ issue_date = {January 2010},
+ volume = {35},
+ number = {1},
+ month = jan,
+ year = {2010},
+ issn = {0163-5948},
+ pages = {5--9},
+ numpages = {5},
+ url = {http://doi.acm.org/10.1145/1668862.1668876},
+ doi = {10.1145/1668862.1668876},
+ acmid = {1668876},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+
+# Binaries in Version Control
+
+@misc{dont_ever_commit_binaries_to_version_control,
+    title = {Don't ever commit binary files to Git! Or what to do if you do.},
+    author = {Robin Winslow},
+    howpublished = {The Blog of Robin},
+    date = {2013-06-11},
+    url = {https://robinwinslow.uk/2013/06/11/dont-ever-commit-binary-files-to-git/},
+    urldate = {2017-05-11},
+}
+
+@book{continuousdeliverybook,
+  title={Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation (Adobe Reader)},
+  author={Humble, Jez and Farley, David},
+  year={2010},
+  publisher={Pearson Education}
+}
+
+
+# Systems (alphebetical)
+# ==================================================
+
+# bup
+
+@misc{bup_homepage,
+    author = "Avery Pennarun and Rob Browning and others",
+    title = "Bup, it backs things up",
+    url = {https://bup.github.io/},
+    urldate = {2017-04-26},
+}
+
+@misc{bup_design,
+    author = "Avery Pennarun and Rob Browning and others",
+    title = "The Crazy Hacker's Crazy Guide to Bup Craziness",
+    howpublished = "\enquote{DESIGN} document in Bup source code",
+    url = {https://github.com/bup/bup/blob/master/DESIGN},
+    urldate = {2017-04-26},
+}
+
+
+# Boar
+
+@misc{boar_homepage,
+    author = "Mats Ekberg and others",
+    title = "Boar",
+    url = {http://www.boarvcs.org/},
+}
+
+
+# Camlistore
+
+@misc{camlistore_homepage,
+    author = "Brad Fitzpatrick and others",
+    title = "Camlistore is your personal storage system for life",
+    url = {https://camlistore.org/},
+}
+
+
+# CVS
+
+@book{cvs_book,
+  title={Version management with CVS},
+  author={Cederqvist, Per and Pesch, Roland and others},
+  year={2002},
+  publisher={Network Theory Ltd.},
+  url={https://ftp.gnu.org/non-gnu/cvs/source/stable/1.11.22/cederqvist-1.11.22.pdf},
+  urldate={2017-05-11},
+}
+
+
+# Dat
+
+@misc{dat_homepage,
+    author = "Max Ogden and Mathias Buus and Karissa McKelvey and others",
+    title = "{Dat Data}",
+    url = {http://dat-data.com/},
+}
+
+
+# Dynamo
+
+@inproceedings{dynamo,
+ author = {DeCandia, Giuseppe and Hastorun, Deniz and Jampani, Madan and Kakulapati, Gunavardhan and Lakshman, Avinash and Pilchin, Alex and Sivasubramanian, Swaminathan and Vosshall, Peter and Vogels, Werner},
+ title = {Dynamo: Amazon's Highly Available Key-value Store},
+ booktitle = {Proceedings of Twenty-first ACM SIGOPS Symposium on Operating Systems Principles},
+ series = {SOSP '07},
+ year = {2007},
+ isbn = {978-1-59593-591-5},
+ location = {Stevenson, Washington, USA},
+ pages = {205--220},
+ numpages = {16},
+ url = {http://doi.acm.org/10.1145/1294261.1294281},
+ doi = {10.1145/1294261.1294281},
+ acmid = {1294281},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {performance, reliability, scalability},
+}
+
+
+# Eyo
+
+@inproceedings{Strauss:2011:EDP:2002181.2002216,
+ author = {Strauss, Jacob and Paluska, Justin Mazzola and Lesniewski-Laas, Chris and Ford, Bryan and Morris, Robert and Kaashoek, Frans},
+ title = {Eyo: Device-transparent Personal Storage},
+ booktitle = {Proceedings of the 2011 USENIX Conference on USENIX Annual Technical Conference},
+ series = {USENIXATC'11},
+ year = {2011},
+ location = {Portland, OR},
+ pages = {35--35},
+ numpages = {1},
+ url = {http://dl.acm.org/citation.cfm?id=2002181.2002216},
+ acmid = {2002216},
+ publisher = {USENIX Association},
+ address = {Berkeley, CA, USA},
+}
+
+
+# IPFS
+
+@misc{ipfs_github_main,
+    author = "Juan Benet and others",
+    title = "{IPFS}: The Interplanetary Filesystem",
+    howpublished = "{GitHub}",
+    date = {2014},
+    url = {https://github.com/ipfs/ipfs},
+}
+
+
+#Kademlia
+
+@Inbook{Maymounkov2002,
+author="Maymounkov, Petar
+and Mazi{\`e}res, David",
+editor="Druschel, Peter
+and Kaashoek, Frans
+and Rowstron, Antony",
+title="Kademlia: A Peer-to-Peer Information System Based on the XOR Metric",
+bookTitle="Peer-to-Peer Systems: First InternationalWorkshop, IPTPS 2002 Cambridge, MA, USA, March 7--8, 2002 Revised Papers",
+year="2002",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="53--65",
+isbn="978-3-540-45748-0",
+doi="10.1007/3-540-45748-8_5",
+url="http://dx.doi.org/10.1007/3-540-45748-8_5"
+}
+
+
+# Git
+
+
+@misc{linus_no_backups,
+    author = "Linus Torvalds",
+    title = "V2.0.8",
+    date = {1996-07},
+    howpublished = "Linux Kernel Mailing List",
+    url = {http://www.webcitation.org/6P8EBZqQX},
+    urldate={2017-04-07},
+}
+
+@misc{git_initial_readme,
+    author = "Linus Torvalds",
+    title = "Git - the stupid content tracker",
+    howpublished = "Git source code README file",
+    date = {2005-04-08},
+    url = {https://github.com/git/git/blob/e83c5163316f89bfbde7d9ab23ca2e25604af290/README},
+    urldate = {2017-04-25},
+    note = "From the initial commit of Git's source code into Git itself (revision e83c516)",
+}
+
+@book{git_book,
+ author = {Chacon, Scott and Straub, Ben},
+ title = {Pro Git},
+ year = {2014},
+ isbn = {1484200772, 9781484200773},
+ edition = {2nd},
+ publisher = {Apress},
+ address = {Berkely, CA, USA},
+ url = {https://git-scm.com/book/en/v2},
+ urldate = {2017-04-27},
+}
+
+@misc{git_10_years_interview,
+    author = {Jennifer Cloer},
+    title = {10 Years of Git: An Interview with Git Createor Linus Torvalds},
+    howpublished = {Linux.com},
+    date = {2015-04-06},
+    url = {https://www.linux.com/blog/10-years-git-interview-git-creator-linus-torvalds},
+    urldate = {2017-05-02},
+}
+
+@inproceedings{redesign_of_git,
+ author = {De Rosso, Santiago Perez and Jackson, Daniel},
+ title = {Purposes, Concepts, Misfits, and a Redesign of Git},
+ booktitle = {Proceedings of the 2016 ACM SIGPLAN International Conference on Object-Oriented Programming, Systems, Languages, and Applications},
+ series = {OOPSLA 2016},
+ year = {2016},
+ isbn = {978-1-4503-4444-9},
+ location = {Amsterdam, Netherlands},
+ pages = {292--310},
+ numpages = {19},
+ url = {http://doi.acm.org/10.1145/2983990.2984018},
+ doi = {10.1145/2983990.2984018},
+ acmid = {2984018},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Git, concept design, concepts, design, software design, usability, version control},
+} 
+
+@Article{what_are_devs_talking_about,
+author="Barua, Anton
+and Thomas, Stephen W.
+and Hassan, Ahmed E.",
+title="What are developers talking about? An analysis of topics and trends in Stack Overflow",
+journal="Empirical Software Engineering",
+year="2014",
+volume="19",
+number="3",
+pages="619--654",
+abstract="Programming question and answer (Q{\&}A) websites, such as Stack Overflow, leverage the knowledge and expertise of users to provide answers to technical questions. Over time, these websites turn into repositories of software engineering knowledge. Such knowledge repositories can be invaluable for gaining insight into the use of specific technologies and the trends of developer discussions. Previous work has focused on analyzing the user activities or the social interactions in Q{\&}A websites. However, analyzing the actual textual content of these websites can help the software engineering community to better understand the thoughts and needs of developers. In the article, we present a methodology to analyze the textual content of Stack Overflow discussions. We use latent Dirichlet allocation (LDA), a statistical topic modeling technique, to automatically discover the main topics present in developer discussions. We analyze these discovered topics, as well as their relationships and trends over time, to gain insights into the development community. Our analysis allows us to make a number of interesting observations, including: the topics of interest to developers range widely from jobs to version control systems to C{\#} syntax; questions in some topics lead to discussions in other topics; and the topics gaining the most popularity over time are web development (especially jQuery), mobile applications (especially Android), Git, and MySQL.",
+issn="1573-7616",
+doi="10.1007/s10664-012-9231-y",
+url="http://dx.doi.org/10.1007/s10664-012-9231-y"
+}
+
+
+# git-annex
+
+@misc{git_annex_homepage,
+    author = "Joey Hess and others",
+    title = "git-annex",
+    date = {2015},
+    url = {http://git-annex.branchable.com/},
+}
+
+
+# git-media
+
+@misc{git_media_github,
+    author = "Scott Chacon and Alex Lebedev and others",
+    title = "git-media",
+    url = {https://github.com/alebedev/git-media},
+}
+
+
+# Mercurial
+
+@book{hgbook,
+ author = {O'Sullivan, Bryan},
+ title = {Mercurial: The Definitive Guide},
+ year = {2009},
+ isbn = {0596800673, 9780596800673},
+ publisher = {O'Reilly Media, Inc.},
+ url = {http://hgbook.red-bean.com/},
+}
+
+
+# Rsync
+
+@techreport{rsynctechreport,
+    author = {Tridgell, Andrew and Mackerras, Paul},
+    title = {The rsync algorithm},
+    year = {1996},
+    institution = {Australian National University},
+    url = {http://hdl.handle.net/1885/40765},
+    urldate = {2017-05-12},
+}
+
+
+# SVN
+
+@book{svnbook,
+  title={Version control with subversion},
+  author={Pilato, C Michael and Collins-Sussman, Ben and Fitzpatrick, Brian},
+  year={2008},
+  publisher={" O'Reilly Media, Inc."},
+  url={http://svnbook.red-bean.com/},
+  urldate={2017-05-11},
+}
+
+
+# Time Machine
+
+@misc{timemachine_patent,
+  title={System for electronic backup},
+  author={Cisler, P. and Tiene, K. and Ko, S. and Ulrich, R.},
+  url={https://www.google.com/patents/US20080034004},
+  year={2008},
+  month=feb # "~7",
+  publisher={Google Patents},
+  note={US Patent App. 11/499,848}
+}
+
+@misc{timemachine_magic,
+    title = {How Time Machine Works its Magic},
+    author = {James Pond},
+    date = {2013-08-31},
+    howpublished = {Website},
+    url = {http://pondini.org/TM/Works.html},
+    urldate = {2017-05-12},
+}
+
+# Time Machine Clones
+
+@misc{timemachine_foreveryunix,
+    title = {Time Machine for every Unix out there},
+    author = {Michael Jakl},
+    date = {2007-11},
+    howpublished = {Blog},
+    url = {https://blog.interlinked.org/tutorials/rsync_time_machine.html},
+    urldate = {2017-05-12},
+}
+
+
+# Unix
+
+@ARTICLE{unix_timesharing_system, 
+author={O. M. Ritchie and K. Thompson}, 
+journal={The Bell System Technical Journal}, 
+title={The UNIX time-sharing system}, 
+year={1978}, 
+volume={57}, 
+number={6}, 
+pages={1905-1929}, 
+doi={10.1002/j.1538-7305.1978.tb02136.x}, 
+ISSN={0005-8580}, 
+month={July},}

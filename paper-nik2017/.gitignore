@@ -1,6 +1,11 @@
+# Standard TeX output
 *.aux
 *.bbl
 *.blg
 *.log
 *.out
 *.pdf
+
+# BibLaTeX output
+*-blx.bib
+*.run.xml

@@ -3,11 +3,13 @@
 default: ../dmv-nik.pdf
 
 dmv-nik.pdf: \
-    dmv-nik*.tex
+    dmv-nik*.tex \
+    dmv-nik.bib \
+    dmv-nik-abstract.txt
 
 %.pdf: %.tex %.bib
 	pdflatex $*.tex
-	#bibtex $*.aux
+	bibtex $*.aux
 	pdflatex $*.tex
 	pdflatex $*.tex
 

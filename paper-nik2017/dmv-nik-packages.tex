@@ -1,2 +1,17 @@
 \usepackage[utf8]{inputenc}
 \usepackage{mathptm}                % Times New Roman
+
+
+\usepackage[
+  backend=bibtex,
+  backref=true, % add back-references from bib to citations
+  urldate=long, % use date like "Apr. 7, 2017" instead of American "04/07/2017"
+  firstinits=true,    % use only initials of given names
+]{biblatex}
+
+\addbibresource{dmv-nik.bib}
+% Bib names last-first
+\DeclareNameAlias{sortname}{last-first}
+\DeclareNameAlias{default}{last-first}
+% Bib names small caps
+\renewcommand{\mkbibnamelast}[1]{\textsc{#1}}
