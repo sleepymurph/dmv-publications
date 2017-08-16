@@ -5,7 +5,10 @@ default: ../dmv-nik.pdf
 dmv-nik.pdf: \
     dmv-nik*.tex \
     dmv-nik.bib \
-    dmv-nik-abstract.txt
+    dmv-nik-abstract.txt \
+    dia_architecture.pdf \
+    dia_dmv_dag_example_three_commits.pdf \
+
 
 %.pdf: %.tex %.bib
 	pdflatex $*.tex
