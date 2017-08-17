@@ -24,3 +24,23 @@
 
 % TODO notes
 \usepackage[obeyFinal]{todonotes}
+
+
+
+% Link URLs in the PDF, and link references within the PDF itself
+%
+% The hyperref docs recommend declaring it after the other \usepackage
+% declarations, because it has to redefine several commands to work properly,
+% and other later redefinitions might interfere.
+\usepackage[
+  hidelinks,    % Do not style links. I think this is classier.
+  pdfusetitle,  % Use doc title metadata for PDF title metadata
+  pdfdisplaydoctitle,           % Display document title instead of filename in title bar
+  bookmarksnumbered,            % use section numbers in PDF index
+  pdfpagemode={UseOutlines},    % Show bookmarks
+  pdfstartview={FitV},          % Fit height of page to PDF viewer window
+]{hyperref}
+
+% Combined references (chapters 1, 2 and 3)
+% hyperref aware: has to be declared AFTER hyperref for its links to work
+\usepackage{cleveref}
