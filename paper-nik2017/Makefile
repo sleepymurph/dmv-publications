@@ -38,7 +38,7 @@ dmv-nik.pdf: \
 # program, you can create a more specific rule for that diagram.
 #
 
-DOT_INCLUDE=
+DOT_INCLUDE=dia_common.m4.dot
 
 %.preprocessed.dot: %.dot $(DOT_INCLUDE)
 	m4 $(DOT_INCLUDE) $*.dot > $*.preprocessed.dot
