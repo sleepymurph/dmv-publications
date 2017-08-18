@@ -14,6 +14,53 @@
 \input{dmv-nik-abstract.txt}
 \end{abstract}
 
+\section*{OUTLINE}
+
+\begin{verbatim}
+
+- Problem: many devices, more data, difficult to follow what is where
+
+- Cloud not solution. Relies on third party. Connection, privacy, etc.
+
+- DVCS: An alternate approach
+
+    - Extreme availability
+    - Version history gives chain of causality for later reconciliation
+
+- Interesting properties of DAG
+
+    - DAG gives de-duplication
+    - Content addressing gives tampering/bitrot protection
+    - DAG also gives convenient ways to shard data
+
+- Problem 1: dealing with larger files: chunking
+
+    - Bup has chunking but locked into backup workflow
+
+- Problem 2: dealing with many files: packing
+
+    - Git has packing but in separate step that fails for large files
+
+- Problem 3: increasing data: sharding
+
+- In-between: de-duplication
+
+- DMV prototype
+
+- Experiments
+
+    - File size and number of files
+    - Random writes
+
+- Results
+
+- Conclusion
+
+    - chunk, content-address, re-pack
+    - DMV not yet viable, but it's a start
+
+\end{verbatim}
+
 \input{dmv-nik-intro.tex}
 \input{dmv-nik-architecture.tex}
 \input{dmv-nik-design.tex}
