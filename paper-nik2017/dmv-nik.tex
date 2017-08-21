@@ -61,6 +61,7 @@
 
 \end{verbatim}
 
+\section{Introduction}
 
 \towrite{A typical computer user has multiple devices holding an increasing amount of data.}
 \towrite{Most users will have at least a computer and a mobile phone.}
@@ -73,32 +74,27 @@
 \towrite{When the user needs a particular file, they must either remember where it is or perform a frustrating, manual, multi-device search.}
 \towrite{Also, copies of data on different devices will diverge if updates are made separately and not reconciled.}
 
+\subsection{Shortcomings of Cloud-Based Solutions}
+
 \towrite{Cloud computing eases these problems by centralizing storage, searching, and update reconciliation.}
 \towrite{However, the user's access to their data depends on the reliability of their network connection and the reliability and longevity of the cloud service.}
 \towrite{Handing data over to a third party also raises concerns about privacy.}
 \towrite{The cloud service may also charge a recurring subscription fee.}
 \towrite{The user might prefer to use the devices they already own, provided there is an easier way to manage the data.}
 
+\subsection{Potential of Version Control}
+
 \towrite{This paper explores distributed version control systems as an alternative approach to managing data across a spectrum of devices.}
 \towrite{A DVCS keeps writable copies of a data set at multiple locations, tracks update history, and allows diverging versions to be merged at a later date.}
 \towrite{However, version control systems are designed for the small text files of source code and are not suited to larger binary files.}
+
+\section{DMV Architecture and Design}
 
 \towrite{We describe the architecture, design, and implementation of a new system we call Distributed Media Versioning (DMV) that resembles version control but is more flexible.}
 \towrite{DMV will allow the user to shard and replicate data across many devices with fine-grained control.}
 \towrite{It will keep a unified view of the data set as subsets of the data are copied or moved between devices by user request.}
 \towrite{It will allow data to be updated on any device, and it will track history so that}
 \towrite{diverging versions can be merged later.}
-
-\towrite{We perform experiments to explore the scalability limits of selected version control systems.}
-\towrite{We find that the maximum file size is limited by available RAM, and that commit times increase sharply as the number of files increases into the}
-\towrite{millions.}
-\towrite{We also perform the same experiments against a DMV prototype for comparison.}
-\towrite{DMV avoids the file-size limitations by using a rolling hash algorithm to break larger files into smaller chunks.}
-\towrite{Unfortunately, our early DMV prototype suffers the same problems with numerous files because it uses the underlying filesystem in a similar way.}
-\towrite{We conclude that the key to processing large files is to break them into many smaller chunks, and the key to storing many small files is to aggregate them into larger packs.}
-\towrite{We propose corrective changes for future work on DMV.}
-
-
 
 \begin{figure}[]
     \centering
@@ -107,16 +103,12 @@
     \label{fig:dia_architecture}
 \end{figure}
 
-
-
-
 \begin{figure}[]
     \centering
     \includegraphics[width=0.9\textwidth]{dia_dmv_dag_example_three_commits}
     \caption{A simple DMV DAG with three commits}
     \label{dia_dmv_dag_example_three_commits}
 \end{figure}
-
 
 
 \newcommand{\slicediagramwidth}{0.45\textwidth}
@@ -146,6 +138,21 @@
     \caption{A DMV DAG, sliced in different dimensions}
 \end{figure}
 
+
+
+\section{Evaluation}
+
+\towrite{We perform experiments to explore the scalability limits of selected version control systems.}
+\towrite{We find that the maximum file size is limited by available RAM, and that commit times increase sharply as the number of files increases into the}
+\towrite{millions.}
+\towrite{We also perform the same experiments against a DMV prototype for comparison.}
+\towrite{DMV avoids the file-size limitations by using a rolling hash algorithm to break larger files into smaller chunks.}
+\towrite{Unfortunately, our early DMV prototype suffers the same problems with numerous files because it uses the underlying filesystem in a similar way.}
+
+\section{Conclusion}
+
+\towrite{We conclude that the key to processing large files is to break them into many smaller chunks, and the key to storing many small files is to aggregate them into larger packs.}
+\towrite{We propose corrective changes for future work on DMV.}
 
 
 \printbibliography[]
