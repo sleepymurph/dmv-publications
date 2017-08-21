@@ -13,9 +13,10 @@ This repository contains the LaTeX source and other source materials for the
 master's thesis and other DMV publications. It also includes experiment results
 data.
 
-The master's thesis is available as a finished PDF in the University of Tromsø's
-open research archive (TODO: LINK), so you do not have to clone and compile this
-source.
+The master's thesis PDF is checked into the repository. It is also available in
+the University of Tromsø's open research archive
+(<http://hdl.handle.net/10037/11213>), so you do not have to clone and compile
+this source.
 
 Generated documents:
 
