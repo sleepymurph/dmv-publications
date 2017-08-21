@@ -13,5 +13,9 @@
 # Todos
 *.tdo
 
+# Endfloat
+dmv-nik.fff
+dmv-nik.lof
+
 # Graphics
 *.preprocessed.dot
