@@ -1,4 +1,14 @@
-% to-write
+% towrite / written
+% Write points that need to be made in a "towrite", then change to "written"
+% when its done.
+% Add `final` to the document to disable all.
 \newcommand\towrite[1]{
     \todo[inline,color=white,bordercolor=white]{\textcolor{blue}{Write: #1}}
+}
+\newcommand\written[1]{%
+    \ifoptionfinal{}{
+        ~\\
+        \textcolor{gray}{Write: #1}
+        ~\\
+    }
 }

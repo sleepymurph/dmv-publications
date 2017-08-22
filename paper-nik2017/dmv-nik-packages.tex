@@ -2,11 +2,17 @@
 \usepackage[utf8]{inputenc}
 \usepackage{mathptm}                % Times New Roman (text and math)
 
+% Let us check for draft/final conditions
+\usepackage{ifdraft}
+
 % Figures
 \usepackage{graphicx}
 \usepackage[margin=1cm,justification=centering]{caption}
 \usepackage{subcaption} % sub-figures
-\usepackage{endfloat}   % Turn off figures for now
+
+\ifoptionfinal{}{
+\usepackage{endfloat}   % Move figures out of text for now
+}
 
 % Typographical tweaks
 \usepackage[inline]{enumitem}       % Compact inline lists with enumerate*
@@ -27,7 +33,6 @@
 
 % TODO notes
 \usepackage[obeyFinal]{todonotes}
-
 
 
 % Link URLs in the PDF, and link references within the PDF itself
