@@ -109,8 +109,6 @@ Such a DAG structure has several interesting properties for data storage.
     \item[De-duplication]
         Identical objects are de-duplicated because they will have the same ID and naturally collapse into a single object in the data store.
         This results in a natural compression of redundant objects.
-        The efficiency of the compression depends on how well identical pieces of data map to independent objects.
-        In Git, the redundant objects are the files and directories that do not change between commits.
     \item[A record of causality]
         Copies of the DAG can be distributed and updated independently.
         Concurrent updates will result in multiple branches of history, but references from child commit to parent commit establish a happens-before relationship and give a chain of causality.
@@ -124,6 +122,10 @@ Such a DAG structure has several interesting properties for data storage.
 \end{description}
 
 \towrite{However, version control systems are designed for the small text files of source code and are not suited to larger binary files.}
+
+The efficiency of de-duplication depends on how well identical pieces of data map to identical objects.
+In Git, the redundant objects are the files and directories that do not change between commits.
+De-duplication of redundant data within files is accomplished by aggregating objects together into pack files and compressing them with zlib \cite[Section 1.4]{git_book}.
 
 
 \section{DMV Architecture and Design}
