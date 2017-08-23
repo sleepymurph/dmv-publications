@@ -1,35 +1,15 @@
-A typical computer user has multiple devices holding an increasing amount of data.
-Most users will have at least a computer and a mobile phone.
-Many will also have a work computer, tablet, or other devices.
-These devices have varying resources, including processing, memory, and storage.
-They may also be in different locations, on different networks, or turned off at any time.
-The user's data will be in files of varying sizes and media types, from kilobyte text documents to multi-gigabyte videos and beyond.
-The volume of data is also always increasing as data is authored, collected from the internet, or gathered from mobile sensors.
-This data is strewn across these devices in an ad-hoc fashion, according to where it is produced and consumed.
-When the user needs a particular file, they must either remember where it is or perform a frustrating, manual, multi-device search.
-Also, copies of data on different devices will diverge if updates are made separately and not reconciled.
+Distributed version control is an interesting form of distributed system because it takes eventual consistency to the extreme.
+Every replica of a repository contains the full history in an append-only data structure, any replica may add new commits, and conflicting updates are reconciled later in a merge operation.
+These systems are popular, but their use is generally limited to the small text files of source code.
 
-Cloud computing eases these problems by centralizing storage, searching, and update reconciliation.
-However, the user's access to their data depends on the reliability of their network connection and the reliability and longevity of the cloud service.
-Handing data over to a third party also raises concerns about privacy.
-The cloud service may also charge a recurring subscription fee.
-The user might prefer to use the devices they already own, provided there is an easier way to manage the data.
+This paper explores the challenges of using version control to store larger binary files, with the goal of building a scalable, versioned, distributed storage system for media files such as images, audio, and video.
+We developed an early prototype of such a system, which we call Distributed Media Versioning (DMV).
+We perform experiments with the popular version control systems Git and Mercurial, the Git-based backup tool Bup, and our DMV prototype.
 
-This paper explores distributed version control systems as an alternative approach to managing data across a spectrum of devices.
-A DVCS keeps writable copies of a data set at multiple locations, tracks update history, and allows diverging versions to be merged at a later date.
-However, version control systems are designed for the small text files of source code and are not suited to larger binary files.
+We measured commit times and repository sizes when storing single files of increasing size, and when increasing numbers of single-kilobyte files.
+We find that processing files whole will limit maximum file size to what can fit in RAM.
+And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.
+We conclude that the key to storing large files is to break them into smaller chunks, and that the key to storing many small chunks is to aggregate them into larger files.
+We intend to use these insights for future versions of DMV.
 
-We describe the architecture, design, and implementation of a new system we call Distributed Media Versioning (DMV) that resembles version control but is more flexible.
-DMV will allow the user to shard and replicate data across many devices with fine-grained control.
-It will keep a unified view of the data set as subsets of the data are copied or moved between devices by user request.
-It will allow data to be updated on any device, and it will track history so that
-diverging versions can be merged later.
-
-We perform experiments to explore the scalability limits of selected version control systems.
-We find that the maximum file size is limited by available RAM, and that commit times increase sharply as the number of files increases into the
-millions.
-We also perform the same experiments against a DMV prototype for comparison.
-DMV avoids the file-size limitations by using a rolling hash algorithm to break larger files into smaller chunks.
-Unfortunately, our early DMV prototype suffers the same problems with numerous files because it uses the underlying filesystem in a similar way.
-We conclude that the key to processing large files is to break them into many smaller chunks, and the key to storing many small files is to aggregate them into larger packs.
-We propose corrective changes for future work on DMV.
+% vim: nonumber colorcolumn= formatoptions-=t :
