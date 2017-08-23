@@ -17,53 +17,6 @@
 \input{dmv-nik-abstract.txt}
 \end{abstract}
 
-\section*{OUTLINE}
-
-\begin{verbatim}
-
-- Problem: many devices, more data, difficult to follow what is where
-
-- Cloud not solution. Relies on third party. Connection, privacy, etc.
-
-- DVCS: An alternate approach
-
-    - Extreme availability
-    - Version history gives chain of causality for later reconciliation
-
-- Interesting properties of DAG
-
-    - DAG gives de-duplication
-    - Content addressing gives tampering/bitrot protection
-    - DAG also gives convenient ways to shard data
-
-- Problem 1: dealing with larger files: chunking
-
-    - Bup has chunking but locked into backup workflow
-
-- Problem 2: dealing with many files: packing
-
-    - Git has packing but in separate step that fails for large files
-
-- Problem 3: increasing data: sharding
-
-- In-between: de-duplication
-
-- DMV prototype
-
-- Experiments
-
-    - File size and number of files
-    - Random writes
-
-- Results
-
-- Conclusion
-
-    - chunk, content-address, re-pack
-    - DMV not yet viable, but it's a start
-
-\end{verbatim}
-
 \section{Introduction}
 
 \towrite{A typical computer user has multiple devices holding an increasing amount of data.}
@@ -89,46 +42,9 @@
 
 \towrite{This paper explores distributed version control systems as an alternative approach to managing data across a spectrum of devices.}
 
-\written{A DVCS keeps writable copies of a data set at multiple locations, tracks update history, and allows diverging versions to be merged at a later date.}
-
-Git stores its data in a directed acyclic graph (DAG) structure.
-Blob objects contain file data;
-tree objects store lists of blobs, representing directories;
-and a commit objects each associate a particular tree state with metadata such as time, author, and previous commit state, placing that tree state into a history.
-Each object is stored in an content-addressed object database, indexed by a cryptographic hash of its contents \cite{git_initial_readme}.
-%Mercurial's data is stored differently on disk, but it can still be modelled conceptually with this same data structure \cite[Chapter 4]{hgbook}.
-
-Objects, once stored, are immutable.
-Updating an object would change its hash and thus its ID, creating a new object.
-Because objects refer to other objects by hash ID, a new object can only refer to a pre-existing object with known content.
-The graph is directed because these links flow in one direction, and it is acyclic because links cannot be created to objects that do not exist yet, and existing objects cannot be updated to point to newer objects.
-The DAG is append-only.
-
-Such a DAG structure has several interesting properties for data storage.
-\begin{description}
-    \item[De-duplication]
-        Identical objects are de-duplicated because they will have the same ID and naturally collapse into a single object in the data store.
-        This results in a natural compression of redundant objects.
-    \item[A record of causality]
-        Copies of the DAG can be distributed and updated independently.
-        Concurrent updates will result in multiple branches of history, but references from child commit to parent commit establish a happens-before relationship and give a chain of causality.
-        Branches can be merged by manually reconciling the changes, and then creating a merge commit that refers to both parent commits.
-        When transferring updates from one copy to another, only new objects need to be transferred.
-    \item[Atomic updates]
-        When a new commit is added, all objects are added the database first, then finally the reference to the current commit is updated.
-        This reference is a 160-byte SHA-1 hash value, and which can be updated atomically.
-    \item[Verifiability]
-        Because every object is identified by its cryptographic hash, the data integrity of each object can be verified at any time by re-computing and checking its hash.
-        And because objects refer to other objects by hash, the graph is a form of blockchain.
-        All objects can be verified by checking hashes and following references from the most recent commits down to the initial commits and the blob leaves of the graph.
-\end{description}
+\towrite{A DVCS keeps writable copies of a data set at multiple locations, tracks update history, and allows diverging versions to be merged at a later date.}
 
 \towrite{However, version control systems are designed for the small text files of source code and are not suited to larger binary files.}
-
-The efficiency of de-duplication depends on how well identical pieces of data map to identical objects.
-In Git, the redundant objects are the files and directories that do not change between commits.
-De-duplication of redundant data within files is accomplished by aggregating objects together into pack files and compressing them with zlib \cite[Section 1.4]{git_book}.
-
 
 \section{DMV Architecture and Design}
 
@@ -200,5 +116,9 @@ De-duplication of redundant data within files is accomplished by aggregating obj
 \printbibliography[]
 
 \listoftodos
+
+\ifoptionfinal{}{
+    \input{dmv-nik-scratchpad.tex}
+}
 
 \end{document}
