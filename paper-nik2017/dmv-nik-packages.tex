@@ -1,0 +1,54 @@
+% File input and fonts
+\usepackage[utf8]{inputenc}
+\usepackage{mathptm}                % Times New Roman (text and math)
+
+% Let us check for draft/final conditions
+\usepackage{ifdraft}
+
+% Figures
+\usepackage{graphicx}
+\usepackage[margin=1cm,justification=centering]{caption}
+\usepackage{subcaption} % sub-figures
+
+\ifoptionfinal{}{
+\usepackage{endfloat}   % Move figures out of text for now
+}
+
+% Typographical tweaks
+\usepackage[inline]{enumitem}       % Compact inline lists with enumerate*
+
+% Bibliography
+\usepackage[
+  backend=bibtex,
+  urldate=long, % use date like "Apr. 7, 2017" instead of American "04/07/2017"
+  firstinits=true,    % use only initials of given names
+]{biblatex}
+
+\addbibresource{dmv-nik.bib}
+% Bib names last-first
+\DeclareNameAlias{sortname}{last-first}
+\DeclareNameAlias{default}{last-first}
+% Bib names small caps
+\renewcommand{\mkbibnamelast}[1]{\textsc{#1}}
+
+% TODO notes
+\usepackage[obeyFinal]{todonotes}
+
+
+% Link URLs in the PDF, and link references within the PDF itself
+%
+% The hyperref docs recommend declaring it after the other \usepackage
+% declarations, because it has to redefine several commands to work properly,
+% and other later redefinitions might interfere.
+\usepackage[
+  hidelinks,    % Do not style links. I think this is classier.
+  pdfusetitle,  % Use doc title metadata for PDF title metadata
+  pdfdisplaydoctitle,           % Display document title instead of filename in title bar
+  bookmarksnumbered,            % use section numbers in PDF index
+  pdfpagemode={UseOutlines},    % Show bookmarks
+  pdfstartview={FitV},          % Fit height of page to PDF viewer window
+]{hyperref}
+
+% Combined references (chapters 1, 2 and 3)
+% hyperref aware: has to be declared AFTER hyperref for its links to work
+\usepackage{cleveref}
