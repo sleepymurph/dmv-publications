@@ -119,6 +119,8 @@ Such a DAG structure has several interesting properties for data storage.
         This reference is a 160-byte SHA-1 hash value, and which can be updated atomically.
     \item[Verifiability]
         Because every object is identified by its cryptographic hash, the data integrity of each object can be verified at any time by re-computing and checking its hash.
+        And because objects refer to other objects by hash, the graph is a form of blockchain.
+        All objects can be verified by checking hashes and following references from the most recent commits down to the initial commits and the blob leaves of the graph.
 \end{description}
 
 \towrite{However, version control systems are designed for the small text files of source code and are not suited to larger binary files.}
