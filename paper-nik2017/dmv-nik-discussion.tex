@@ -23,3 +23,12 @@ As such, it does not exhaust the disk's \glspl{inode}, and can continue until th
 \subsubsection{Hash-Based Directory Names Cause Disk Seeking}
 
 \towrite{Discuss Git and DMV slowing down due to random writes}
+
+We saw in the file-size commit times (\autoref{results-file-size--c1-time}) that DMV's time increased quadratically, and we suspected that was because it was creating many small files and incurring filesystem overhead.
+This effect would explain why both Git and DMV do so poorly here while Bup would fare much better.
+But why then would Mercurial and the copy also have a linear increase instead of an quadratic one?
+
+The difference is the naming schemes of stored files.
+Git and DMV name each object file according to the SHA-1 hash of the object's contents, while Mercurial, like the copy, uses the original input file's name.
+This means that Git and DMV write files in a random order with respect to their names, jumping between different \gls{objectstore} subdirectories, while Mercurial and the copy can write files in the order they read them, one subdirectory at a time.
+The filesystem is most likely optimized for that kind of sequential write.

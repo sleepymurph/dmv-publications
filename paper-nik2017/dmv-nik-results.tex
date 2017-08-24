@@ -133,6 +133,5 @@ Bup trials could continue until the input data itself exhausted the system's \gl
     \includegraphics[]{plot-num-files--c1-time}
 \end{figure}
 
-\subsubsection{Hash-Based Directory Names Cause Disk Seeking}
-
-\towrite{Results with Git and DMV slowing down due to random writes}
+\autoref{fig:plot-num-files--c1-time} shows the time required for the initial \gls{commit}, storing all files into a fresh empty \gls{repository}.
+Here we see the commit times for Git and DMV increasing quadratically with the number of files, while Mercurial, Bup, and the copy increase linearly.
