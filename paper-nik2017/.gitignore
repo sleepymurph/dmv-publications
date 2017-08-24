@@ -16,6 +16,8 @@
 # Endfloat
 *.fff
 *.lof
+*.lot
+*.ttt
 
 # Glossaries
 *.glo

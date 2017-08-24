@@ -2,7 +2,7 @@
 
 \subsection{File Size}
 
-\subsubsection{File Size Limits}
+\subsubsection{File Size Limits: RAM, Time, Disk Space}
 
 \written{We find that processing files whole will limit maximum file size to what can fit in RAM.}
 
@@ -48,6 +48,7 @@ These findings are summarized in \autoref{file-sizes-table} and
 \begin{table}[]
     \caption{Effective size limits for VCSs evaluated}
     \label{vcs-size-limits-table}
+    \todo[inline]{Remove this table?}
     \centering
     \begin{tabular}{l l}
 
@@ -68,9 +69,44 @@ These findings are summarized in \autoref{file-sizes-table} and
 
 %
 
+\subsubsection{Commit Times for Increasing File Sizes}
 
 \towrite{Give file size result timing}
 
+\autoref{fig:plot-file-size--c1-time}
+
+\begin{figure}[p]
+    \caption{Wall-clock time to commit one large file to a fresh repository}
+    \label{fig:plot-file-size--c1-time}
+    \todo[inline]{Simplify to just largest sizes, convert to black \& white}
+    \centering
+
+    \explainlogsubfig
+
+    \includegraphics[]{plot-file-size--c1-time}
+\end{figure}
+
+%
+
+
+
 \subsection{Number of Files}
 
+\subsubsection{Number of Files Limits: inodes}
+
 \towrite{And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.}
+
+\subsubsection{Commit Times for Increasing Numbers of Files}
+
+\autoref{fig:plot-num-files--c1-time}
+
+\begin{figure}[p]
+    \caption{Wall-clock time to commit many 1KiB files to a fresh repository}
+    \label{fig:plot-num-files--c1-time}
+    \todo[inline]{Simplify to just largest sizes, convert to black \& white}
+    \centering
+
+    \explainlogsubfig
+
+    \includegraphics[]{plot-num-files--c1-time}
+\end{figure}
