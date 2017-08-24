@@ -7,6 +7,13 @@
 \towrite{Git: Compress during gc}
 
 % DMV sluggishness
+
+DMV's parabolic increase is due to the way it breaks the large file into chunks and stores objects as individual files on the filesystem.
+While it is reading one large file, it is writing many small files, which incurs filesystem overhead.
+So its performance characteristic for storing a large file is closer to that of storing many files (\autoref{results-num-files}).
+Bup also breaks the file into many chunks, but it avoids the filesystem overhead by recombining the chunks into \glspl{packfile}.
+We investigate the filesystem overhead further in \autoref{perf-tuning-exp-chapter}.
+
 This sluggishness is due to the way DMV stores chunks of the file as individual files on the filesystem, turning the problem of storing one large file into the problem of storing many small files.
 Storing many small files in this way incurs filesystem overhead, as we discovered in the results of the number-of-files experiment (\autoref{results-num-files--c1-time}), and later performed more experiments to examine in detail (\autoref{perf-tuning-exp-chapter}).
 

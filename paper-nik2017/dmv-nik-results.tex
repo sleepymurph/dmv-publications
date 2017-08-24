@@ -79,9 +79,12 @@ These findings are summarized in \autoref{file-sizes-table} and
 
 \subsubsection{Commit Times for Increasing File Sizes}
 
-\towrite{Give file size result timing}
+\written{Give file size result timing}
 
-\autoref{fig:plot-file-size--c1-time}
+\autoref{fig:plot-file-size--c1-time} shows the wall-clock time required for the initial \gls{commit}, adding a single file of the given size to a fresh \gls{repository}.
+Over all, the trend is clear and unsurprising: \gls{commit} time increases with file size.
+It increases linearly for Git, Mercurial, and Bup.
+DMV's commit times increase in a more parabolic fashion, which is most apparent in \autoref{fig:plot-file-size--c1-time}e.
 
 \begin{figure}[p]
     \caption{Wall-clock time to commit one large file to a fresh repository}
