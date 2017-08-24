@@ -65,6 +65,51 @@ In Git, the redundant objects are the files and directories that do not change b
 De-duplication of redundant data within files is accomplished by aggregating objects together into pack files and compressing them with zlib \cite[Section 10.4]{git_book}.
 
 
+\subsection{Some Images}
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=0.95\textwidth]{dia_architecture}
+    \caption{Repositories in an ad-hoc network}
+    \label{fig:dia_architecture}
+\end{figure}
+
+\begin{figure}[]
+    \centering
+    \includegraphics[width=0.9\textwidth]{dia_dmv_dag_example_three_commits}
+    \caption{A simple DMV DAG with three commits}
+    \label{dia_dmv_dag_example_three_commits}
+\end{figure}
+
+
+\newcommand{\slicediagramwidth}{0.45\textwidth}
+
+\begin{figure}[]
+
+    \centering
+
+    \begin{subfigure}[]{\slicediagramwidth}
+        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_partial_history}
+        \caption{Partial history of full data set}
+        \label{dia_dmv_dag_slice_partial_history}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[]{\slicediagramwidth}
+        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_history_of_subset}
+        \caption{Full history of part of data set}
+        \label{dia_dmv_dag_slice_history_of_subset}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[]{\slicediagramwidth}
+        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_history_of_metadata}
+        \caption{Full history of metadata}
+        \label{dia_dmv_dag_slice_history_of_metadata}
+    \end{subfigure}
+
+    \caption{A DMV DAG, sliced in different dimensions}
+\end{figure}
+
+
 
 \section*{Alternate outline}
 
@@ -112,4 +157,3 @@ De-duplication of redundant data within files is accomplished by aggregating obj
     - DMV not yet viable, but it's a start
 
 \end{verbatim}
-
