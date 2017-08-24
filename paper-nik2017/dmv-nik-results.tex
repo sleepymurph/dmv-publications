@@ -1,5 +1,9 @@
 \section{Results}
 
+\subsection{File Size}
+
+\subsubsection{File Size Limits}
+
 \written{We find that processing files whole will limit maximum file size to what can fit in RAM.}
 
 In our experiments, both Git and Mercurial had file size limits that were related to RAM.
@@ -18,6 +22,55 @@ The \lstinline{fsck} command would exit with an error code and give a similar "f
 However, the file could still be checked out from the repository without error.
 So we continued the trials assuming that these were also false alarms.
 
+These findings are summarized in \autoref{file-sizes-table} and
+\autoref{vcs-size-limits-table}.
+
+\begin{table}[]
+    \caption{Observations as file size increases}
+    \label{file-sizes-table}
+    \centering
+    \begin{tabular}{r l}
+        Size & Observation \\
+        \midrule
+        \SI{1.5}{\gibi\byte} & Largest successful commit with Mercurial \\
+        \SI{2}{\gibi\byte} & Mercurial commit rejected \\
+        \SI{8}{\gibi\byte} & Largest successful commit with Git \\
+        \SI{12}{\gibi\byte} & Git false-alarm errors begin, but commit still intact \\
+        \SI{16}{\gibi\byte} & Largest successful Git fsck command \\
+        \SI{24}{\gibi\byte} & Git false-alarm errors begin during fsck, but commit still intact \\
+        \SI{64}{\gibi\byte} & Largest successful DMV commit \\
+        \SI{96}{\gibi\byte} & DMV timeout after \SI{5.5}{\hour} \\
+        \SI{96}{\gibi\byte} & Last successful commit with Bup (and Git, ignoring false-alarm errors) \\
+        \SI{128}{\gibi\byte} & All fail due to size of test partition \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[]
+    \caption{Effective size limits for VCSs evaluated}
+    \label{vcs-size-limits-table}
+    \centering
+    \begin{tabular}{l l}
+
+        VCS & Effective limit \\
+        \midrule
+
+        Git & Commit intact at all sizes, UI reports errors at \SI{12}{\gibi\byte} and larger \\
+
+        Mercurial & Commit rejected at \SI{2}{\gibi\byte} and larger \\
+
+        Bup & Successful commits at all sizes tried, up to \SI{96}{\gibi\byte} \\
+
+        DMV & Successful commits up to \SI{64}{\gibi\byte}, timeout at
+        \SI{5.5}{\hour} during \SI{96}{\gibi\byte} trial
+
+    \end{tabular}
+\end{table}
+
+%
+
+
 \towrite{Give file size result timing}
+
+\subsection{Number of Files}
 
 \towrite{And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.}
