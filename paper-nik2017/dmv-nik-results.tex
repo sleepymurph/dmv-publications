@@ -100,9 +100,23 @@ These findings are summarized in \autoref{file-sizes-table} and
 
 \subsection{Number of Files}
 
-\subsubsection{Number of Files Limits: inodes}
+\subsubsection{File Quantity Limits: inodes}
 
-\towrite{And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.}
+\written{And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.}
+
+Git, Mercurial, DMV, and the copy operation all failed when trying to store \num{7.5} million files or more, reporting that the disk was full.
+However, the disk was not actually out of space --- it was out of \emph{\glspl{inode}}.
+
+\glsreset{inode} % This is the para where we actually define what an inode is
+
+Unix filesystems, ext4 included, store file and directory metadata in a data structure called an \gls{inode}, which reside in a fixed-length table~\cite{unix_timesharing_system}.
+When all of the \glspl{inode} in the table are allocated, the filesystem cannot store any more files or directories.
+
+Bup avoided the \gls{inode} limit.
+Bup trials could continue until the input data itself exhausted the system's \glspl{inode} attempting to generate \num{25} million input files.
+
+%
+
 
 \subsubsection{Commit Times for Increasing Numbers of Files}
 
@@ -118,3 +132,7 @@ These findings are summarized in \autoref{file-sizes-table} and
 
     \includegraphics[]{plot-num-files--c1-time}
 \end{figure}
+
+\subsubsection{Hash-Based Directory Names Cause Disk Seeking}
+
+\towrite{Results with Git and DMV slowing down due to random writes}

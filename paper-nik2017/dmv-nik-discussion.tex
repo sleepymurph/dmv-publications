@@ -9,3 +9,17 @@
 % DMV sluggishness
 This sluggishness is due to the way DMV stores chunks of the file as individual files on the filesystem, turning the problem of storing one large file into the problem of storing many small files.
 Storing many small files in this way incurs filesystem overhead, as we discovered in the results of the number-of-files experiment (\autoref{results-num-files--c1-time}), and later performed more experiments to examine in detail (\autoref{perf-tuning-exp-chapter}).
+
+\subsection{File Quantity Limits}
+
+Git, Mercurial, DMV, and the copy all create one file in their \glspl{objectstore} for each input file.
+So to store \num{7.5} million files, they will create \num{7.5} million more, resulting in \num{15} million files on the filesystem, plus directories.
+However, the \SI{197}{\gib} experiment partition has \num{13107200} total \glspl{inode}, so storing \num{15} million files is impossible.
+
+Bup is able to store more files because it does not write a separate object file for each input file.
+Bup aggregates its DAG objects into \glspl{packfile}, writing several large files instead many small files.
+As such, it does not exhaust the disk's \glspl{inode}, and can continue until the experiment itself exhausts the system's \glspl{inode} when it tries to go up from \num{10} million files to the next step and run a trial with \num{25} million files.
+
+\subsubsection{Hash-Based Directory Names Cause Disk Seeking}
+
+\towrite{Discuss Git and DMV slowing down due to random writes}
