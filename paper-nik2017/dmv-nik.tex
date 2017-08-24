@@ -43,16 +43,19 @@ even as the modern software development practice of continuous delivery was comm
 
 \section{Experiments}
 
-\towrite{We perform experiments with the popular version control systems Git and Mercurial, the Git-based backup tool Bup, and our DMV prototype.}
+\written{We perform experiments with the popular version control systems Git and Mercurial, the Git-based backup tool Bup, and our DMV prototype.}
 
-\towrite{We measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.}
+\written{We measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.}
+
+\subsection{Methodology}
 
 We conducted two major experiments.
 In order to measure the effect of file size, we would \gls{commit} a single file of increasing size to each target \gls{VCS}.
 And to measure the effect of numbers of files, we would \gls{commit} increasing number of small (\SI{1}{\kibi\byte}) files to each target \gls{VCS}.
 
-For each experiment, the procedure for a single trial was as follows:
+\towrite{List VCSs in a more compact way than in thesis}
 
+For each experiment, the procedure for a single trial was as follows:
 \begin{tight_enumerate}
     \item Create an empty \gls{repository} of the target \gls{VCS} in a temporary directory
     \item Generate target data to store, either a single file of the target size, or the target number of \SI{1}{\kibi\byte} files
@@ -79,6 +82,20 @@ Input data files consisted of pseudorandom bytes taken from the operating system
 When updating data files for the second \gls{commit}, we would overwrite a single contiguous section of each file with new pseudorandom bytes.
 We would start one-quarter of the way into the file, and overwrite \num{1/1024}th of the file's size (or 1 byte if the file was smaller than \SI{1024}{\kibi\byte}).
 So a \SI{1}{\mebi\byte} file would have \SI{1}{\kibi\byte} overwritten, a \SI{1}{\gibi\byte} file would have \SI{1}{\mebi\byte} overwritten, and so on.
+
+%
+
+\subsection{Experiment Platform}
+
+We ran the trials on four dedicated computers with no other load.
+Each was a typical office desktop with a \SI{3.16}{\giga\hertz} \num{64}-bit dual-core processor and \SI{8}{\gibi\byte} of RAM, running Debian version 8.6 ("Jessie").
+Each computer had one normal SATA hard disk (spinning platter, not solid-state), and trials were conducted on a dedicated \SI{197}{\gibi\byte} LVM partition formatted with the ext4 filesystem.
+All came from the same manufacturer with the same specifications and were, for practical purposes, identical.
+%Additional details can be found in \autoref{test-machine-specs}.
+\todo{Include platform table?}
+
+We ran every trial four times, once on each of the experiment computers, and took the mean and standard deviation of each time and disk space measurement.
+However, because the experiment computers are practically identical, there was little real variation.
 
 %
 
