@@ -7,9 +7,14 @@
 }
 \newcommand\written[1]{%
     \ifoptionfinal{}{
-        ~\\
-        \textcolor{gray}{Write: #1}
-        ~\\
+        {
+            \setlength{\parindent}{0em}
+            \par
+            \vspace{.5em}
+            \textcolor{gray}{Written: #1}
+            \vspace{.5em}
+            \par
+        }
     }
 }
 
