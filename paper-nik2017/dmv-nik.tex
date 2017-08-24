@@ -23,7 +23,17 @@
 
 \towrite{Every replica of a repository contains the full history in an append-only data structure, any replica may add new commits, and conflicting updates are reconciled later in a merge operation.}
 
-\towrite{These systems are popular, but their use is generally limited to the small text files of source code.}
+
+\written{These systems are popular, but their use is generally limited to the small text files of source code.}
+
+\Glspl{DVCS} are designed primarily to store program source code: plain text files in the range of tens of kilobytes.
+Checking in larger binary files such as images, sound, or video affects performance.
+Actions that require copying data in and out of the system slow from hundredths of a second to full seconds or minutes.
+And since a \gls{DVCS} keeps every version of every file in every \gls{repository}, forever, the disk space needs compound.
+
+This has lead to a conventional wisdom that binary files should never be stored in version control, inspiring blog posts with titles such as
+"Don't ever commit binary files to Git! Or what to do if you do"~\cite{dont_ever_commit_binaries_to_version_control},
+even as the modern software development practice of continuous delivery was commanding teams to "keep absolutely everything in version control."~\cite[p.33]{continuousdeliverybook}
 
 \towrite{This paper explores the challenges of using version control to store larger binary files, with the goal of building a scalable, highly-available, distributed storage system for media files such as images, audio, and video.}
 

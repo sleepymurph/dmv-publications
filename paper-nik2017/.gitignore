@@ -14,8 +14,12 @@
 *.tdo
 
 # Endfloat
-dmv-nik.fff
-dmv-nik.lof
+*.fff
+*.lof
+
+# Glossaries
+*.glo
+*.ist
 
 # Graphics
 *.preprocessed.dot

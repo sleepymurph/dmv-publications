@@ -1,0 +1,228 @@
+% Style: Capitalize first letter of all descriptions,
+%   but don't capitalize all initialze in acronym unless it's a proper name
+%   or if it's not obvious where the acronym is from.
+
+
+% Dist sys
+
+\newacronym[
+    description={Atomicity, consistency, durability, and isolation, the
+    guarantees of a traditional database commit},
+]{ACID}{ACID}{atomicity, consistency, durability, and isolation}
+
+\newglossaryentry{CAP-theorem}{
+    name={CAP-theorem},
+    description={The fundamental theorem of distributed systems, that no system
+    can simultaneously be consistent (C), available (A), and tolerant of network
+    partitions (P)},
+    see={partitiondecision},
+}
+
+\newglossaryentry{partitiondecision}{
+    name={partition decision},
+    description={The dilemma faced by a distributed system during a network
+    partition: to decrease availability or risk inconsistency},
+    see={CAP-theorem},
+}
+
+\newglossaryentry{endtoendargument}{
+    name={end-to-end argument},
+    description={When designing a communications system, the idea that there is
+    certain functionality that can only be implemented correctly by the
+    higher-level application at the endpoints of the communication, and so it is
+    futile for the communication system to try to provide that functionality
+    itself},
+}
+
+% General Version Control
+
+\newacronym[
+    description={Distributed version control system, such as Git, where
+    individual repositories can operate independently without having to connect
+    to a central repository},
+    see={VCS},
+]
+{DVCS}{DVCS}{distributed version control system}
+
+\newacronym[
+    description={Version control system, a program that stores many versions of
+    a file or set of files, commonly used to track changes to source code},
+    see={SCM},
+]
+{VCS}{VCS}{version control system}
+
+\newacronym[
+    description={Source code manager, a version control system that is designed
+    primarily to store source code},
+    see={VCS},
+]
+{SCM}{SCM}{source code manager}
+
+
+% Specific systems
+
+\newacronym[
+    description={Distributed Media Versioning, the new distributed data storage
+    platform described and introduced in this dissertation}
+]
+{DMV}{DMV}{Distributed Media Versioning}
+
+
+% VCS architecture
+
+\newglossaryentry{repository}{
+    name={repository},
+    plural={repositories},
+    description={A location where data is stored in a version control system.
+    Early systems would have a central repository that clients would check out
+    from. In distributed version control, every client is a separate
+    repository},
+}
+
+\newglossaryentry{objectstore}{
+    name={object store},
+    description={Content-addressable storage for DAG objects},
+    see={DAG},
+}
+
+\newglossaryentry{workdir}{
+    name={working directory},
+    description={A directory where files that are tracked by a version control
+    system are actively worked on and edited},
+}
+
+\newglossaryentry{branch}{
+    name={branch},
+    plural={branches},
+    description={In a version control system, separate concurrent lines of
+    update history},
+    see={head,merge},
+}
+
+\newglossaryentry{head}{
+    name={head},
+    description={In a version control system, the most recent revision in a
+    branch},
+    see={branch},
+}
+
+\newglossaryentry{merge}{
+    name={merge},
+    description={In a version control system, an operation that combines two
+    branches and reconciles conflicting changes},
+    see={branch},
+}
+
+
+% DAG
+
+\newglossaryentry{contentaddressablestorage}{
+    name={content addressable storage},
+    description={Storage that stores immutable objects named by a hash of their
+    content, which naturally de-duplicates identical objects},
+}
+
+\newacronym[
+    description={Directed acyclic graph, the type of graph data structure used
+    to represent history in many distributed version control systems. Directed
+    meaning all the edges have a direction, from one node to another, and
+    acyclic meaning that there are no cycles, no paths that revisit any node},
+    see={blob,chunkedblob,tree,commit,ref},
+]
+{DAG}{DAG}{directed acyclic graph}
+
+\newacronym[
+    description={Binary large object, a sequence of unstructured binary data. In
+    Git and DMV, a DAG object holding file data},
+    first={blob (binary large object)},
+    see={DAG},
+]
+{blob}{blob}{binary large object}
+
+\newglossaryentry{chunkedblob}{
+    name={chunked blob},
+    description={In DMV, a DAG object that is an index of blobs that make up a
+    larger blob},
+    see={DAG,blob},
+}
+
+\newglossaryentry{tree}{
+    name={tree},
+    description={In Git and DMV, a DAG object representing a particular state of
+    a file hierarchy},
+    see={DAG},
+}
+
+\newglossaryentry{commit}{
+    name={commit},
+    description={In version control, the operation for storing a particular
+    version of the data. Also, the resulting DAG object that represents that
+    version in the history},
+    see={DAG},
+}
+
+\newacronym[
+    description={A reference to a commit object in the DAG},
+    see={DAG},
+]
+{ref}{ref}{reference}
+
+\newglossaryentry{packfile}{
+    name={pack file},
+    description={An object store file format that aggregates many objects in one
+    file},
+    see={objectstore},
+}
+
+\newglossaryentry{filelog}{
+    name={filelog},
+    description={Mercurial's file format that stores different versions of the
+    same file as a base version followed by a series of delta},
+}
+
+
+% Rolling Hash
+
+\newglossaryentry{rollinghash}{
+    name={rolling hash},
+    first={rolling hash algorithm},
+    description={A hash checksum that operates over a moving window of data in a
+    byte stream that can be used to find repeating patterns},
+    see={windowsize,divisor},
+}
+
+\newglossaryentry{windowsize}{
+    name={window size},
+    symbol={\ensuremath{w}},
+    description={In a rolling hash algorithm, the number of previous bytes used
+    in the rolling sum},
+    see={rollinghash,divisor},
+}
+
+\newglossaryentry{divisor}{
+    name={divisor},
+    symbol={\ensuremath{d}},
+    description={In a rolling hash algorithm, the divisor in the modulus
+    operation. A chunk boundary is created when the sum of the bytes in the
+    window, modulo this divisor, is equal to zero},
+    see={rollinghash,windowsize},
+}
+
+
+% low-level
+
+\newglossaryentry{inode}{
+    name={inode},
+    description={A data structure in a Unix filesystem that stores file
+    metadata. Each filesystem has a fixed number of inodes, which limits the
+    total number of files and directories the filesystem can hold},
+}
+
+\newacronym[
+    description={Application binary interface, the public interface between a
+    system library and a client application}
+]{ABI}{ABI}{application binary interface}
+
+\newacronym[
+    description={random number generator}
+]{RNG}{RNG}{random number generator}
