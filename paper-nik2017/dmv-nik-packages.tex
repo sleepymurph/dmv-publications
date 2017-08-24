@@ -14,8 +14,23 @@
 \usepackage{endfloat}   % Move figures out of text for now
 }
 
+
+% Listings
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
+
+
+% Numbers and units of measurement
+\usepackage[binary-units]{siunitx}
+
+\newcommand{\gib}{\gibi\byte}
+\newcommand{\mib}{\mebi\byte}
+\newcommand{\kib}{\kibi\byte}
+
+
 % Typographical tweaks
 \usepackage[inline]{enumitem}       % Compact inline lists with enumerate*
+
 
 % Bibliography
 \usepackage[

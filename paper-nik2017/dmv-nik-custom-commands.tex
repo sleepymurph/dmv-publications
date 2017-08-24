@@ -12,3 +12,11 @@
         ~\\
     }
 }
+
+
+% An enumerated list with less spacing between items
+\newenvironment{tight_enumerate}{
+\begin{enumerate}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+}{\end{enumerate}}

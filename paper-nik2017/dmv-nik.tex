@@ -47,6 +47,41 @@ even as the modern software development practice of continuous delivery was comm
 
 \towrite{We measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.}
 
+We conducted two major experiments.
+In order to measure the effect of file size, we would \gls{commit} a single file of increasing size to each target \gls{VCS}.
+And to measure the effect of numbers of files, we would \gls{commit} increasing number of small (\SI{1}{\kibi\byte}) files to each target \gls{VCS}.
+
+For each experiment, the procedure for a single trial was as follows:
+
+\begin{tight_enumerate}
+    \item Create an empty \gls{repository} of the target \gls{VCS} in a temporary directory
+    \item Generate target data to store, either a single file of the target size, or the target number of \SI{1}{\kibi\byte} files
+    \item \Gls{commit} the target data to the \gls{repository}, measuring wall-clock time to \gls{commit}
+    \item Verify that the first \gls{commit} exists in the \gls{repository}, and if there was any kind of error, run the \gls{repository}'s integrity check operation
+    \item Measure the total \gls{repository} size
+    \item Overwrite a fraction of each target file
+    \item (Number-of-files experiment only) Run the \gls{VCS}'s status command that lists what files have changed, and measure the wall-clock time that it takes to complete
+    \item \Gls{commit} again, measuring wall-clock time to \gls{commit}
+    \item Verify that the second \gls{commit} exists in the \gls{repository}, and if there was any kind of error, run the \gls{repository}'s integrity check operation
+    \item Measure the total \gls{repository} size again
+    \item (File-size experiment only) Run Git's garbage collector (\lstinline{git fsck}) to pack objects, then measure total \gls{repository} size again
+    \item Delete temporary directory and all trial files
+\end{tight_enumerate}
+
+We increased file sizes exponentially by powers of two from \SI{1}{\byte} up to \SI{128}{\gibi\byte}, adding an additional step at \num{1.5} times the base size at each order of magnitude.
+For example, starting at \SI{1}{\mebi\byte}, we would run trails with \SI{1}{\mebi\byte}, \SI{1.5}{\mebi\byte}, \SI{2}{\mebi\byte}, \SI{3}{\mebi\byte}, \SI{4}{\mebi\byte}, \SI{6}{\mebi\byte}, \SI{8}{\mebi\byte}, \SI{12}{\mebi\byte}, and so on.
+
+We increased numbers of files exponentially by powers of ten from one file to ten million files, adding additional steps at \num{2.5}, \num{5}, and \num{7.5} times the base number at each order of magnitude.
+For example, starting at \num{100} files we would run trials with \num{100}, \num{250}, \num{500}, \num{750}, \num{1000}, \num{2500}, \num{5000}, \num{7500}, \num{10000}, and so on.
+
+Input data files consisted of pseudorandom bytes taken from the operating system's pseudorandom number generator (\lstinline{/dev/urandom} on Linux).
+
+When updating data files for the second \gls{commit}, we would overwrite a single contiguous section of each file with new pseudorandom bytes.
+We would start one-quarter of the way into the file, and overwrite \num{1/1024}th of the file's size (or 1 byte if the file was smaller than \SI{1024}{\kibi\byte}).
+So a \SI{1}{\mebi\byte} file would have \SI{1}{\kibi\byte} overwritten, a \SI{1}{\gibi\byte} file would have \SI{1}{\mebi\byte} overwritten, and so on.
+
+%
+
 \section{Results}
 
 \towrite{We find that processing files whole will limit maximum file size to what can fit in RAM.}
