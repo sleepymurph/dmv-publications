@@ -22,6 +22,14 @@ The \lstinline{fsck} command would exit with an error code and give a similar "f
 However, the file could still be checked out from the repository without error.
 So we continued the trials assuming that these were also false alarms.
 
+The \gls{DMV} prototype was able to store a file up to \SI{64}{\gibi\byte} in size, but time became a limiting factor as file size increased.
+At \SI{96}{\gibi\byte}, our experiment script timed out and terminated the \gls{commit} after five and a half hours.
+
+Our experiment environment itself limited the largest file stored by any \gls{VCS} to \SI{96}{\gibi\byte}.
+Any larger and it was simply impossible to store a second copy of the file on our \SI{197}{\gibi\byte} test partition.
+Bup was able to store a \SI{96}{\gibi\byte} file with no errors in just under two hours.
+Git could also store such a large file, but one must ignore the false-alarm "fatal" errors being reported by the user interface.
+
 These findings are summarized in \autoref{file-sizes-table} and
 \autoref{vcs-size-limits-table}.
 

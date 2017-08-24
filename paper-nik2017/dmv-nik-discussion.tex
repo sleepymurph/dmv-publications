@@ -1,3 +1,11 @@
 \section{Discussion}
 
-\towrite{Discuss implementation details that lead to RAM limits}
+\towrite{Discuss implementation details that lead to size limits}
+
+\towrite{Mercurial: Diff during commit}
+
+\towrite{Git: Compress during gc}
+
+% DMV sluggishness
+This sluggishness is due to the way DMV stores chunks of the file as individual files on the filesystem, turning the problem of storing one large file into the problem of storing many small files.
+Storing many small files in this way incurs filesystem overhead, as we discovered in the results of the number-of-files experiment (\autoref{results-num-files--c1-time}), and later performed more experiments to examine in detail (\autoref{perf-tuning-exp-chapter}).
