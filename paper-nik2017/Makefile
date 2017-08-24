@@ -8,11 +8,6 @@ dmv-nik.pdf: \
     dmv-nik*.tex \
     dmv-nik.bib \
     dmv-nik-abstract.txt \
-    dia_architecture.pdf \
-    dia_dmv_dag_example_three_commits.pdf \
-    dia_dmv_dag_slice_partial_history.pdf \
-    dia_dmv_dag_slice_history_of_subset.pdf \
-    dia_dmv_dag_slice_history_of_metadata.pdf \
     plot-file-size--c1-time.pdf \
     plot-num-files--c1-time.pdf \
 
