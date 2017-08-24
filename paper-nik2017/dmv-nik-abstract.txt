@@ -2,14 +2,14 @@ Distributed version control is an interesting form of distributed system because
 Every replica of a repository contains the full history in an append-only data structure, any replica may add new commits, and conflicting updates are reconciled later in a merge operation.
 These systems are popular, but their use is generally limited to the small text files of source code.
 
-This paper explores the challenges of using version control to store larger binary files, with the goal of building a scalable, versioned, distributed storage system for media files such as images, audio, and video.
+This paper explores the challenges of using version control to store larger binary files, with the goal of building a scalable, highly-available, distributed storage system for media files such as images, audio, and video.
 We developed an early prototype of such a system, which we call Distributed Media Versioning (DMV).
 We perform experiments with the popular version control systems Git and Mercurial, the Git-based backup tool Bup, and our DMV prototype.
 
-We measured commit times and repository sizes when storing single files of increasing size, and when increasing numbers of single-kilobyte files.
+We measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.
 We find that processing files whole will limit maximum file size to what can fit in RAM.
 And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.
 We conclude that the key to storing large files is to break them into smaller chunks, and that the key to storing many small chunks is to aggregate them into larger files.
-We intend to use these insights for future versions of DMV.
+We intend to incorporate these insights into future versions of DMV.
 
 % vim: nonumber colorcolumn= formatoptions-=t :
