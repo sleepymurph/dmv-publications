@@ -1,5 +1,23 @@
 \section{Results}
 
-\towrite{We find that processing files whole will limit maximum file size to what can fit in RAM.}
+\written{We find that processing files whole will limit maximum file size to what can fit in RAM.}
+
+In our experiments, both Git and Mercurial had file size limits that were related to RAM.
+Mercurial would refuse to commit a file \SI{2}{\gib} or larger.
+It would exit with an error code and print an error message saying "up to 6442 MB of RAM may be required to manage this file."
+The commit would not be stored, and the repository would be left unchanged.
+This suggests that Mercurial needs to be able to fit the file into memory three times over in order to commit it.
+
+Git's commit operation would appear to fail with files \SI{12}{\gib} and larger.
+It would exit with an error code and print an error message saying "fatal: Out of memory, malloc failed (tried to allocate 12884901889 bytes)."
+However, the commit would be written to the repository, and git's \lstinline{fsck} operation would report no errors.
+So the commit operation completes successfully, even though an error is reported.
+
+With files \SI{24}{\gib} and larger, Git's \lstinline{fsck} operation itself would fail.
+The \lstinline{fsck} command would exit with an error code and give a similar "fatal ... malloc" error.
+However, the file could still be checked out from the repository without error.
+So we continued the trials assuming that these were also false alarms.
+
+\towrite{Give file size result timing}
 
 \towrite{And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.}
