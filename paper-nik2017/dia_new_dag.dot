@@ -1,0 +1,27 @@
+digraph {
+
+    {
+        // In Git
+        node[INGIT]
+        blob[label="Blob"]
+        tree[label="Tree"]
+        commit[label="Commit"]
+        ref[label="Ref"]
+    }
+
+    {
+        // New
+        node[NEW]
+        chunkedblob[label="Chunked Blob"]
+    }
+
+    ref -> commit [label=" current commit"]
+    commit -> tree [label=" directory state"]
+    tree -> tree [label=" subdirectory"]
+    tree -> { chunkedblob, blob }[label=" file"]
+
+    commit -> commit [label=" parent commit"]
+    chunkedblob -> blob [label=" chunk"]
+    chunkedblob -> chunkedblob [label=" chunk"]
+
+}

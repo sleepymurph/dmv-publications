@@ -8,6 +8,8 @@ dmv-nik.pdf: \
     dmv-nik*.tex \
     dmv-nik.bib \
     dmv-nik-abstract.txt \
+    dia_dmv_dag_example_three_commits.pdf \
+    dia_new_dag.pdf \
     plot-file-size--c1-time.pdf \
     plot-num-files--c1-time.pdf \
 
