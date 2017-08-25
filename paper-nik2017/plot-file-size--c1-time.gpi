@@ -4,13 +4,12 @@ meantable(f) = "< ../data/meantable.py \
     --where-not-bad c1_ver \
     --files ../data/exp--file-size--v04--w-cpu/".f.'-*'
 
-#set xlabel "File Size (linear scale)"
+set xlabel "File size"
 set format x "%1.0b%BB"
 
-#set ylabel "Time to commit"
+set ylabel "Time to commit"
 
 set grid
-unset key
 
 kilos(n) = n * 2**10
 megs(n) = n * 2**20
@@ -21,94 +20,13 @@ mins(n) = n * 60
 vcslist = "gitallowrepoerr hg bup prototype2x1mem copy"
 vcstitles = "Git Mercurial Bup DMV Copy"
 
-#set xtics rotate by 30 offset character -2.2, -1.3
-#set xtics font ",9"
-#set ytics font ",9"
-
-set multiplot layout 3,2 rowsfirst
-
-set logscale x 2
-set logscale y 60
-set xrange [kilos(1):gigs(128)]
-set ytics ("10ms" .01, "100ms" .1, "1s" 1, "1m" 60, "1h" mins(60))
-set xtics (kilos(1), megs(1), gigs(1), gigs(128))
-set yrange [.001:mins(240)]
-
-set title "(a) Logarithmic Scale"
-plot for [vcs in vcslist] \
-    meantable(vcs) using 1:2 with lines title vcs
-
-unset logscale xy
-
-
-# Separate key: do another plot with outlandish ranges and all decoration off
-
-set xrange [8*2**30:104*2**30]
-set yrange [mins(400):mins(500)]
-unset xtics
-unset ytics
-unset grid
-unset border
-set key center center
-unset title
-
-plot for [vcs in vcstitles] \
-    meantable("bup") using 1:2:3 with errorlines title vcs
-
-
-# Reestablish decorations
-
-set grid
-set border
-unset key
-set yrange [*:*]
-
-
-set mxtics 2
-set mytics 2
-
-
-# Other plots
-
-set xrange [kilos(128):megs(1)+kilos(128)]
-set xtics kilos(256)
-set yrange [0:1]
-set ytics 0.2
-set format y "%1.1fs"
-
-set title "(b) Sub-megabyte-scale"
-plot for [vcs in vcslist] \
-    meantable(vcs) using 1:2:3 with errorlines title vcs
-
-
-set xrange [megs(1):megs(11)]
-set xtics megs(2)
-set yrange [0:2]
-set ytics 0.5
-set format y "%1.1fs"
-
-set title "(c) Megabytes-scale"
-plot for [vcs in vcslist] \
-    meantable(vcs) using 1:2:3 with errorlines title vcs
-
-
-set xrange [gigs(.5):gigs(4.5)]
-set xtics gigs(1)
-set yrange [0:10]
-set ytics 2
-set format y "%1.0fm"
-
-set title "(d) Gigabytes-scale"
-plot for [vcs in vcslist] \
-    meantable(vcs) using 1:($2/60):($3/60) with errorlines title vcs
-
-
-set xrange [gigs(16):gigs(112)]
-set xtics gigs(32)
-set yrange [0:360]
+set xrange [gigs(7.5):gigs(104.5)]
+set xtics gigs(16)
+set yrange [0:330]
 set ytics 60
 set format y "%1.0fm"
+set key
 
-set title "(e) Largest scales measured"
-plot for [vcs in vcslist] \
-    meantable(vcs) using 1:($2/60):($3/60) with errorlines title vcs
+#set title "(e) Largest scales measured"
+plot for [i = 1:words(vcslist)] \
+    meantable(word(vcslist,i)) using 1:($2/60):($3/60) with errorlines title word(vcstitles,i)

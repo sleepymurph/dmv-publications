@@ -20,12 +20,6 @@ dmv-nik.pdf: \
 
 TALL_GRAPH_SIZE=5in,6in
 
-plot-file-size--c1-time.pdf: \
-    plot-file-size--c1-time.gpi \
-    ../data/exp--file-size--v04--w-cpu/*.txt \
-    ../data/meantable.py
-	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-file-size--c1-time.gpi > plot-file-size--c1-time.pdf
-
 plot-num-files--c1-time.pdf: \
     plot-num-files--c1-time.gpi \
     ../data/exp--num-files--v03--less-dirs/*.txt \
@@ -48,12 +42,14 @@ plot-num-files--c1-time.pdf: \
 
 ## Plots with GnuPlot
 
-%.pdf: %.gpi \
-    *-common.gpi \
+%.pdf: \
+    %.gpi \
+    #*-common.gpi \
     ../data/** \
     ../data/meantable.py \
-    *.sh
-	gnuplot -e 'set terminal pdf' $*.gpi > $*.pdf
+    #*.sh \
+
+	gnuplot -e 'set terminal pdf monochrome' $*.gpi > $*.pdf
 
 
 ## Diagrams with Graphviz
