@@ -2,47 +2,6 @@
 
 \written{We developed an early prototype of such a system, which we call Distributed Media Versioning (DMV).}
 
-\todo[inline]{Reduce and compress DAG section}
-
-Git's \gls{DAG} data structure has several interesting properties for distributed data storage.
-
-\begin{description}
-
-    \item[De-duplication]
-        Identical objects are de-duplicated because they will have the same ID and naturally collapse into a single object in the data store.
-        This results in a natural compression of redundant objects.
-
-    \item[A record of causality]
-        Copies of the DAG can be distributed and updated independently.
-        Concurrent updates will result in multiple branches of history, but references from child commit to parent commit establish a happens-before relationship and give a chain of causality.
-        Branches can be merged by manually reconciling the changes, and then creating a merge commit that refers to both parent commits.
-        When transferring updates from one copy to another, only new objects need to be transferred.
-
-    \item[Atomic updates]
-        When a new commit is added, all objects are added the database first, then finally the reference to the current commit is updated.
-        This reference is a 160-byte SHA-1 hash value, and which can be updated atomically.
-
-    \item[Verifiability]
-        Because every object is identified by its cryptographic hash, the data integrity of each object can be verified at any time by re-computing and checking its hash.
-        And because objects refer to other objects by hash, the graph is a form of blockchain.
-        All objects can be verified by checking hashes and following references from the most recent commits down to the initial commits and the blob leaves of the graph.
-
-\end{description}
-
-The efficiency of de-duplication depends on how well identical pieces of data map to identical objects.
-In Git, the redundant objects are the files and directories that do not change between commits.
-De-duplication of redundant data within files is accomplished by aggregating objects together into pack files and compressing them with zlib \cite[Section 10.4]{git_book}.
-
-Calculating deltas during this \glsdisp{packfile}{packing} phase requires loading the objects into memory, and so it can cause an out-of-memory error if an object is too large to fit into available RAM.
-Because Git stores files whole in \glspl{blob}, it cannot \glsdisp{packfile}{pack} objects that are larger than available RAM.
-
-If the \gls{DAG} operated at a granularity smaller than the file, it could become even more powerful.
-It could naturally de-duplicate chunks of files the way that Git already de-duplicates whole files, and it could ensure that all objects fit into RAM for \glsdisp{packfile}{packing} or other operations.
-
-This sub-file granularity and de-duplication is the core idea behind our new data storage system, \acrlong{DMV}.
-
-%
-
 \todo[inline]{Reduce and compress DMV section}
 
 \glsreset{DMV}
