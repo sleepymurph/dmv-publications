@@ -17,52 +17,12 @@
 \input{dmv-nik-abstract.txt}
 \end{abstract}
 
-\section{Introduction}
-
-
-\begin{figure}[]
-    \centering
-    \includegraphics[width=0.95\textwidth]{dia_architecture}
-    \caption{Repositories in an ad-hoc network}
-    \label{fig:dia_architecture}
-\end{figure}
-
-\begin{figure}[]
-    \centering
-    \includegraphics[width=0.9\textwidth]{dia_dmv_dag_example_three_commits}
-    \caption{A simple DMV DAG with three commits}
-    \label{dia_dmv_dag_example_three_commits}
-\end{figure}
-
-
-\newcommand{\slicediagramwidth}{0.45\textwidth}
-
-\begin{figure}[]
-
-    \centering
-
-    \begin{subfigure}[]{\slicediagramwidth}
-        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_partial_history}
-        \caption{Partial history of full data set}
-        \label{dia_dmv_dag_slice_partial_history}
-    \end{subfigure}
-    ~
-    \begin{subfigure}[]{\slicediagramwidth}
-        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_history_of_subset}
-        \caption{Full history of part of data set}
-        \label{dia_dmv_dag_slice_history_of_subset}
-    \end{subfigure}
-    ~
-    \begin{subfigure}[]{\slicediagramwidth}
-        \includegraphics[width=\textwidth]{dia_dmv_dag_slice_history_of_metadata}
-        \caption{Full history of metadata}
-        \label{dia_dmv_dag_slice_history_of_metadata}
-    \end{subfigure}
-
-    \caption{A DMV DAG, sliced in different dimensions}
-\end{figure}
-
-
+\input{dmv-nik-intro.tex}
+\input{dmv-nik-prototype.tex}
+\input{dmv-nik-experiments.tex}
+\input{dmv-nik-results.tex}
+\input{dmv-nik-discussion.tex}
+\input{dmv-nik-conclusion.tex}
 
 \printbibliography[]
 

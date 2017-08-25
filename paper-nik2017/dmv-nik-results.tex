@@ -1,0 +1,140 @@
+\section{Results}
+
+\subsection{File Size}
+
+\subsubsection{File Size Limits: RAM, Time, Disk Space}
+
+\written{We find that processing files whole will limit maximum file size to what can fit in RAM.}
+
+In our experiments, both Git and Mercurial had file size limits that were related to RAM.
+Mercurial would refuse to commit a file \SI{2}{\gib} or larger.
+It would exit with an error code and print an error message saying "up to 6442 MB of RAM may be required to manage this file."
+The commit would not be stored, and the repository would be left unchanged.
+This suggests that Mercurial needs to be able to fit the file into memory three times over in order to commit it.
+
+Git's commit operation would appear to fail with files \SI{12}{\gib} and larger.
+It would exit with an error code and print an error message saying "fatal: Out of memory, malloc failed (tried to allocate 12884901889 bytes)."
+However, the commit would be written to the repository, and git's \lstinline{fsck} operation would report no errors.
+So the commit operation completes successfully, even though an error is reported.
+
+With files \SI{24}{\gib} and larger, Git's \lstinline{fsck} operation itself would fail.
+The \lstinline{fsck} command would exit with an error code and give a similar "fatal ... malloc" error.
+However, the file could still be checked out from the repository without error.
+So we continued the trials assuming that these were also false alarms.
+
+The \gls{DMV} prototype was able to store a file up to \SI{64}{\gibi\byte} in size, but time became a limiting factor as file size increased.
+At \SI{96}{\gibi\byte}, our experiment script timed out and terminated the \gls{commit} after five and a half hours.
+
+Our experiment environment itself limited the largest file stored by any \gls{VCS} to \SI{96}{\gibi\byte}.
+Any larger and it was simply impossible to store a second copy of the file on our \SI{197}{\gibi\byte} test partition.
+Bup was able to store a \SI{96}{\gibi\byte} file with no errors in just under two hours.
+Git could also store such a large file, but one must ignore the false-alarm "fatal" errors being reported by the user interface.
+
+These findings are summarized in \autoref{file-sizes-table} and
+\autoref{vcs-size-limits-table}.
+
+\begin{table}[]
+    \caption{Observations as file size increases}
+    \label{file-sizes-table}
+    \centering
+    \begin{tabular}{r l}
+        Size & Observation \\
+        \midrule
+        \SI{1.5}{\gibi\byte} & Largest successful commit with Mercurial \\
+        \SI{2}{\gibi\byte} & Mercurial commit rejected \\
+        \SI{8}{\gibi\byte} & Largest successful commit with Git \\
+        \SI{12}{\gibi\byte} & Git false-alarm errors begin, but commit still intact \\
+        \SI{16}{\gibi\byte} & Largest successful Git fsck command \\
+        \SI{24}{\gibi\byte} & Git false-alarm errors begin during fsck, but commit still intact \\
+        \SI{64}{\gibi\byte} & Largest successful DMV commit \\
+        \SI{96}{\gibi\byte} & DMV timeout after \SI{5.5}{\hour} \\
+        \SI{96}{\gibi\byte} & Last successful commit with Bup (and Git, ignoring false-alarm errors) \\
+        \SI{128}{\gibi\byte} & All fail due to size of test partition \\
+    \end{tabular}
+\end{table}
+
+\begin{table}[]
+    \caption{Effective size limits for VCSs evaluated}
+    \label{vcs-size-limits-table}
+    \todo[inline]{Remove this table?}
+    \centering
+    \begin{tabular}{l l}
+
+        VCS & Effective limit \\
+        \midrule
+
+        Git & Commit intact at all sizes, UI reports errors at \SI{12}{\gibi\byte} and larger \\
+
+        Mercurial & Commit rejected at \SI{2}{\gibi\byte} and larger \\
+
+        Bup & Successful commits at all sizes tried, up to \SI{96}{\gibi\byte} \\
+
+        DMV & Successful commits up to \SI{64}{\gibi\byte}, timeout at
+        \SI{5.5}{\hour} during \SI{96}{\gibi\byte} trial
+
+    \end{tabular}
+\end{table}
+
+%
+
+\subsubsection{Commit Times for Increasing File Sizes}
+
+\written{Give file size result timing}
+
+\autoref{fig:plot-file-size--c1-time} shows the wall-clock time required for the initial \gls{commit}, adding a single file of the given size to a fresh \gls{repository}.
+Over all, the trend is clear and unsurprising: \gls{commit} time increases with file size.
+It increases linearly for Git, Mercurial, and Bup.
+DMV's commit times increase in a more parabolic fashion, which is most apparent in \autoref{fig:plot-file-size--c1-time}e.
+
+\begin{figure}[p]
+    \caption{Wall-clock time to commit one large file to a fresh repository}
+    \label{fig:plot-file-size--c1-time}
+    \todo[inline]{Simplify to just largest sizes, convert to black \& white}
+    \centering
+
+    \explainlogsubfig
+
+    \includegraphics[]{plot-file-size--c1-time}
+\end{figure}
+
+%
+
+
+
+\subsection{Number of Files}
+
+\subsubsection{File Quantity Limits: inodes}
+
+\written{And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.}
+
+Git, Mercurial, DMV, and the copy operation all failed when trying to store \num{7.5} million files or more, reporting that the disk was full.
+However, the disk was not actually out of space --- it was out of \emph{\glspl{inode}}.
+
+\glsreset{inode} % This is the para where we actually define what an inode is
+
+Unix filesystems, ext4 included, store file and directory metadata in a data structure called an \gls{inode}, which reside in a fixed-length table~\cite{unix_timesharing_system}.
+When all of the \glspl{inode} in the table are allocated, the filesystem cannot store any more files or directories.
+
+Bup avoided the \gls{inode} limit.
+Bup trials could continue until the input data itself exhausted the system's \glspl{inode} attempting to generate \num{25} million input files.
+
+%
+
+
+\subsubsection{Commit Times for Increasing Numbers of Files}
+
+\autoref{fig:plot-num-files--c1-time}
+
+\begin{figure}[p]
+    \caption{Wall-clock time to commit many 1KiB files to a fresh repository}
+    \label{fig:plot-num-files--c1-time}
+    \todo[inline]{Simplify to just largest sizes, convert to black \& white}
+    \centering
+
+    \explainlogsubfig
+
+    \includegraphics[]{plot-num-files--c1-time}
+\end{figure}
+
+\autoref{fig:plot-num-files--c1-time} shows the time required for the initial \gls{commit}, storing all files into a fresh empty \gls{repository}.
+Here we see the commit times for Git and DMV increasing quadratically with the number of files, while Mercurial, Bup, and the copy increase linearly.

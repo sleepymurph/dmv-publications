@@ -14,8 +14,24 @@
 \usepackage{endfloat}   % Move figures out of text for now
 }
 
+
+% Listings
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=false}
+
+
+% Numbers and units of measurement
+\usepackage[binary-units]{siunitx}
+
+\newcommand{\gib}{\gibi\byte}
+\newcommand{\mib}{\mebi\byte}
+\newcommand{\kib}{\kibi\byte}
+
+
 % Typographical tweaks
 \usepackage[inline]{enumitem}       % Compact inline lists with enumerate*
+\usepackage{booktabs}               % Nicer hlines (\midrule) in tables
+
 
 % Bibliography
 \usepackage[
@@ -31,15 +47,20 @@
 % Bib names small caps
 \renewcommand{\mkbibnamelast}[1]{\textsc{#1}}
 
+
 % TODO notes
 \usepackage[obeyFinal]{todonotes}
 
 
-% Link URLs in the PDF, and link references within the PDF itself
-%
+%%% ↑↑↑ Hyperref unaware packages above this line ↑↑↑ %%%%
+
 % The hyperref docs recommend declaring it after the other \usepackage
 % declarations, because it has to redefine several commands to work properly,
 % and other later redefinitions might interfere.
+%
+% However, other packages are aware of hyperref and ask to be declared AFTER it.
+
+% Link URLs in the PDF, and link references within the PDF itself
 \usepackage[
   hidelinks,    % Do not style links. I think this is classier.
   pdfusetitle,  % Use doc title metadata for PDF title metadata
@@ -49,6 +70,19 @@
   pdfstartview={FitV},          % Fit height of page to PDF viewer window
 ]{hyperref}
 
+
+%%% ↓↓↓ Hyperref aware packages below this line ↓↓↓ %%%%
+
+
 % Combined references (chapters 1, 2 and 3)
-% hyperref aware: has to be declared AFTER hyperref for its links to work
 \usepackage{cleveref}
+
+% Glossaries
+\usepackage[toc]{glossaries}
+\makeglossaries
+% Glossary entries
+\input{dmv-nik-glossary}
+% Emphasize first use of glossary term
+\defglsentryfmt[main]{\ifglsused{\glslabel}{\glsgenentryfmt}{\emph{\glsgenentryfmt}}}
+% Disable glossary hyperlinks because we will not print a glossary in this paper
+\glsdisablehyper

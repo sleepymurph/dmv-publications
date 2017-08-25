@@ -2,16 +2,37 @@
 # default: dmv-nik.pdf
 default: ../dmv-nik.pdf
 
+## Specific documents
+
 dmv-nik.pdf: \
     dmv-nik*.tex \
     dmv-nik.bib \
     dmv-nik-abstract.txt \
-    dia_architecture.pdf \
-    dia_dmv_dag_example_three_commits.pdf \
-    dia_dmv_dag_slice_partial_history.pdf \
-    dia_dmv_dag_slice_history_of_subset.pdf \
-    dia_dmv_dag_slice_history_of_metadata.pdf \
+    plot-file-size--c1-time.pdf \
+    plot-num-files--c1-time.pdf \
 
+
+
+
+## Specific plots
+
+TALL_GRAPH_SIZE=5in,6in
+
+plot-file-size--c1-time.pdf: \
+    plot-file-size--c1-time.gpi \
+    ../data/exp--file-size--v04--w-cpu/*.txt \
+    ../data/meantable.py
+	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-file-size--c1-time.gpi > plot-file-size--c1-time.pdf
+
+plot-num-files--c1-time.pdf: \
+    plot-num-files--c1-time.gpi \
+    ../data/exp--num-files--v03--less-dirs/*.txt \
+    ../data/meantable.py
+	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-num-files--c1-time.gpi > plot-num-files--c1-time.pdf
+
+
+
+## Generic LaTeX
 
 %.pdf: %.tex %.bib
 	pdflatex $*.tex
@@ -23,7 +44,17 @@ dmv-nik.pdf: \
 	cp $*.pdf ../$*.pdf
 
 
-# Diagrams with Graphviz
+## Plots with GnuPlot
+
+%.pdf: %.gpi \
+    *-common.gpi \
+    ../data/** \
+    ../data/meantable.py \
+    *.sh
+	gnuplot -e 'set terminal pdf' $*.gpi > $*.pdf
+
+
+## Diagrams with Graphviz
 #
 # These are generic rules to render Graphviz graphs with an M4 processing step.
 # PDF seems to be the best vector graphics format for including in LaTeX
