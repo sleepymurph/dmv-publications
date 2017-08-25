@@ -36,32 +36,25 @@ even as the modern software development practice of continuous delivery was comm
 
 \subsection{The Power of the DAG}
 
-\todo[inline]{Reduce and compress DAG section}
+Git stores data in a directed acyclic graph (DAG) data structure~\cite{git_initial_readme}.
+Each version of each file is hashed with the cryptographic SHA-1 digest, becoming a blob object, which is stored in an object store with the SHA-1 hash as its ID.
+Directory states are stored by creating a list of hash IDs for each file in the directory, a tree object, and also storing it by SHA-1 hash ID.
+Tree objects can also refer to other trees, representing subdirectories.
+Commit objects contain the hash ID of the tree object representing the directory state at the time of commit, plus metadata such as the author and commit message.
+The resulting graph is directed because the links between objects are directional.
+It is acyclic because objects are content-addressed.
+An object can only refer to another object by hash, so it must refer to an existing object whose hash is known.
+And objects cannot be updated without changing their hash.
+Therefore, it is impossible to create a circular reference.
 
-Git's \gls{DAG} data structure has several interesting properties for distributed data storage.
-
-\begin{description}
-
-    \item[De-duplication]
-        Identical objects are de-duplicated because they will have the same ID and naturally collapse into a single object in the data store.
-        This results in a natural compression of redundant objects.
-
-    \item[A record of causality]
-        Copies of the DAG can be distributed and updated independently.
-        Concurrent updates will result in multiple branches of history, but references from child commit to parent commit establish a happens-before relationship and give a chain of causality.
-        Branches can be merged by manually reconciling the changes, and then creating a merge commit that refers to both parent commits.
-        When transferring updates from one copy to another, only new objects need to be transferred.
-
-    \item[Atomic updates]
-        When a new commit is added, all objects are added the database first, then finally the reference to the current commit is updated.
-        This reference is a 160-byte SHA-1 hash value, and which can be updated atomically.
-
-    \item[Verifiability]
-        Because every object is identified by its cryptographic hash, the data integrity of each object can be verified at any time by re-computing and checking its hash.
-        And because objects refer to other objects by hash, the graph is a form of blockchain.
-        All objects can be verified by checking hashes and following references from the most recent commits down to the initial commits and the blob leaves of the graph.
-
-\end{description}
+This DAG data structure has several interesting properties for distributed data storage.
+The content-addressing naturally de-duplicates identical objects, since identical objects will have the same hash ID.
+This results in a natural compression of redundant objects.
+The append-only nature of the DAG allows replicas to make independent updates without disturbing the existing history.
+Then, when transferring updates from one replica to another, only new objects need to be transferred.
+Concurrent updates will result in multiple branches of history, but references from child commit to parent commit establish a happens-before relationship and give a chain of causality.
+Data integrity can also be verified by re-hashing each object and comparing to its ID, protecting against tampering and bit rot.
+Updates can also be made atomic by waiting to update branch head references until after all new objects are written to the object store.
 
 The efficiency of de-duplication depends on how well identical pieces of data map to identical objects.
 In Git, the redundant objects are the files and directories that do not change between commits.
