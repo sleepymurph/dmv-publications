@@ -1,12 +1,39 @@
 \section{Discussion}
 
-\towrite{Discuss implementation details that lead to size limits}
+\subsection{File Size Limits}
 
-\towrite{Mercurial: Diff during commit}
+\written{Discuss implementation details that lead to size limits}
 
-\towrite{Git: Compress during gc}
+By using files as the basic unit of storage, and storing files as deltas against
+a base revision, both Git and Mercurial will at some point load an entire file
+into memory in order to compare it to another version. This limits the maximum
+file size that the system can work with to what can fit into RAM. In Mercurial's
+case, the error message that appears when attempting to \gls{commit} a
+\SI{2}{\gib} file warns that \SI{6}{\gib} will be required to manage it. And
+because it has to calculate deltas in order to store a file at all, Mercurial
+simply cannot work with any file that it can't fit into memory three times over.
+This is why Mercurial could not store files larger than \SI{1.5}{\gib} in the
+file-size experiments (\autoref{file-size-limits-results}).
 
-% DMV sluggishness
+Because Git's delta calculation happens behind-the-scenes in a secondary phase,
+it can still manage to \gls{commit} files larger than available RAM, but it
+prints errors as the other operations fail. The two-phase approach also requires
+extra disk space and processing power. If a large file is changed, then both
+revisions will be written in full, taking twice the disk space. Then a separate
+operation will have to reread both \glspl{blob} in full to calculate deltas and
+pack the objects.
+
+Both \gls{DMV} and Bup avoid these pitfalls by operating with a finer
+granularity, using a \gls{rollinghash} to divide files into chunks by their
+content. It is the chunks and their indexes that must fit into memory, not the
+entire file. And then since chunks are only a few kilobytes and chunk indexes
+are hierarchical, file size becomes theoretically unlimited. Dividing into
+chunks by \gls{rollinghash} also makes delta compression unnecessary, because
+identical chunks in different files or file revisions will naturally
+de-duplicate. At this point, it is the method of object storage that becomes the
+bottleneck.
+
+\subsection{DMV Sluggishness}
 
 DMV's parabolic increase is due to the way it breaks the large file into chunks and stores objects as individual files on the filesystem.
 While it is reading one large file, it is writing many small files, which incurs filesystem overhead.
@@ -27,9 +54,9 @@ Bup is able to store more files because it does not write a separate object file
 Bup aggregates its DAG objects into \glspl{packfile}, writing several large files instead many small files.
 As such, it does not exhaust the disk's \glspl{inode}, and can continue until the experiment itself exhausts the system's \glspl{inode} when it tries to go up from \num{10} million files to the next step and run a trial with \num{25} million files.
 
-\subsubsection{Hash-Based Directory Names Cause Disk Seeking}
+\subsection{Hash-Based Directory Names Cause Disk Seeking}
 
-\towrite{Discuss Git and DMV slowing down due to random writes}
+\written{Discuss Git and DMV slowing down due to random writes}
 
 We saw in the file-size commit times (\autoref{results-file-size--c1-time}) that DMV's time increased quadratically, and we suspected that was because it was creating many small files and incurring filesystem overhead.
 This effect would explain why both Git and DMV do so poorly here while Bup would fare much better.
