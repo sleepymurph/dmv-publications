@@ -19,6 +19,7 @@ mins(n) = n * 60
 
 vcslist = "git hg bup prototype2x1mem copy"
 vcstitles = "Git Mercurial Bup DMV Copy"
+vcsstyles = "7 6 5 4 8"
 
 set xrange [50000:10500000]
 set xtics 1000000
@@ -29,4 +30,7 @@ set key
 
 #set title "(e) Millions of Files"
 plot for [i = 1:words(vcslist)] \
-    meantable(word(vcslist,i)) using 1:($2/60):($3/60) with errorlines title word(vcstitles,i)
+    meantable(word(vcslist,i)) using 1:($2/60):($3/60) \
+    with errorlines \
+    linestyle word(vcsstyles,i) \
+    title word(vcstitles,i)

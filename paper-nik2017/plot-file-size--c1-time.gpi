@@ -19,6 +19,7 @@ mins(n) = n * 60
 
 vcslist = "gitallowrepoerr hg bup prototype2x1mem copy"
 vcstitles = "Git Mercurial Bup DMV Copy"
+vcsstyles = "7 6 5 4 8"
 
 set xrange [gigs(7.5):gigs(104.5)]
 set xtics gigs(16)
@@ -29,4 +30,7 @@ set key
 
 #set title "(e) Largest scales measured"
 plot for [i = 1:words(vcslist)] \
-    meantable(word(vcslist,i)) using 1:($2/60):($3/60) with errorlines title word(vcstitles,i)
+    meantable(word(vcslist,i)) using 1:($2/60):($3/60) \
+    with errorlines \
+    linestyle word(vcsstyles,i) \
+    title word(vcstitles,i)
