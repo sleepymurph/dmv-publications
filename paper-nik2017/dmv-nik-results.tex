@@ -60,22 +60,6 @@ These findings are summarized in \autoref{file-sizes-table} and
     \end{tabular}
 \end{table}
 
-\begin{table}[]
-    \caption{Effective size limits for VCSs evaluated}
-    \label{vcs-size-limits-table}
-    \todo[inline]{Remove this table?}
-    \centering
-    \begin{tabular}{l l}
-
-        VCS & Effective limit \\
-        \midrule
-        Git & Commit intact at all sizes, UI reports errors at \SI{12}{\gibi\byte} and larger \\
-        Mercurial & Commit rejected at \SI{2}{\gibi\byte} and larger \\
-        Bup & Successful commits at all sizes tried, up to \SI{96}{\gibi\byte} \\
-        DMV & Successful commits up to \SI{64}{\gibi\byte}, timeout at \SI{5.5}{\hour} during \SI{96}{\gibi\byte} trial \\
-    \end{tabular}
-\end{table}
-
 %
 
 \subsubsection{Commit Times for Increasing File Sizes}
