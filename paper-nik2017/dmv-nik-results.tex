@@ -1,21 +1,26 @@
 \section{Results}
 
+\perottoinline{Don't use "would" so much}
+
 \subsection{File Size}
 
 \subsubsection{File Size Limits: RAM, Time, Disk Space}
 
 \written{We find that processing files whole will limit maximum file size to what can fit in RAM.}
 
-In our experiments, both Git and Mercurial had file size limits that were related to RAM.
+In the experiments, both Git and Mercurial had file size limits that were related to the size of RAM.
 Mercurial would refuse to commit a file \SI{2}{\gib} or larger.
 It would exit with an error code and print an error message saying "up to 6442 MB of RAM may be required to manage this file."
 The commit would not be stored, and the repository would be left unchanged.
-This suggests that Mercurial needs to be able to fit the file into memory three times over in order to commit it.
+Mercurial needs to be able to fit the file into memory three times over in order to commit it.
+\perotto{Give reason Mercurial needs 3x RAM}
+\askotto{Should that go in the discussion section?}
 
 Git's commit operation would appear to fail with files \SI{12}{\gib} and larger.
 It would exit with an error code and print an error message saying "fatal: Out of memory, malloc failed (tried to allocate 12884901889 bytes)."
 However, the commit would be written to the repository, and git's \lstinline{fsck} operation would report no errors.
 So the commit operation completes successfully, even though an error is reported.
+\perotto{Is this A, D, or I}
 
 With files \SI{24}{\gib} and larger, Git's \lstinline{fsck} operation itself would fail.
 The \lstinline{fsck} command would exit with an error code and give a similar "fatal ... malloc" error.
@@ -24,9 +29,11 @@ So we continued the trials assuming that these were also false alarms.
 
 The \gls{DMV} prototype was able to store a file up to \SI{64}{\gibi\byte} in size, but time became a limiting factor as file size increased.
 At \SI{96}{\gibi\byte}, our experiment script timed out and terminated the \gls{commit} after five and a half hours.
+\perotto{Why timed out?}
 
 Our experiment environment itself limited the largest file stored by any \gls{VCS} to \SI{96}{\gibi\byte}.
 Any larger and it was simply impossible to store a second copy of the file on our \SI{197}{\gibi\byte} test partition.
+\perotto{Make clearer that this was just experiment set up and can be changed}
 Bup was able to store a \SI{96}{\gibi\byte} file with no errors in just under two hours.
 Git could also store such a large file, but one must ignore the false-alarm "fatal" errors being reported by the user interface.
 
@@ -85,6 +92,8 @@ These findings are summarized in \autoref{file-sizes-table} and
 Over all, the trend is clear and unsurprising: \gls{commit} time increases with file size.
 It increases linearly for Git, Mercurial, and Bup.
 DMV's commit times increase in a more parabolic fashion, which is most apparent in \autoref{fig:plot-file-size--c1-time}e.
+\perotto{Why parabolic}
+\askotto{In discussion?}
 
 \begin{figure}[p]
     \caption{Wall-clock time to commit one large file to a fresh repository}
@@ -113,6 +122,7 @@ However, the disk was not actually out of space --- it was out of \emph{\glspl{i
 \glsreset{inode} % This is the para where we actually define what an inode is
 
 Unix filesystems, ext4 included, store file and directory metadata in a data structure called an \gls{inode}, which reside in a fixed-length table~\cite{unix_timesharing_system}.
+\perotto{Can be configured with more inodes (max in Linux is...?)}
 When all of the \glspl{inode} in the table are allocated, the filesystem cannot store any more files or directories.
 
 Bup avoided the \gls{inode} limit.

@@ -17,7 +17,10 @@ We intend to incorporate these insights into future versions of DMV.
 
 
 
+\todo[inline]{Incorporate abstract suggestion from Otto}
+
 =================Otto===================
+
 A distributed version control system allows for replicas of a repository with the full history of updates.
 Updates and new commits can be done to each replica independent of each other.
 Updates, including conflicting updates, are reconciled later in a peer-to-peer merge operation. This will bring replicas to a consistent state with each other.
