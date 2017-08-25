@@ -81,6 +81,7 @@ DMV's commit times increase in a more parabolic fashion, which is most apparent 
 \subsubsection{File Quantity Limits: inodes}
 
 \written{And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.}
+\perotto{Loose?}
 
 Git, Mercurial, DMV, and the copy operation all failed when trying to store \num{7.5} million files or more, reporting that the disk was full.
 However, the disk was not actually out of space --- it was out of \emph{\glspl{inode}}.
