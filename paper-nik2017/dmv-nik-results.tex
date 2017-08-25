@@ -73,12 +73,6 @@ DMV's commit times increase in a more parabolic fashion, which is most apparent 
 \perotto{Why parabolic}
 \askotto{In discussion?}
 
-\begin{figure}[]
-    \caption{Wall-clock time to commit one large file to a fresh repository}
-    \label{fig:plot-file-size--c1-time}
-    \centering
-    \includegraphics[]{plot-file-size--c1-time}
-\end{figure}
 
 %
 
@@ -110,9 +104,22 @@ Bup trials could continue until the input data itself exhausted the system's \gl
 \autoref{fig:plot-num-files--c1-time} shows the time required for the initial \gls{commit}, storing all files into a fresh empty \gls{repository}.
 Here we see the commit times for Git and DMV increasing quadratically with the number of files, while Mercurial, Bup, and the copy increase linearly.
 
-\begin{figure}[]
-    \caption{Wall-clock time to commit many 1KiB files to a fresh repository}
-    \label{fig:plot-num-files--c1-time}
+\begin{figure}
     \centering
-    \includegraphics[]{plot-num-files--c1-time}
+    \begin{minipage}{.5\textwidth}
+
+        \caption{Wall-clock time to commit one large file to a fresh repository}
+        \label{fig:plot-file-size--c1-time}
+        \centering
+        \includegraphics[width=\textwidth]{plot-file-size--c1-time}
+
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+
+        \caption{Wall-clock time to commit many 1KiB files to a fresh repository}
+        \label{fig:plot-num-files--c1-time}
+        \centering
+        \includegraphics[width=\textwidth]{plot-num-files--c1-time}
+
+    \end{minipage}
 \end{figure}

@@ -22,7 +22,8 @@ vcstitles = "Git Mercurial Bup DMV Copy"
 vcsstyles = "7 6 5 4 8"
 
 set xrange [50000:10500000]
-set xtics 1000000
+set xtics 2000000
+set mxtics 2
 set yrange [0:330]
 set ytics 60
 set format y "%1.0fm"

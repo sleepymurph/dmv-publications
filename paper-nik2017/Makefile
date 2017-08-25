@@ -37,7 +37,7 @@ dmv-nik.pdf: \
     ../data/meantable.py \
     #*.sh \
 
-	gnuplot -e 'set terminal pdf monochrome' $*.gpi > $*.pdf
+	gnuplot -e 'set terminal pdf monochrome size 3in,2in' $*.gpi > $*.pdf
 
 
 ## Diagrams with Graphviz
