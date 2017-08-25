@@ -28,12 +28,22 @@
 \newcommand{\kib}{\kibi\byte}
 
 
-% Typographical tweaks
-\usepackage[inline]{enumitem}       % Compact inline lists with enumerate*
+%%% Typographical tweaks
+
 \usepackage{booktabs}               % Nicer hlines (\midrule) in tables
+\usepackage[inline]{enumitem}       % Compact inline lists with enumerate*
+
+% An enumerated list with less spacing between items
+\newenvironment{tight_enumerate}{
+\begin{enumerate}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+}{\end{enumerate}}
 
 
-% Bibliography
+
+%%% Bibliography
+
 \usepackage[
   backend=bibtex,
   urldate=long, % use date like "Apr. 7, 2017" instead of American "04/07/2017"
@@ -48,11 +58,40 @@
 \renewcommand{\mkbibnamelast}[1]{\textsc{#1}}
 
 
-% TODO notes
+
+%%% TODO notes
+
 \usepackage[obeyFinal]{todonotes}
 \ifoptionfinal{}{
     \setlength{\marginparwidth}{2.5cm}
 }
+
+% towrite / written
+% Write points that need to be made in a "towrite", then change to "written"
+% when its done.
+% Add `final` to the document to disable all.
+\newcommand\towrite[1]{
+    \todo[inline,color=white,bordercolor=white]{\textcolor{blue}{Write: #1}}
+}
+\newcommand\written[1]{%
+    \ifoptionfinal{}{
+        {
+            \setlength{\parindent}{0em}
+            \par
+            \vspace{.5em}
+            \textcolor{gray}{Written: #1}
+            \vspace{.5em}
+            \par
+        }
+    }
+}
+
+% Feedback from specific people
+\newcommand{\perotto}[1]{\todo[color=blue!40]{Otto: #1}}
+\newcommand{\perottoinline}[1]{\todo[color=blue!40,inline]{Otto: #1}}
+\newcommand{\askotto}[1]{\todo[color=violet!40]{Ask Otto: #1}}
+\newcommand{\askottoinline}[1]{\todo[color=violet!40,inline]{Ask Otto: #1}}
+
 
 
 %%% ↑↑↑ Hyperref unaware packages above this line ↑↑↑ %%%%
@@ -73,8 +112,8 @@
   pdfstartview={FitV},          % Fit height of page to PDF viewer window
 ]{hyperref}
 
-
 %%% ↓↓↓ Hyperref aware packages below this line ↓↓↓ %%%%
+
 
 
 % Combined references (chapters 1, 2 and 3)
@@ -89,3 +128,24 @@
 \defglsentryfmt[main]{\ifglsused{\glslabel}{\glsgenentryfmt}{\emph{\glsgenentryfmt}}}
 % Disable glossary hyperlinks because we will not print a glossary in this paper
 \glsdisablehyper
+
+
+
+% Repeated text snippets
+
+\newcommand{\explainlogsubfig}{
+
+    Subfigure (a) shows the full range on a logarithmic scale, while the others
+    are linear-scale for specific ranges and include error bars.
+
+}
+
+\newcommand{\explaindiskspaceplot}{
+
+    Subfigure (a) shows repository size on a logarithmic scale, while subfigure
+    (b) shows the ratio of total repository size to input data size.
+
+}
+
+\newcommand{\muninurl}{\url{http://munin.uit.no}}
+\newcommand{\dmvurl}{\url{http://dmv.sleepymurph.com/}}
