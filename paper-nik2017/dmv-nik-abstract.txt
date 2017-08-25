@@ -1,41 +1,22 @@
-Distributed version control is an interesting form of distributed system because it takes eventual consistency to the extreme.
-Every replica of a repository contains the full history in an append-only data structure, any replica may add new commits, and conflicting updates are reconciled later in a merge operation.
-These systems are popular, but their use is generally limited to the small text files of source code.
-
-This paper explores the challenges of using version control to store larger binary files, with the goal of building a scalable, highly-available, distributed storage system for media files such as images, audio, and video.
-We developed an early prototype of such a system, which we call Distributed Media Versioning (DMV).
-We perform experiments with the popular version control systems Git and Mercurial, the Git-based backup tool Bup, and our DMV prototype.
-
-We measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.
-We find that processing files whole will limit maximum file size to what can fit in RAM.
-And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.
-We conclude that the key to storing large files is to break them into smaller chunks, and that the key to storing many small chunks is to aggregate them into larger files.
-We intend to incorporate these insights into future versions of DMV.
-
-% vim: nonumber colorcolumn= formatoptions-=t :
-
-
-
-
-\todo[inline]{Incorporate abstract suggestion from Otto}
-
-=================Otto===================
-
 A distributed version control system allows for replicas of a repository with the full history of updates.
 Updates and new commits can be done to each replica independent of each other.
 Updates, including conflicting updates, are reconciled later in a peer-to-peer merge operation. This will bring replicas to a consistent state with each other.
 
-These systems are popular, but their INTENDED? use is TYPICALLY? (generally) limited to small text files of source code. 
+These systems are popular, but their intended use is typically limited to the small text files of source code.
 However, distributed version control can be useful also for larger files, including binary files of images, audio and video.
 
-We report on the results from a set of experiments designed to characterise the behaviour of some widely used distributed version control systems. The experiments measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.
+We report on the results from a set of experiments designed to characterise the behaviour of some widely used distributed version control systems.
+The experiments measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.
 
 The goal is to better understand the behaviour and approaches used in those systems with the purpose of building a scalable, highly-available, distributed storage system for many large text and binary files residing on computers ranging from smart phones to servers.
 
 An early prototype of such a system, Distributed Media Versioning (DMV), is briefly described and compared with Git and Mercurial, and the Git-based backup tool Bup.
 
-We find that processing LARGE files WITHOUT SPLITTING THEM INTO SMALLER PARTS (whole) will limit maximum file size to what can fit in RAM.
-Storing millions of small files with hash-based names will result in SLOW? (inefficient) write SPEEDS? AS IN ... ms? HIGH LATENCY WRITE OPERATIONS? (speeds) and INEFFICIENT use of disk space.
-We conclude that large files must be split into smaller chunks to avoid the physical memory limitation, and that storing many small chunks shoulkd be aggregated into larger files to achieve low latency write operations and efficient use of disk STORAGE? space.
+We find that processing large files without splitting them into smaller parts will limit maximum file size to what can fit in RAM.
+Storing millions of small files will result in inefficient use of disk space.
+And storing files with hash-based file and directory names will result in high-latency write operations, due to having to switch between directories rather than performing a sequential write.
+We conclude that large files must be split into smaller chunks to avoid the physical memory limitation, and that many small chunks should be aggregated into larger files to achieve low latency write operations and efficient use of disk space.
 
 We intend to incorporate these insights into future versions of DMV.
+
+% vim: nonumber colorcolumn= formatoptions-=t :
