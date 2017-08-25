@@ -123,18 +123,12 @@ Bup trials could continue until the input data itself exhausted the system's \gl
 
 \subsubsection{Commit Times for Increasing Numbers of Files}
 
-\autoref{fig:plot-num-files--c1-time}
+\autoref{fig:plot-num-files--c1-time} shows the time required for the initial \gls{commit}, storing all files into a fresh empty \gls{repository}.
+Here we see the commit times for Git and DMV increasing quadratically with the number of files, while Mercurial, Bup, and the copy increase linearly.
 
 \begin{figure}[]
     \caption{Wall-clock time to commit many 1KiB files to a fresh repository}
     \label{fig:plot-num-files--c1-time}
-    \todo[inline]{Simplify to just largest sizes, convert to black \& white}
     \centering
-
-    \explainlogsubfig
-
     \includegraphics[]{plot-num-files--c1-time}
 \end{figure}
-
-\autoref{fig:plot-num-files--c1-time} shows the time required for the initial \gls{commit}, storing all files into a fresh empty \gls{repository}.
-Here we see the commit times for Git and DMV increasing quadratically with the number of files, while Mercurial, Bup, and the copy increase linearly.

@@ -16,18 +16,6 @@ dmv-nik.pdf: \
 
 
 
-## Specific plots
-
-TALL_GRAPH_SIZE=5in,6in
-
-plot-num-files--c1-time.pdf: \
-    plot-num-files--c1-time.gpi \
-    ../data/exp--num-files--v03--less-dirs/*.txt \
-    ../data/meantable.py
-	gnuplot -e 'set terminal pdf size ${TALL_GRAPH_SIZE}' plot-num-files--c1-time.gpi > plot-num-files--c1-time.pdf
-
-
-
 ## Generic LaTeX
 
 %.pdf: %.tex %.bib
