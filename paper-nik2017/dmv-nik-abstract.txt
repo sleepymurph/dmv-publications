@@ -13,3 +13,26 @@ We conclude that the key to storing large files is to break them into smaller ch
 We intend to incorporate these insights into future versions of DMV.
 
 % vim: nonumber colorcolumn= formatoptions-=t :
+
+
+
+
+=================Otto===================
+A distributed version control system allows for replicas of a repository with the full history of updates.
+Updates and new commits can be done to each replica independent of each other.
+Updates, including conflicting updates, are reconciled later in a peer-to-peer merge operation. This will bring replicas to a consistent state with each other.
+
+These systems are popular, but their INTENDED? use is TYPICALLY? (generally) limited to small text files of source code. 
+However, distributed version control can be useful also for larger files, including binary files of images, audio and video.
+
+We report on the results from a set of experiments designed to characterise the behaviour of some widely used distributed version control systems. The experiments measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.
+
+The goal is to better understand the behaviour and approaches used in those systems with the purpose of building a scalable, highly-available, distributed storage system for many large text and binary files residing on computers ranging from smart phones to servers.
+
+An early prototype of such a system, Distributed Media Versioning (DMV), is briefly described and compared with Git and Mercurial, and the Git-based backup tool Bup.
+
+We find that processing LARGE files WITHOUT SPLITTING THEM INTO SMALLER PARTS (whole) will limit maximum file size to what can fit in RAM.
+Storing millions of small files with hash-based names will result in SLOW? (inefficient) write SPEEDS? AS IN ... ms? HIGH LATENCY WRITE OPERATIONS? (speeds) and INEFFICIENT use of disk space.
+We conclude that large files must be split into smaller chunks to avoid the physical memory limitation, and that storing many small chunks shoulkd be aggregated into larger files to achieve low latency write operations and efficient use of disk STORAGE? space.
+
+We intend to incorporate these insights into future versions of DMV.
