@@ -26,17 +26,9 @@ At this point, it is the method of object storage that becomes the bottleneck.
 
 DMV's super-linear commit time increase when storing a large file is due to the way it breaks the large file into chunks and stores objects as individual files on the filesystem.
 So its performance characteristic for storing a large file is closer to that of storing many files.
-Both Git and DMV have super-linear commit time increases as the number of files increases.
-This is because both Git and DMV store objects with directory and file names taken from the object's SHA-1 hash ID.
-These randomized writes jump from directory to directory.
-So rather than updating a single directory with multiple new files, the write operate must jump to another directory and open it for appending.
-This slows both Git and DMV down down significantly as the number of objects increases.
-Mercurial stores data in files named after the original input files, so they can be written in the order that they are read, without all the jumping back and forth between directories.
-Bup also breaks large files into chunks, but it aggregates objects into pack files.
-So in addition to conserving inodes, Bup's writes are sequential appends to a single file.
-Disks and filesystems are optimized for this kind of sequential write, and so Bup has the fastest commit times of all systems tested.
-\perjmbinline{In addition: if metadata updates may cause problems (last read time etc).
-There was a paper about this, but I'll have to dig a bit before finding it.}
+And both Git and DMV had super-linear commit time increases as the number of files increases, due to their randomized directory and file names.
+Mercurial's many-files commit times were faster, with many files written sequentially, without jumping between directories.
+Bup's appends to pack files where faster still, though the speed gains over Mercurial were marginal.
 
 
 \subsection{Storing Many Small Files Leads to Inefficient Use of Disk Space}

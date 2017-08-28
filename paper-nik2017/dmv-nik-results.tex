@@ -13,7 +13,7 @@ Mercurial commits are atomic.
 
 \perjmb{would work (slowly) with larger swap then...}
 Git's commit operation appeared to fail with files \SI{12}{\gib} and larger.
-It exited with an error code and print an error message saying "fatal: Out of memory, malloc failed (tried to allocate 12884901889 bytes)."
+It exited with an error code and print an error message saying "fatal: Out of memory, malloc failed (tried to allocate \num{12884901889} bytes)."
 However, the commit was be written to the repository, and git's \lstinline{fsck} operation reported no errors.
 So the commit operation completes successfully, even though an error is reported.
 \perotto{Is this A, D, or I}
@@ -38,7 +38,7 @@ The largest file size committed in the trials was \SI{96}{\gib}.
 This was a limitation of the experiment environment, not a limit of the systems under test.
 The experiments were performed on a \SI{197}{\gib} partition.
 The next trial size \SI{128}{\gib} is too large to fit two copies on the partition.
-So no version control system was able to commit it, since they all save a copy of the file.
+And so every system tested ran out of disk space while trying to commit the \SI{128}{\gib} file, because each system saves a copy of the file during commit.
 
 Bup was able to store a \SI{96}{\gibi\byte} file with no errors in just under two hours.
 Git could also store such a large file, but one must ignore the false-alarm "fatal" errors being reported by the user interface.
@@ -98,7 +98,7 @@ So committing \num{7.5} million input files would create an additional \num{7.5}
 
 Bup avoided the \gls{inode} limit because it writes directly into Git's pack file format.
 It aggregates objects and conserves inodes.
-Bup trials could continue until the input data itself exhausted the system's \glspl{inode} attempting to generate \num{25} million input files.
+Bup trials could continue until the input data itself exhausted the system's \glspl{inode} while attempting to generate \num{25} million input files.
 
 Bup also made more efficient use of disk space.
 The input files were \SI{1}{\kib}, while the filesystem's block size was the default \SI{4}{\kib}.
@@ -114,6 +114,18 @@ And since the input files themselves account for just over \num{4} times the the
 
 \autoref{fig:plot-num-files--c1-time} shows the time required for the initial \gls{commit}, storing all files into a fresh empty \gls{repository}.
 Here we see the commit times for Git and DMV increasing quadratically with the number of files, while Mercurial, Bup, and the copy increase linearly.
+This is due to the way that each system stores objects.
+Git and DMV store objects with directory and files names taken from the object's SHA-1 hash ID.
+These randomized writes jump from directory to directory.
+So rather than updating a single directory with multiple new files, the write operate must jump to another directory and open it for appending.
+This slows both Git and DMV down down significantly as the number of objects increases.
+Mercurial stores data in files named after the original input files, so they can be written in the order that they are read, without all the jumping back and forth between directories.
+Bup also breaks large files into chunks, but it aggregates objects into pack files.
+So in addition to conserving inodes, Bup's writes are sequential appends to a single file.
+Disks and filesystems are optimized for this kind of sequential write, and so Bup had the fastest commit times of all systems tested.
+\perjmbinline{In addition: if metadata updates may cause problems (last read time etc).
+There was a paper about this, but I'll have to dig a bit before finding it.}
+
 
 \begin{figure}
     \centering
