@@ -6,4 +6,4 @@ An important disk-space optimization would be to create a virtual copy-on-write 
 A virtual filesystem could be used as the working directory, eliminating the wasted disk space of having a second writable copy of all files, and it would eliminate the copying of those files back into the immutable data store on \gls{commit}.
 It would also be interesting to perform these experiments on other filesystems and disk hardware to see how they behave.
 It would be particularly interesting to see if solid state drives experience the same slowdown with randomized writes.
-We would also like to measure the compression of the rolling hash plus DAG when applied to real world data such as common image, audio, and video formats.
+We would also like to measure the compression of files when broken up by rolling hash and stored in a DAG, using a sampling of real-world data in common image, audio, and video formats.

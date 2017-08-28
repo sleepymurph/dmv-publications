@@ -4,7 +4,7 @@
 
 In the experiments, both Git and Mercurial had file size limits that were related to the size of RAM.
 Mercurial refused to commit a file \SI{2}{\gib} or larger.
-It exited with an error code and print an error message saying "up to 6442 MB of RAM may be required to manage this file."
+It exited with an error code and printed an error message saying "up to 6442 MB of RAM may be required to manage this file."
 This is because Mercurial stores file revisions as deltas against a base revision, so it has to do its delta calculation up front.
 It loads each revision of the file into memory to do the calculations, plus it allocates memory to write the output.
 As a result, Mercurial needs to be able to fit the file into memory three times over in order to commit it.
@@ -13,7 +13,7 @@ Mercurial commits are atomic.
 
 \perjmb{would work (slowly) with larger swap then...}
 Git's commit operation appeared to fail with files \SI{12}{\gib} and larger.
-It exited with an error code and print an error message saying "fatal: Out of memory, malloc failed (tried to allocate \num{12884901889} bytes)."
+It exited with an error code and printed an error message saying "fatal: Out of memory, malloc failed (tried to allocate \num{12884901889} bytes)."
 However, the commit was be written to the repository, and git's \lstinline{fsck} operation reported no errors.
 So the commit operation completes successfully, even though an error is reported.
 \perotto{Is this A, D, or I}
@@ -26,8 +26,9 @@ So we continued the trials assuming that these were also false alarms.
 Git's delta compression takes place in a separate garbage collection step.
 For Git, we ran the garbage collector at the end of each trial and measured repository size before and after garbage collection.
 We measured total size, which included input data.
-With file sizes up to and including \SI{1}{\gib}, the garbage collection resulted in a reduction in repository size from approximately three times the input data size (the input file, and two separately stored revisions) to approximately twice the input data size (the input file, and the base revision, and a delta).
+With file sizes up to and including \SI{1}{\gib}, the garbage collection resulted in a reduction in repository size from approximately three times the input data size (the input file and two separately stored revisions) to approximately twice the input data size (the input file, the base revision, and a negligible delta).
 At \SI{1.5}{\gib} and above, the repository size remained approximately three times the input data size after garbage collection.
+So Git's garbage collection was silently failing with larger files.
 This indicates that Git's delta compression also requires that the file be able to fit into disk space three times over.
 
 The \gls{DMV} prototype was able to store a file up to \SI{64}{\gibi\byte} in size, but time became a limiting factor as file size increased.
@@ -115,7 +116,7 @@ And since the input files themselves account for just over \num{4} times the the
 \autoref{fig:plot-num-files--c1-time} shows the time required for the initial \gls{commit}, storing all files into a fresh empty \gls{repository}.
 Here we see the commit times for Git and DMV increasing quadratically with the number of files, while Mercurial, Bup, and the copy increase linearly.
 This is due to the way that each system stores objects.
-Git and DMV store objects with directory and files names taken from the object's SHA-1 hash ID.
+Git and DMV store objects with directory and files names taken from the object's SHA-1 hash ID, so they are effectively random.
 These randomized writes jump from directory to directory.
 So rather than updating a single directory with multiple new files, the write operate must jump to another directory and open it for appending.
 This slows both Git and DMV down down significantly as the number of objects increases.

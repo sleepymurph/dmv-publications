@@ -17,26 +17,27 @@ These limits could be circumvented by increasing RAM, or by implementing the dif
 
 Both \gls{DMV} and Bup avoid these pitfalls by operating with a finer granularity than the file, using a \gls{rollinghash} to divide files into chunks by their content.
 It is the chunks and their indexes that must fit into memory, not the entire file.
-And then since chunks are only a few kilobytes and chunk indexes are hierarchical, file size becomes theoretically unlimited.
+And then since chunks are only a few kilobytes and chunk indexes are hierarchical, file size becomes practically unlimited.
 Dividing into chunks by \gls{rollinghash} also makes delta compression unnecessary, because identical chunks in different files or file revisions will naturally de-duplicate.
-At this point, it is the method of object storage that becomes the bottleneck.
+From there, it is the method of object storage that becomes the bottleneck.
 
 
 \subsection{Naming Files by Hash Leads to Inefficient Writes}
 
-DMV's super-linear commit time increase when storing a large file is due to the way it breaks the large file into chunks and stores objects as individual files on the filesystem.
-So its performance characteristic for storing a large file is closer to that of storing many files.
-And both Git and DMV had super-linear commit time increases as the number of files increases, due to their randomized directory and file names.
+The way DMV's commit time increased super-linearly with file size is due to the way it breaks the large file into chunks and stores objects as individual files on the filesystem.
+It turns the problem of storing one large file into the problem of storing many small files.
+And so its performance characteristic is closer to that of storing many files.
+And both Git's and DMV's commit times increased super-linearly with the number of files increases, due to their randomized directory and file names.
 Mercurial's many-files commit times were faster, with many files written sequentially, without jumping between directories.
 Bup's appends to pack files where faster still, though the speed gains over Mercurial were marginal.
 
 
 \subsection{Storing Many Small Files Leads to Inefficient Use of Disk Space}
 
-Git, Mercurial, DMV, and the copy all create one file in their \glspl{objectstore} for each input file.
+Git, Mercurial, DMV, and the copy control all create one file in their \glspl{objectstore} for each input file.
 So they all used up the filesystem's available inodes when storing millions of files.
 Bup, with its aggregated storage, did not.
-Storing many small files also make less efficient use of disk space when the file sizes are smaller than the filesystem's block size.
+Storing many small files also makes less efficient use of disk space when the file sizes are smaller than the filesystem's block size.
 With immutable stored objects and an append-only history, the usage pattern of version control does not require room for objects to grow.
 Therefore it makes sense to aggregate objects together into larger files.
 
