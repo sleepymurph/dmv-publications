@@ -3,12 +3,14 @@
 \todo[inline]{Repositories are "full" replicas, but they are not necessarily up to date}
 
 Git stores data in a directed acyclic graph (DAG) data structure~\cite{git_initial_readme}.
-Each version of each file is hashed with the cryptographic SHA-1 digest, becoming a blob object, which is stored in an object store with the SHA-1 hash as its ID.
-Directory states are stored by creating a list of hash IDs for each file in the directory, a tree object, and also storing it by SHA-1 hash ID.
-Tree objects can also refer to other trees, representing subdirectories.
-Commit objects contain the hash ID of the tree object representing the directory state at the time of commit, plus metadata such as the author and commit message.
-The resulting graph is directed because the links between objects are directional.
-It is acyclic because objects are content-addressed.
+Each version of each file is hashed with the cryptographic SHA-1 digest, becoming a \gls{blob}, which is stored in an object store with the SHA-1 hash as its ID.
+Directory states are stored by creating a list of hash IDs for each file in the directory.
+This list is called a tree object, and it is also hashed and stored by its SHA-1 hash ID.
+It is called a tree because tree objects can also refer to other trees, representing subdirectories.
+Commit objects contain the hash ID of the tree object that represents the directory state at the time of commit, plus metadata such as the author and commit message.
+It too is hashed and stored by ID.
+These objects form a graph with directed links from one object to another and no circular references (cycles), a directed acyclic graph.
+It is the content-addressing that makes cycles impossible.
 An object can only refer to another object by hash, so it must refer to an existing object whose hash is known.
 And objects cannot be updated without changing their hash.
 Therefore, it is impossible to create a circular reference.
