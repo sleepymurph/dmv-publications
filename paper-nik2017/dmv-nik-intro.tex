@@ -2,10 +2,11 @@
 
 \written{Distributed version control is an interesting form of distributed system because it takes eventual consistency to the extreme.}
 
-Distributed systems are ruled by the \gls{CAP-theorem}~\cite{cap_origin}, which states that a system cannot be completely consistent (C), available (A), and tolerant of network partitions (P) all at the same time.
-When communication between replicas breaks down and they cannot all acknowledge an operation, the system is faced with "the \gls{partitiondecision}: block the operation and thus decrease availability, or proceed and thus risk inconsistency."~\cite{cap_years_later}
+The \gls{CAP-theorem}~\cite{cap_origin} states that a distributed system cannot be completely consistent (C), available (A), and tolerant of network partitions (P) all at the same time.
+When communication between nodes breaks down and they cannot all acknowledge an operation, the system is faced with "the \gls{partitiondecision}: block the operation and thus decrease availability, or proceed and thus risk inconsistency."~\cite{cap_years_later}
 
-Much research is aimed at improving consistency, but distributed version control systems focus on availability.
+Much research is focused on consistency.
+However distributed version control systems focus on availability.
 
 \written{Every replica of a repository contains the full history in an append-only data structure, any replica may add new commits, and conflicting updates are reconciled later in a merge operation.}
 
@@ -20,7 +21,7 @@ A \gls{DVCS} can track many different \glspl{branch} at the same time, and confl
 \Glspl{DVCS} are designed primarily to store program source code: plain text files in the range of tens of kilobytes.
 Checking in larger binary files such as images, sound, or video affects performance.
 Actions that require copying data in and out of the system slow from hundredths of a second to full seconds or minutes.
-And since a \gls{DVCS} keeps every version of every file in every \gls{repository}, forever, the disk space needs compound.
+And since a \gls{DVCS} keeps every version of every file in every \gls{repository}, forever, the disk space needs only increase.
 
 This has lead to a conventional wisdom that binary files should never be stored in version control, inspiring blog posts with titles such as
 "Don't ever commit binary files to Git! Or what to do if you do"~\cite{dont_ever_commit_binaries_to_version_control},
@@ -28,43 +29,5 @@ even as the modern software development practice of continuous delivery was comm
 
 \written{This paper explores the challenges of using version control to store larger binary files, with the goal of building a scalable, highly-available, distributed storage system for media files such as images, audio, and video.}
 
-This paper explores the challenges of using version control to store larger binary files, with the goal of building a scalable, highly-available, distributed storage system for media files such as images, audio, and video.
+This paper evaluates version control when storing larger binary files, with the goal of building a scalable, highly-available, distributed storage system with versioning for media files such as images, audio, and video.
 
-\subsection{The Power of the DAG}
-
-Git stores data in a directed acyclic graph (DAG) data structure~\cite{git_initial_readme}.
-Each version of each file is hashed with the cryptographic SHA-1 digest, becoming a blob object, which is stored in an object store with the SHA-1 hash as its ID.
-Directory states are stored by creating a list of hash IDs for each file in the directory, a tree object, and also storing it by SHA-1 hash ID.
-Tree objects can also refer to other trees, representing subdirectories.
-Commit objects contain the hash ID of the tree object representing the directory state at the time of commit, plus metadata such as the author and commit message.
-The resulting graph is directed because the links between objects are directional.
-It is acyclic because objects are content-addressed.
-An object can only refer to another object by hash, so it must refer to an existing object whose hash is known.
-And objects cannot be updated without changing their hash.
-Therefore, it is impossible to create a circular reference.
-
-This DAG data structure has several interesting properties for distributed data storage.
-The content-addressing naturally de-duplicates identical objects, since identical objects will have the same hash ID.
-This results in a natural data compression.
-The append-only nature of the DAG allows replicas to make independent updates without disturbing the existing history.
-Then, when transferring updates from one replica to another, only new objects need to be transferred.
-Concurrent updates will result in multiple branches of history, but references from child commit to parent commit establish a happens-before relationship and give a chain of causality.
-Data integrity can also be verified by re-hashing each object and comparing to its ID, protecting against tampering and bit rot.
-Updates can also be made atomic by waiting to update branch head references until after all new objects are written to the object store.
-
-The efficiency of de-duplication depends on how well identical pieces of data map to identical objects.
-In Git, the redundant objects are the files and directories that do not change between commits.
-However, small changes to a file will result in a new object that is very similar to the previous one, and the two could be compressed further.
-Git compresses this redundant data between files by aggregating objects into archives called pack files.
-Inside pack files, Git stores similar objects as a series of deltas against a base revision~\cite[Section 10.4]{git_book}.
-This secondary compression requires reading objects again, comparing them, and calculating deltas.
-Also, if the algorithm is implemented with an assumption that objects are small enough to fit into RAM, attempting to process large files could result in an out-of-memory error.
-This extra effort could be avoided by more fine-grained mapping of data to objects, so that repeated sections within files become their own objects that can be reused.
-
-With better mapping, the DAG would de-duplicate redundant chunks of files the way that it already de-duplicates whole files.
-It could also ensure that all objects are a reasonable size that can fit into RAM for processing.
-This sub-file granularity and de-duplication is one of the core ideas behind our new data storage system, \acrlong{DMV}.
-
-\todo[inline]{Repositories are "full" replicas, but they are not necessarily up to date}
-
-%

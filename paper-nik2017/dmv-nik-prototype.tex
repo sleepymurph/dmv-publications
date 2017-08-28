@@ -1,10 +1,42 @@
 \section{Distributed Media Versioning}
 
-\written{We developed an early prototype of such a system, which we call Distributed Media Versioning (DMV).}
+\todo[inline]{Repositories are "full" replicas, but they are not necessarily up to date}
 
-\glsreset{DMV}
+Git stores data in a directed acyclic graph (DAG) data structure~\cite{git_initial_readme}.
+Each version of each file is hashed with the cryptographic SHA-1 digest, becoming a blob object, which is stored in an object store with the SHA-1 hash as its ID.
+Directory states are stored by creating a list of hash IDs for each file in the directory, a tree object, and also storing it by SHA-1 hash ID.
+Tree objects can also refer to other trees, representing subdirectories.
+Commit objects contain the hash ID of the tree object representing the directory state at the time of commit, plus metadata such as the author and commit message.
+The resulting graph is directed because the links between objects are directional.
+It is acyclic because objects are content-addressed.
+An object can only refer to another object by hash, so it must refer to an existing object whose hash is known.
+And objects cannot be updated without changing their hash.
+Therefore, it is impossible to create a circular reference.
 
-\gls{DMV} is our new distributed data storage platform.
+This DAG data structure has several interesting properties for distributed data storage.
+The content-addressing naturally de-duplicates identical objects, since identical objects will have the same hash ID.
+This results in a natural data compression.
+The append-only nature of the DAG allows replicas to make independent updates without disturbing the existing history.
+Then, when transferring updates from one replica to another, only new objects need to be transferred.
+Concurrent updates will result in multiple branches of history, but references from child commit to parent commit establish a happens-before relationship and give a chain of causality.
+Data integrity can also be verified by re-hashing each object and comparing to its ID, protecting against tampering and bit rot.
+Updates can also be made atomic by waiting to update branch head references until after all new objects are written to the object store.
+
+The efficiency of de-duplication depends on how well identical pieces of data map to identical objects.
+In Git, the redundant objects are the files and directories that do not change between commits.
+However, small changes to a file will result in a new object that is very similar to the previous one, and the two could be compressed further.
+Git compresses this redundant data between files by aggregating objects into archives called pack files.
+Inside pack files, Git stores similar objects as a series of deltas against a base revision~\cite[Section 10.4]{git_book}.
+This secondary compression requires reading objects again, comparing them, and calculating deltas.
+Also, if the algorithm is implemented with an assumption that objects are small enough to fit into RAM, attempting to process large files could result in an out-of-memory error.
+This extra effort could be avoided by more fine-grained mapping of data to objects, so that repeated sections within files become their own objects that can be reused.
+
+With better mapping, the DAG would de-duplicate redundant chunks of files the way that it already de-duplicates whole files.
+It could also ensure that all objects are a reasonable size that can fit into RAM for processing.
+This sub-file granularity and de-duplication is one of the core ideas behind our new data storage system, \textbf{\acrfull{DMV}}.
+
+%
+
 The core idea is relatively simple --- store data in a Git-like \gls{DAG}, but make the following changes:
 
 \begin{tight_enumerate}
@@ -17,12 +49,12 @@ The core idea is relatively simple --- store data in a Git-like \gls{DAG}, but m
 
 Doing so allows a data set to be replicated or sharded across many nodes according to the capacity of nodes and the needs of local users.
 The focus is on data locality: tracking what data is where, presenting that information to the user, and making it easy to transfer data to other nodes as desired.
-The ultimate goal is to create a new abstraction, of \emph{many devices, one data item} in varying states of synchronization.
+The goal is to create a new abstraction, of \emph{many devices, one data item} in varying states of synchronization.
 
 %
 
 \gls{DMV}'s \gls{DAG} is based on Git's, but it adds a new object type, the \gls{chunkedblob}, which represents a \gls{blob} that has been broken into several smaller chunks.
-An example \gls{DMV} \gls{DAG} is shown in \autoref{dia_dmv_dag_example_three_commits},and the relationships between object types are shown in \autoref{fig:dia_new_dag}.
+An example \gls{DMV} \gls{DAG} is shown in \autoref{dia_dmv_dag_example_three_commits}, and the relationships between object types are shown in \autoref{fig:dia_new_dag}.
 
 
 \begin{figure}[]
@@ -53,7 +85,7 @@ Repositories will have the option of only storing a portion of the data set or a
 A DMV repository will start with the assumption that it does not hold all objects in the data set.
 The goal is to allow DMV to run on devices with widely varying available resources, from servers to mobile devices.
 
-We have written a \gls{DMV} prototype in the Rust programming language.
+We have written a \gls{DMV} prototype.
 The current early prototype can store and retrieve data locally, but the distributed features are not yet implemented.
 
 The \gls{DMV} prototype was developed with Rust stable versions 1.15 and 1.16 on Debian Linux 8.6 ("Jessie").
