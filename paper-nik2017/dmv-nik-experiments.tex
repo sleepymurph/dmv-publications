@@ -55,10 +55,12 @@ We ran the trials on four dedicated computers with no other load.
 Each was a typical office desktop with a \SI{3.16}{\giga\hertz} \num{64}-bit dual-core processor and \SI{8}{\gibi\byte} of RAM, running Debian version 8.6 ("Jessie").
 Each computer had one normal SATA hard disk (spinning platter, not solid-state), and trials were conducted on a dedicated \SI{197}{\gibi\byte} LVM partition formatted with the ext4 filesystem.
 All came from the same manufacturer with the same specifications and were, for practical purposes, identical.
-%Additional details can be found in \autoref{test-machine-specs}.
-\todo{Include platform table?}
 
 We ran every trial four times, once on each of the experiment computers, and took the mean and standard deviation of each time and disk space measurement.
 However, because the experiment computers are practically identical, there was little variation.
+
+Software versions used where Git 2.1.4, Mercurial 3.1.2, Bup \mbox{debian/0.25-1}.
+The DMV prototype was compiled from version c9baf3a in the DMV source Git repository.
+The dummy copy VCS simply used the \lstinline{cp} utility bundled with Debian, GNU \lstinline{cp} version 8.23.
 
 %
