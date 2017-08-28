@@ -7,7 +7,6 @@ However, distributed version control can also be useful for larger files, includ
 
 We report on the results from a set of experiments designed to characterise the behaviour of some widely used distributed version control systems.
 The experiments measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.
-\todo{Write about repository sizes in text}
 
 The goal is to better understand the behaviour and approaches used in those systems with the purpose of building a scalable, highly-available, distributed storage system for many large text and binary files residing on computers ranging from smart phones to servers.
 
