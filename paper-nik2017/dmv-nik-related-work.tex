@@ -1,7 +1,7 @@
 \section{Related Works}
 
-The obvious related works are distributed version control systems such as Git and Mercurial.
-These are the inspirations for DMV.
+The primary related works are distributed version control systems such as Git and Mercurial, which are the inspiration for DMV.
+DMV hopes to expand on the distributed version control concept with better handling of large binary files, and the ability to distribute the repository itself.
 
 There are existing projects that extend Git with special handling for larger files, such as Git-annex~\cite{git_annex_homepage} and Git-media~\cite{git_media_github}.
 Both store information about the larger files in the normal Git \gls{repository} and then store the files themselves in a separate location.
@@ -10,7 +10,7 @@ These tracking and distribution features are very similar to our goals for DMV
 However, Git-annex is not quite as flexible as we aim for with \gls{DMV}.
 It considers the large files atomic units, and it does not break them into smaller chunks for de-duplication.
 
-Boar~\cite{boar_homepage}, and Bup~\cite{bup_homepage} are open-source backup systems based on version control.
+Boar~\cite{boar_homepage} and Bup~\cite{bup_homepage} are open-source backup systems based on version control.
 Bup even uses Git's data format.
 They are also an inspiration for DMV.
 Both use a rolling hash algorithm to break files into chunks by content.
@@ -30,8 +30,11 @@ Eyo in particular leans on the insight that in media files, the metadata is more
 And so it separates metadata from data.
 This allows efficient storage and syncing of metadata.
 However, it requires that the software be able to parse many different media formats, and it requires client software to be rewritten to open the separate metadata and data streams.
-This requires extra effort on the part of Eyo's developers and application developers.
+A rolling hash will not be likely to find these exact seams between changing metadata and static data.
+So it will not compress data as well.
+However, it will avoid additional developer effort to support new file formats.
 
 Rsync~\cite{rsynctechreport} is the origin of the rolling hash algorithm that DMV and Bup use.
 
 \perjmbinline{Mention COW filesystems}
+\askjmbinline{I mention them in the Future Work section. Is that ok?}

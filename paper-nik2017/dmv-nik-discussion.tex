@@ -2,35 +2,24 @@
 
 \subsection{Reading Whole Files into RAM Limits File Size to RAM}
 
-\perjmb{again: efficient in RAM, larger is possible if you have a large swap partition/file.}
-By using files as the basic unit of storage, and storing files as deltas against
-a base revision, both Git and Mercurial will at some point load an entire file
-into memory in order to compare it to another version. This limits the maximum
-file size that the system can work with to what can fit into RAM. In Mercurial's
-case, the error message that appears when attempting to \gls{commit} a
-\SI{2}{\gib} file warns that \SI{6}{\gib} will be required to manage it. And
-because it has to calculate deltas in order to store a file at all, Mercurial
-simply cannot work with any file that it can't fit into memory three times over.
-This is why Mercurial could not store files larger than \SI{1.5}{\gib} in the
-file-size experiments.
+Both Git and Mercurial will at some point load an entire file into memory in order to compare it to another version.
+This limits the maximum file size that the system can work with to what can fit into RAM.
+In Mercurial's case, the error message that appears when attempting to \gls{commit} a \SI{2}{\gib} file warns that \SI{6}{\gib} will be required to manage it.
+And because it has to calculate deltas in order to store a file at all, Mercurial simply cannot work with any file that it can't fit into memory three times over.
+This is why Mercurial could not store files larger than \SI{1.5}{\gib} in the file-size experiments.
 
-Because Git's delta calculation happens behind-the-scenes in a secondary phase,
-it can still manage to \gls{commit} files larger than available RAM, but it
-prints errors as the other operations fail. The two-phase approach also requires
-extra disk space and processing power. If a large file is changed, then both
-revisions will be written in full, taking twice the disk space. Then a separate
-operation will have to reread both \glspl{blob} in full to calculate deltas and
-pack the objects.
+Because Git's delta calculation happens behind-the-scenes in a secondary phase, it can still manage to \gls{commit} files larger than available RAM, but it prints errors as the other operations fail.
+The two-phase approach also requires extra disk space and processing power.
+If a large file is changed, then both revisions will be written in full, taking twice the disk space.
+Then a separate operation will have to reread both \glspl{blob} in full to calculate deltas and pack the objects.
 
-Both \gls{DMV} and Bup avoid these pitfalls by operating with a finer
-granularity, using a \gls{rollinghash} to divide files into chunks by their
-content. It is the chunks and their indexes that must fit into memory, not the
-entire file. And then since chunks are only a few kilobytes and chunk indexes
-are hierarchical, file size becomes theoretically unlimited. Dividing into
-chunks by \gls{rollinghash} also makes delta compression unnecessary, because
-identical chunks in different files or file revisions will naturally
-de-duplicate. At this point, it is the method of object storage that becomes the
-bottleneck.
+These limits could be circumvented by increasing RAM, or by implementing the diff algorithms in a streaming fashion that does not load the whole file at once.
+
+Both \gls{DMV} and Bup avoid these pitfalls by operating with a finer granularity than the file, using a \gls{rollinghash} to divide files into chunks by their content.
+It is the chunks and their indexes that must fit into memory, not the entire file.
+And then since chunks are only a few kilobytes and chunk indexes are hierarchical, file size becomes theoretically unlimited.
+Dividing into chunks by \gls{rollinghash} also makes delta compression unnecessary, because identical chunks in different files or file revisions will naturally de-duplicate.
+At this point, it is the method of object storage that becomes the bottleneck.
 
 
 \subsection{Naming Files by Hash Leads to Inefficient Writes}
@@ -39,13 +28,13 @@ DMV's super-linear commit time increase when storing a large file is due to the 
 So its performance characteristic for storing a large file is closer to that of storing many files.
 Both Git and DMV have super-linear commit time increases as the number of files increases.
 This is because both Git and DMV store objects with directory and file names taken from the object's SHA-1 hash ID.
-These randomized writes are inefficient for spinning disks and incur significant overhead as the writes jump from directory to directory.
+These randomized writes jump from directory to directory.
+So rather than updating a single directory with multiple new files, the write operate must jump to another directory and open it for appending.
 This slows both Git and DMV down down significantly as the number of objects increases.
 Mercurial stores data in files named after the original input files, so they can be written in the order that they are read, without all the jumping back and forth between directories.
 Bup also breaks large files into chunks, but it aggregates objects into pack files.
-So in addition to conserving inodes, Bup's writes are sequential and more efficient than the others.
-This is why Bup is consistently the fastest.
-\perjmbinline{you had a clue to a likely candidate there: every time you create a new file in a new / separate subdirectory, you have to open that directory's inode and update it later. Adding a new file to the same directory should (in principle) just be updating the same inode again, while we would need to read the inode for a new directory in the git case.}
+So in addition to conserving inodes, Bup's writes are sequential appends to a single file.
+Disks and filesystems are optimized for this kind of sequential write, and so Bup has the fastest commit times of all systems tested.
 \perjmbinline{In addition: if metadata updates may cause problems (last read time etc).
 There was a paper about this, but I'll have to dig a bit before finding it.}
 
@@ -53,8 +42,9 @@ There was a paper about this, but I'll have to dig a bit before finding it.}
 \subsection{Storing Many Small Files Leads to Inefficient Use of Disk Space}
 
 Git, Mercurial, DMV, and the copy all create one file in their \glspl{objectstore} for each input file.
-So they all used up the filesystem's available inodes before Bup did with its aggregated storage.
-They also make less efficient use of disk space when the file sizes are smaller than the filesystem's block size.
+So they all used up the filesystem's available inodes when storing millions of files.
+Bup, with its aggregated storage, did not.
+Storing many small files also make less efficient use of disk space when the file sizes are smaller than the filesystem's block size.
 With immutable stored objects and an append-only history, the usage pattern of version control does not require room for objects to grow.
 Therefore it makes sense to aggregate objects together into larger files.
 

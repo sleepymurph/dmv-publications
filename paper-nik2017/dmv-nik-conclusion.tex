@@ -1,17 +1,15 @@
 \section{Conclusion}
 
-We have performed experiments to probe the scalability limits of existing \gls{DAG}-based \acrlongpl{DVCS}.
+We have performed experiments to probe the scalability limits of Git, Mercurial, Bup, and our DMV prototype.
 We have shown that the maximum size of file that Git and Mercurial can store is limited by the amount of available memory in the system.
-We conclude that this is because those systems calculate deltas of files to de-duplicate data, and they load the entire file into memory in order to do so.
-\perjmbinline{memory limitations is probably not a common issue for systems intended for small files, otherwise they would probably have used algorithms that don't require the entire file to be loaded into memory.}
-\perjmbinline{The point is: we should be careful when sounding like we say that file-size diffs is causing memory issues as there are two ways to handle this:\\
-- better algorithms\\
-- larger swap (slow)}
+We conclude that this is because those systems calculate deltas of files to de-duplicate data, and their implementations load the entire file into memory in order to do so.
+Better diff algorithm implementations could work around this problem.
+However, a rolling hash algorithm can also work around this problem by finding duplicate content at a finer granularity than the file.
+Using those chunks as objects would make use of the DAG's natural de-duplication of identical objects, and make the secondary compression less necessary.
 
 We have also rediscovered the limits of the Unix filesystem for storing many small files.
 We saw that writing files smaller than the filesystem block size incurs storage overhead, that splitting files among too many subdirectories takes \glspl{inode} that are needed to store files, and that jumping between directories when writing files incurs write-speed penalties.
 
-We have shown that any \gls{VCS} that stores objects as individual files on the filesystem will encounter these filesystem limitations as they try to scale in terms of number of files.
-\perjmb{it could be interesting to see how other file systems behave with the same experiments.}
+We have shown that a \gls{VCS} that stores objects as individual files on the filesystem will encounter these limitations as they try to scale in terms of number of files.
 A \gls{VCS} that also breaks files into chunks will turn the problem of storing large files into the problem of storing many files, again encountering these limitations.
-However, the limitations can be avoided by aggregating objects into \glspl{packfile} as Bup does.
+However, the limitations can be avoided by aggregating objects into archives as Bup does.

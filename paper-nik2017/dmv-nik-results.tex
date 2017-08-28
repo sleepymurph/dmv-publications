@@ -73,10 +73,10 @@ These findings are summarized in \autoref{file-sizes-table}.
 \autoref{fig:plot-file-size--c1-time} shows the wall-clock time required for the initial \gls{commit}, adding a single file of the given size to a fresh \gls{repository}.
 Over all, the trend is clear and unsurprising: \gls{commit} time increases with file size.
 It increases linearly for Git, Mercurial, and Bup.
-DMV's commit times increase in a more parabolic fashion,
-similar to how it and Git respond to increasing numbers of files.
+DMV's commit times increase in a more parabolic fashion, similar to how it and Git respond to increasing numbers of files.
 This is because DMV breaks the large files into many smaller objects, trading the large file problem for the many file problem.
-
+Files up to \SI{8}{\mib} were committed in under \SI{1}{\second} for all systems.
+So one should be able to keep a small number images or short audio files in version control and still have reasonable interactive response times.
 
 %
 
@@ -90,11 +90,11 @@ It was out of \glspl{inode}.
 
 Unix filesystems, ext4 included, store file and directory metadata in a data structure called an \gls{inode}, which reside in a fixed-length table~\cite{unix_timesharing_system}.
 When all of the \glspl{inode} in the table are allocated, the filesystem cannot store any more files or directories.
-The number of inodes is tunable at filesystem creation by passing a bytes-per-inode parameter (\lstinline{-i}) to \lstinline{mke2fs}, but our experiment partitions used the default setting.
-The \SI{197}{\gib} partitions had approximately \num{13} million inodes.
+The number of inodes is tunable at filesystem creation by passing a bytes-per-inode parameter (\lstinline{-i}) to \lstinline{mke2fs}.
+However, our experiment partitions used the default setting, giving the \SI{197}{\gib} partitions \num{13107200} inodes.
 
 All systems tested except for Bup store a new copy of the input data, with one stored file per input file.
-So committing \num{7.5} million input files would create an additional \num{7.5} million stored files, for a total of \num{15} million inodes, \num{2} million more than the \num{13} million on the filesystem.
+So committing \num{7.5} million input files would create an additional \num{7.5} million stored files, for a total of \num{15} million inodes, almost \num{2} million more than the \num{13.1} million on the filesystem.
 
 Bup avoided the \gls{inode} limit because it writes directly into Git's pack file format.
 It aggregates objects and conserves inodes.
