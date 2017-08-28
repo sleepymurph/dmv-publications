@@ -55,8 +55,9 @@ Updates can also be made atomic by waiting to update branch head references unti
 The efficiency of de-duplication depends on how well identical pieces of data map to identical objects.
 In Git, the redundant objects are the files and directories that do not change between commits.
 However, small changes to a file will result in a new object that is very similar to the previous one, and the two could be compressed further.
-Git compresses this redundant data between files by aggregating objects into archives called pack files, where they are compressed together with zlib~\cite[Section 10.4]{git_book}.
-This secondary compression requires reading objects again, comparing them, and searching for repeated sections.
+Git compresses this redundant data between files by aggregating objects into archives called pack files.
+Inside pack files, Git stores similar objects as a series of deltas against a base revision~\cite[Section 10.4]{git_book}.
+This secondary compression requires reading objects again, comparing them, and calculating deltas.
 Also, if the algorithm is implemented with an assumption that objects are small enough to fit into RAM, attempting to process large files could result in an out-of-memory error.
 This extra effort could be avoided by more fine-grained mapping of data to objects, so that repeated sections within files become their own objects that can be reused.
 
