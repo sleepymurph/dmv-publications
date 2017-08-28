@@ -2,10 +2,6 @@
 
 \written{We developed an early prototype of such a system, which we call Distributed Media Versioning (DMV).}
 
-\todo[inline]{DMV is different because it starts with the assumption that the repo is incomplete.
-The repository itself can be distributed.}
-\todo[inline]{Reduce and compress DMV section}
-
 \glsreset{DMV}
 
 \gls{DMV} is our new distributed data storage platform.
@@ -25,15 +21,8 @@ The ultimate goal is to create a new abstraction, of \emph{many devices, one dat
 
 %
 
-\gls{DMV}'s data set and its history are represented as a \acrshort{DAG} (\acrlong{DAG}, see \autoref{how-data-stored-in-git}), and the rest of the design flows from that.
 \gls{DMV}'s \gls{DAG} is based on Git's, but it adds a new object type, the \gls{chunkedblob}, which represents a \gls{blob} that has been broken into several smaller chunks.
-An example \gls{DMV} \gls{DAG} is shown in \autoref{dia_dmv_dag_example_three_commits}.
-
-
-Files are split into chunks using a \gls{rollinghash} such as Rabin-Karp fingerprinting~\cite{rabin_karp_fingerprinting}.
-\todo{It's the rsync algorithm}
-This splits the files into chunks by content rather than position, so that identical chunks within files (and especially different versions of the same file) will be found and stored as identical objects, regardless of their position within the file.
-This way, identical chunks will be naturally de-duplicated by the \gls{DAG}, and only the changed portions of files need to be stored as new objects.
+An example \gls{DMV} \gls{DAG} is shown in \autoref{dia_dmv_dag_example_three_commits},and the relationships between object types are shown in \autoref{fig:dia_new_dag}.
 
 
 \begin{figure}[]
@@ -52,14 +41,21 @@ This way, identical chunks will be naturally de-duplicated by the \gls{DAG}, and
 \end{figure}
 
 
-We have written a \gls{DMV} prototype as a proof-of-concept. The \gls{DMV}
-prototype is written in the Rust programming language and it runs from the Unix
-command line, with the executable built as a thin wrapper around a library, so
-that it can be used by other applications.
+Files are split into chunks using the rsync \gls{rollinghash} algorithm.
+This splits the files into chunks by content rather than position, so that identical chunks within files (and especially different versions of the same file) will be found and stored as identical objects, regardless of their position within the file.
+This way, identical chunks will be naturally de-duplicated by the \gls{DAG}, and only the changed portions of files need to be stored as new objects.
 
-The \gls{DMV} prototype was developed with Rust stable versions 1.15 and 1.16 on
-Debian Linux 8.6 ("Jessie"). The current DMV prototype stands at \num{7592}
-lines of Rust code (\num{6565} excluding comments). Source code is available
-alongside this dissertation in Munin, the University of Tromsø's open research
-archive (\muninurl), and continued work can be found via the author's website
-(\dmvurl).
+\written{DMV is different because it starts with the assumption that the repo is incomplete.
+The repository itself can be distributed.}
+
+DMV will also distribute the repository itself.
+Repositories will have the option of only storing a portion of the data set or a portion of its history, in order to save space.
+A DMV repository will start with the assumption that it does not hold all objects in the data set.
+The goal is to allow DMV to run on devices with widely varying available resources, from servers to mobile devices.
+
+We have written a \gls{DMV} prototype in the Rust programming language.
+The current early prototype can store and retrieve data locally, but the distributed features are not yet implemented.
+
+The \gls{DMV} prototype was developed with Rust stable versions 1.15 and 1.16 on Debian Linux 8.6 ("Jessie").
+The current DMV prototype stands at \num{7592} lines of Rust code (\num{6565} excluding comments).
+Source code is available at \dmvurl .
