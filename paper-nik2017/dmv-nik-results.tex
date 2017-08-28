@@ -26,7 +26,8 @@ So we continued the trials assuming that these were also false alarms.
 
 Git's delta compression takes place in a separate garbage collection step.
 For Git, we ran the garbage collector at the end of each trial and measured repository size before and after garbage collection.
-With file sizes up to and including \SI{1}{\gib}, the garbage collection resulted in a reduction in repository size from approximately three times the input data size (the input file, and two separately stored revisions) to approximately twice the input data size (the input file, and compressed stored revisions).
+We measured total size, which included input data.
+With file sizes up to and including \SI{1}{\gib}, the garbage collection resulted in a reduction in repository size from approximately three times the input data size (the input file, and two separately stored revisions) to approximately twice the input data size (the input file, and the base revision, and a delta).
 At \SI{1.5}{\gib} and above, the repository size remained approximately three times the input data size after garbage collection.
 This indicates that Git's delta compression also requires that the file be able to fit into disk space three times over.
 
@@ -84,7 +85,7 @@ This is because DMV breaks the large files into many smaller objects, trading th
 
 \subsection{Number of Files}
 
-\subsubsection{File Quantity Limits: inodes}
+\subsubsection{File Quantity Limits: Inodes, Disk Space}
 
 Git, Mercurial, DMV, and the copy operation all failed when trying to store \num{7.5} million files or more, reporting that the disk was full.
 However, the disk was not actually out of space.
@@ -101,6 +102,13 @@ So committing \num{7.5} million input files would create an additional \num{7.5}
 Bup avoided the \gls{inode} limit because it writes directly into Git's pack file format.
 It aggregates objects and conserves inodes.
 Bup trials could continue until the input data itself exhausted the system's \glspl{inode} attempting to generate \num{25} million input files.
+
+Bup also made more efficient use of disk space.
+The input files were \SI{1}{\kib}, while the filesystem's block size was the default \SI{4}{\kib}.
+Therefore, the input data set used four times the amount of disk space as it needed.
+Because Git, Mercurial, DMV, and the copy control all made one new file for each input file, the commit used another \SI{4}{\kib} for each file, for a total of approximately eight times the disk space used.
+The total size measured in the Bup experiments, including input data, was \num{5.374} times the size of the input data at \num{5} million files.
+And since the input files themselves account for just over \num{4} times the theoretical size, we can see that Bup is storing the data in a form that is much closer to its theoretical size, taking just under \num{1.374} times the space.
 
 %
 

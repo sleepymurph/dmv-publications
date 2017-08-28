@@ -31,6 +31,7 @@ identical chunks in different files or file revisions will naturally
 de-duplicate. At this point, it is the method of object storage that becomes the
 bottleneck.
 
+
 \subsection{Naming Files by Hash Leads to Inefficient Writes}
 
 DMV's super-linear commit time increase when storing a large file is due to the way it breaks the large file into chunks and stores objects as individual files on the filesystem.
@@ -48,13 +49,9 @@ This is why Bup is consistently the fastest.
 \subsection{Storing Many Small Files Leads to Inefficient Use of Disk Space}
 
 Git, Mercurial, DMV, and the copy all create one file in their \glspl{objectstore} for each input file.
-So to store \num{7.5} million files, they will create \num{7.5} million more, resulting in \num{15} million files on the filesystem, plus directories.
-However, the \SI{197}{\gib} experiment partition has \num{13107200} total \glspl{inode}, so storing \num{15} million files is impossible.
-
-Bup is able to store more files because it does not write a separate object file for each input file.
-Bup aggregates its DAG objects into \glspl{packfile}, writing several large files instead many small files.
-As such, it does not exhaust the disk's \glspl{inode}, and can continue until the experiment itself exhausts the system's \glspl{inode} when it tries to go up from \num{10} million files to the next step and run a trial with \num{25} million files.
-
-\todo[inline]{Smaller than block size, 8x storage}
+So they all used up the filesystem's available inodes before Bup did with its aggregated storage.
+They also make less efficient use of disk space when the file sizes are smaller than the filesystem's block size.
+With immutable stored objects and an append-only history, the usage pattern of version control does not require room for objects to grow.
+Therefore it makes sense to aggregate objects together into larger files.
 
 %
