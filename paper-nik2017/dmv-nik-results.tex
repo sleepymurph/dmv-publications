@@ -4,8 +4,6 @@
 
 \subsubsection{File Size Limits: RAM, Time, Disk Space}
 
-\written{We find that processing files whole will limit maximum file size to what can fit in RAM.}
-
 In the experiments, both Git and Mercurial had file size limits that were related to the size of RAM.
 Mercurial refused to commit a file \SI{2}{\gib} or larger.
 It exited with an error code and print an error message saying "up to 6442 MB of RAM may be required to manage this file."
@@ -72,8 +70,6 @@ These findings are summarized in \autoref{file-sizes-table}.
 
 \subsubsection{Commit Times for Increasing File Sizes}
 
-\written{Give file size result timing}
-
 \autoref{fig:plot-file-size--c1-time} shows the wall-clock time required for the initial \gls{commit}, adding a single file of the given size to a fresh \gls{repository}.
 Over all, the trend is clear and unsurprising: \gls{commit} time increases with file size.
 It increases linearly for Git, Mercurial, and Bup.
@@ -89,8 +85,6 @@ This is because DMV breaks the large files into many smaller objects, trading th
 \subsection{Number of Files}
 
 \subsubsection{File Quantity Limits: inodes}
-
-\written{And we find that storing millions of objects loose as files with hash-based names will result in inefficient write speeds and use of disk space.}
 
 Git, Mercurial, DMV, and the copy operation all failed when trying to store \num{7.5} million files or more, reporting that the disk was full.
 However, the disk was not actually out of space.

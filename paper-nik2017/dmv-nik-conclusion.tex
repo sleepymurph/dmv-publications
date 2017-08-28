@@ -1,7 +1,5 @@
 \section{Conclusion}
 
-\written{We conclude that the key to storing large files is to break them into smaller chunks, and that the key to storing many small chunks is to aggregate them into larger files.}
-
 We have performed experiments to probe the scalability limits of existing \gls{DAG}-based \acrlongpl{DVCS}.
 We have shown that the maximum size of file that Git and Mercurial can store is limited by the amount of available memory in the system.
 We conclude that this is because those systems calculate deltas of files to de-duplicate data, and they load the entire file into memory in order to do so.

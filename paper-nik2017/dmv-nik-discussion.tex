@@ -2,8 +2,6 @@
 
 \subsection{File Size Limits}
 
-\written{Discuss implementation details that lead to size limits}
-
 By using files as the basic unit of storage, and storing files as deltas against
 a base revision, both Git and Mercurial will at some point load an entire file
 into memory in order to compare it to another version. This limits the maximum
@@ -55,8 +53,6 @@ Bup aggregates its DAG objects into \glspl{packfile}, writing several large file
 As such, it does not exhaust the disk's \glspl{inode}, and can continue until the experiment itself exhausts the system's \glspl{inode} when it tries to go up from \num{10} million files to the next step and run a trial with \num{25} million files.
 
 \subsection{Hash-Based Directory Names Cause Disk Seeking}
-
-\written{Discuss Git and DMV slowing down due to random writes}
 
 We saw in the file-size commit times (\autoref{results-file-size--c1-time}) that DMV's time increased quadratically, and we suspected that was because it was creating many small files and incurring filesystem overhead.
 This effect would explain why both Git and DMV do so poorly here while Bup would fare much better.
