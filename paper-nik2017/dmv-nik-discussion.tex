@@ -1,6 +1,6 @@
 \section{Discussion}
 
-\subsection{File Size Limits}
+\subsection{Reading Whole Files into RAM Limits File Size to RAM}
 
 By using files as the basic unit of storage, and storing files as deltas against
 a base revision, both Git and Mercurial will at some point load an entire file
@@ -11,7 +11,7 @@ case, the error message that appears when attempting to \gls{commit} a
 because it has to calculate deltas in order to store a file at all, Mercurial
 simply cannot work with any file that it can't fit into memory three times over.
 This is why Mercurial could not store files larger than \SI{1.5}{\gib} in the
-file-size experiments (\autoref{file-size-limits-results}).
+file-size experiments.
 
 Because Git's delta calculation happens behind-the-scenes in a secondary phase,
 it can still manage to \gls{commit} files larger than available RAM, but it
@@ -31,18 +31,21 @@ identical chunks in different files or file revisions will naturally
 de-duplicate. At this point, it is the method of object storage that becomes the
 bottleneck.
 
-\subsection{DMV Sluggishness}
+\subsection{Naming Files by Hash Leads to Inefficient Writes}
 
-DMV's parabolic increase is due to the way it breaks the large file into chunks and stores objects as individual files on the filesystem.
-While it is reading one large file, it is writing many small files, which incurs filesystem overhead.
-So its performance characteristic for storing a large file is closer to that of storing many files (\autoref{results-num-files}).
-Bup also breaks the file into many chunks, but it avoids the filesystem overhead by recombining the chunks into \glspl{packfile}.
-We investigate the filesystem overhead further in \autoref{perf-tuning-exp-chapter}.
+DMV's super-linear commit time increase when storing a large file is due to the way it breaks the large file into chunks and stores objects as individual files on the filesystem.
+So its performance characteristic for storing a large file is closer to that of storing many files.
+Both Git and DMV have super-linear commit time increases as the number of files increases.
+This is because both Git and DMV store objects with directory and file names taken from the object's SHA-1 hash ID.
+These randomized writes are inefficient for spinning disks and incur significant overhead as the writes jump from directory to directory.
+This slows both Git and DMV down down significantly as the number of objects increases.
+Mercurial stores data in files named after the original input files, so they can be written in the order that they are read, without all the jumping back and forth between directories.
+Bup also breaks large files into chunks, but it aggregates objects into pack files.
+So in addition to conserving inodes, Bup's writes are sequential and more efficient than the others.
+This is why Bup is consistently the fastest.
 
-This sluggishness is due to the way DMV stores chunks of the file as individual files on the filesystem, turning the problem of storing one large file into the problem of storing many small files.
-Storing many small files in this way incurs filesystem overhead, as we discovered in the results of the number-of-files experiment (\autoref{results-num-files--c1-time}), and later performed more experiments to examine in detail (\autoref{perf-tuning-exp-chapter}).
 
-\subsection{File Quantity Limits}
+\subsection{Storing Many Small Files Leads to Inefficient Use of Disk Space}
 
 Git, Mercurial, DMV, and the copy all create one file in their \glspl{objectstore} for each input file.
 So to store \num{7.5} million files, they will create \num{7.5} million more, resulting in \num{15} million files on the filesystem, plus directories.
@@ -52,13 +55,6 @@ Bup is able to store more files because it does not write a separate object file
 Bup aggregates its DAG objects into \glspl{packfile}, writing several large files instead many small files.
 As such, it does not exhaust the disk's \glspl{inode}, and can continue until the experiment itself exhausts the system's \glspl{inode} when it tries to go up from \num{10} million files to the next step and run a trial with \num{25} million files.
 
-\subsection{Hash-Based Directory Names Cause Disk Seeking}
+\todo[inline]{Smaller than block size, 8x storage}
 
-We saw in the file-size commit times (\autoref{results-file-size--c1-time}) that DMV's time increased quadratically, and we suspected that was because it was creating many small files and incurring filesystem overhead.
-This effect would explain why both Git and DMV do so poorly here while Bup would fare much better.
-But why then would Mercurial and the copy also have a linear increase instead of an quadratic one?
-
-The difference is the naming schemes of stored files.
-Git and DMV name each object file according to the SHA-1 hash of the object's contents, while Mercurial, like the copy, uses the original input file's name.
-This means that Git and DMV write files in a random order with respect to their names, jumping between different \gls{objectstore} subdirectories, while Mercurial and the copy can write files in the order they read them, one subdirectory at a time.
-The filesystem is most likely optimized for that kind of sequential write.
+%
