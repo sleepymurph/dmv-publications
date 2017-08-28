@@ -5,14 +5,11 @@
 Distributed systems are ruled by the \gls{CAP-theorem}~\cite{cap_origin}, which states that a system cannot be completely consistent (C), available (A), and tolerant of network partitions (P) all at the same time.
 When communication between replicas breaks down and they cannot all acknowledge an operation, the system is faced with "the \gls{partitiondecision}: block the operation and thus decrease availability, or proceed and thus risk inconsistency."~\cite{cap_years_later}
 
-Much research is aimed at improving consistency.
-Vector clocks~\cite{lamport_ordering} and consensus algorithms such as Paxos~\cite{paxos_made_simple,paxos_made_moderately_complex} make sure the same updates are applied in the same order on all replicas even, if a minority of nodes cannot respond.
-There are also data types are cleverly designed to be commutative, so that the resulting data will be the same regardless of the order in which updates are applied~\cite{crdt_orig}.
-But in general, when systems cannot communicate, the CAP theorem cannot be avoided~\cite{cap_proof}, and the system is still faced with the \gls{partitiondecision}.
+Much research is aimed at improving consistency, but distributed version control systems are interesting because they focus on availability.
 
 \written{Every replica of a repository contains the full history in an append-only data structure, any replica may add new commits, and conflicting updates are reconciled later in a merge operation.}
 
-Though maybe not designed with the CAP theorem explicitly in mind, a \gls{DVCS} is in fact a small-scale distributed system that takes the availability-first approach to the extreme.
+Though maybe not designed with the CAP theorem explicitly in mind, a \gls{DVCS} is in fact a small-scale distributed system, where nodes are completely autonomous.
 Rather than a set of connected nodes that may occasionally lose contact in a network partition, a \gls{DVCS}'s \glspl{repository} are self-contained and offline by default.
 They allow writes to local data at any time, and only connect to other \glspl{repository} intermittently by user command to exchange updates.
 Concurrent updates are not only allowed but embraced as different \glspl{branch} of development.
