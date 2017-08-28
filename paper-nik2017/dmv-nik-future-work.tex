@@ -1,5 +1,8 @@
 \section{Future Work}
 
-\towrite{Future Work}
-
-\perjmb{it could be interesting to see how other file systems behave with the same experiments.}
+The most vital future step for DMV is to implement the planned network features, to move DMV from the local case to the distributed case.
+We would also incorporate the performance insights from these experiments and switch DMV to an aggregating storage format.
+An important disk-space optimization would be to create a virtual copy-on-write filesystem that is a view into a \gls{tree} in the \gls{DMV} repository.
+A virtual filesystem could be used as the working directory, eliminating the wasted disk space of having a second writable copy of all files, and it would eliminate the copying of those files back into the immutable data store on \gls{commit}.
+It would also be interesting to perform these experiments on other filesystems and disk hardware to see how they behave.
+It would be particularly interesting to see if solid state drives have the same poor randomized write performance.
