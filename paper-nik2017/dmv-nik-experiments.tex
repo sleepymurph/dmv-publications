@@ -35,7 +35,7 @@ For each experiment, the procedure for a single trial was as follows:
     \item \Gls{commit} again, measuring wall-clock time to \gls{commit}
     \item Verify that the second \gls{commit} exists in the \gls{repository}, and if there was any kind of error, run the \gls{repository}'s integrity check operation
     \item Measure the total \gls{repository} size again
-    \item (File-size experiment only) Run Git's garbage collector (\lstinline{git fsck}) to pack objects, then measure total \gls{repository} size again
+    \item (File-size experiment only, Git only) Run Git's garbage collector (\lstinline{git fsck}) to pack objects, then measure total \gls{repository} size again
     \item Delete temporary directory and all trial files
 \end{tight_enumerate}
 

@@ -9,10 +9,11 @@
 In the experiments, both Git and Mercurial had file size limits that were related to the size of RAM.
 Mercurial refused to commit a file \SI{2}{\gib} or larger.
 It exited with an error code and print an error message saying "up to 6442 MB of RAM may be required to manage this file."
-Mercurial commits are atomic, and we saw that in each case, the commit was not stored, and the repository was left unchanged.
-Mercurial needs to be able to fit the file into memory three times over in order to commit it.
-\perotto{Give reason Mercurial needs 3x RAM}
-\askotto{Should that go in the discussion section?}
+This is because Mercurial stores file revisions as deltas against a base revision, so it has to do its delta calculation up front.
+It loads each revision of the file into memory to do the calculations, plus it allocates memory to write the output.
+As a result, Mercurial needs to be able to fit the file into memory three times over in order to commit it.
+We saw that in each case, the commit was not stored, and the repository was left unchanged.
+Mercurial commits are atomic.
 
 Git's commit operation appeared to fail with files \SI{12}{\gib} and larger.
 It exited with an error code and print an error message saying "fatal: Out of memory, malloc failed (tried to allocate 12884901889 bytes)."
@@ -25,18 +26,26 @@ In each case, the \lstinline{fsck} command exited with an error code and give a 
 However, the \SI{24}{\gib} file could still be checked out from the repository without error.
 So we continued the trials assuming that these were also false alarms.
 
-The \gls{DMV} prototype was able to store a file up to \SI{64}{\gibi\byte} in size, but time became a limiting factor as file size increased.
-At \SI{96}{\gibi\byte}, our experiment script timed out and terminated the \gls{commit} after five and a half hours.
-\perotto{Why timed out?}
+Git's delta compression takes place in a separate garbage collection step.
+For Git, we ran the garbage collector at the end of each trial and measured repository size before and after garbage collection.
+With file sizes up to and including \SI{1}{\gib}, the garbage collection resulted in a reduction in repository size from approximately three times the input data size (the input file, and two separately stored revisions) to approximately twice the input data size (the input file, and compressed stored revisions).
+At \SI{1.5}{\gib} and above, the repository size remained approximately three times the input data size after garbage collection.
+This indicates that Git's delta compression also requires that the file be able to fit into disk space three times over.
 
-Our experiment environment itself limited the largest file stored by any \gls{VCS} to \SI{96}{\gibi\byte}.
-Any larger and it was simply impossible to store a second copy of the file on our \SI{197}{\gibi\byte} test partition.
-\perotto{Make clearer that this was just experiment set up and can be changed}
+The \gls{DMV} prototype was able to store a file up to \SI{64}{\gibi\byte} in size, but time became a limiting factor as file size increased.
+We set an arbitrary five and a half hour timeout for commits in our experiment script.
+At \SI{96}{\gib}, the DMV commit operation hit this limit and was terminated.
+
+The largest file size committed in the trials was \SI{96}{\gib}.
+This was a limitation of the experiment environment, not a limit of the systems under test.
+The experiments were performed on a \SI{197}{\gib} partition.
+The next trial size \SI{128}{\gib} is too large to fit two copies on the partition.
+So no version control system was able to commit it, since they all save a copy of the file.
+
 Bup was able to store a \SI{96}{\gibi\byte} file with no errors in just under two hours.
 Git could also store such a large file, but one must ignore the false-alarm "fatal" errors being reported by the user interface.
 
-These findings are summarized in \autoref{file-sizes-table} and
-\autoref{vcs-size-limits-table}.
+These findings are summarized in \autoref{file-sizes-table}.
 
 \begin{table}[]
     \caption{Observations as file size increases}
@@ -46,6 +55,7 @@ These findings are summarized in \autoref{file-sizes-table} and
         Size & Observation \\
         \midrule
         \SI{1.5}{\gibi\byte} & Largest successful commit with Mercurial \\
+        \SI{1.5}{\gibi\byte} & Git commit successful, but garbage collection fails to compress \\
         \SI{2}{\gibi\byte} & Mercurial commit rejected \\
         \SI{8}{\gibi\byte} & Largest successful commit with Git \\
         \SI{12}{\gibi\byte} & Git false-alarm errors begin, but commit still intact \\
