@@ -9,6 +9,14 @@ And to measure the effect of numbers of files, we committed increasing number of
 \perotto{Effect on what?}
 
 We ran each experiment with four different \glspl{VCS}: Git, Mercurial, Bup, the DMV prototype.
+We chose Git because it is the most popular \gls{DVCS} in use today~\cite{what_are_devs_talking_about} and the main inspiration for DMV.
+\askotto{You write "Refs ref? [1?]" here. I'm not sure what you mean. Can you clarify?}
+We chose the Mercurial and Bup because they are both related to Git but each store data differently.
+Git and DMV both store objects in an \gls{objectstore} directory as a file named for its hash ID.
+Git has a separate garbage collection step that takes object files and aggregates them into \glspl{packfile}~\cite[Section 10.7]{git_book}.
+Mercurial stores revisions of each file as a base revision followed by a series of deltas~\cite[Chapter 4]{hgbook}, much like previous \glspl{VCS} such as RCS, CVS, and Subversion~\cite{history_of_version_control}.
+Bup uses Git's exact data model and \gls{packfile} format, but Bup breaks files into chunks using a \gls{rollinghash}, reusing Git's \gls{tree} object as a \gls{chunkedblob} index\footnotemark.
+Unlike Git, Bup writes to the \gls{packfile} format directly, without Git's separate commit and pack steps, and without bothering to calculate deltas~\cite{bup_design}.
 As a control, we also ran the experiments with a dummy \gls{VCS} that simply copied the files to a hidden directory.
 
 \footnotetext{Git can read a repository written by Bup, but it will see
