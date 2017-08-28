@@ -14,7 +14,7 @@ Boar~\cite{boar_homepage} and Bup~\cite{bup_homepage} are open-source backup sys
 Bup even uses Git's data format.
 They are also an inspiration for DMV.
 Both use a rolling hash algorithm to break files into chunks by content.
-However both are focused on a backup workflow.
+However, both are focused on a backup workflow.
 Both also assume that the whole repository will fit on one filesystem, and both have limited distributed capabilities.
 Apple's Time Machine~\cite{timemachine_patent} is another backup system that de-duplicates unchanged files, but it uses filesystem hardlinks rather than content-addressing.
 Time Machine's functionality can be mimicked by using Rsync with the \lstinline{--link-dest} option~\cite{timemachine_foreveryunix}.
