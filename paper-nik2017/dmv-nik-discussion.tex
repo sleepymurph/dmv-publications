@@ -2,6 +2,7 @@
 
 \subsection{Reading Whole Files into RAM Limits File Size to RAM}
 
+\perjmb{again: efficient in RAM, larger is possible if you have a large swap partition/file.}
 By using files as the basic unit of storage, and storing files as deltas against
 a base revision, both Git and Mercurial will at some point load an entire file
 into memory in order to compare it to another version. This limits the maximum
@@ -44,6 +45,9 @@ Mercurial stores data in files named after the original input files, so they can
 Bup also breaks large files into chunks, but it aggregates objects into pack files.
 So in addition to conserving inodes, Bup's writes are sequential and more efficient than the others.
 This is why Bup is consistently the fastest.
+\perjmbinline{you had a clue to a likely candidate there: every time you create a new file in a new / separate subdirectory, you have to open that directory's inode and update it later. Adding a new file to the same directory should (in principle) just be updating the same inode again, while we would need to read the inode for a new directory in the git case.}
+\perjmbinline{In addition: if metadata updates may cause problems (last read time etc).
+There was a paper about this, but I'll have to dig a bit before finding it.}
 
 
 \subsection{Storing Many Small Files Leads to Inefficient Use of Disk Space}

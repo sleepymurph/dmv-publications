@@ -13,9 +13,10 @@ Concurrent updates are not only allowed but embraced as different \glspl{branch}
 A \gls{DVCS} can track many different \glspl{branch} at the same time, and conflicting \glspl{branch} can be combined and resolved by the user in a \gls{merge} operation.
 
 \Glspl{DVCS} are designed primarily to store program source code: plain text files in the range of tens of kilobytes.
+\perjmb{it would be nice if we had a reference for this, but it's not critical to get it accepted.}
 Checking in larger binary files such as images, sound, or video affects performance.
 Actions that require copying data in and out of the system slow from hundredths of a second to full seconds or minutes.
-And since a \gls{DVCS} keeps every version of every file in every \gls{repository}, forever, the disk space needs only increase.
+And since a \gls{DVCS} keeps every version of every file in every \gls{repository} forever, the disk space needs only increase.
 
 This has lead to a conventional wisdom that binary files should never be stored in version control, inspiring blog posts with titles such as
 "Don't ever commit binary files to Git! Or what to do if you do"~\cite{dont_ever_commit_binaries_to_version_control},

@@ -13,6 +13,7 @@ As a result, Mercurial needs to be able to fit the file into memory three times 
 We saw that in each case, the commit was not stored, and the repository was left unchanged.
 Mercurial commits are atomic.
 
+\perjmb{would work (slowly) with larger swap then...}
 Git's commit operation appeared to fail with files \SI{12}{\gib} and larger.
 It exited with an error code and print an error message saying "fatal: Out of memory, malloc failed (tried to allocate 12884901889 bytes)."
 However, the commit was be written to the repository, and git's \lstinline{fsck} operation reported no errors.
