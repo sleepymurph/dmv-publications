@@ -1,8 +1,6 @@
 \section{Results}
 
-\subsection{File Size}
-
-\subsubsection{File Size Limits: RAM, Time, Disk Space}
+\subsection{File Size Limits: RAM, Time, Disk Space}
 
 In the experiments, both Git and Mercurial had file size limits that were related to the size of RAM.
 Mercurial refused to commit a file \SI{2}{\gib} or larger.
@@ -70,7 +68,7 @@ These findings are summarized in \autoref{file-sizes-table}.
 
 %
 
-\subsubsection{Commit Times for Increasing File Sizes}
+\subsection{Commit Times for Increasing File Sizes}
 
 \autoref{fig:plot-file-size--c1-time} shows the wall-clock time required for the initial \gls{commit}, adding a single file of the given size to a fresh \gls{repository}.
 Over all, the trend is clear and unsurprising: \gls{commit} time increases with file size.
@@ -84,9 +82,7 @@ This is because DMV breaks the large files into many smaller objects, trading th
 
 
 
-\subsection{Number of Files}
-
-\subsubsection{File Quantity Limits: Inodes, Disk Space}
+\subsection{File Quantity Limits: Inodes, Disk Space}
 
 Git, Mercurial, DMV, and the copy operation all failed when trying to store \num{7.5} million files or more, reporting that the disk was full.
 However, the disk was not actually out of space.
@@ -114,7 +110,7 @@ And since the input files themselves account for just over \num{4} times the the
 %
 
 
-\subsubsection{Commit Times for Increasing Numbers of Files}
+\subsection{Commit Times for Increasing Numbers of Files}
 
 \autoref{fig:plot-num-files--c1-time} shows the time required for the initial \gls{commit}, storing all files into a fresh empty \gls{repository}.
 Here we see the commit times for Git and DMV increasing quadratically with the number of files, while Mercurial, Bup, and the copy increase linearly.
