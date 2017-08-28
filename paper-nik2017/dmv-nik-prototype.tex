@@ -35,6 +35,8 @@ With better mapping, the DAG would de-duplicate redundant chunks of files the wa
 It could also ensure that all objects are a reasonable size that can fit into RAM for processing.
 This sub-file granularity and de-duplication is one of the core ideas behind our new data storage system, \textbf{\acrfull{DMV}}.
 
+\glsunset{DMV}
+
 %
 
 The core idea is relatively simple --- store data in a Git-like \gls{DAG}, but make the following changes:
@@ -73,7 +75,7 @@ An example \gls{DMV} \gls{DAG} is shown in \autoref{dia_dmv_dag_example_three_co
 \end{figure}
 
 
-Files are split into chunks using the rsync \gls{rollinghash} algorithm~\cite{rsynctechreport}.
+Files are split into chunks using the Rsync \gls{rollinghash} algorithm~\cite{rsynctechreport}.
 This splits the files into chunks by content rather than position, so that identical chunks within files (and especially different versions of the same file) will be found and stored as identical objects, regardless of their position within the file.
 This way, identical chunks will be naturally de-duplicated by the \gls{DAG}, and only the changed portions of files need to be stored as new objects.
 

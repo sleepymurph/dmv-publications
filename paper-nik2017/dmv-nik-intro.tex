@@ -6,14 +6,13 @@ When communication between nodes breaks down and they cannot all acknowledge an 
 Much research is focused on consistency.
 However distributed version control systems focus on availability.
 
-Though maybe not designed with the CAP theorem explicitly in mind, a \gls{DVCS} is in fact a small-scale distributed system, where nodes are completely autonomous.
-Rather than a set of connected nodes that may occasionally lose contact in a network partition, a \gls{DVCS}'s \glspl{repository} are self-contained and offline by default.
-They allow writes to local data at any time, and only connect to other \glspl{repository} intermittently by user command to exchange updates.
+A \gls{DVCS} is a small-scale distributed system, where nodes are autonomous.
+Rather than a set of nodes that is connected by default, a \gls{DVCS}'s \glspl{repository} are self-contained and offline by default.
+A DVCS allows writes to local data at any time, and only connects to other \glspl{repository} intermittently to exchange updates at the user's command.
 Concurrent updates are not only allowed but embraced as different \glspl{branch} of development.
 A \gls{DVCS} can track many different \glspl{branch} at the same time, and conflicting \glspl{branch} can be combined and resolved by the user in a \gls{merge} operation.
 
-\Glspl{DVCS} are designed primarily to store program source code: plain text files in the range of tens of kilobytes.
-\perjmb{it would be nice if we had a reference for this, but it's not critical to get it accepted.}
+Version control systems are historically designed primarily to store program source code~\cite{history_of_version_control}: plain text files in the range of tens of kilobytes.
 Checking in larger binary files such as images, sound, or video affects performance.
 Actions that require copying data in and out of the system slow from hundredths of a second to full seconds or minutes.
 And since a \gls{DVCS} keeps every version of every file in every \gls{repository} forever, the disk space needs only increase.
@@ -22,5 +21,4 @@ This has lead to a conventional wisdom that binary files should never be stored 
 "Don't ever commit binary files to Git! Or what to do if you do"~\cite{dont_ever_commit_binaries_to_version_control},
 even as the modern software development practice of continuous delivery was commanding teams to "keep absolutely everything in version control."~\cite[p.33]{continuousdeliverybook}
 
-This paper evaluates version control when storing larger binary files, with the goal of building a scalable, highly-available, distributed storage system with versioning for media files such as images, audio, and video.
-
+This paper evaluates the behavior of current version control systems when storing larger binary files, with the goal of building a scalable, highly-available, distributed storage system with versioning for media files such as images, audio, and video.

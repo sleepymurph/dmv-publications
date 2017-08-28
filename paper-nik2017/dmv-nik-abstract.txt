@@ -1,6 +1,7 @@
 A distributed version control system allows for replicas of a repository with the full history of updates.
 Updates and new commits can be done to each replica independent of each other.
-Updates, including conflicting updates, are reconciled later in a peer-to-peer merge operation. This will bring replicas to a consistent state with each other.
+Updates, including conflicting updates, are reconciled later in a peer-to-peer merge operation.
+This will bring replicas to a consistent state with each other.
 
 These systems are popular, but their intended use is typically limited to the small text files of source code.
 However, distributed version control can also be useful for larger files, including binary files of images, audio and video.
