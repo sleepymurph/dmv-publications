@@ -5,7 +5,7 @@
 Distributed systems are ruled by the \gls{CAP-theorem}~\cite{cap_origin}, which states that a system cannot be completely consistent (C), available (A), and tolerant of network partitions (P) all at the same time.
 When communication between replicas breaks down and they cannot all acknowledge an operation, the system is faced with "the \gls{partitiondecision}: block the operation and thus decrease availability, or proceed and thus risk inconsistency."~\cite{cap_years_later}
 
-Much research is aimed at improving consistency, but distributed version control systems are interesting because they focus on availability.
+Much research is aimed at improving consistency, but distributed version control systems focus on availability.
 
 \written{Every replica of a repository contains the full history in an append-only data structure, any replica may add new commits, and conflicting updates are reconciled later in a merge operation.}
 
@@ -14,9 +14,6 @@ Rather than a set of connected nodes that may occasionally lose contact in a net
 They allow writes to local data at any time, and only connect to other \glspl{repository} intermittently by user command to exchange updates.
 Concurrent updates are not only allowed but embraced as different \glspl{branch} of development.
 A \gls{DVCS} can track many different \glspl{branch} at the same time, and conflicting \glspl{branch} can be combined and resolved by the user in a \gls{merge} operation.
-
-The \glsdisp{DVCS}{distributed version control} concept may have something to
-teach larger-scale systems about availability.
 
 \written{These systems are popular, but their use is generally limited to the small text files of source code.}
 
@@ -29,7 +26,9 @@ This has lead to a conventional wisdom that binary files should never be stored 
 "Don't ever commit binary files to Git! Or what to do if you do"~\cite{dont_ever_commit_binaries_to_version_control},
 even as the modern software development practice of continuous delivery was commanding teams to "keep absolutely everything in version control."~\cite[p.33]{continuousdeliverybook}
 
-\towrite{This paper explores the challenges of using version control to store larger binary files, with the goal of building a scalable, highly-available, distributed storage system for media files such as images, audio, and video.}
+\written{This paper explores the challenges of using version control to store larger binary files, with the goal of building a scalable, highly-available, distributed storage system for media files such as images, audio, and video.}
+
+This paper explores the challenges of using version control to store larger binary files, with the goal of building a scalable, highly-available, distributed storage system for media files such as images, audio, and video.
 
 \subsection{The Power of the DAG}
 
@@ -46,7 +45,7 @@ Therefore, it is impossible to create a circular reference.
 
 This DAG data structure has several interesting properties for distributed data storage.
 The content-addressing naturally de-duplicates identical objects, since identical objects will have the same hash ID.
-This results in a natural compression of redundant objects.
+This results in a natural data compression.
 The append-only nature of the DAG allows replicas to make independent updates without disturbing the existing history.
 Then, when transferring updates from one replica to another, only new objects need to be transferred.
 Concurrent updates will result in multiple branches of history, but references from child commit to parent commit establish a happens-before relationship and give a chain of causality.
@@ -55,15 +54,15 @@ Updates can also be made atomic by waiting to update branch head references unti
 
 The efficiency of de-duplication depends on how well identical pieces of data map to identical objects.
 In Git, the redundant objects are the files and directories that do not change between commits.
-De-duplication of redundant data within files is accomplished by aggregating objects together into pack files and compressing them with zlib \cite[Section 10.4]{git_book}.
+However, small changes to a file will result in a new object that is very similar to the previous one, and the two could be compressed further.
+Git compresses this redundant data between files by aggregating objects into archives called pack files, where they are compressed together with zlib~\cite[Section 10.4]{git_book}.
+This secondary compression requires reading objects again, comparing them, and searching for repeated sections.
+Also, if the algorithm is implemented with an assumption that objects are small enough to fit into RAM, attempting to process large files could result in an out-of-memory error.
+This extra effort could be avoided by more fine-grained mapping of data to objects, so that repeated sections within files become their own objects that can be reused.
 
-Calculating deltas during this \glsdisp{packfile}{packing} phase requires loading the objects into memory, and so it can cause an out-of-memory error if an object is too large to fit into available RAM.
-Because Git stores files whole in \glspl{blob}, it cannot \glsdisp{packfile}{pack} objects that are larger than available RAM.
-
-If the \gls{DAG} operated at a granularity smaller than the file, it could become even more powerful.
-It could naturally de-duplicate chunks of files the way that Git already de-duplicates whole files, and it could ensure that all objects fit into RAM for \glsdisp{packfile}{packing} or other operations.
-
-This sub-file granularity and de-duplication is the core idea behind our new data storage system, \acrlong{DMV}.
+With better mapping, the DAG would de-duplicate redundant chunks of files the way that it already de-duplicates whole files.
+It could also ensure that all objects are a reasonable size that can fit into RAM for processing.
+This sub-file granularity and de-duplication is one of the core ideas behind our new data storage system, \acrlong{DMV}.
 
 \todo[inline]{Repositories are "full" replicas, but they are not necessarily up to date}
 
