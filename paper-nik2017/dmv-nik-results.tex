@@ -119,7 +119,7 @@ This is due to the way that each system stores objects.
 Git and DMV store objects with directory and files names taken from the object's SHA-1 hash ID, so they are effectively random.
 These randomized writes jump from directory to directory.
 So rather than updating a single directory with multiple new files, the write operate must jump to another directory and open it for appending.
-This slows both Git and DMV down down significantly as the number of objects increases.
+This slows both Git and DMV down significantly as the number of objects increases.
 Mercurial stores data in files named after the original input files, so they can be written in the order that they are read, without all the jumping back and forth between directories.
 Bup also breaks large files into chunks, but it aggregates objects into pack files.
 So in addition to conserving inodes, Bup's writes are sequential appends to a single file.
