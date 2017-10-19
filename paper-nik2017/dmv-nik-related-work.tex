@@ -1,14 +1,10 @@
 \section{Related Works}
 
-The primary related works are distributed version control systems such as Git and Mercurial, which are the inspiration for DMV.
+The primary inspiration for DMV are Git and Mercurial.
 DMV hopes to expand on the distributed version control concept with better handling of large binary files, and the ability to distribute the repository itself.
 
-There are existing projects that extend Git with special handling for larger files, such as Git-annex~\cite{git_annex_homepage} and Git-media~\cite{git_media_github}.
-Both store information about the larger files in the normal Git \gls{repository} and then store the files themselves in a separate location.
-Git-annex files may be spread across several different remote \gls{repository} clones or data stores, and Git-annex has features for tracking the locations of annex files in different remote \glspl{repository} and moving them from one \gls{repository} to another.
-These tracking and distribution features are very similar to our goals for DMV
-However, Git-annex is not quite as flexible as we aim for with \gls{DMV}.
-It considers the large files atomic units, and it does not break them into smaller chunks for de-duplication.
+There are existing projects that extend Git with special handling for larger files, such as Git-annex~\cite{git_annex_homepage}, Git-media~\cite{git_media_github}, and Git Large File Storage (Git LFS)~\cite{git_lfs_homepage}.
+All three store the large files outside of the repository, storing only a pointer within the repository itself.
 
 Boar~\cite{boar_homepage} and Bup~\cite{bup_homepage} are open-source backup systems based on version control.
 Bup even uses Git's data format.
