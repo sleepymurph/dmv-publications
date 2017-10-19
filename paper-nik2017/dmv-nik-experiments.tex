@@ -38,10 +38,11 @@ For each experiment, the procedure for a single trial was as follows:
     \item Delete temporary directory and all trial files.
 \end{tight_enumerate}
 
-We increased file sizes exponentially by powers of two from \SI{1}{\byte} up to \SI{128}{\gibi\byte}, adding an additional step at \num{1.5} times the base size at each order of magnitude.
+In order to maximize the range of file sizes tried, we increased file sizes exponentially by powers of two, from \SI{1}{\byte} up to \SI{128}{\gibi\byte}.
+We also added an additional between step at \num{1.5} times the base size at each order of magnitude.
 For example, on the megabyte scale, the file sizes are \SI{1}{\mebi\byte}, \SI{1.5}{\mebi\byte}, \SI{2}{\mebi\byte}, \SI{3}{\mebi\byte}, \SI{4}{\mebi\byte}, \SI{6}{\mebi\byte}, \SI{8}{\mebi\byte}, \SI{12}{\mebi\byte}, and so on.
 
-We increased numbers of files exponentially by powers of ten from one file to ten million files, adding additional steps at \num{2.5}, \num{5}, and \num{7.5} times the base number at each order of magnitude.
+Similarly, we increased numbers of files exponentially by powers of ten from one file to ten million files, adding additional steps at \num{2.5}, \num{5}, and \num{7.5} times the base number at each order of magnitude.
 For example, at the hundreds and thousands scales, the file quantities are \num{100}, \num{250}, \num{500}, \num{750}, \num{1000}, \num{2500}, \num{5000}, \num{7500}, \num{10000}, and so on.
 
 Input data files consisted of pseudorandom bytes taken from the operating system's pseudorandom number generator (\lstinline{/dev/urandom} on Linux).
