@@ -1,36 +1,39 @@
 \section{Related Works}
 
-The primary inspiration for DMV are Git and Mercurial.
-DMV hopes to expand on the distributed version control concept with better handling of large binary files, and the ability to distribute the repository itself.
+The primary inspirations for DMV are Git~\cite{git_book} and Mercurial~\cite{hgbook}.
+Both store the version history of a filesystem in a content-addressed graph structure that naturally de-duplicates unchanged files and allows efficient synchronization between replicas.
+This natural de-duplication works for identical files,
+but for de-duplication within versions of files, Git and Mercurial rely on diff algorithms, which are designed for text, not large binary files.
 
-There are existing projects that extend Git with special handling for larger files, such as Git-annex~\cite{git_annex_homepage}, Git-media~\cite{git_media_github}, and Git Large File Storage (Git LFS)~\cite{git_lfs_homepage}.
-All three store the large files outside of the repository, storing only a pointer within the repository itself.
+There are existing projects to extend Git with special handling for larger binary files, such as Git-annex~\cite{git_annex_homepage}, Git-media~\cite{git_media_github}, and Git Large File Storage (Git LFS)~\cite{git_lfs_homepage}.
+All three store the large files outside of the repository, possibly on a cloud server, storing only a pointer within the repository itself.
+They side-step the issue of de-duplicating within binary files by going out and finding more storage.
 
-Boar~\cite{boar_homepage} and Bup~\cite{bup_homepage} are open-source backup systems based on version control.
-Bup even uses Git's data format.
-They are also an inspiration for DMV.
-Both use a rolling hash algorithm to break files into chunks by content.
-However, both are focused on a backup workflow.
-Both also assume that the whole repository will fit on one filesystem, and both have limited distributed capabilities.
-Apple's Time Machine~\cite{timemachine_patent} is another backup system that de-duplicates unchanged files, but it uses filesystem hardlinks rather than content-addressing.
+Boar~\cite{boar_homepage} and Bup~\cite{bup_homepage} are open-source backup systems based on version control that do de-duplication within binary files and store the files within the repository itself.
+They use a rolling hash algorithm to break the files into chunks by content, and then store the chunks in the content-addressed graph.
+These tools are limited in scope, however.
+Both are primarily focused on a backup workflow, both keep the assumption that the repository resides on one filesystem, and both have limited distribution capabilities.
+
+Another de-duplicating backup system is Apple's Time Machine~\cite{timemachine_patent}.
+Time Machine uses filesystem hardlinks for de-duplication of unchanged files, rather than content-addressing.
 Time Machine's functionality can be mimicked by using Rsync with the \lstinline{--link-dest} option~\cite{timemachine_foreveryunix}.
 
-Dat~\cite{dat_homepage} is an open-source project for publishing and sharing scientific data sets for research.
-IPFS~\cite{ipfs_github_main} is an open-source pro\-ject to create a global content-addressed filesystem.
-Both use content addressing to keep versions of content.
-Where Dat and IPFS focus on publishing on the open internet, DMV will focus on ad-hoc networks and data that may be private.
+Rsync~\cite{rsynctechreport} is also the origin of the rolling hash algorithm that DMV and Bup use to break files into chunks by content.
 
-Camlistore~\cite{camlistore_homepage} and Eyo~\cite{Strauss:2011:EDP:2002181.2002216} are systems for storing personal media collections.
+Other projects that employ content addressing on large data sets include
+Dat~\cite{dat_homepage}, an open-source project for publishing and sharing scientific data sets for research, and IPFS~\cite{ipfs_github_main}, an open-source pro\-ject to create a global content-addressed filesystem.
+Both focus on publishing data on the open internet.
+
+Camlistore~\cite{camlistore_homepage} and Eyo~\cite{Strauss:2011:EDP:2002181.2002216} are systems for storing private data, specifically personal media collections.
 Both eschew traditional filesystems for databases to store various media types and their metadata.
 Eyo in particular leans on the insight that in media files, the metadata is more likely to change than the image/audio/video data.
-And so it separates metadata from data.
-This allows efficient storage and syncing of metadata.
+It separates metadata from data, which allows efficient storage and syncing of metadata.
 However, it requires that the software be able to parse many different media formats, and it requires client software to be rewritten to open the separate metadata and data streams.
-A rolling hash will not be likely to find these exact seams between changing metadata and static data.
-So it will not compress data as well.
-However, it will avoid additional developer effort to support new file formats.
 
-Rsync~\cite{rsynctechreport} is the origin of the rolling hash algorithm that DMV and Bup use.
+DMV hopes to expand the distributed version control concept into a generalized, highly-available, distributed storage system for large data sets.
+It uses the rolling hash approach of Boar and Bup, but hopes to avoid their limitations.
+Unlike Dat and IPFS it will focus on private data on a private ad-hoc networks.
+And unlike Camlistore and Eyo, it does not tie itself to any particular media formats.
 
 \perjmbinline{Mention COW filesystems}
 \askjmbinline{I mention them in the Future Work section. Is that ok?}
