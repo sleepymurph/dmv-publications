@@ -1,17 +1,11 @@
 Distributed version control systems are popular for storing source code, but they are notoriously ill suited for storing large binary files.
 
-We report on the results from a set of experiments designed to characterise the behaviour of some widely used distributed version control systems with respect to scaling.
-The experiments measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.
+We report on the results from a set of experiments designed to characterize the behavior of some widely used distributed version control systems with respect to scaling. The experiments measured commit times and repository sizes when storing single files of increasing size, and when storing increasing numbers of single-kilobyte files.
 
-The goal is to build a distributed storage system with characteristics similar to version control but for much larger data sets.
-An early prototype of such a system, Distributed Media Versioning (DMV), is briefly described and compared with Git, Mercurial, and the Git-based backup tool Bup.
+The goal is to build a distributed storage system with characteristics similar to version control but for much larger data sets. An early prototype of such a system, Distributed Media Versioning (DMV), is briefly described and compared with Git, Mercurial, and the Git-based backup tool Bup.
 
-We find that processing large files without splitting them into smaller parts will limit maximum file size to what can fit in RAM.
-\perjmb{there should be techniques for comparing files larger than memory (sliding window-ish).}
-\perjmb{On the other hand: dedup/diffing of chunks is probably easier with the added advantage of potentially deduping files that are "mostly similar".}
-Storing millions of small files will result in inefficient use of disk space.
-And storing files with hash-based file and directory names will result in high-latency write operations, due to having to switch between directories rather than performing a sequential write.
+We find that processing large files without splitting them into smaller parts will limit maximum file size to what can fit in RAM. Storing millions of small files will result in inefficient use of disk space. And storing files with hash-based file and directory names will result in high-latency write operations, due to having to switch between directories rather than performing a sequential write.
 
 The next-phase strategy for DMV will be to break files into chunks by content for de-duplication, then re-aggregating the chunks into append-only log files for low-latency write operations and efficient use of disk space.
 
-% vim: nonumber colorcolumn= formatoptions-=t :
+% vim: wrap tw=0 spell nonumber colorcolumn= formatoptions-=t :
