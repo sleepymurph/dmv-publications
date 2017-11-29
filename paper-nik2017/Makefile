@@ -39,6 +39,14 @@ dmv-nik.pdf: \
 
 	gnuplot -e 'set terminal pdf monochrome size 3in,2in' $*.gpi > $*.pdf
 
+%.svg: \
+    %.gpi \
+    #*-common.gpi \
+    ../data/** \
+    ../data/meantable.py \
+    #*.sh \
+
+	gnuplot -e 'set terminal svg size 480,360' $*.gpi > $*.svg
 
 ## Diagrams with Graphviz
 #
